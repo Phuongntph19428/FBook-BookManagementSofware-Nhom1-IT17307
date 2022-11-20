@@ -13,7 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.TheLoai;
+import service.ITheLoaiServicer;
+import service.impl.TheLoaiServicer;
 
 /**
  *
@@ -21,83 +25,50 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TheLoai_Form extends javax.swing.JPanel {
 
-    private final int RecordOneTable = 11;
-    private int indexSelected = 1;
-    private int indexRow = 1;
-    private int pageCurrently = 1;
-    private int countJbtn = 0;
-
-    private List<SachFake> listS = new ArrayList<>();
+    private List<TheLoai> listTheLoai = new ArrayList<>();
+    private ITheLoaiServicer iTheLoaiServicer;
     private List<Button> listBtn = new ArrayList<>();
 
     public TheLoai_Form() {
         initComponents();
-        String columns[] = {"Mã", "Tên Sách", "Hình", "Số lượng", "Giá bán", "Barcode", "Mô Tả"};
+        iTheLoaiServicer = new TheLoaiServicer();
+        String columns[] = {"Id", "Mã Thể Loại", "Tên Thể Loại", "Mô Tả"};
         Object rows[][] = {};
-        this.table1.setModel(new DefaultTableModel(rows, columns));
-        table1.setDefaultEditor(Object.class, null);
-        table1.setBackground(Color.WHITE);
-        this.table1.setRowHeight(50);
-        this.table1.setBackground(Color.white);
+        this.tbTheLoai.setModel(new DefaultTableModel(rows, columns));
+        tbTheLoai.setDefaultEditor(Object.class, null);
+        tbTheLoai.setBackground(Color.WHITE);
+        this.tbTheLoai.setRowHeight(50);
+        this.tbTheLoai.setBackground(Color.white);
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/tacgia.jpg").getImage().getScaledInstance(174, 230, Image.SCALE_DEFAULT));
-        initTableData();
-        showTarget(1);
+        loadTable();
+        xoaFrom();
     }
 
-     public void initTableData() {
-        // Nơi đổ dữ liệu vào table
-        // Ví dụ về đối tượng SachFake khi add Row ( sẽ tùy vào đối tượng để sửa các trường
-        //new ModelTest(new ImageIcon("image/bookmark_30px.png"), "Bora", "Male", "C#", 300).toRowTable()
-        //new Object[]{new ModelProfile(icon, name), Ma, soLuong, df.format(giaBan), barCode, moTa}
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-//        this.table1.addRow(new SachFake("SKL1", imageIcon, "Sách 1", 100, 30000, "01293123", "Mới vl").toRowTable());
-        
+    private void loadTable() {
+        listTheLoai = iTheLoaiServicer.selectAll();
+        DefaultTableModel dtm = (DefaultTableModel) tbTheLoai.getModel();
+        dtm.setRowCount(0);
+        for (TheLoai loai : listTheLoai) {
+            dtm.addRow(loai.toDaTaRow());
 
-        for (int i = 0; i <= 160; i++) {
-            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
         }
-         for (SachFake sach : listS) {
-             table1.addRow(sach.toRowTable());
-         }
-//        if (listS.size() / RecordOneTable != 0) {
-//            countJbtn = listS.size() / RecordOneTable;
-//            countJbtn += 1;
-//        };
-//        System.out.println(countJbtn);
-//        for (int i = 0; i < countJbtn; i++) {
-//            Button btn = new Button();
-//            listBtn.add(btn);
-//            btn.setText("" + (i + 1));
-//            btn.setSize(30, 30);
-//            btn.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    showTarget(Integer.parseInt(btn.getText()));
-//                    setColorButtonSelected(Integer.parseInt(btn.getText()) - 1);
-//
-//                }
-//            });
-//
-////              JButton btn = new JButton("Hehe");
-//            pagePanel.add(btn);
-//        }
+    }
+
+    private void fillTable(int row) {
+        TheLoai loai = listTheLoai.get(row);
+        txtId.setText(loai.getId());
+        txtMa.setText(loai.getMa());
+        txtTen.setText(loai.getTen());
+        txtMoTa.setText(loai.getMoTa());
 
     }
 
-    public void showTarget(int index) {
-        DefaultTableModel model = new DefaultTableModel();
-        model = (DefaultTableModel) this.table1.getModel();
-        model.setRowCount(0);
-        int coutRecord = 0;
-        int sizeIndex = RecordOneTable * index;
-        int indexStart = sizeIndex - RecordOneTable;
-        try {
-            for (int i = indexStart; i < sizeIndex; i++) {
-                this.table1.addRow(listS.get(i).toRowTable());
-            }
-        } catch (Exception e) {
+    private void xoaFrom() {
 
-        }
+        txtId.setText("");
+        txtMa.setText("");
+        txtTen.setText("");
+        txtMoTa.setText("");
 
     }
 
@@ -110,6 +81,7 @@ public class TheLoai_Form extends javax.swing.JPanel {
         listBtn.get(index).setForeground(Color.WHITE);
 
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,16 +93,16 @@ public class TheLoai_Form extends javax.swing.JPanel {
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new View.DesignComponent.Table();
+        tbTheLoai = new View.DesignComponent.Table();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        textField2 = new View.DesignComponent.TextField();
-        textField3 = new View.DesignComponent.TextField();
-        textField4 = new View.DesignComponent.TextField();
-        textField5 = new View.DesignComponent.TextField();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao5 = new View.ButtonDesign.Button();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
+        txtId = new View.DesignComponent.TextField();
+        txtTen = new View.DesignComponent.TextField();
+        txtMa = new View.DesignComponent.TextField();
+        txtMoTa = new View.DesignComponent.TextField();
+        btnSua = new View.ButtonDesign.Button();
+        btnThem = new View.ButtonDesign.Button();
+        btnXoaFrom = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(11, 20, 55));
@@ -201,7 +173,7 @@ public class TheLoai_Form extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tbTheLoai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -226,9 +198,14 @@ public class TheLoai_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        table1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        table1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(table1);
+        tbTheLoai.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tbTheLoai.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tbTheLoai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbTheLoaiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbTheLoai);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
@@ -286,72 +263,72 @@ public class TheLoai_Form extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        textField2.setEditable(false);
-        textField2.setBackground(new java.awt.Color(47, 55, 90));
-        textField2.setForeground(new java.awt.Color(255, 255, 255));
-        textField2.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField2.setLabelText("ID");
-        textField2.setLineColor(new java.awt.Color(255, 255, 255));
+        txtId.setEditable(false);
+        txtId.setBackground(new java.awt.Color(47, 55, 90));
+        txtId.setForeground(new java.awt.Color(255, 255, 255));
+        txtId.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtId.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtId.setLabelText("ID");
+        txtId.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField3.setBackground(new java.awt.Color(47, 55, 90));
-        textField3.setForeground(new java.awt.Color(255, 255, 255));
-        textField3.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField3.setLabelText("Tên Thể Loại");
-        textField3.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTen.setBackground(new java.awt.Color(47, 55, 90));
+        txtTen.setForeground(new java.awt.Color(255, 255, 255));
+        txtTen.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTen.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTen.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTen.setLabelText("Tên Thể Loại");
+        txtTen.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField4.setBackground(new java.awt.Color(47, 55, 90));
-        textField4.setForeground(new java.awt.Color(255, 255, 255));
-        textField4.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField4.setLabelText("Mã Thể Loại");
-        textField4.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMa.setLabelText("Mã Thể Loại");
+        txtMa.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField5.setBackground(new java.awt.Color(47, 55, 90));
-        textField5.setForeground(new java.awt.Color(255, 255, 255));
-        textField5.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField5.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField5.setLabelText("Mô Tả");
-        textField5.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
 
-        btnInBaoCao4.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Cập Nhật");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setBackground(new java.awt.Color(31, 31, 111));
+        btnSua.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnSua.setForeground(new java.awt.Color(255, 255, 255));
+        btnSua.setText("Cập Nhật");
+        btnSua.setFocusable(false);
+        btnSua.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
-        btnInBaoCao5.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao5.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao5.setText("Tạo Mới");
-        btnInBaoCao5.setFocusable(false);
-        btnInBaoCao5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao5.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setBackground(new java.awt.Color(31, 31, 111));
+        btnThem.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setText("Tạo Mới");
+        btnThem.setFocusable(false);
+        btnThem.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao5ActionPerformed(evt);
+                btnThemActionPerformed(evt);
             }
         });
 
-        btnInBaoCao6.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Làm Mới");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaFrom.setBackground(new java.awt.Color(31, 31, 111));
+        btnXoaFrom.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnXoaFrom.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoaFrom.setText("Làm Mới");
+        btnXoaFrom.setFocusable(false);
+        btnXoaFrom.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnXoaFrom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                btnXoaFromActionPerformed(evt);
             }
         });
 
@@ -368,18 +345,18 @@ public class TheLoai_Form extends javax.swing.JPanel {
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInBaoCao4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                            .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
@@ -396,18 +373,18 @@ public class TheLoai_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
                 .addGap(10, 10, 10)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -417,23 +394,78 @@ public class TheLoai_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+        int row = tbTheLoai.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn dòng cần sửa", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            TheLoai loai = getDaTa();
 
-    private void btnInBaoCao5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao5ActionPerformed
+            if (JOptionPane.showConfirmDialog(this, "Cập nhật", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                if (loai == null) {
+                    return;
+                }
+
+                JOptionPane.showMessageDialog(this, "Cập nhập thành công");
+                iTheLoaiServicer.update(loai);
+                loadTable();
+            }
+
+        }
+
+        xoaFrom();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao5ActionPerformed
+        TheLoai loai = getDaTa();
+        if (loai == null) {
+            return;
+        }
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
+        for (TheLoai theLoai : listTheLoai) {
+            if (theLoai.getMa().equals(txtMa.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã thể loại", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+        if (JOptionPane.showConfirmDialog(this, "Thêm", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
+            JOptionPane.showMessageDialog(this, "Thêm thành công");
+            iTheLoaiServicer.insert(loai);
+            loadTable();
+        }
+        xoaFrom();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaFromActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+        xoaFrom();
+    }//GEN-LAST:event_btnXoaFromActionPerformed
 
+    private void tbTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTheLoaiMouseClicked
+        // TODO add your handling code here:
+        int row = tbTheLoai.getSelectedRow();
+        fillTable(row);
+    }//GEN-LAST:event_tbTheLoaiMouseClicked
 
+    private TheLoai getDaTa() {
+        String id = txtId.getText().trim();
+        String ma = txtMa.getText().trim();
+        String ten = txtTen.getText().trim();
+        String moTa = txtMoTa.getText().trim();
+        if (ma.length() == 0 || ten.length() == 0 || moTa.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống, cần điền đầy đủ thông tin !", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        TheLoai loai = new TheLoai(id, ma, ten, moTa);
+        return loai;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao4;
-    private View.ButtonDesign.Button btnInBaoCao5;
-    private View.ButtonDesign.Button btnInBaoCao6;
+    private View.ButtonDesign.Button btnSua;
+    private View.ButtonDesign.Button btnThem;
+    private View.ButtonDesign.Button btnXoaFrom;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -443,11 +475,11 @@ public class TheLoai_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private View.DesignComponent.Table table1;
+    private View.DesignComponent.Table tbTheLoai;
     private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.TextField textField2;
-    private View.DesignComponent.TextField textField3;
-    private View.DesignComponent.TextField textField4;
-    private View.DesignComponent.TextField textField5;
+    private View.DesignComponent.TextField txtId;
+    private View.DesignComponent.TextField txtMa;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtTen;
     // End of variables declaration//GEN-END:variables
 }
