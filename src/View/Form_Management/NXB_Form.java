@@ -16,7 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.NhaXuatBan;
+import service.NhaXuatBanService;
+import service.impl.NhaXuatBanServicelmpl;
 
 /**
  *
@@ -27,35 +31,49 @@ public class NXB_Form extends javax.swing.JPanel {
 // 
     private List<SachFake> listS = new ArrayList<>();
     private List<Button> listBtn = new ArrayList<>();
+    private List<NhaXuatBan> listNxb = new ArrayList<>();
+    private NhaXuatBanService NhaXuatBanServicer;
 
     public NXB_Form() {
         initComponents();
-        String columns[] = {"Mã", "Tên Sách", "Hình", "Số lượng", "Giá bán", "Barcode", "Mô Tả"};
+        String columns[] = {"ID", "Mã nhà xuất bản", "Tên nhà xuất bản ", "Mô tả nhà xuất bản"};
         Object rows[][] = {};
-        this.table1.setModel(new DefaultTableModel(rows, columns));
-        table1.setDefaultEditor(Object.class, null);
-        table1.setBackground(Color.WHITE);
-        this.table1.setRowHeight(50);
-        this.table1.setBackground(Color.white);
+        NhaXuatBanServicer = new NhaXuatBanServicelmpl();
+        this.tbNXB.setModel(new DefaultTableModel(rows, columns));
+        tbNXB.setDefaultEditor(Object.class, null);
+        tbNXB.setBackground(Color.WHITE);
+        this.tbNXB.setRowHeight(50);
+        this.tbNXB.setBackground(Color.white);
         this.jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         initTableData();
+        xoaFrom();
     }
 
-    public void initTableData() {
+    public void initTableData1() {
         // Nơi đổ dữ liệu vào table
         // Ví dụ về đối tượng SachFake khi add Row ( sẽ tùy vào đối tượng để sửa các trường
         //new ModelTest(new ImageIcon("image/bookmark_30px.png"), "Bora", "Male", "C#", 300).toRowTable()
         //new Object[]{new ModelProfile(icon, name), Ma, soLuong, df.format(giaBan), barCode, moTa}
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-//        this.table1.addRow(new SachFake("SKL1", imageIcon, "Sách 1", 100, 30000, "01293123", "Mới vl").toRowTable());
+//        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+////        this.table1.addRow(new SachFake("SKL1", imageIcon, "Sách 1", 100, 30000, "01293123", "Mới vl").toRowTable());
+//
+//        for (int i = 0; i <= 160; i++) {
+//            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
+//        }
+//        for (SachFake sach : listS) {
+//            tbNXB.addRow(sach.toRowTable());
+//        }
 
-        for (int i = 0; i <= 160; i++) {
-            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
-        }
-        for (SachFake sach : listS) {
-            table1.addRow(sach.toRowTable());
-        }
+    }
 
+    public void initTableData() {
+        listNxb = NhaXuatBanServicer.selectAll();
+        System.out.println(listNxb.size());
+        DefaultTableModel dtm = (DefaultTableModel) tbNXB.getModel();
+        dtm.setRowCount(0);
+        for (NhaXuatBan nxb : listNxb) {
+            dtm.addRow(nxb.toDaTaRow());
+        }
     }
 
     public void setColorButtonSelected(int index) {
@@ -65,6 +83,23 @@ public class NXB_Form extends javax.swing.JPanel {
         }
         listBtn.get(index).setBackground(new Color(31, 31, 111));
         listBtn.get(index).setForeground(Color.WHITE);
+
+    }
+
+    private void fillTable(int row) {
+        NhaXuatBan nxb = listNxb.get(row);
+        txtIdNXB.setText(nxb.getId());
+        txtMaNXB.setText(nxb.getMa());
+        txtTenNXB.setText(nxb.getTen());
+        txtMoTa.setText(nxb.getMoTa());
+
+    }
+
+    private void xoaFrom() {
+        txtIdNXB.setText("");
+        txtMaNXB.setText("");
+        txtTenNXB.setText("");
+        txtMoTa.setText("");
 
     }
 
@@ -79,16 +114,16 @@ public class NXB_Form extends javax.swing.JPanel {
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new View.DesignComponent.Table();
+        tbNXB = new View.DesignComponent.Table();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        textField2 = new View.DesignComponent.TextField();
-        textField3 = new View.DesignComponent.TextField();
-        textField4 = new View.DesignComponent.TextField();
-        textField5 = new View.DesignComponent.TextField();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao5 = new View.ButtonDesign.Button();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
+        txtIdNXB = new View.DesignComponent.TextField();
+        txtTenNXB = new View.DesignComponent.TextField();
+        txtMaNXB = new View.DesignComponent.TextField();
+        txtMoTa = new View.DesignComponent.TextField();
+        btnCapNhat = new View.ButtonDesign.Button();
+        btnTaoMoi = new View.ButtonDesign.Button();
+        btnLamMoi = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(11, 20, 55));
@@ -161,7 +196,7 @@ public class NXB_Form extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tbNXB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -186,9 +221,14 @@ public class NXB_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        table1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        table1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(table1);
+        tbNXB.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tbNXB.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tbNXB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbNXBMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbNXB);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
@@ -246,72 +286,72 @@ public class NXB_Form extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        textField2.setEditable(false);
-        textField2.setBackground(new java.awt.Color(47, 55, 90));
-        textField2.setForeground(new java.awt.Color(255, 255, 255));
-        textField2.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField2.setLabelText("ID");
-        textField2.setLineColor(new java.awt.Color(255, 255, 255));
+        txtIdNXB.setEditable(false);
+        txtIdNXB.setBackground(new java.awt.Color(47, 55, 90));
+        txtIdNXB.setForeground(new java.awt.Color(255, 255, 255));
+        txtIdNXB.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtIdNXB.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtIdNXB.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtIdNXB.setLabelText("ID");
+        txtIdNXB.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField3.setBackground(new java.awt.Color(47, 55, 90));
-        textField3.setForeground(new java.awt.Color(255, 255, 255));
-        textField3.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField3.setLabelText("Tên Nhà Xuất Bản");
-        textField3.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTenNXB.setBackground(new java.awt.Color(47, 55, 90));
+        txtTenNXB.setForeground(new java.awt.Color(255, 255, 255));
+        txtTenNXB.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTenNXB.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTenNXB.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTenNXB.setLabelText("Tên Nhà Xuất Bản");
+        txtTenNXB.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField4.setBackground(new java.awt.Color(47, 55, 90));
-        textField4.setForeground(new java.awt.Color(255, 255, 255));
-        textField4.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField4.setLabelText("Mã Nhà Xuất Bản");
-        textField4.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMaNXB.setBackground(new java.awt.Color(47, 55, 90));
+        txtMaNXB.setForeground(new java.awt.Color(255, 255, 255));
+        txtMaNXB.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMaNXB.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMaNXB.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMaNXB.setLabelText("Mã Nhà Xuất Bản");
+        txtMaNXB.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField5.setBackground(new java.awt.Color(47, 55, 90));
-        textField5.setForeground(new java.awt.Color(255, 255, 255));
-        textField5.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField5.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField5.setLabelText("Mô Tả");
-        textField5.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
 
-        btnInBaoCao4.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Cập Nhật");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        btnCapNhat.setBackground(new java.awt.Color(31, 31, 111));
+        btnCapNhat.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapNhat.setText("Cập Nhật");
+        btnCapNhat.setFocusable(false);
+        btnCapNhat.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                btnCapNhatActionPerformed(evt);
             }
         });
 
-        btnInBaoCao5.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao5.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao5.setText("Tạo Mới");
-        btnInBaoCao5.setFocusable(false);
-        btnInBaoCao5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao5.addActionListener(new java.awt.event.ActionListener() {
+        btnTaoMoi.setBackground(new java.awt.Color(31, 31, 111));
+        btnTaoMoi.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnTaoMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoMoi.setText("Tạo Mới");
+        btnTaoMoi.setFocusable(false);
+        btnTaoMoi.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnTaoMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao5ActionPerformed(evt);
+                btnTaoMoiActionPerformed(evt);
             }
         });
 
-        btnInBaoCao6.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Làm Mới");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        btnLamMoi.setBackground(new java.awt.Color(31, 31, 111));
+        btnLamMoi.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnLamMoi.setText("Làm Mới");
+        btnLamMoi.setFocusable(false);
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                btnLamMoiActionPerformed(evt);
             }
         });
 
@@ -328,18 +368,18 @@ public class NXB_Form extends javax.swing.JPanel {
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTenNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIdNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMaNXB, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInBaoCao4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                            .addComponent(btnTaoMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -356,44 +396,79 @@ public class NXB_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIdNXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaNXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTenNXB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnTaoMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
                 .addGap(10, 10, 10)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelBourder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+        NhaXuatBan nxb = getDaTa();
+        int row = tbNXB.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "chon dong can cap nhat");
+            return;
+        } else if (nxb == null) {
+            JOptionPane.showMessageDialog(this, "khong duoc de trong");
+            return;
+        } else {
+            NhaXuatBanServicer.update(nxb);
+            JOptionPane.showMessageDialog(this, "Cap nhat thanh cong");
+            initTableData();
+        }
+    }//GEN-LAST:event_btnCapNhatActionPerformed
 
-    private void btnInBaoCao5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao5ActionPerformed
+    private void btnTaoMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoMoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao5ActionPerformed
+        NhaXuatBan nxb = getDaTa();
+        if (nxb == null) {
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Tao moi thanh cong");
+        NhaXuatBanServicer.insert(nxb);
+        xoaFrom();
+        initTableData();
+    }//GEN-LAST:event_btnTaoMoiActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
+    private void tbNXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbNXBMouseClicked
+        // TODO add your handling code here:
+        int row = tbNXB.getSelectedRow();
+        fillTable(row);
+    }//GEN-LAST:event_tbNXBMouseClicked
+    private NhaXuatBan getDaTa() {
+        String id = txtIdNXB.getText().trim();
+        String ma = txtMaNXB.getText().trim();
+        String ten = txtTenNXB.getText().trim();
+        String moTa = txtMoTa.getText().trim();
+        NhaXuatBan nhaXuatBan = new NhaXuatBan(id, ma, ten, moTa);
+        return nhaXuatBan;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao4;
-    private View.ButtonDesign.Button btnInBaoCao5;
-    private View.ButtonDesign.Button btnInBaoCao6;
+    private View.ButtonDesign.Button btnCapNhat;
+    private View.ButtonDesign.Button btnLamMoi;
+    private View.ButtonDesign.Button btnTaoMoi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -403,11 +478,11 @@ public class NXB_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private View.DesignComponent.Table table1;
+    private View.DesignComponent.Table tbNXB;
     private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.TextField textField2;
-    private View.DesignComponent.TextField textField3;
-    private View.DesignComponent.TextField textField4;
-    private View.DesignComponent.TextField textField5;
+    private View.DesignComponent.TextField txtIdNXB;
+    private View.DesignComponent.TextField txtMaNXB;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtTenNXB;
     // End of variables declaration//GEN-END:variables
 }

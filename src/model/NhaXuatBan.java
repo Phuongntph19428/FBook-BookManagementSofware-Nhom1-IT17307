@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -23,7 +24,8 @@ public class NhaXuatBan implements Serializable {
 
     @Id
     @Column(name = "Id")
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
     @Column(name = "Ma")
@@ -93,4 +95,13 @@ public class NhaXuatBan implements Serializable {
         return "NhaXuatBan{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", moTa=" + moTa + '}';
     }
 
+    public Object[] toDaTaRow() {
+        return new Object[]{id, ma, ten, moTa};
+    }
+
+    public NhaXuatBan(String ma, String ten, String moTa) {
+        this.ma = ma;
+        this.ten = ten;
+        this.moTa = moTa;
+    }
 }

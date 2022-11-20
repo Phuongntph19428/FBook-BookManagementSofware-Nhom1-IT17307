@@ -14,15 +14,20 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import service.SachService;
+import service.impl.SachServiceImpl;
 
 /**
  *
  * @author quanc
  */
 public class Sach_ChucNang_Form extends javax.swing.JPanel {
-    
-    private boolean isToggle = false;    
-    
+
+    private boolean isToggle = false;
+
+    private byte[] hinh = null;
+    private final SachService sachService;
+
     public Sach_ChucNang_Form() {
         initComponents();
         this.Form_Chon.show(false);
@@ -38,6 +43,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             "Linh",
             "Hương",
             "Nam"};
+        
         DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
         this.cbSelect.setModel(model);
         Icon icon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
@@ -46,8 +52,9 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         Icon iconbgr = new ImageIcon("image/demobgr.png");
         this.background.setIcon(iconbgr);
         this.background.setBackground(new Color(0, 0, 0, 0));
+
+        sachService = new SachServiceImpl();
     }
-   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -753,7 +760,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     private void btnSelectTacGia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGia1ActionPerformed
         this.lbNameForm.setText("Thêm Tác Giả");
-         String tacgia[] = {"TG",
+        String tacgia[] = {"TG",
             "Thế Phương",
             "Đức Anh",
             "Linh",
@@ -793,7 +800,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     private void btnSelectTacGia2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGia2ActionPerformed
         this.lbNameForm.setText("Thêm Khuyến Mãi");
-         String tacgia[] = {"KM",
+        String tacgia[] = {"KM",
             "Thế Phương",
             "Đức Anh",
             "Linh",
@@ -848,7 +855,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInBaoCaoActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-     this.isToggle = true;
+        this.isToggle = true;
     }//GEN-LAST:event_button1ActionPerformed
 
 

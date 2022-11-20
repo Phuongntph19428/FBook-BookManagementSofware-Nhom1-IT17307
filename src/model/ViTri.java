@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -18,11 +20,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ViTri")
-public class ViTri {
+public class ViTri implements Serializable {
 
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(generator = "generator")
+    @Column(name = "Id")@GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
     @Column(name = "Ma")
