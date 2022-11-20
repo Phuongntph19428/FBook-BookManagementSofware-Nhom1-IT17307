@@ -94,7 +94,8 @@ public class ChucVu implements Serializable {
     public String toString() {
         return "ChucVu{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", moTa=" + moTa + '}';
     }
-public Object[] tObjects() {
+
+    public Object[] toDaTaRow() {
         return new Object[]{id, ma, ten, moTa};
     }
 

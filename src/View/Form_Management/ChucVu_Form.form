@@ -30,21 +30,21 @@
                   <Component id="jPanel6" alignment="0" min="-2" pref="1204" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="textField3" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
-                          <Component id="textField2" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                          <Component id="txtTenCV" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                          <Component id="txtIdCV" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="textField4" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
-                          <Component id="textField5" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                          <Component id="txtMaCV" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                          <Component id="txtMoTa" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnInBaoCao5" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnInBaoCao4" alignment="0" pref="157" max="32767" attributes="0"/>
+                          <Component id="btnTaoMoi" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnCapNhat" alignment="0" pref="157" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao6" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Component id="btnLamMoi" min="-2" pref="157" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -65,22 +65,22 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtIdCV" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMaCV" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTenCV" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnInBaoCao5" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="btnInBaoCao6" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnTaoMoi" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnLamMoi" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao4" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="btnCapNhat" min="-2" pref="49" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -278,7 +278,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="View.DesignComponent.Table" name="table1">
+                <Component class="View.DesignComponent.Table" name="tbChucVu">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="10" rowCount="10">
@@ -412,6 +412,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbChucVuMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -453,7 +456,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="View.DesignComponent.TextField" name="textField2">
+    <Component class="View.DesignComponent.TextField" name="txtIdCV">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -476,8 +479,11 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdCVActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField3">
+    <Component class="View.DesignComponent.TextField" name="txtTenCV">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -500,7 +506,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField4">
+    <Component class="View.DesignComponent.TextField" name="txtMaCV">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -523,7 +529,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField5">
+    <Component class="View.DesignComponent.TextField" name="txtMoTa">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -546,7 +552,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao4">
+    <Component class="View.ButtonDesign.Button" name="btnCapNhat">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -566,10 +572,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapNhatActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao5">
+    <Component class="View.ButtonDesign.Button" name="btnTaoMoi">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -589,10 +595,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTaoMoiActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao6">
+    <Component class="View.ButtonDesign.Button" name="btnLamMoi">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -612,7 +618,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLamMoiActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">

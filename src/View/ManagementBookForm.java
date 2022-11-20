@@ -203,7 +203,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem ItemHoaDonBan = new MenuItem(iconHDBan, "                 Hóa Đơn Bán", null);
         ItemHoaDonBan.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
         ActionListenerJLabel(ItemHoaDonBan.getIcon(), 1, ItemHoaDonBan, item_);
-
         MenuItem ItemPhieuTra = new MenuItem(iconHDTra, "                 Hóa Đơn Trả", null);
         MenuItem ItemnhapKho = new MenuItem(null, "                 Nhập Kho", null);
         MenuItem ItemKiemKho = new MenuItem(null, "                 Kiểm Kho", null);
