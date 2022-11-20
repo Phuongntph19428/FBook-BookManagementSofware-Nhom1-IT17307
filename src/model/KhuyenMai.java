@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -25,7 +26,8 @@ public class KhuyenMai implements Serializable {
 
     @Id
     @Column(name = "Id")
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
     @Column(name = "Ma")
@@ -55,17 +57,6 @@ public class KhuyenMai implements Serializable {
     private List<KhuyenMaiChiTiet> lstKhuyenMaiCT;
 
     public KhuyenMai() {
-    }
-
-    public KhuyenMai(String id, String ma, String ten, int chietKhau, Date ngayBatDau, Date ngayKetThuc, int trangThai, String moTa) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
-        this.chietKhau = chietKhau;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
-        this.trangThai = trangThai;
-        this.moTa = moTa;
     }
 
     public String getId() {
@@ -145,4 +136,32 @@ public class KhuyenMai implements Serializable {
         return "KhuyenMai{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", chietKhau=" + chietKhau + ", ngayBatDau=" + ngayBatDau + ", ngayKetThuc=" + ngayKetThuc + ", trangThai=" + trangThai + ", moTa=" + moTa + '}';
     }
 
+    public KhuyenMai(String id, String ma, String ten, int chietKhau, Date ngayBatDau, Date ngayKetThuc, int trangThai, String moTa) {
+        this.id = id;
+        this.ma = ma;
+        this.ten = ten;
+        this.chietKhau = chietKhau;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.trangThai = trangThai;
+        this.moTa = moTa;
+
+    }
+
+    public KhuyenMai(String ma, String ten, int chietKhau, Date ngayBatDau, Date ngayKetThuc, int trangThai, String moTa) {
+
+        this.ma = ma;
+        this.ten = ten;
+        this.chietKhau = chietKhau;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.trangThai = trangThai;
+        this.moTa = moTa;
+    }
+
+    public Object[] toDaTaRow() {
+
+        return new Object[]{id, ma, ten, chietKhau, ngayBatDau, ngayKetThuc, trangThai == 1 ? "Dang hoat dong" : "Khong hoat dong", moTa};
+
+    }
 }
