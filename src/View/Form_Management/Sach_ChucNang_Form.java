@@ -43,8 +43,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         Icon icon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
         this.lbAvatar.setIcon(icon);
 
-        Icon iconbgr = new ImageIcon("image/background_btn.png");
-//        this.background.setIcon(iconbgr);
+        Icon iconbgr = new ImageIcon("image/demobgr.png");
+        this.background.setIcon(iconbgr);
         this.background.setBackground(new Color(0, 0, 0, 0));
     }
    
