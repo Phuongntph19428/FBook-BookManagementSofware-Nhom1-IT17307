@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -30,7 +31,8 @@ public class Sach implements Serializable {
 
     @Id
     @Column(name = "Id")
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
     @ManyToOne

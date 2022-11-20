@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -23,7 +24,8 @@ public class TheLoai implements Serializable {
 
     @Id
     @Column(name = "Id")
-    @GeneratedValue(generator = "generator")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     private String id;
 
     @Column(name = "Ma")
@@ -39,13 +41,6 @@ public class TheLoai implements Serializable {
     private List<TheLoaiChiTiet> lstTheLoaiChiTiet;
 
     public TheLoai() {
-    }
-
-    public TheLoai(String id, String ma, String ten, String moTa) {
-        this.id = id;
-        this.ma = ma;
-        this.ten = ten;
-        this.moTa = moTa;
     }
 
     public String getId() {
@@ -91,6 +86,23 @@ public class TheLoai implements Serializable {
     @Override
     public String toString() {
         return "TheLoai{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", moTa=" + moTa + '}';
+    }
+
+    public Object[] toDaTaRow() {
+        return new Object[]{id, ma, ten, moTa};
+    }
+
+    public TheLoai(String id, String ma, String ten, String moTa) {
+        this.id = id;
+        this.ma = ma;
+        this.ten = ten;
+        this.moTa = moTa;
+    }
+
+    public TheLoai(String ma, String ten, String moTa) {
+        this.ma = ma;
+        this.ten = ten;
+        this.moTa = moTa;
     }
 
 }
