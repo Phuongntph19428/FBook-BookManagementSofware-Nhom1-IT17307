@@ -38,6 +38,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             "Linh",
             "Hương",
             "Nam"};
+        
         DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
         this.cbSelect.setModel(model);
         Icon icon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
