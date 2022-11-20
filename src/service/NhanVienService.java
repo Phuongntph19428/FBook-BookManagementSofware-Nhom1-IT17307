@@ -4,10 +4,15 @@
  */
 package service;
 
+import java.util.List;
+import model.NhanVien;
+
 /**
  *
  * @author ppolo
  */
 public interface NhanVienService {
+    String addNhanVien(NhanVien nhanVien);
     
+    List<NhanVien> getAllNhanVien();
 }

@@ -4,10 +4,28 @@
  */
 package service.impl;
 
+import java.util.List;
+import model.NhanVien;
+import repository.impl.NhanVienRepositoryImpl;
+import service.NhanVienService;
+
 /**
  *
  * @author ppolo
  */
-public class NhanVienServiceImpl {
-    
+public class NhanVienServiceImpl implements NhanVienService {
+
+    private static NhanVienRepositoryImpl nhanVienRepositoryImpl = new NhanVienRepositoryImpl();
+
+    @Override
+    public String addNhanVien(NhanVien nhanVien) {
+        boolean result = nhanVienRepositoryImpl.addNhanVien(nhanVien);
+        return result ? "Thêm nhân viên thành công" : "Thêm nhân viên thất bại";
+    }
+
+    @Override
+    public List<NhanVien> getAllNhanVien() {
+        return nhanVienRepositoryImpl.getAllNhanVien();
+    }
+
 }

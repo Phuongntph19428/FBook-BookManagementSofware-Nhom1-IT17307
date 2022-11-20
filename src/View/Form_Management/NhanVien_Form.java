@@ -14,6 +14,9 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import model.NhanVien;
+import service.NhanVienService;
+import service.impl.NhanVienServiceImpl;
 
 /**
  *
@@ -23,17 +26,12 @@ public class NhanVien_Form extends javax.swing.JPanel {
 
     private List<SachFake> listS = new ArrayList<>();
     private List<Button> listBtn = new ArrayList<>();
+    private List<NhanVien> listNhanVien;
+    private NhanVienService nhanVienService;
 
     public NhanVien_Form() {
         initComponents();
-        String columns[] = {"Mã", "Tên Sách", "Hình", "Số lượng", "Giá bán", "Barcode", "Mô Tả"};
-        Object rows[][] = {};
-        this.table1.setModel(new DefaultTableModel(rows, columns));
-        table1.setDefaultEditor(Object.class, null);
-        table1.setBackground(Color.WHITE);
-        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
-        this.table1.setRowHeight(50);
-        this.table1.setBackground(Color.white);
+        nhanVienService = new NhanVienServiceImpl();
         initTableData();
     }
 
@@ -42,15 +40,20 @@ public class NhanVien_Form extends javax.swing.JPanel {
     }
 
     public void initTableData() {
-
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        for (int i = 0; i <= 160; i++) {
-            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
-        }
-        for (int i = 0; i < listS.size(); i++) {
-            this.table1.addRow(listS.get(i).toRowTable());
-        }
-    }
+        listNhanVien = nhanVienService.getAllNhanVien();
+        String columns[] = {"Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
+        Object rows[][] = {};
+        this.table1.setModel(new DefaultTableModel(rows, columns));
+        table1.setDefaultEditor(Object.class, null);
+        table1.setBackground(Color.WHITE);
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        this.table1.setRowHeight(50);
+        this.table1.setBackground(Color.white);
+      
+        for (NhanVien nhanVien : listNhanVien) {
+            table1.addRow(new Object[]{nhanVien.getMa(), nhanVien.getHo()+ " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
+        }      
+    }   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
