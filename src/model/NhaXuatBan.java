@@ -95,7 +95,7 @@ public class NhaXuatBan implements Serializable {
         return "NhaXuatBan{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", moTa=" + moTa + '}';
     }
 
-    public Object[] tObjects() {
+    public Object[] toDaTaRow() {
         return new Object[]{id, ma, ten, moTa};
     }
 
