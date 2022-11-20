@@ -8,7 +8,7 @@
           <Color blue="5a" green="37" red="2f" type="rgb"/>
         </Property>
         <Property name="textRefernce" type="javax.swing.JTextField" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="txtNgayBatDau"/>
+          <ComponentRef name="txtNgayBD"/>
         </Property>
       </Properties>
     </Component>
@@ -18,9 +18,11 @@
           <Color blue="5a" green="37" red="2f" type="rgb"/>
         </Property>
         <Property name="textRefernce" type="javax.swing.JTextField" editor="org.netbeans.modules.form.ComponentChooserEditor">
-          <ComponentRef name="txtNgayKetThuc"/>
+          <ComponentRef name="txtNgayKT"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="btgrTrangThai">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -55,45 +57,39 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtNgayBatDau" min="-2" pref="333" max="-2" attributes="0"/>
+                                  <Component id="txtNgayBD" min="-2" pref="333" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnNgayBatDau" min="-2" pref="39" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="textField3" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
-                              <Component id="textField2" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                              <Component id="txtTenKM" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                              <Component id="txtId" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="txtNgayKetThuc" min="-2" pref="336" max="-2" attributes="0"/>
+                                  <Component id="txtNgayKT" min="-2" pref="336" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnNgayKetThuc" min="-2" pref="39" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="textField4" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
-                              <Component id="textField5" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                              <Component id="txtMaKM" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                              <Component id="txtChietKhau" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jLabel3" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="radioButtonCustom2" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rdDangHD" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="rdNgungHD" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="textField6" alignment="0" min="-2" pref="325" max="-2" attributes="0"/>
+                              <Component id="txtMoTa" alignment="0" min="-2" pref="325" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace pref="52" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace type="separate" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btnInBaoCao6" min="-2" pref="157" max="-2" attributes="0"/>
-                                      <Component id="btnInBaoCao5" min="-2" pref="157" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="btnXoaFrom" min="-2" pref="157" max="-2" attributes="0"/>
+                                  <Component id="btnThem" min="-2" pref="157" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btnInBaoCao4" min="-2" pref="157" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="btnSua" alignment="1" min="-2" pref="157" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -116,14 +112,14 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="textField2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtId" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="textField3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTenKM" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnInBaoCao6" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="btnXoaFrom" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnInBaoCao5" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="btnThem" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -131,13 +127,13 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="txtNgayBatDau" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNgayBD" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnNgayBatDau" min="-2" pref="50" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnInBaoCao4" min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="btnSua" min="-2" pref="49" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -151,22 +147,22 @@
                           <Component id="btnNgayKetThuc" min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="textField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textField6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMaKM" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="textField5" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtChietKhau" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="txtNgayKetThuc" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtNgayKT" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdNgungHD" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                      <Component id="radioButtonCustom2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdDangHD" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -363,7 +359,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="View.DesignComponent.Table" name="table1">
+                <Component class="View.DesignComponent.Table" name="tbKhuyenMai">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="10" rowCount="10">
@@ -497,6 +493,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbKhuyenMaiMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -538,7 +537,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="View.DesignComponent.TextField" name="textField2">
+    <Component class="View.DesignComponent.TextField" name="txtId">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -562,7 +561,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField3">
+    <Component class="View.DesignComponent.TextField" name="txtTenKM">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -585,7 +584,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField4">
+    <Component class="View.DesignComponent.TextField" name="txtMaKM">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -608,7 +607,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField5">
+    <Component class="View.DesignComponent.TextField" name="txtChietKhau">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -631,7 +630,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao4">
+    <Component class="View.ButtonDesign.Button" name="btnSua">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -651,10 +650,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao5">
+    <Component class="View.ButtonDesign.Button" name="btnThem">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -674,10 +673,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao6">
+    <Component class="View.ButtonDesign.Button" name="btnXoaFrom">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -697,12 +696,12 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaFromActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtNgayBatDau">
+    <Component class="View.DesignComponent.TextField" name="txtNgayBD">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -728,7 +727,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtNgayKetThuc">
+    <Component class="View.DesignComponent.TextField" name="txtNgayKT">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -772,10 +771,13 @@
         <Property name="text" type="java.lang.String" value="Tr&#x1ea1;ng Th&#xe1;i"/>
       </Properties>
     </Component>
-    <Component class="View.ComboBoxDesign.RadioButtonCustom" name="radioButtonCustom1">
+    <Component class="View.ComboBoxDesign.RadioButtonCustom" name="rdNgungHD">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="37" green="14" red="b" type="rgb"/>
+        </Property>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="btgrTrangThai"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -786,10 +788,13 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.ComboBoxDesign.RadioButtonCustom" name="radioButtonCustom2">
+    <Component class="View.ComboBoxDesign.RadioButtonCustom" name="rdDangHD">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="37" green="14" red="b" type="rgb"/>
+        </Property>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="btgrTrangThai"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -800,7 +805,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField6">
+    <Component class="View.DesignComponent.TextField" name="txtMoTa">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>

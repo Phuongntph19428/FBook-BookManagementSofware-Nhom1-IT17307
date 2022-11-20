@@ -161,7 +161,7 @@ public class KhuyenMai implements Serializable {
 
     public Object[] toDaTaRow() {
 
-        return new Object[]{id, ma, ten, chietKhau, ngayBatDau, ngayKetThuc, trangThai == 1 ? "Dang hoat dong" : "Khong hoat dong", moTa};
+        return new Object[]{id, ma, ten, chietKhau, ngayBatDau, ngayKetThuc, trangThai== 1 ? "Đang hoạt động" : "Ngừng hoạt động", moTa};
 
     }
 }
