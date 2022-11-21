@@ -4,7 +4,6 @@
  */
 package View.Form_Management;
 
-import View.ScrollBarCustom;
 import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,9 +38,14 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         nhanVienService = new NhanVienServiceImpl();
         chucVuService = new ChucVuServiceImpl();
         listChucVu = chucVuService.getAllChuVu();
+        comboboxChucVu.setModel(new DefaultComboBoxModel());
         for (int i = 0; i < listChucVu.size(); i++) {
             comboboxChucVu.addItem(listChucVu.get(i).getMoTa());
         }
+        
+        comboboxTrangThai.setModel(new DefaultComboBoxModel());
+        comboboxTrangThai.addItem(0);
+        comboboxTrangThai.addItem(1);
 
         Icon icon = new ImageIcon(new ImageIcon("image/nhanvien.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
         this.lbAvatar.setIcon(icon);
@@ -69,6 +73,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         }
 
         String moTaChucVu = comboboxChucVu.getSelectedItem().toString();
+        Integer trangThai = (Integer) comboboxTrangThai.getSelectedItem();
         NhanVien nhanvien = new NhanVien();
         nhanvien.setMa(maNhanVien);
         nhanvien.setTen(ten);
@@ -78,6 +83,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         nhanvien.setSdt(sdt);
         nhanvien.setDiaChi(diaChi);
         nhanvien.setMatKhau(matKhau);
+        nhanvien.setTrangThai(trangThai);
         nhanvien.setNgaySinh(date);
         if (radioButtonCustom1.isSelected()) {
             nhanvien.setGioiTinh("Nam");
@@ -359,6 +365,11 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         comboboxTrangThai.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         comboboxTrangThai.setLabeText("Trạng Thái");
         comboboxTrangThai.setLineColor(new java.awt.Color(255, 255, 255));
+        comboboxTrangThai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboboxTrangThaiActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
@@ -461,9 +472,9 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                         .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
+                .addGap(46, 46, 46)
                 .addComponent(comboboxTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
 
         TruongThongTin.add(jPanelBourder1);
@@ -617,6 +628,10 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     private void radioButtonCustom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonCustom1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioButtonCustom1ActionPerformed
+
+    private void comboboxTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxTrangThaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboboxTrangThaiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
