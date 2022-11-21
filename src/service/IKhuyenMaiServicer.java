@@ -5,6 +5,7 @@
 package service;
 
 import java.util.List;
+import java.util.UUID;
 import model.KhuyenMai;
 
 /**
@@ -15,7 +16,12 @@ public interface IKhuyenMaiServicer {
 
     boolean insert(KhuyenMai km);
 
-   boolean update(KhuyenMai km);
+    boolean update(KhuyenMai km);
 
-    List<KhuyenMai> selectAll();
+    List<KhuyenMai> selectAll(String ma);
+
+    public void delete(String id);
+
+    public String findById(String ma);
+
 }

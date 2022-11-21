@@ -4,8 +4,10 @@
  */
 package repository.impl;
 
+import java.util.ArrayList;
 import model.KhuyenMai;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -54,17 +56,70 @@ public class KhuyenMaiRepository implements IKhuyenMaiRepository {
         }
     }
 
+//    @Override
+//    public List<KhuyenMai> selectAll() {
+//        
+//        List<KhuyenMai> pes;
+//        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            TypedQuery<KhuyenMai> query = session.createQuery("From KhuyenMai k");
+//            pes = query.getResultList();
+//            session.close();
+//        }
+////        System.out.println(pes);
+//        return pes;
+//    }
+//    
     @Override
-    public List<KhuyenMai> selectAll() {
-        
-        List<KhuyenMai> pes;
+    public List<KhuyenMai> selectAll(String ma) {
+        List<KhuyenMai> lists = new ArrayList<KhuyenMai>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            TypedQuery<KhuyenMai> query = session.createQuery("From KhuyenMai k");
-            pes = query.getResultList();
-            session.close();
+            String hql = "FROM KhuyenMai WHERE Ma LIKE '%" + ma + "%'";
+            TypedQuery<KhuyenMai> query = session.createQuery(hql, KhuyenMai.class);
+            lists = query.getResultList();
         }
-//        System.out.println(pes);
-        return pes;
+        return lists;
     }
-    
+
+    @Override
+    public void delete(String id) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                TypedQuery<KhuyenMai> query = session.createQuery("DELETE FROM KhuyenMai km WHERE km.id = :id");
+                query.setParameter("id", id);
+                query.executeUpdate();
+                tran.commit();
+
+            } catch (Exception e) {
+                tran.rollback();
+                e.printStackTrace();
+
+            } finally {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public String findById(String ma) {
+        String string;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction t = session.beginTransaction();
+            try {
+                String statement = "select km.ma from KhuyenMai km where km.ma = :ma";
+                TypedQuery<String> query = session.createQuery(statement, String.class);
+                query.setParameter("ma", ma);
+                string = query.getSingleResult();
+                t.commit();
+            } catch (Exception e) {
+                t.rollback();
+                string = "";
+                e.printStackTrace();
+
+            }
+            return string;
+        }
+
+    }
+
 }

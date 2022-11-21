@@ -4,6 +4,7 @@
  */
 package repository.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
 import model.TheLoai;
@@ -54,7 +55,6 @@ public class TheLoaiRepository implements ITheLoaiRepository {
         }
     }
 
-   
     @Override
     public List<TheLoai> selectAll() {
         List<TheLoai> pes;
@@ -64,6 +64,19 @@ public class TheLoaiRepository implements ITheLoaiRepository {
             session.close();
         }
         return pes;
+    }
+
+    @Override
+    public List<TheLoai> selectTimKiem(String ma) {
+        List<TheLoai> lists = new ArrayList<TheLoai>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM TheLoai WHERE Ma LIKE '%" + ma + "%'";
+
+            TypedQuery<TheLoai> query = session.createQuery(hql, TheLoai.class);
+            lists = query.getResultList();
+
+        }
+        return lists;
     }
 
 }
