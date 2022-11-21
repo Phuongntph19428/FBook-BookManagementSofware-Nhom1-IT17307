@@ -106,8 +106,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnInBaoCao3 = new View.ButtonDesign.Button();
         btnInBaoCao4 = new View.ButtonDesign.Button();
         btnInBaoCao5 = new View.ButtonDesign.Button();
-        textField10 = new View.DesignComponent.TextField();
-        btnSelectTacGia2 = new View.ButtonDesign.Button();
         textField12 = new View.DesignComponent.TextField();
         textField13 = new View.DesignComponent.TextField();
         radioButtonCustom1 = new View.ComboBoxDesign.RadioButtonCustom();
@@ -356,32 +354,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             }
         });
 
-        textField10.setBackground(new java.awt.Color(47, 55, 90));
-        textField10.setForeground(new java.awt.Color(255, 255, 255));
-        textField10.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField10.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField10.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField10.setLabelText("Khuyến Mãi");
-        textField10.setLineColor(new java.awt.Color(255, 255, 255));
-        textField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField10ActionPerformed(evt);
-            }
-        });
-
-        btnSelectTacGia2.setBackground(new java.awt.Color(55, 69, 128));
-        btnSelectTacGia2.setBorder(null);
-        btnSelectTacGia2.setForeground(new java.awt.Color(255, 255, 255));
-        btnSelectTacGia2.setText("...");
-        btnSelectTacGia2.setFocusable(false);
-        btnSelectTacGia2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        btnSelectTacGia2.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btnSelectTacGia2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectTacGia2ActionPerformed(evt);
-            }
-        });
-
         textField12.setBackground(new java.awt.Color(47, 55, 90));
         textField12.setForeground(new java.awt.Color(255, 255, 255));
         textField12.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -446,13 +418,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(268, 268, 268)
+                        .addGap(26, 26, 26)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(textField13, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                                .addComponent(btnSelectTacGia2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(textField13, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSelectTacGia1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -482,7 +454,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                                         .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textField10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(combobox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -495,12 +466,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(14, 14, 14))))
+                        .addGap(21, 21, 21))))
         );
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -521,11 +491,10 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, Short.MAX_VALUE))
+                    .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
@@ -538,12 +507,10 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(textField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnSelectTacGia1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSelectTacGia2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSelectTacGia1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(textField13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -554,7 +521,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         TruongThongTin.add(jPanelBourder1);
@@ -837,30 +804,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInBaoCao6ActionPerformed
 
-    private void textField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textField10ActionPerformed
-
-    private void btnSelectTacGia2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGia2ActionPerformed
-        this.lbNameForm.setText("Thêm Khuyến Mãi");
-        String tacgia[] = {"KM",
-            "Thế Phương",
-            "Đức Anh",
-            "Linh",
-            "Hương",
-            "Nam"};
-        DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
-        this.cbSelect.setModel(model);
-        this.background.show(true);
-        this.btnSelectTacGia.show(false);
-        this.Form_Chon.show(true);
-        this.TruongThongTin.show(false);
-        //        this.background.doClick();
-        //        this.jScrollPane1.show(true);
-
-        revalidate();
-    }//GEN-LAST:event_btnSelectTacGia2ActionPerformed
-
     private void textField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField12ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField12ActionPerformed
@@ -924,7 +867,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnInBaoCao6;
     private View.ButtonDesign.Button btnSelectTacGia;
     private View.ButtonDesign.Button btnSelectTacGia1;
-    private View.ButtonDesign.Button btnSelectTacGia2;
     private View.ButtonDesign.Button button1;
     private View.ButtonDesign.Button button2;
     private View.ComboBoxDesign.ComboBoxSuggestion cbSelect;
@@ -952,7 +894,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ComboBoxDesign.RadioButtonCustom radioButtonCustom2;
     private javax.swing.JScrollPane scroll;
     private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.TextField textField10;
     private View.DesignComponent.TextField textField12;
     private View.DesignComponent.TextField textField13;
     private View.DesignComponent.TextField textField2;
