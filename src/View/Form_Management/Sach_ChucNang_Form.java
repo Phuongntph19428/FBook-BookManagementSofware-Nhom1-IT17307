@@ -17,8 +17,6 @@ import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,6 +33,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Sach;
@@ -916,14 +915,14 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInBaoCaoActionPerformed
 
     private void btnCamBarCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamBarCodeActionPerformed
-        openedCam();
-        CamDialog cam = new CamDialog();
+//        openedCam();
+        CamJFrame cam = new CamJFrame();
         cam.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 cam.webcam.close();
                 cam.dispose();
-                closedCam();
+                closedCam(cam);
             }
         });
         cam.setTitle("QR/ BarCode Scanner");
@@ -954,29 +953,29 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         return;
                     }
                     txtBarCode.setText(result + "");
-                    cam.webcam.close();
-                    cam.dispose();
+                    closedCam(cam);
                 }
 
             }
         });
         th.start();
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 boolean x = true;
                 while (x) {
-                    if (!cam.isFocused()) {
-                        cam.webcam.close();
-                        cam.dispose();
-                        x = false;
-                    }
-
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Sach_ChucNang_Form.class.getName()).log(Level.SEVERE, null, ex);
+                        ex.printStackTrace();
                     }
+                    if (!cam.isFocusOwner()) {
+                        closedCam(cam);
+                        btnCameraImage.setEnabled(true);
+                        x = false;
+                    }
+
                 }
             }
         });
@@ -991,17 +990,18 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }
 
     private void btnCameraImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCameraImageActionPerformed
-        this.background.show(true);
-        this.btnSelectTheLoai.show(false);
-        this.TruongThongTin.show(false);
+//        this.background.show(true);
+//        this.btnSelectTheLoai.show(false);
+//        this.TruongThongTin.show(false);
 
-        CamDialog cam = new CamDialog();
+        btnCameraImage.setEnabled(false);
+        CamJFrame cam = new CamJFrame();
         cam.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 cam.webcam.close();
-                cam.dispose();
-                closedCam();
+                btnCameraImage.setEnabled(true);
+                closedCam(cam);
             }
         });
         cam.setTitle("Take a picture");
@@ -1020,9 +1020,10 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 System.out.println(_hinh);
                 this.TruongThongTin.show(true);
             }
-            cam.webcam.close();
-            cam.dispose();
+            btnCameraImage.setEnabled(true);
+            closedCam(cam);
         });
+
         Thread th = new Thread(() -> {
             cam.record();
         });
@@ -1033,17 +1034,19 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             public void run() {
                 boolean x = true;
                 while (x) {
-                    if (!cam.isFocused()) {
-                        cam.webcam.close();
-                        cam.dispose();
-                        x = false;
-                    }
-
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(Sach_ChucNang_Form.class.getName()).log(Level.SEVERE, null, ex);
+                        ex.printStackTrace();
                     }
+                    if (!cam.isFocusOwner()) {
+//                        cam.webcam.close();
+//                        cam.dispose();
+                        btnCameraImage.setEnabled(true);
+                        closedCam(cam);
+                        x = false;
+                    }
+
                 }
             }
         });
@@ -1051,11 +1054,9 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCameraImageActionPerformed
 
-    private void closedCam() {
-        Form_Chon.show(false);
-        background.show(false);
-        btnSelectTheLoai.show(true);
-        TruongThongTin.show(true);
+    private void closedCam(CamJFrame cam) {
+        cam.webcam.close();
+        cam.dispose();
     }
 
 
