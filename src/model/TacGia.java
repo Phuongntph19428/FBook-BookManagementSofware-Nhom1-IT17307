@@ -111,7 +111,7 @@ public class TacGia implements Serializable {
     }
     
     public Object[] toDataRow() {
-        return new Object[]{ma, ten,
+        return new Object[]{ma, ten, hinh == null ? null :
             new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(35, 50, Image.SCALE_DEFAULT)))};
     }
 

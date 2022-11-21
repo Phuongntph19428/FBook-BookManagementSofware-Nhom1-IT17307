@@ -46,7 +46,6 @@ public class TacGiaRepositoryImpl implements TacGiaRepository {
                 e.printStackTrace();
                 return false;
             } finally {
-                session.flush();
                 session.close();
             }
         }
@@ -65,7 +64,6 @@ public class TacGiaRepositoryImpl implements TacGiaRepository {
                 e.printStackTrace();
                 return false;
             } finally {
-                session.flush();
                 session.close();
             }
         }
