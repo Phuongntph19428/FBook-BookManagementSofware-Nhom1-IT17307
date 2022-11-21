@@ -66,6 +66,14 @@ public class NXB_Form extends javax.swing.JPanel {
 
     }
 
+    public void LoadTablebySearch(List<NhaXuatBan> list) {
+        DefaultTableModel dtm = (DefaultTableModel) tbNXB.getModel();
+        dtm.setRowCount(0);
+        for (NhaXuatBan nxb : list) {
+            dtm.addRow(nxb.toDaTaRow());
+        }
+    }
+
     public void initTableData() {
         listNxb = NhaXuatBanServicer.selectAll();
         System.out.println(listNxb.size());
@@ -87,11 +95,15 @@ public class NXB_Form extends javax.swing.JPanel {
     }
 
     private void fillTable(int row) {
-        NhaXuatBan nxb = listNxb.get(row);
-        txtIdNXB.setText(nxb.getId());
-        txtMaNXB.setText(nxb.getMa());
-        txtTenNXB.setText(nxb.getTen());
-        txtMoTa.setText(nxb.getMoTa());
+//        NhaXuatBan nxb = listNxb.get(row);
+//        txtIdNXB.setText(nxb.getId());
+//        txtMaNXB.setText(nxb.getMa());
+//        txtTenNXB.setText(nxb.getTen());
+//        txtMoTa.setText(nxb.getMoTa());
+        txtIdNXB.setText(tbNXB.getValueAt(row, 0).toString());
+        txtMaNXB.setText(tbNXB.getValueAt(row, 1).toString());
+        txtTenNXB.setText(tbNXB.getValueAt(row, 2).toString());
+        txtMoTa.setText(tbNXB.getValueAt(row, 3).toString());
 
     }
 
@@ -108,7 +120,7 @@ public class NXB_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtTimKiem = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
@@ -132,13 +144,18 @@ public class NXB_Form extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setBackground(new java.awt.Color(17, 28, 68));
+        txtTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtTimKiem.setLabelText("Tìm Kiếm Theo Tên");
+        txtTimKiem.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -168,7 +185,7 @@ public class NXB_Form extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelBourder1Layout.setVerticalGroup(
@@ -180,7 +197,7 @@ public class NXB_Form extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2)))
@@ -448,7 +465,12 @@ public class NXB_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTaoMoiActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        // TODO add your handling code here:
+//        txtIdNXB.setText("");
+//        txtMaNXB.setText("");
+//        txtTenNXB.setText("");
+//        txtMoTa.setText("");
+//        initTableData
+        xoaFrom();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void tbNXBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbNXBMouseClicked
@@ -456,6 +478,13 @@ public class NXB_Form extends javax.swing.JPanel {
         int row = tbNXB.getSelectedRow();
         fillTable(row);
     }//GEN-LAST:event_tbNXBMouseClicked
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+         String txtName = this.txtTimKiem.getText().trim();
+        System.out.println(txtName);
+        List<NhaXuatBan> list = this.NhaXuatBanServicer.SelectbyName(txtName);
+        LoadTablebySearch(list);
+    }//GEN-LAST:event_txtTimKiemKeyReleased
     private NhaXuatBan getDaTa() {
         String id = txtIdNXB.getText().trim();
         String ma = txtMaNXB.getText().trim();
@@ -479,10 +508,10 @@ public class NXB_Form extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private View.DesignComponent.Table tbNXB;
-    private View.DesignComponent.TextField textField1;
     private View.DesignComponent.TextField txtIdNXB;
     private View.DesignComponent.TextField txtMaNXB;
     private View.DesignComponent.TextField txtMoTa;
     private View.DesignComponent.TextField txtTenNXB;
+    private View.DesignComponent.TextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }
