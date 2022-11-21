@@ -5,6 +5,7 @@
 package repository;
 
 import java.util.List;
+
 import model.KhuyenMai;
 
 /**
@@ -17,5 +18,9 @@ public interface IKhuyenMaiRepository {
 
     boolean update(KhuyenMai km);
 
-    List<KhuyenMai> selectAll();
+    List<KhuyenMai> selectAll(String ma);
+
+    public void delete(String id);
+
+    public String findById(String ma);
 }

@@ -4,14 +4,13 @@
  */
 package View.Form_Management;
 
-import Model.SachFake;
 import View.ButtonDesign.Button;
+import View.ManagementBookForm;
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,37 +24,46 @@ import service.impl.TheLoaiServicer;
  */
 public class TheLoai_Form extends javax.swing.JPanel {
 
-    private List<TheLoai> listTheLoai = new ArrayList<>();
+    private List<TheLoai> listTimKiem = new ArrayList<>();
     private ITheLoaiServicer iTheLoaiServicer;
     private List<Button> listBtn = new ArrayList<>();
+    private String ma = "";
 
     public TheLoai_Form() {
         initComponents();
         iTheLoaiServicer = new TheLoaiServicer();
         String columns[] = {"Id", "Mã Thể Loại", "Tên Thể Loại", "Mô Tả"};
         Object rows[][] = {};
+
         this.tbTheLoai.setModel(new DefaultTableModel(rows, columns));
         tbTheLoai.setDefaultEditor(Object.class, null);
         tbTheLoai.setBackground(Color.WHITE);
         this.tbTheLoai.setRowHeight(50);
         this.tbTheLoai.setBackground(Color.white);
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/tacgia.jpg").getImage().getScaledInstance(174, 230, Image.SCALE_DEFAULT));
-        loadTable();
+        loadTableTimKiem();
+
         xoaFrom();
+
     }
 
-    private void loadTable() {
-        listTheLoai = iTheLoaiServicer.selectAll();
+    private void lamMoi() {
+        ma = "";
+        loadTableTimKiem();
+    }
+
+    private void loadTableTimKiem() {
+        listTimKiem = iTheLoaiServicer.selectTimKiem(ma);
         DefaultTableModel dtm = (DefaultTableModel) tbTheLoai.getModel();
         dtm.setRowCount(0);
-        for (TheLoai loai : listTheLoai) {
+        for (TheLoai loai : listTimKiem) {
             dtm.addRow(loai.toDaTaRow());
 
         }
     }
 
-    private void fillTable(int row) {
-        TheLoai loai = listTheLoai.get(row);
+    private void fillTableTimkiem(int row) {
+        TheLoai loai = listTimKiem.get(row);
         txtId.setText(loai.getId());
         txtMa.setText(loai.getMa());
         txtTen.setText(loai.getTen());
@@ -69,6 +77,7 @@ public class TheLoai_Form extends javax.swing.JPanel {
         txtMa.setText("");
         txtTen.setText("");
         txtMoTa.setText("");
+        txtTimKiem.setText("");
 
     }
 
@@ -87,9 +96,10 @@ public class TheLoai_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtTimKiem = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        btnTimKiem = new View.ButtonDesign.Button();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -102,20 +112,20 @@ public class TheLoai_Form extends javax.swing.JPanel {
         txtMoTa = new View.DesignComponent.TextField();
         btnSua = new View.ButtonDesign.Button();
         btnThem = new View.ButtonDesign.Button();
-        btnXoaFrom = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
+        btnXoaFrom1 = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setBackground(new java.awt.Color(17, 28, 68));
+        txtTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtTimKiem.setLabelText("Tìm Kiếm Theo Tên");
+        txtTimKiem.setLineColor(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -135,6 +145,18 @@ public class TheLoai_Form extends javax.swing.JPanel {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
+        btnTimKiem.setBackground(new java.awt.Color(31, 31, 111));
+        btnTimKiem.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        btnTimKiem.setText("Tìm Kiếm");
+        btnTimKiem.setFocusable(false);
+        btnTimKiem.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
         jPanelBourder1Layout.setHorizontalGroup(
@@ -144,8 +166,10 @@ public class TheLoai_Form extends javax.swing.JPanel {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 483, Short.MAX_VALUE)
+                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelBourder1Layout.setVerticalGroup(
@@ -153,14 +177,16 @@ public class TheLoai_Form extends javax.swing.JPanel {
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel2)))
+                        .addComponent(jLabel2))
+                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -320,15 +346,15 @@ public class TheLoai_Form extends javax.swing.JPanel {
             }
         });
 
-        btnXoaFrom.setBackground(new java.awt.Color(31, 31, 111));
-        btnXoaFrom.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnXoaFrom.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoaFrom.setText("Làm Mới");
-        btnXoaFrom.setFocusable(false);
-        btnXoaFrom.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnXoaFrom.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaFrom1.setBackground(new java.awt.Color(31, 31, 111));
+        btnXoaFrom1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnXoaFrom1.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoaFrom1.setText("Làm Mới");
+        btnXoaFrom1.setFocusable(false);
+        btnXoaFrom1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnXoaFrom1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaFromActionPerformed(evt);
+                btnXoaFrom1ActionPerformed(evt);
             }
         });
 
@@ -338,11 +364,15 @@ public class TheLoai_Form extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
+                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1))
+                        .addContainerGap(77, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,10 +385,9 @@ public class TheLoai_Form extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator1))
-                .addContainerGap(77, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnXoaFrom1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(210, 210, 210))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,7 +398,7 @@ public class TheLoai_Form extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -382,8 +411,8 @@ public class TheLoai_Form extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnXoaFrom1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
                 .addGap(10, 10, 10)
@@ -407,10 +436,11 @@ public class TheLoai_Form extends javax.swing.JPanel {
                 if (loai == null) {
                     return;
                 }
-
-                JOptionPane.showMessageDialog(this, "Cập nhập thành công");
+                ManagementBookForm mng = new ManagementBookForm();
+                mng.runNotificationSua();
+//                JOptionPane.showMessageDialog(this, "Cập nhập thành công");
                 iTheLoaiServicer.update(loai);
-                loadTable();
+                loadTableTimKiem();
             }
 
         }
@@ -425,30 +455,58 @@ public class TheLoai_Form extends javax.swing.JPanel {
             return;
         }
 
-        for (TheLoai theLoai : listTheLoai) {
+        for (TheLoai theLoai : listTimKiem) {
             if (theLoai.getMa().equals(txtMa.getText().trim())) {
                 JOptionPane.showMessageDialog(this, "Trùng mã thể loại", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
                 return;
             }
         }
         if (JOptionPane.showConfirmDialog(this, "Thêm", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
-            JOptionPane.showMessageDialog(this, "Thêm thành công");
+//            JOptionPane.showMessageDialog(this, "Thêm thành công");
+            ManagementBookForm mng = new ManagementBookForm();
+            mng.runNotificationThem();
             iTheLoaiServicer.insert(loai);
-            loadTable();
+//            
+            loadTableTimKiem();
         }
         xoaFrom();
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnXoaFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaFromActionPerformed
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
+        ma = txtTimKiem.getText().trim();
+        if (ma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cần điền mã thể loại để tìm");
+            return;
+        } else {
+            if (iTheLoaiServicer.selectTimKiem(ma).isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy");
+                xoaFrom();
+                return;
+
+            }
+        }
+//        JOptionPane.showMessageDialog(this, "Đã tìm thấy");
+        ManagementBookForm mng = new ManagementBookForm();
+        mng.runNotificationTim();
+        loadTableTimKiem();
         xoaFrom();
-    }//GEN-LAST:event_btnXoaFromActionPerformed
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void tbTheLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTheLoaiMouseClicked
         // TODO add your handling code here:
+
         int row = tbTheLoai.getSelectedRow();
-        fillTable(row);
+        fillTableTimkiem(row);
     }//GEN-LAST:event_tbTheLoaiMouseClicked
+
+    private void btnXoaFrom1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaFrom1ActionPerformed
+        // TODO add your handling code here:
+        xoaFrom();
+        lamMoi();
+
+    }//GEN-LAST:event_btnXoaFrom1ActionPerformed
 
     private TheLoai getDaTa() {
         String id = txtId.getText().trim();
@@ -465,7 +523,8 @@ public class TheLoai_Form extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnSua;
     private View.ButtonDesign.Button btnThem;
-    private View.ButtonDesign.Button btnXoaFrom;
+    private View.ButtonDesign.Button btnTimKiem;
+    private View.ButtonDesign.Button btnXoaFrom1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -476,10 +535,10 @@ public class TheLoai_Form extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private View.DesignComponent.Table tbTheLoai;
-    private View.DesignComponent.TextField textField1;
     private View.DesignComponent.TextField txtId;
     private View.DesignComponent.TextField txtMa;
     private View.DesignComponent.TextField txtMoTa;
     private View.DesignComponent.TextField txtTen;
+    private View.DesignComponent.TextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

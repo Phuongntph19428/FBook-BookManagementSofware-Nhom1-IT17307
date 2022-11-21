@@ -18,4 +18,5 @@ public interface ITheLoaiRepository {
     boolean update(TheLoai km);
 
     public List<TheLoai> selectAll();
+    public List<TheLoai> selectTimKiem(String ma);
 }

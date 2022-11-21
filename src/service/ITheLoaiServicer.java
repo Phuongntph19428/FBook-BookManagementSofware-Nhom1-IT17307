@@ -18,4 +18,6 @@ public interface ITheLoaiServicer {
     boolean update(TheLoai tl);
 
     List<TheLoai> selectAll();
+
+    public List<TheLoai> selectTimKiem(String ma);
 }
