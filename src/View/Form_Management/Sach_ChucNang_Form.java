@@ -4,7 +4,9 @@ import View.ManagementBookForm;
 import View.PanelTagDesign.EventTags;
 import View.PanelTagDesign.Item;
 import View.ScrollBarCustom;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +16,7 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import service.SachService;
 import service.impl.SachServiceImpl;
 
@@ -43,17 +46,37 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             "Linh",
             "Hương",
             "Nam"};
-        
+
         DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
         this.cbSelect.setModel(model);
         Icon icon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
         this.lbAvatar.setIcon(icon);
 
-        Icon iconbgr = new ImageIcon("image/background_btn.png");
-//        this.background.setIcon(iconbgr);
+        Icon iconbgr = new ImageIcon("image/demobgr.png");
+        this.background.setIcon(iconbgr);
         this.background.setBackground(new Color(0, 0, 0, 0));
 
         sachService = new SachServiceImpl();
+
+        j.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                Form_Chon.show(false);
+                background.show(false);
+                btnSelectTacGia.show(true);
+                TruongThongTin.show(true);
+            }
+        });
+    }
+
+    private void OpenCamera(String title) {
+        j.setSize(524, 524);
+        Camera_Form cameraF = new Camera_Form();
+        cameraF.setSize(524, 501);
+        cameraF.setTitle(title);
+        j.add(cameraF, BorderLayout.CENTER);
+        j.setLocationRelativeTo(this);
+        j.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -61,6 +84,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         jSeparator4 = new javax.swing.JSeparator();
+        j = new javax.swing.JDialog();
         TruongThongTin = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
@@ -108,6 +132,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         lbNameForm = new javax.swing.JLabel();
         background = new View.ButtonDesign.Background();
+
+        j.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        j.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        j.setResizable(false);
+
+        javax.swing.GroupLayout jLayout = new javax.swing.GroupLayout(j.getContentPane());
+        j.getContentPane().setLayout(jLayout);
+        jLayout.setHorizontalGroup(
+            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jLayout.setVerticalGroup(
+            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setBackground(new java.awt.Color(29, 32, 57));
         setPreferredSize(new java.awt.Dimension(1373, 850));
@@ -556,6 +595,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         button2.setBackground(new java.awt.Color(47, 55, 90));
         button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
@@ -699,7 +743,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         background.setBackground(new java.awt.Color(0, 0, 0));
         background.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        background.setIcon(new javax.swing.ImageIcon("C:\\Users\\quanc\\Downloads\\demobgr.png")); // NOI18N
         background.setBorderPainted(false);
         background.setFocusPainted(false);
         background.setFocusable(false);
@@ -855,8 +898,19 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInBaoCaoActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        this.isToggle = true;
+        this.background.show(true);
+        this.btnSelectTacGia.show(false);
+        this.TruongThongTin.show(false);
+        OpenCamera("Select Barcode");
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        this.background.show(true);
+        this.btnSelectTacGia.show(false);
+        this.TruongThongTin.show(false);
+        OpenCamera("Select Image Book");
+
+    }//GEN-LAST:event_button2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -876,6 +930,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ComboBoxDesign.ComboBoxSuggestion cbSelect;
     private View.DesignComponent.Combobox combobox1;
     private View.DesignComponent.Combobox combobox2;
+    private javax.swing.JDialog j;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
