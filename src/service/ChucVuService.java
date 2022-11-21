@@ -18,4 +18,6 @@ public interface ChucVuService {
     String update(ChucVu cv);
 
     List<ChucVu> selectAll();
+    
+    List<ChucVu> SelectbyName(String name);
 }

@@ -16,11 +16,11 @@ import util.HibernateUtil;
  *
  * @author ECO
  */
-public class ChucVuRepositorylmpl implements ChucVuRepository{
+public class ChucVuRepositorylmpl implements ChucVuRepository {
 
     @Override
     public boolean insert(ChucVu cv) {
-           try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
                 session.save(cv);
@@ -38,7 +38,7 @@ public class ChucVuRepositorylmpl implements ChucVuRepository{
 
     @Override
     public boolean update(ChucVu cv) {
-           try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
                 session.update(cv);
@@ -56,7 +56,7 @@ public class ChucVuRepositorylmpl implements ChucVuRepository{
 
     @Override
     public List<ChucVu> selectAll() {
-         List<ChucVu> pas;
+        List<ChucVu> pas;
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<ChucVu> query = session.createQuery("From ChucVu k");
             pas = query.getResultList();
@@ -65,5 +65,20 @@ public class ChucVuRepositorylmpl implements ChucVuRepository{
 //        System.out.println(pes);
         return pas;
     }
-    
+    @Override
+    public List<ChucVu> SelectbyName(String name) {
+        List<ChucVu> pas;
+        String nameSelect = "%"+name+"%";
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            TypedQuery<ChucVu> query = session.createQuery("From ChucVu  WHERE Ten like :key");
+            query.setParameter("key", nameSelect);
+            System.out.println(query);
+            pas = query.getResultList();
+            session.close();
+            
+        }
+//        System.out.println(pes);
+        return pas;
+    }
+
 }

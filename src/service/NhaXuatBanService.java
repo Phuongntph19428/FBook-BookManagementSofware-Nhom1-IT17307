@@ -18,4 +18,6 @@ public interface NhaXuatBanService {
     String update(NhaXuatBan nxb);
 
     List<NhaXuatBan> selectAll();
+
+    List<NhaXuatBan> SelectbyName(String name);
 }

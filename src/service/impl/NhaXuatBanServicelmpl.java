@@ -22,23 +22,33 @@ public class NhaXuatBanServicelmpl implements NhaXuatBanService {
 
     @Override
     public String insert(NhaXuatBan nxb) {
-         boolean insertSuccess = repository.insert(nxb);
+        boolean insertSuccess = repository.insert(nxb);
         return insertSuccess ? "Thêm thành công" : "Thêm thất bại";
     }
 
     @Override
     public String update(NhaXuatBan nxb) {
-           boolean insertSuccess = repository.update(nxb);
+        boolean insertSuccess = repository.update(nxb);
         return insertSuccess ? "Update thành công" : "Update thất bại";
     }
 
     @Override
     public List<NhaXuatBan> selectAll() {
-         listNhaXuatBan= new ArrayList<>();
-         System.out.println(listNhaXuatBan.size());
+        listNhaXuatBan = new ArrayList<>();
+        System.out.println(listNhaXuatBan.size());
         var ems = repository.selectAll();
         for (NhaXuatBan em : ems) {
-            listNhaXuatBan.add(new NhaXuatBan(em.getId(), em.getMa(), em.getTen(),em.getMoTa()));
+            listNhaXuatBan.add(new NhaXuatBan(em.getId(), em.getMa(), em.getTen(), em.getMoTa()));
+        }
+        return listNhaXuatBan;
+    }
+
+    @Override
+    public List<NhaXuatBan> SelectbyName(String name) {
+        listNhaXuatBan = new ArrayList<>();
+        var ems = repository.SelectbyName(name);
+        for (NhaXuatBan em : ems) {
+            listNhaXuatBan.add(new NhaXuatBan(em.getId(), em.getMa(), em.getTen(), em.getMoTa()));
         }
         return listNhaXuatBan;
     }

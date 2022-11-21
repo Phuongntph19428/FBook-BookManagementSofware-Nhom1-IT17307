@@ -116,7 +116,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="textField1" min="-2" pref="271" max="-2" attributes="0"/>
+                  <Component id="txtTimKiem" min="-2" pref="271" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -131,7 +131,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textField1" min="-2" pref="52" max="-2" attributes="0"/>
+                          <Component id="txtTimKiem" min="-2" pref="52" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -144,7 +144,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="View.DesignComponent.TextField" name="textField1">
+        <Component class="View.DesignComponent.TextField" name="txtTimKiem">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="44" green="1c" red="11" type="rgb"/>
@@ -166,6 +166,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>

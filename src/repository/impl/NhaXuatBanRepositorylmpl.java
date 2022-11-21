@@ -64,5 +64,21 @@ public class NhaXuatBanRepositorylmpl implements NhaXuatBanRepository{
 //        System.out.println(pes);
         return pos;
     }
+
+    @Override
+    public List<NhaXuatBan> SelectbyName(String name) {
+              List<NhaXuatBan> pos;
+        String nameSelect = "%"+name+"%";
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            TypedQuery<NhaXuatBan> query = session.createQuery("From NhaXuatBan  WHERE Ten like :key");
+            query.setParameter("key", nameSelect);
+            System.out.println(query);
+            pos = query.getResultList();
+            session.close();
+            
+        }
+//        System.out.println(pes);
+        return pos;
+    }
     
 }

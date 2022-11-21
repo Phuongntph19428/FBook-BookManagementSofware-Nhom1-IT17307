@@ -18,4 +18,7 @@ public interface ChucVuRepository {
     boolean update(ChucVu cv);
 
     List<ChucVu> selectAll();
+
+    List<ChucVu> SelectbyName(String name);
+
 }

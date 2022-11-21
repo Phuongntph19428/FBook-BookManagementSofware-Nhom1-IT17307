@@ -60,12 +60,23 @@ public class ChucVu_Form extends javax.swing.JPanel {
         }
     }
 
+    // nma nếu click như vậy thì cách này sẽ bị sai dữ liệu khi fill nhé oke
+    // nên tôi sẽ làm là click theo table kh theo vị trí trong list nữa
+    public void LoadTablebySearch(List<ChucVu> list) {
+        DefaultTableModel dtm = (DefaultTableModel) tbChucVu.getModel();
+        dtm.setRowCount(0);
+        for (ChucVu cv : list) {
+            dtm.addRow(cv.toDaTaRow());
+        }
+    }
+
     private void fillTable(int row) {
-        ChucVu cv = listCv.get(row);
-        txtIdCV.setText(cv.getId());
-        txtMaCV.setText(cv.getMa());
-        txtTenCV.setText(cv.getTen());
-        txtMoTa.setText(cv.getMoTa());
+        // String columns[] = {"ID", "Mã chức vụ", "Tên chức vụ ", "Mô tả chức vụ"};
+//        ChucVu cv = listCv.get(row); 
+        txtIdCV.setText(tbChucVu.getValueAt(row, 0).toString());
+        txtMaCV.setText(tbChucVu.getValueAt(row, 1).toString());
+        txtTenCV.setText(tbChucVu.getValueAt(row, 2).toString());
+        txtMoTa.setText(tbChucVu.getValueAt(row, 3).toString());
 
     }
 
@@ -82,7 +93,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtTimKiem = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
@@ -104,13 +115,18 @@ public class ChucVu_Form extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setBackground(new java.awt.Color(17, 28, 68));
+        txtTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtTimKiem.setLabelText("Tìm Kiếm Theo Tên");
+        txtTimKiem.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -140,7 +156,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelBourder1Layout.setVerticalGroup(
@@ -152,7 +168,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2)))
@@ -408,9 +424,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Cap nhat thanh cong");
             initTableData();
         }
-
     }//GEN-LAST:event_btnCapNhatActionPerformed
-
     private void btnTaoMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoMoiActionPerformed
         // TODO add your handling code here:
         ChucVu cv = getDaTa();
@@ -426,6 +440,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
+        xoaFrom();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void tbChucVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChucVuMouseClicked
@@ -437,6 +452,14 @@ public class ChucVu_Form extends javax.swing.JPanel {
     private void txtIdCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdCVActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdCVActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        String txtName = this.txtTimKiem.getText().trim();
+        System.out.println(txtName);
+        List<ChucVu> list = this.ChucVuServicer.SelectbyName(txtName);
+        LoadTablebySearch(list);
+
+    }//GEN-LAST:event_txtTimKiemKeyReleased
     private ChucVu getDaTa() {
         String id = txtIdCV.getText().trim();
         String ma = txtMaCV.getText().trim();
@@ -460,10 +483,10 @@ public class ChucVu_Form extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private View.DesignComponent.Table tbChucVu;
-    private View.DesignComponent.TextField textField1;
     private View.DesignComponent.TextField txtIdCV;
     private View.DesignComponent.TextField txtMaCV;
     private View.DesignComponent.TextField txtMoTa;
     private View.DesignComponent.TextField txtTenCV;
+    private View.DesignComponent.TextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }
