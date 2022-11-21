@@ -12,7 +12,10 @@ import model.NhanVien;
  * @author ppolo
  */
 public interface NhanVienService {
+
     String addNhanVien(NhanVien nhanVien);
-    
+
     List<NhanVien> getAllNhanVien();
+
+    List<NhanVien> getListbyName(String name);
 }

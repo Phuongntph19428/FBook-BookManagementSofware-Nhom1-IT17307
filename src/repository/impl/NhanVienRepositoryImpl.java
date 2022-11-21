@@ -41,7 +41,7 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
                 tx.rollback();
             }
             e.printStackTrace();
-             return false;
+            return false;
 
         } finally {
             session.close();
@@ -56,11 +56,28 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
             CriteriaQuery<NhanVien> cq = criteriaBuilder.createQuery(NhanVien.class);
             Root<NhanVien> root = cq.from(NhanVien.class);
             CriteriaQuery<NhanVien> all = cq.select(root);
-            
+
             TypedQuery<NhanVien> allQuery = session.createQuery(all);
             listNhanVien = allQuery.getResultList();
             session.close();
         }
         return listNhanVien;
+    }
+    
+    
+    @Override
+    public List<NhanVien> getListNhanVienByName(String name) {
+        List<NhanVien> listNhanVien = null ;
+        String nameSelect = "%" + name + "%";
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            TypedQuery<NhanVien> query = session.createQuery("From NhanVien WHERE Ten like :key");
+            query.setParameter("key", nameSelect);
+            listNhanVien = query.getResultList();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listNhanVien;
+
     }
 }

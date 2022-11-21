@@ -28,4 +28,9 @@ public class NhanVienServiceImpl implements NhanVienService {
         return nhanVienRepositoryImpl.getAllNhanVien();
     }
 
+    @Override
+    public List<NhanVien> getListbyName(String name) {
+        return nhanVienRepositoryImpl.getListNhanVienByName(name);
+    }
+
 }
