@@ -4,6 +4,13 @@ import View.ManagementBookForm;
 import View.PanelTagDesign.EventTags;
 import View.PanelTagDesign.Item;
 import View.ScrollBarCustom;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
@@ -12,11 +19,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import model.Sach;
 import service.SachService;
 import service.impl.SachServiceImpl;
 
@@ -28,8 +49,9 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     private boolean isToggle = false;
 
-    private byte[] hinh = null;
-    private final SachService sachService;
+    private String currentDirectory;
+    private byte[] _hinh = null;
+    private final SachService _sachService;
 
     public Sach_ChucNang_Form() {
         initComponents();
@@ -50,29 +72,46 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
         this.cbSelect.setModel(model);
         Icon icon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
-        this.lbAvatar.setIcon(icon);
+        this.lblAvartar.setIcon(icon);
 
         Icon iconbgr = new ImageIcon("image/demobgr.png");
         this.background.setIcon(iconbgr);
         this.background.setBackground(new Color(0, 0, 0, 0));
 
-        sachService = new SachServiceImpl();
+        _sachService = new SachServiceImpl();
 
         j.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 Form_Chon.show(false);
                 background.show(false);
-                btnSelectTacGia.show(true);
+                btnSelectTheLoai.show(true);
                 TruongThongTin.show(true);
             }
         });
     }
 
+    public void setForm(Sach sach) {
+        _hinh = sach.getHinh();
+        if (_hinh != null) {
+            lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT)));
+        }
+        txtId.setText(sach.getId());
+        txtBarCode.setText(sach.getBarCode());
+        txtGiaBan.setText(sach.getGiaBan() + "");
+        txtGiaNhap.setText(sach.getGiaNhap() + "");
+        txtMa.setText(sach.getMa());
+        txtMoTa.setText(sach.getMoTa());
+        txtSoLuong.setText(sach.getSoLuong() + "");
+        txtSoTrang.setText(sach.getSoTrang() + "");
+        txtTen.setText(sach.getTen());
+
+    }
+
     private void OpenCamera(String title) {
-        j.setSize(524, 524);
+        j.setSize(1018, 750);
         Camera_Form cameraF = new Camera_Form();
-        cameraF.setSize(524, 501);
+        cameraF.setSize(1018, 750);
         cameraF.setTitle(title);
         j.add(cameraF, BorderLayout.CENTER);
         j.setLocationRelativeTo(this);
@@ -85,39 +124,40 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         jSeparator4 = new javax.swing.JSeparator();
         j = new javax.swing.JDialog();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         TruongThongTin = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        btnSelectTacGia = new View.ButtonDesign.Button();
-        textField1 = new View.DesignComponent.TextField();
-        textField2 = new View.DesignComponent.TextField();
-        textField3 = new View.DesignComponent.TextField();
-        textField4 = new View.DesignComponent.TextField();
-        textField5 = new View.DesignComponent.TextField();
-        textField6 = new View.DesignComponent.TextField();
-        textField7 = new View.DesignComponent.TextField();
-        textField8 = new View.DesignComponent.TextField();
+        btnSelectTheLoai = new View.ButtonDesign.Button();
+        txtId = new View.DesignComponent.TextField();
+        txtMa = new View.DesignComponent.TextField();
+        txtTen = new View.DesignComponent.TextField();
+        txtSoLuong = new View.DesignComponent.TextField();
+        txtSoTrang = new View.DesignComponent.TextField();
+        txtMoTa = new View.DesignComponent.TextField();
+        txtGiaBan = new View.DesignComponent.TextField();
+        txtGiaNhap = new View.DesignComponent.TextField();
         jLabel1 = new javax.swing.JLabel();
-        textField9 = new View.DesignComponent.TextField();
-        button1 = new View.ButtonDesign.Button();
+        txtBarCode = new View.DesignComponent.TextField();
+        btnCamBarCode = new View.ButtonDesign.Button();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnSelectTacGia1 = new View.ButtonDesign.Button();
-        btnInBaoCao3 = new View.ButtonDesign.Button();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao5 = new View.ButtonDesign.Button();
+        btnSelectTacGia = new View.ButtonDesign.Button();
+        btnAdd = new View.ButtonDesign.Button();
+        btnUpdate = new View.ButtonDesign.Button();
+        btnClear = new View.ButtonDesign.Button();
         textField12 = new View.DesignComponent.TextField();
         textField13 = new View.DesignComponent.TextField();
-        radioButtonCustom1 = new View.ComboBoxDesign.RadioButtonCustom();
-        radioButtonCustom2 = new View.ComboBoxDesign.RadioButtonCustom();
-        combobox1 = new View.DesignComponent.Combobox();
-        combobox2 = new View.DesignComponent.Combobox();
+        rdoDangKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
+        rdoNgungKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
+        cboNhaXuatBan = new View.DesignComponent.Combobox();
+        cboViTri = new View.DesignComponent.Combobox();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
-        lbAvatar = new javax.swing.JLabel();
+        lblAvartar = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
-        button2 = new View.ButtonDesign.Button();
+        btnChooseImage = new View.ButtonDesign.Button();
+        btnCameraImage = new View.ButtonDesign.Button();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         Form_Chon = new View.DesignComponent.JPanelBourder();
@@ -159,106 +199,106 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(47, 55, 90));
 
-        btnSelectTacGia.setBackground(new java.awt.Color(55, 69, 128));
-        btnSelectTacGia.setBorder(null);
-        btnSelectTacGia.setForeground(new java.awt.Color(255, 255, 255));
-        btnSelectTacGia.setText("...");
-        btnSelectTacGia.setFocusable(false);
-        btnSelectTacGia.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        btnSelectTacGia.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btnSelectTacGia.addActionListener(new java.awt.event.ActionListener() {
+        btnSelectTheLoai.setBackground(new java.awt.Color(55, 69, 128));
+        btnSelectTheLoai.setBorder(null);
+        btnSelectTheLoai.setForeground(new java.awt.Color(255, 255, 255));
+        btnSelectTheLoai.setText("...");
+        btnSelectTheLoai.setFocusable(false);
+        btnSelectTheLoai.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnSelectTheLoai.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSelectTheLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectTacGiaActionPerformed(evt);
+                btnSelectTheLoaiActionPerformed(evt);
             }
         });
 
-        textField1.setEditable(false);
-        textField1.setBackground(new java.awt.Color(47, 55, 90));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField1.setLabelText("ID");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtId.setEditable(false);
+        txtId.setBackground(new java.awt.Color(47, 55, 90));
+        txtId.setForeground(new java.awt.Color(255, 255, 255));
+        txtId.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtId.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtId.setLabelText("ID");
+        txtId.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField2.setBackground(new java.awt.Color(47, 55, 90));
-        textField2.setForeground(new java.awt.Color(255, 255, 255));
-        textField2.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField2.setLabelText("Mã Sách");
-        textField2.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMa.setLabelText("Mã Sách");
+        txtMa.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField3.setBackground(new java.awt.Color(47, 55, 90));
-        textField3.setForeground(new java.awt.Color(255, 255, 255));
-        textField3.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField3.setLabelText("Tên Sách");
-        textField3.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTen.setBackground(new java.awt.Color(47, 55, 90));
+        txtTen.setForeground(new java.awt.Color(255, 255, 255));
+        txtTen.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTen.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTen.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTen.setLabelText("Tên Sách");
+        txtTen.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField4.setBackground(new java.awt.Color(47, 55, 90));
-        textField4.setForeground(new java.awt.Color(255, 255, 255));
-        textField4.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField4.setLabelText("Số lượng");
-        textField4.setLineColor(new java.awt.Color(255, 255, 255));
-        textField4.addActionListener(new java.awt.event.ActionListener() {
+        txtSoLuong.setBackground(new java.awt.Color(47, 55, 90));
+        txtSoLuong.setForeground(new java.awt.Color(255, 255, 255));
+        txtSoLuong.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtSoLuong.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtSoLuong.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtSoLuong.setLabelText("Số lượng");
+        txtSoLuong.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSoLuong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField4ActionPerformed(evt);
+                txtSoLuongActionPerformed(evt);
             }
         });
 
-        textField5.setBackground(new java.awt.Color(47, 55, 90));
-        textField5.setForeground(new java.awt.Color(255, 255, 255));
-        textField5.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField5.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField5.setLabelText("Số Trang");
-        textField5.setLineColor(new java.awt.Color(255, 255, 255));
-        textField5.addActionListener(new java.awt.event.ActionListener() {
+        txtSoTrang.setBackground(new java.awt.Color(47, 55, 90));
+        txtSoTrang.setForeground(new java.awt.Color(255, 255, 255));
+        txtSoTrang.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtSoTrang.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtSoTrang.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtSoTrang.setLabelText("Số Trang");
+        txtSoTrang.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSoTrang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField5ActionPerformed(evt);
+                txtSoTrangActionPerformed(evt);
             }
         });
 
-        textField6.setBackground(new java.awt.Color(47, 55, 90));
-        textField6.setForeground(new java.awt.Color(255, 255, 255));
-        textField6.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField6.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField6.setLabelText("Mô Tả");
-        textField6.setLineColor(new java.awt.Color(255, 255, 255));
-        textField6.addActionListener(new java.awt.event.ActionListener() {
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField6ActionPerformed(evt);
+                txtMoTaActionPerformed(evt);
             }
         });
 
-        textField7.setBackground(new java.awt.Color(47, 55, 90));
-        textField7.setForeground(new java.awt.Color(255, 255, 255));
-        textField7.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField7.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField7.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField7.setLabelText("Giá Bán");
-        textField7.setLineColor(new java.awt.Color(255, 255, 255));
-        textField7.addActionListener(new java.awt.event.ActionListener() {
+        txtGiaBan.setBackground(new java.awt.Color(47, 55, 90));
+        txtGiaBan.setForeground(new java.awt.Color(255, 255, 255));
+        txtGiaBan.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtGiaBan.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtGiaBan.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtGiaBan.setLabelText("Giá Bán");
+        txtGiaBan.setLineColor(new java.awt.Color(255, 255, 255));
+        txtGiaBan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField7ActionPerformed(evt);
+                txtGiaBanActionPerformed(evt);
             }
         });
 
-        textField8.setBackground(new java.awt.Color(47, 55, 90));
-        textField8.setForeground(new java.awt.Color(255, 255, 255));
-        textField8.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField8.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField8.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField8.setLabelText("Giá Nhập");
-        textField8.setLineColor(new java.awt.Color(255, 255, 255));
-        textField8.addActionListener(new java.awt.event.ActionListener() {
+        txtGiaNhap.setBackground(new java.awt.Color(47, 55, 90));
+        txtGiaNhap.setForeground(new java.awt.Color(255, 255, 255));
+        txtGiaNhap.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtGiaNhap.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtGiaNhap.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtGiaNhap.setLabelText("Giá Nhập");
+        txtGiaNhap.setLineColor(new java.awt.Color(255, 255, 255));
+        txtGiaNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField8ActionPerformed(evt);
+                txtGiaNhapActionPerformed(evt);
             }
         });
 
@@ -266,24 +306,25 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(153, 153, 153));
         jLabel1.setText("Trạng Thái");
 
-        textField9.setBackground(new java.awt.Color(47, 55, 90));
-        textField9.setForeground(new java.awt.Color(255, 255, 255));
-        textField9.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField9.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField9.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField9.setLabelText("Barcode");
-        textField9.setLineColor(new java.awt.Color(255, 255, 255));
-        textField9.addActionListener(new java.awt.event.ActionListener() {
+        txtBarCode.setBackground(new java.awt.Color(47, 55, 90));
+        txtBarCode.setForeground(new java.awt.Color(255, 255, 255));
+        txtBarCode.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtBarCode.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtBarCode.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtBarCode.setLabelText("Barcode");
+        txtBarCode.setLineColor(new java.awt.Color(255, 255, 255));
+        txtBarCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField9ActionPerformed(evt);
+                txtBarCodeActionPerformed(evt);
             }
         });
 
-        button1.setBackground(new java.awt.Color(47, 55, 90));
-        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnCamBarCode.setBackground(new java.awt.Color(47, 55, 90));
+        btnCamBarCode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
+        btnCamBarCode.setToolTipText("Quét mã barcode");
+        btnCamBarCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnCamBarCodeActionPerformed(evt);
             }
         });
 
@@ -305,52 +346,55 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        btnSelectTacGia1.setBackground(new java.awt.Color(55, 69, 128));
-        btnSelectTacGia1.setBorder(null);
-        btnSelectTacGia1.setForeground(new java.awt.Color(255, 255, 255));
-        btnSelectTacGia1.setText("...");
-        btnSelectTacGia1.setFocusable(false);
-        btnSelectTacGia1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        btnSelectTacGia1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        btnSelectTacGia1.addActionListener(new java.awt.event.ActionListener() {
+        btnSelectTacGia.setBackground(new java.awt.Color(55, 69, 128));
+        btnSelectTacGia.setBorder(null);
+        btnSelectTacGia.setForeground(new java.awt.Color(255, 255, 255));
+        btnSelectTacGia.setText("...");
+        btnSelectTacGia.setFocusable(false);
+        btnSelectTacGia.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnSelectTacGia.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnSelectTacGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectTacGia1ActionPerformed(evt);
+                btnSelectTacGiaActionPerformed(evt);
             }
         });
 
-        btnInBaoCao3.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao3.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao3.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao3.setText("Tạo Mới");
-        btnInBaoCao3.setFocusable(false);
-        btnInBaoCao3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao3.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.setBackground(new java.awt.Color(31, 31, 111));
+        btnAdd.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnAdd.setForeground(new java.awt.Color(255, 255, 255));
+        btnAdd.setText("Tạo Mới");
+        btnAdd.setToolTipText("Thêm mới sách");
+        btnAdd.setFocusable(false);
+        btnAdd.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao3ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        btnInBaoCao4.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Cập Nhật");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setBackground(new java.awt.Color(31, 31, 111));
+        btnUpdate.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setText("Cập Nhật");
+        btnUpdate.setToolTipText("Cập nhật sách");
+        btnUpdate.setFocusable(false);
+        btnUpdate.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
-        btnInBaoCao5.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao5.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao5.setText("Làm Mới");
-        btnInBaoCao5.setFocusable(false);
-        btnInBaoCao5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao5.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setBackground(new java.awt.Color(31, 31, 111));
+        btnClear.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
+        btnClear.setText("Làm Mới");
+        btnClear.setToolTipText("Clear form");
+        btnClear.setFocusable(false);
+        btnClear.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao5ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -380,31 +424,34 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             }
         });
 
-        radioButtonCustom1.setBackground(new java.awt.Color(47, 55, 90));
-        radioButtonCustom1.setForeground(new java.awt.Color(255, 255, 255));
-        radioButtonCustom1.setText("Đang Hoạt Động");
+        rdoDangKinhDoanh.setBackground(new java.awt.Color(47, 55, 90));
+        buttonGroup1.add(rdoDangKinhDoanh);
+        rdoDangKinhDoanh.setForeground(new java.awt.Color(255, 255, 255));
+        rdoDangKinhDoanh.setSelected(true);
+        rdoDangKinhDoanh.setText("Đang kinh doanh");
 
-        radioButtonCustom2.setBackground(new java.awt.Color(47, 55, 90));
-        radioButtonCustom2.setForeground(new java.awt.Color(255, 255, 255));
-        radioButtonCustom2.setText("Ngừng Hoạt Động");
+        rdoNgungKinhDoanh.setBackground(new java.awt.Color(47, 55, 90));
+        buttonGroup1.add(rdoNgungKinhDoanh);
+        rdoNgungKinhDoanh.setForeground(new java.awt.Color(255, 255, 255));
+        rdoNgungKinhDoanh.setText("Ngừng kinh doanh");
 
-        combobox1.setBackground(new java.awt.Color(47, 55, 90));
-        combobox1.setForeground(new java.awt.Color(255, 255, 255));
-        combobox1.setMaximumRowCount(10);
-        combobox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
-        combobox1.setSelectedIndex(-1);
-        combobox1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        combobox1.setLabeText("Nhà Xuất Bản");
-        combobox1.setLineColor(new java.awt.Color(255, 255, 255));
+        cboNhaXuatBan.setBackground(new java.awt.Color(47, 55, 90));
+        cboNhaXuatBan.setForeground(new java.awt.Color(255, 255, 255));
+        cboNhaXuatBan.setMaximumRowCount(10);
+        cboNhaXuatBan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
+        cboNhaXuatBan.setSelectedIndex(-1);
+        cboNhaXuatBan.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        cboNhaXuatBan.setLabeText("Nhà Xuất Bản");
+        cboNhaXuatBan.setLineColor(new java.awt.Color(255, 255, 255));
 
-        combobox2.setBackground(new java.awt.Color(47, 55, 90));
-        combobox2.setForeground(new java.awt.Color(255, 255, 255));
-        combobox2.setMaximumRowCount(10);
-        combobox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
-        combobox2.setSelectedIndex(-1);
-        combobox2.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        combobox2.setLabeText("Vị Trí");
-        combobox2.setLineColor(new java.awt.Color(255, 255, 255));
+        cboViTri.setBackground(new java.awt.Color(47, 55, 90));
+        cboViTri.setForeground(new java.awt.Color(255, 255, 255));
+        cboViTri.setMaximumRowCount(10);
+        cboViTri.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
+        cboViTri.setSelectedIndex(-1);
+        cboViTri.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        cboViTri.setLabeText("Vị Trí");
+        cboViTri.setLineColor(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
@@ -422,54 +469,54 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(textField13, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                                .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSelectTacGia1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(67, Short.MAX_VALUE))
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                                .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rdoDangKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rdoNgungKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(21, 21, 21))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelBourder1Layout.createSequentialGroup()
                                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(combobox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cboNhaXuatBan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textField5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textField7, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                            .addComponent(textField9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSoTrang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtGiaBan, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                            .addComponent(txtBarCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnCamBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(21, 21, 21))))
         );
         jPanelBourder1Layout.setVerticalGroup(
@@ -483,44 +530,44 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSoTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtGiaNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(rdoDangKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rdoNgungKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(textField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCamBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelectTacGia1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combobox2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, Short.MAX_VALUE))
+                    .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 51, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(textField13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSelectTacGia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cboNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -529,7 +576,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         jPanelBourder2.setBackground(new java.awt.Color(47, 55, 90));
 
-        lbAvatar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        lblAvartar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -541,30 +588,32 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        btnInBaoCao6.setBackground(new java.awt.Color(35, 35, 93));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Choose a picture for the book");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        btnChooseImage.setBackground(new java.awt.Color(35, 35, 93));
+        btnChooseImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnChooseImage.setForeground(new java.awt.Color(255, 255, 255));
+        btnChooseImage.setText("Choose a picture for the book");
+        btnChooseImage.setToolTipText("Chọn ảnh cho sách");
+        btnChooseImage.setFocusable(false);
+        btnChooseImage.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnChooseImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                btnChooseImageActionPerformed(evt);
             }
         });
 
-        button2.setBackground(new java.awt.Color(47, 55, 90));
-        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
-        button2.addActionListener(new java.awt.event.ActionListener() {
+        btnCameraImage.setBackground(new java.awt.Color(47, 55, 90));
+        btnCameraImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
+        btnCameraImage.setToolTipText("Chụp ảnh sách");
+        btnCameraImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                btnCameraImageActionPerformed(evt);
             }
         });
 
@@ -576,17 +625,19 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbAvatar, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                        .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                                .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnChooseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnCameraImage, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanelBourder2Layout.createSequentialGroup()
                         .addGap(133, 133, 133)
-                        .addComponent(jLabel4)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(jLabel4))
+                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(lblAvartar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanelBourder2Layout.setVerticalGroup(
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -594,13 +645,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblAvartar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(btnInBaoCao6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCameraImage, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(btnChooseImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -725,16 +776,16 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private void backgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backgroundActionPerformed
         this.Form_Chon.show(false);
         this.background.show(false);
-        this.btnSelectTacGia.show(true);
+        this.btnSelectTheLoai.show(true);
         this.TruongThongTin.show(true);
 //        revalidate();
     }//GEN-LAST:event_backgroundActionPerformed
 
-    private void btnSelectTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGiaActionPerformed
+    private void btnSelectTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTheLoaiActionPerformed
         this.lbNameForm.setText("Thêm Thể Loại");
 //        this.txtReset.requestFocusInWindow();
         this.background.show(true);
-        this.btnSelectTacGia.show(false);
+        this.btnSelectTheLoai.show(false);
         this.Form_Chon.show(true);
         this.TruongThongTin.show(false);
         //        this.background.doClick();
@@ -742,33 +793,33 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         revalidate();
 
-    }//GEN-LAST:event_btnSelectTacGiaActionPerformed
+    }//GEN-LAST:event_btnSelectTheLoaiActionPerformed
 
-    private void textField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField4ActionPerformed
+    private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField4ActionPerformed
+    }//GEN-LAST:event_txtSoLuongActionPerformed
 
-    private void textField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField5ActionPerformed
+    private void txtSoTrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoTrangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField5ActionPerformed
+    }//GEN-LAST:event_txtSoTrangActionPerformed
 
-    private void textField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField6ActionPerformed
+    private void txtMoTaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMoTaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField6ActionPerformed
+    }//GEN-LAST:event_txtMoTaActionPerformed
 
-    private void textField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField7ActionPerformed
+    private void txtGiaBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiaBanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField7ActionPerformed
+    }//GEN-LAST:event_txtGiaBanActionPerformed
 
-    private void textField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField8ActionPerformed
+    private void txtGiaNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiaNhapActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField8ActionPerformed
+    }//GEN-LAST:event_txtGiaNhapActionPerformed
 
-    private void textField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField9ActionPerformed
+    private void txtBarCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarCodeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField9ActionPerformed
+    }//GEN-LAST:event_txtBarCodeActionPerformed
 
-    private void btnSelectTacGia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGia1ActionPerformed
+    private void btnSelectTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGiaActionPerformed
         this.lbNameForm.setText("Thêm Tác Giả");
         String tacgia[] = {"TG",
             "Thế Phương",
@@ -779,30 +830,54 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
         this.cbSelect.setModel(model);
         this.background.show(true);
-        this.btnSelectTacGia.show(false);
+        this.btnSelectTheLoai.show(false);
         this.Form_Chon.show(true);
         this.TruongThongTin.show(false);
         //        this.background.doClick();
         //        this.jScrollPane1.show(true);
 
         revalidate();
-    }//GEN-LAST:event_btnSelectTacGia1ActionPerformed
+    }//GEN-LAST:event_btnSelectTacGiaActionPerformed
 
-    private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao3ActionPerformed
+    }//GEN-LAST:event_btnAddActionPerformed
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void btnInBaoCao5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao5ActionPerformed
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao5ActionPerformed
+    }//GEN-LAST:event_btnClearActionPerformed
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+    private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
+        JFileChooser fileChooser = new JFileChooser(currentDirectory);
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
+        int result = fileChooser.showDialog(this, "Chọn ảnh");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            currentDirectory = file.getAbsolutePath();
+            Path p = Paths.get(currentDirectory);
+            if (currentDirectory.endsWith(".png") || currentDirectory.endsWith(".jpg")) {
+                try {
+                    _hinh = Files.readAllBytes(p);
+                    if (_hinh.length > 1024000) {
+                        JOptionPane.showMessageDialog(this, "File không được vượt quá 1M", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        _hinh = null;
+                        return;
+                    }
+                    lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return;
+            }
+
+            JOptionPane.showMessageDialog(this, "Chỉ hỗ trợ file .jpg | .png", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnChooseImageActionPerformed
 
     private void textField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField12ActionPerformed
         // TODO add your handling code here:
@@ -840,38 +915,167 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         mng.runNotification();
     }//GEN-LAST:event_btnInBaoCaoActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        this.background.show(true);
-        this.btnSelectTacGia.show(false);
-        this.TruongThongTin.show(false);
-        OpenCamera("Select Barcode");
-    }//GEN-LAST:event_button1ActionPerformed
+    private void btnCamBarCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamBarCodeActionPerformed
+        openedCam();
+        CamDialog cam = new CamDialog();
+        cam.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                cam.webcam.close();
+                cam.dispose();
+                closedCam();
+            }
+        });
+        cam.setTitle("QR/ BarCode Scanner");
+        cam.setVisible(true);
+        cam.btnCapture.setEnabled(false);
 
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        this.background.show(true);
-        this.btnSelectTacGia.show(false);
-        this.TruongThongTin.show(false);
-        OpenCamera("Select Image Book");
+        Thread th = new Thread(() -> {
+            cam.webcam.open();
+            while (true) {
+                Image image = cam.getImage();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                Result result = null;
+                LuminanceSource source = new BufferedImageLuminanceSource((BufferedImage) image);
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
-    }//GEN-LAST:event_button2ActionPerformed
+                try {
+                    result = new MultiFormatReader().decode(bitmap);
+                } catch (NotFoundException ex) {
+                    //not result
+                }
+                if (result != null) {
+                    if (!(result + "").matches("\\d+")) {
+                        JOptionPane.showMessageDialog(this, "BarCode không hợp lệ");
+                        return;
+                    }
+                    txtBarCode.setText(result + "");
+                    cam.webcam.close();
+                    cam.dispose();
+                }
+
+            }
+        });
+        th.start();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean x = true;
+                while (x) {
+                    if (!cam.isFocused()) {
+                        cam.webcam.close();
+                        cam.dispose();
+                        x = false;
+                    }
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Sach_ChucNang_Form.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        thread.start();
+
+    }//GEN-LAST:event_btnCamBarCodeActionPerformed
+
+    private void openedCam() {
+        this.background.show(true);
+        this.btnSelectTheLoai.show(false);
+        this.TruongThongTin.show(false);
+    }
+
+    private void btnCameraImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCameraImageActionPerformed
+        this.background.show(true);
+        this.btnSelectTheLoai.show(false);
+        this.TruongThongTin.show(false);
+
+        CamDialog cam = new CamDialog();
+        cam.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                cam.webcam.close();
+                cam.dispose();
+                closedCam();
+            }
+        });
+        cam.setTitle("Take a picture");
+        cam.setVisible(true);
+        cam.btnCapture.addActionListener((java.awt.event.ActionEvent evt1) -> {
+            BufferedImage image = cam.webcam.getImage();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "png", baos);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            _hinh = baos.toByteArray();
+            if (_hinh != null) {
+                lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
+                System.out.println(_hinh);
+                this.TruongThongTin.show(true);
+            }
+            cam.webcam.close();
+            cam.dispose();
+        });
+        Thread th = new Thread(() -> {
+            cam.record();
+        });
+        th.start();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean x = true;
+                while (x) {
+                    if (!cam.isFocused()) {
+                        cam.webcam.close();
+                        cam.dispose();
+                        x = false;
+                    }
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Sach_ChucNang_Form.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        thread.start();
+
+    }//GEN-LAST:event_btnCameraImageActionPerformed
+
+    private void closedCam() {
+        Form_Chon.show(false);
+        background.show(false);
+        btnSelectTheLoai.show(true);
+        TruongThongTin.show(true);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.DesignComponent.JPanelBourder Form_Chon;
     private javax.swing.JPanel TruongThongTin;
     private View.ButtonDesign.Background background;
+    private View.ButtonDesign.Button btnAdd;
+    private View.ButtonDesign.Button btnCamBarCode;
+    private View.ButtonDesign.Button btnCameraImage;
+    private View.ButtonDesign.Button btnChooseImage;
+    private View.ButtonDesign.Button btnClear;
     private View.ButtonDesign.Button btnInBaoCao;
-    private View.ButtonDesign.Button btnInBaoCao3;
-    private View.ButtonDesign.Button btnInBaoCao4;
-    private View.ButtonDesign.Button btnInBaoCao5;
-    private View.ButtonDesign.Button btnInBaoCao6;
     private View.ButtonDesign.Button btnSelectTacGia;
-    private View.ButtonDesign.Button btnSelectTacGia1;
-    private View.ButtonDesign.Button button1;
-    private View.ButtonDesign.Button button2;
+    private View.ButtonDesign.Button btnSelectTheLoai;
+    private View.ButtonDesign.Button btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private View.ComboBoxDesign.ComboBoxSuggestion cbSelect;
-    private View.DesignComponent.Combobox combobox1;
-    private View.DesignComponent.Combobox combobox2;
+    private View.DesignComponent.Combobox cboNhaXuatBan;
+    private View.DesignComponent.Combobox cboViTri;
     private javax.swing.JDialog j;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -888,21 +1092,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JLabel lbAvatar;
     private javax.swing.JLabel lbNameForm;
-    private View.ComboBoxDesign.RadioButtonCustom radioButtonCustom1;
-    private View.ComboBoxDesign.RadioButtonCustom radioButtonCustom2;
+    private javax.swing.JLabel lblAvartar;
+    private View.ComboBoxDesign.RadioButtonCustom rdoDangKinhDoanh;
+    private View.ComboBoxDesign.RadioButtonCustom rdoNgungKinhDoanh;
     private javax.swing.JScrollPane scroll;
-    private View.DesignComponent.TextField textField1;
     private View.DesignComponent.TextField textField12;
     private View.DesignComponent.TextField textField13;
-    private View.DesignComponent.TextField textField2;
-    private View.DesignComponent.TextField textField3;
-    private View.DesignComponent.TextField textField4;
-    private View.DesignComponent.TextField textField5;
-    private View.DesignComponent.TextField textField6;
-    private View.DesignComponent.TextField textField7;
-    private View.DesignComponent.TextField textField8;
-    private View.DesignComponent.TextField textField9;
+    private View.DesignComponent.TextField txtBarCode;
+    private View.DesignComponent.TextField txtGiaBan;
+    private View.DesignComponent.TextField txtGiaNhap;
+    private View.DesignComponent.TextField txtId;
+    private View.DesignComponent.TextField txtMa;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtSoLuong;
+    private View.DesignComponent.TextField txtSoTrang;
+    private View.DesignComponent.TextField txtTen;
     // End of variables declaration//GEN-END:variables
 }

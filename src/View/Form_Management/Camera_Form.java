@@ -4,28 +4,55 @@
  */
 package View.Form_Management;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamResolution;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author quanc
  */
 public class Camera_Form extends javax.swing.JPanel {
 
-    
+    public final Webcam webcam = Webcam.getDefault();
+    private byte[] hinh = null;
+
     public Camera_Form() {
         initComponents();
+        webcam.setViewSize(WebcamResolution.VGA.getSize());
     }
-    public void setTitle(String text){
+
+    public void setTitle(String text) {
         this.lbNameForm.setText(text);
     }
     
+    public void record() {
+        webcam.setViewSize(WebcamResolution.VGA.getSize());
+        webcam.open();
+        while (true) {
+            Image image = webcam.getImage();
+            if (image != null) {
+                lblScreen.setIcon(new ImageIcon(image));
+            }
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lbNameForm = new javax.swing.JLabel();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        jLabel1 = new javax.swing.JLabel();
+        lblScreen = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        btnCapture = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(47, 55, 90));
 
@@ -39,12 +66,19 @@ public class Camera_Form extends javax.swing.JPanel {
         jPanelBourder1.setLayout(jPanelBourder1Layout);
         jPanelBourder1Layout.setHorizontalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblScreen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+            .addComponent(lblScreen, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
         );
+
+        btnCapture.setBackground(new java.awt.Color(31, 31, 111));
+        btnCapture.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnCapture.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapture.setText("Capture");
+        btnCapture.setFocusable(false);
+        btnCapture.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -55,8 +89,12 @@ public class Camera_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator1)
                     .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbNameForm, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
-                .addGap(56, 56, 56))
+                    .addComponent(lbNameForm, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE))
+                .addGap(44, 44, 44))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCapture, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(386, 386, 386))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,15 +105,18 @@ public class Camera_Form extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnCapture, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    public View.ButtonDesign.Button btnCapture;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbNameForm;
+    private javax.swing.JLabel lblScreen;
     // End of variables declaration//GEN-END:variables
 }

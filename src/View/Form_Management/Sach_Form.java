@@ -4,29 +4,20 @@
  */
 package View.Form_Management;
 
-import Model.SachFake;
 import View.ButtonDesign.Button;
-import View.ManagementBookForm;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Sach;
 import service.SachService;
 import service.impl.SachServiceImpl;
 //s
+
 /**
  *
  * @author quanc
@@ -35,13 +26,16 @@ public class Sach_Form extends javax.swing.JPanel {
 
     private SachService _sachService = new SachServiceImpl();
 
-    private final int RecordOneTable = 10;
+    private final int _pageSize = 10;
+    private int _currentPage = 1;
+    private int _totalPage;
+    private boolean searcher = false;
+
     private int indexSelected = 1;
     private int indexRow = 1;
-    private int pageCurrently = 1;
     private int countJbtn = 0;
 
-    private List<Sach> lstSach;
+    private List<Sach> _lstSach;
     private List<Button> listBtn = new ArrayList<>();
 
     public Sach_Form() {
@@ -52,8 +46,30 @@ public class Sach_Form extends javax.swing.JPanel {
         table1.setBackground(Color.WHITE);
         this.table1.setRowHeight(59);
         this.table1.setBackground(Color.white);
-        initTableData(0, 10);
-        showTarget(1);
+        loadTable(0, _pageSize);
+        setPageLabel(false);
+//        showTarget(1);
+
+    }
+
+    private void setPageLabel(boolean searching) {
+        if (searching == false) {
+            int result = _sachService.countAllSach();
+            if (result % _pageSize == 0) {
+                _totalPage = result / _pageSize;
+            } else {
+                _totalPage = result / _pageSize + 1;
+            }
+            lblPage.setText("Viewing " + ((_currentPage - 1) * _pageSize + 1) + " - " + ((_currentPage - 1) * _pageSize + _pageSize) + " of " + result);
+        } else {
+            int result = _lstSach.size();
+            if (result % _pageSize == 0) {
+                _totalPage = result / _pageSize;
+            } else {
+                _totalPage = result / _pageSize + 1;
+            }
+            lblPage.setText("Viewing " + ((_currentPage - 1) * _pageSize + 1) + " - " + ((_currentPage - 1) * _pageSize + _pageSize) + " of " + result);
+        }
 
     }
 
@@ -61,46 +77,59 @@ public class Sach_Form extends javax.swing.JPanel {
         return this.btnTaoSP1;
     }
 
-    public void initTableData(int position, int pageSize) {
-        // Nơi đổ dữ liệu vào table
-        // Ví dụ về đối tượng SachFake khi add Row ( sẽ tùy vào đối tượng để sửa các trường
-        //new ModelTest(new ImageIcon("image/bookmark_30px.png"), "Bora", "Male", "C#", 300).toRowTable()
-        //new Object[]{new ModelProfile(icon, name), Ma, soLuong, df.format(giaBan), barCode, moTa}
-//        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-//        this.table1.addRow(new SachFake("SKL1", imageIcon, "Sách 1", 100, 30000, "01293123", "Mới vl").toRowTable());
-
-        lstSach = _sachService.getList(position, pageSize);
-
-        for (int i = 0; i < countJbtn; i++) {
-            Button btn = new Button();
-            listBtn.add(btn);
-            btn.setText("" + (i + 1));
-            btn.setSize(30, 30);
-            btn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    showTarget(Integer.parseInt(btn.getText()));
-                    setColorButtonSelected(Integer.parseInt(btn.getText()) - 1);
-
-                }
-            });
-
-            pagePanel.add(btn);
-        }
-
-    }
-
-    public void showTarget(int index) {
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
-        model.setRowCount(0);
-        int sizeIndex = RecordOneTable * index;
-        int indexStart = sizeIndex - RecordOneTable;
-        for (Sach sach : lstSach) {
+//    public void initTableData(int position, int pageSize) {
+//       
+//        _lstSach = _sachService.getList(position, pageSize);
+//
+////        for (int i = 0; i < countJbtn; i++) {
+////            Button btn = new Button();
+////            listBtn.add(btn);
+////            btn.setText("" + (i + 1));
+////            btn.setSize(30, 30);
+////            btn.addActionListener(new ActionListener() {
+////                @Override
+////                public void actionPerformed(ActionEvent e) {
+////                    showTarget(Integer.parseInt(btn.getText()));
+////                    setColorButtonSelected(Integer.parseInt(btn.getText()) - 1);
+////
+////                }
+////            });
+////
+////            pagePanel.add(btn);
+////        }
+//
+//    }
+    public void loadTable(int position, int pageSize) {
+        _lstSach = _sachService.getList(position, pageSize);
+        DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
+        dtm.setRowCount(0);
+        for (Sach sach : _lstSach) {
             this.table1.addRow(sach.toDataRow());
         }
-
     }
 
+    public void loadTableSearch(List<Sach> lst, int position, int pageSize) {
+        _lstSach = lst;
+        DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
+        dtm.setRowCount(0);
+        for (int i = position * 10; i < position * 10 + 10; i++) {
+            if(_lstSach.size() <= i) {
+                return;
+            }
+            dtm.addRow(_lstSach.get(i).toDataRow());
+        }
+    }
+
+//    public void showTarget(int index) {
+//        DefaultTableModel model = (DefaultTableModel) table1.getModel();
+//        model.setRowCount(0);
+//        int sizeIndex = RecordOneTable * index;
+//        int indexStart = sizeIndex - RecordOneTable;
+//        for (Sach sach : _lstSach) {
+//            this.table1.addRow(sach.toDataRow());
+//        }
+//
+//    }
     public void setColorButtonSelected(int index) {
         for (Button btn : listBtn) {
             btn.setBackground(Color.WHITE);
@@ -122,12 +151,13 @@ public class Sach_Form extends javax.swing.JPanel {
 
         pagePanel = new javax.swing.JPanel();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtSearch = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        btnPrevious = new javax.swing.JLabel();
+        btnNext = new javax.swing.JLabel();
+        lblPage = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        btnSearch = new View.ButtonDesign.Button();
         btnInBaoCao3 = new View.ButtonDesign.Button();
         btnInBaoCao1 = new View.ButtonDesign.Button();
         btnTaoSP1 = new View.ButtonDesign.Button();
@@ -146,25 +176,36 @@ public class Sach_Form extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSearch.setBackground(new java.awt.Color(17, 28, 68));
+        txtSearch.setForeground(new java.awt.Color(255, 255, 255));
+        txtSearch.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtSearch.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtSearch.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtSearch.setLabelText("Tìm kiếm theo mã, tên, tác giả, thể loại, barcode,...");
+        txtSearch.setLineColor(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
         jLabel2.setText("List of Book");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_previous_40px.png"))); // NOI18N
+        btnPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_previous_40px.png"))); // NOI18N
+        btnPrevious.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPreviousMouseClicked(evt);
+            }
+        });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_next_40px.png"))); // NOI18N
+        btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_next_40px.png"))); // NOI18N
+        btnNext.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNextMouseClicked(evt);
+            }
+        });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Viewing 1-10 of 36");
+        lblPage.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblPage.setForeground(new java.awt.Color(255, 255, 255));
+        lblPage.setText("Viewing 1-10 of 36");
+        lblPage.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1, 30));
@@ -180,6 +221,19 @@ public class Sach_Form extends javax.swing.JPanel {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
+        btnSearch.setBackground(new java.awt.Color(31, 31, 111));
+        btnSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_add_35px.png"))); // NOI18N
+        btnSearch.setText("Tìm Kiếm");
+        btnSearch.setFocusable(false);
+        btnSearch.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
         jPanelBourder1Layout.setHorizontalGroup(
@@ -190,13 +244,15 @@ public class Sach_Form extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(497, 497, 497)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79)
+                .addComponent(lblPage, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPrevious)
                 .addGap(6, 6, 6)
-                .addComponent(jLabel3)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel4))
+                .addComponent(btnNext))
         );
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,16 +266,18 @@ public class Sach_Form extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPage, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -299,6 +357,11 @@ public class Sach_Form extends javax.swing.JPanel {
         });
         table1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         table1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table1);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
@@ -402,7 +465,7 @@ public class Sach_Form extends javax.swing.JPanel {
                 .addComponent(jPanelBourder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -418,24 +481,69 @@ public class Sach_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInBaoCao3ActionPerformed
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String keyword = txtSearch.getText();
+        if (keyword.isBlank()) {
+            setPageLabel(false);
+            loadTable(0, _pageSize);
+            searcher = false;
+            return;
+        }
+        searcher = true;
+        loadTableSearch(_sachService.getListByKeyword(keyword), 0, _pageSize);
+        setPageLabel(true);
+
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnPreviousMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPreviousMouseClicked
+        if (_currentPage == 1) {
+            return;
+        }
+        if (!searcher) {
+            _currentPage--;
+            loadTable(_currentPage - 1, _pageSize);
+        } else {
+            loadTableSearch(_lstSach, _currentPage - 1, _pageSize);
+            _currentPage--;
+        }
+    }//GEN-LAST:event_btnPreviousMouseClicked
+
+    private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
+        if (_currentPage == _totalPage) {
+            return;
+        }
+        if (!searcher) {
+            _currentPage++;
+            loadTable(_currentPage - 1, _pageSize);
+        } else {
+            loadTableSearch(_lstSach, _currentPage - 1, _pageSize);
+            _currentPage++;
+        }
+    }//GEN-LAST:event_btnNextMouseClicked
+
+    private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnInBaoCao1;
     private View.ButtonDesign.Button btnInBaoCao3;
+    private javax.swing.JLabel btnNext;
+    private javax.swing.JLabel btnPrevious;
+    private View.ButtonDesign.Button btnSearch;
     private View.ButtonDesign.Button btnTaoSP1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private View.DesignComponent.JPanelBourder jPanelBourder2;
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblPage;
     private javax.swing.JPanel pagePanel;
     private View.DesignComponent.Table table1;
-    private View.DesignComponent.TextField textField1;
+    private View.DesignComponent.TextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

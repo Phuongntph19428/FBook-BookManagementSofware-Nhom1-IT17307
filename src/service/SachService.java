@@ -18,5 +18,9 @@ public interface SachService {
     public boolean updateSach(Sach sach);
 
     public List<Sach> getList(int position, int pageSize);
+    
+    public int countAllSach();
+    
+    public List<Sach> getListByKeyword(String keyword);
 
 }

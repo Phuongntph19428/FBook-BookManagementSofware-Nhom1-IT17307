@@ -271,11 +271,11 @@ public class Sach implements Serializable {
     public String toString() {
         return "Sach{" + "id=" + id + ", nhaXuatBan=" + nhaXuatBan + ", viTri=" + viTri + ", ma=" + ma + ", ten=" + ten + ", soLuong=" + soLuong + ", soTrang=" + soTrang + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", trangThai=" + trangThai + ", hinh=" + hinh + ", barCode=" + barCode + ", moTa=" + moTa + '}';
     }
-    
+
     public Object[] toDataRow() {
         DecimalFormat df = new DecimalFormat("#,##0.00");
-        return new Object[]{nhaXuatBan.getTen(), viTri.getMa(), ma, ten, soLuong, soTrang, df.format(giaNhap), df.format(giaBan), trangThai == 0? "Ngừng kinh doanh" : "Đang kinh doanh",
-            new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)))};
+        return new Object[]{nhaXuatBan.getTen(), viTri.getMa(), ma, ten, soLuong, soTrang, df.format(giaNhap), df.format(giaBan), trangThai == 0 ? "Ngừng kinh doanh" : "Đang kinh doanh",
+            hinh == null ? null : new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)))};
     }
 
 }

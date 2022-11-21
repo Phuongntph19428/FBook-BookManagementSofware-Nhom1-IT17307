@@ -39,9 +39,12 @@ public class PhieuNhap implements Serializable {
     @Column(name = "Ma")
     private String ma;
 
-    @Column(name = "ngayNhap")
+    @Column(name = "NgayNhap")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date ngayNhap;
+
+    @Column(name = "TrangThai")
+    private int trangThai;
 
     @Column(name = "MoTa")
     private String moTa;
@@ -52,11 +55,12 @@ public class PhieuNhap implements Serializable {
     public PhieuNhap() {
     }
 
-    public PhieuNhap(String id, NhaCungCap nhaCungCap, String ma, Date ngayNhap, String moTa) {
+    public PhieuNhap(String id, NhaCungCap nhaCungCap, String ma, Date ngayNhap, int trangThai, String moTa) {
         this.id = id;
         this.nhaCungCap = nhaCungCap;
         this.ma = ma;
         this.ngayNhap = ngayNhap;
+        this.trangThai = trangThai;
         this.moTa = moTa;
     }
 
@@ -100,6 +104,14 @@ public class PhieuNhap implements Serializable {
         this.moTa = moTa;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
     public List<PhieuNhapChiTiet> getLstPhieuNhapCT() {
         return lstPhieuNhapCT;
     }
@@ -110,7 +122,7 @@ public class PhieuNhap implements Serializable {
 
     @Override
     public String toString() {
-        return "PhieuNhap{" + "id=" + id + ", nhaCungCap=" + nhaCungCap + ", ma=" + ma + ", ngayNhap=" + ngayNhap + ", moTa=" + moTa + '}';
+        return "PhieuNhap{" + "id=" + id + ", nhaCungCap=" + nhaCungCap + ", ma=" + ma + ", ngayNhap=" + ngayNhap + ", moTa=" + moTa + ", trangThai" + trangThai + '}';
     }
 
 }

@@ -42,7 +42,7 @@ public class TacGiaServiceImpl implements TacGiaService {
     public List<TacGia> searchTacGiaByKeyWord(List<TacGia> lstTacGia, String keyword) {
         List<TacGia> lst = new ArrayList<>();
         for (TacGia tacGia : lstTacGia) {
-            if(tacGia.getTen().contains(keyword) || tacGia.getMa().contains(keyword)) {
+            if(tacGia.getTen().toLowerCase().contains(keyword.toLowerCase()) || tacGia.getMa().toLowerCase().contains(keyword.toLowerCase())) {
                 lst.add(tacGia);
             }
         }

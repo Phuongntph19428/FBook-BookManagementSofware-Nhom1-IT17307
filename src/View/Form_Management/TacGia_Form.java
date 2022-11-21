@@ -34,7 +34,9 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private String currentDirectory;
     private final TacGiaService _tacGiaService = new TacGiaServiceImpl();
+    private List<TacGia> _lstAllTacGia;
     private List<TacGia> _lstTacGia;
+    
     private byte[] _hinh;
 
     public TacGia_Form() {
@@ -48,7 +50,8 @@ public class TacGia_Form extends javax.swing.JPanel {
         this.lblAvatar.setIcon(imageIcon);
 //        showTarget(1);
 
-        _lstTacGia = _tacGiaService.selectAll();
+        _lstAllTacGia = _tacGiaService.selectAll();
+        _lstTacGia = _lstAllTacGia;
         loadTable(_lstTacGia);
     }
 
@@ -63,10 +66,9 @@ public class TacGia_Form extends javax.swing.JPanel {
     }
 
     private void loadTable(List<TacGia> lstTacGia) {
-       
+
         DefaultTableModel dtm = (DefaultTableModel) tblTacGia.getModel();
         dtm.setRowCount(0);
-        System.out.println("tg:" + _lstTacGia.size());
         for (TacGia tacGia : lstTacGia) {
             dtm.addRow(tacGia.toDataRow());
         }
@@ -110,6 +112,11 @@ public class TacGia_Form extends javax.swing.JPanel {
         txtSearch.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
         txtSearch.setLabelText("Tìm kiếm theo tên, mã");
         txtSearch.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearchCaretUpdate(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -186,6 +193,11 @@ public class TacGia_Form extends javax.swing.JPanel {
         ));
         tblTacGia.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         tblTacGia.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblTacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTacGiaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTacGia);
         if (tblTacGia.getColumnModel().getColumnCount() > 0) {
             tblTacGia.getColumnModel().getColumn(0).setMinWidth(100);
@@ -411,12 +423,50 @@ public class TacGia_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private TacGia getFrom() {
+        String id = txtId.getText();
+        String ma = txtMaTacGia.getText().trim();
+        String ten = txtTenTacGia.getText().trim();
+        String mota = txtMoTa.getText().trim();
+
+        return new TacGia(id.isBlank() ? null : id, ma, ten, _hinh, mota.isBlank() ? null : mota);
+
+    }
+
+    private void setForm(TacGia tacGia) {
+        txtId.setText(tacGia.getId());
+        txtMaTacGia.setText(tacGia.getMa());
+        txtTenTacGia.setText(tacGia.getTen());
+        txtMoTa.setText(tacGia.getMoTa() == null ? "" : tacGia.getMoTa());
+        _hinh = tacGia.getHinh();
+        if (_hinh != null) {
+            lblAvatar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
+        }
+
+    }
+
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+        TacGia tacGia = getFrom();
+        if (tacGia.getId() == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn tác giả");
+            return;
+        }
+        _tacGiaService.updateTacGia(tacGia);
+        _lstAllTacGia = _tacGiaService.selectAll();
+        clear();
+        loadTable(_lstAllTacGia);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        TacGia tacGia = getFrom();
+        if (tacGia.getId() != null) {
+            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
+            return;
+        }
+        _tacGiaService.insertTacGia(tacGia);
+        _lstAllTacGia = _tacGiaService.selectAll();
+        clear();
+        loadTable(_lstAllTacGia);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void clear() {
@@ -425,22 +475,28 @@ public class TacGia_Form extends javax.swing.JPanel {
         txtMoTa.setText("");
         txtTenTacGia.setText("");
     }
-    
+
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clear();
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         JFileChooser fileChooser = new JFileChooser(currentDirectory);
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
         int result = fileChooser.showDialog(this, "Chọn ảnh");
-        if(result == JFileChooser.APPROVE_OPTION) {
+        if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             currentDirectory = file.getAbsolutePath();
             Path p = Paths.get(currentDirectory);
             if (currentDirectory.endsWith(".png") || currentDirectory.endsWith(".jpg")) {
                 try {
                     _hinh = Files.readAllBytes(p);
+                    if (_hinh.length > 1024000) {
+                        JOptionPane.showMessageDialog(this, "File không được vượt quá 1M", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        _hinh = null;
+                        return;
+                    }
                     lblAvatar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -450,8 +506,22 @@ public class TacGia_Form extends javax.swing.JPanel {
 
             JOptionPane.showMessageDialog(this, "Chỉ hỗ trợ file .jpg | .png", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnChooseImageActionPerformed
+
+    private void tblTacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTacGiaMouseClicked
+        int row = tblTacGia.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        setForm(_lstTacGia.get(row));
+    }//GEN-LAST:event_tblTacGiaMouseClicked
+
+    private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
+        String keyword = txtSearch.getText().trim();
+        _lstTacGia = _tacGiaService.searchTacGiaByKeyWord(_lstAllTacGia, keyword);
+        loadTable(_lstTacGia);
+    }//GEN-LAST:event_txtSearchCaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

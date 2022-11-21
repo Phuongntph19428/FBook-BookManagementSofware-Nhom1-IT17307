@@ -28,6 +28,8 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -110,15 +112,15 @@
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Component id="textField13" alignment="1" min="-2" pref="237" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="combobox2" min="-2" pref="290" max="-2" attributes="0"/>
+                                      <Component id="cboViTri" min="-2" pref="290" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="textField12" min="-2" pref="237" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnSelectTacGia1" min="-2" pref="48" max="-2" attributes="0"/>
                                   <Component id="btnSelectTacGia" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <Component id="btnSelectTheLoai" min="-2" pref="48" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -128,51 +130,51 @@
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="btnInBaoCao3" min="-2" pref="217" max="-2" attributes="0"/>
+                              <Component id="btnAdd" min="-2" pref="217" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="btnInBaoCao4" min="-2" pref="217" max="-2" attributes="0"/>
+                              <Component id="btnUpdate" min="-2" pref="217" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                              <Component id="btnInBaoCao5" min="-2" pref="217" max="-2" attributes="0"/>
+                              <Component id="btnClear" min="-2" pref="217" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="radioButtonCustom1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdoDangKinhDoanh" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="radioButtonCustom2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdoNgungKinhDoanh" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                              <Component id="textField4" min="-2" pref="282" max="-2" attributes="0"/>
-                                              <Component id="textField1" min="-2" pref="282" max="-2" attributes="0"/>
-                                              <Component id="textField8" min="-2" pref="282" max="-2" attributes="0"/>
+                                              <Component id="txtSoLuong" min="-2" pref="282" max="-2" attributes="0"/>
+                                              <Component id="txtId" min="-2" pref="282" max="-2" attributes="0"/>
+                                              <Component id="txtGiaNhap" min="-2" pref="282" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="combobox1" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
+                                          <Component id="cboNhaXuatBan" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="textField2" max="32767" attributes="0"/>
-                                  <Component id="textField5" max="32767" attributes="0"/>
-                                  <Component id="textField7" pref="295" max="32767" attributes="0"/>
-                                  <Component id="textField9" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtMa" max="32767" attributes="0"/>
+                                  <Component id="txtSoTrang" max="32767" attributes="0"/>
+                                  <Component id="txtGiaBan" pref="295" max="32767" attributes="0"/>
+                                  <Component id="txtBarCode" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="textField3" min="-2" pref="283" max="-2" attributes="0"/>
-                                          <Component id="textField6" alignment="0" min="-2" pref="282" max="-2" attributes="0"/>
+                                          <Component id="txtTen" min="-2" pref="283" max="-2" attributes="0"/>
+                                          <Component id="txtMoTa" alignment="0" min="-2" pref="282" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button1" min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="btnCamBarCode" min="-2" pref="44" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -194,20 +196,20 @@
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTen" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtSoTrang" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMoTa" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtGiaNhap" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtGiaBan" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -215,32 +217,32 @@
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="radioButtonCustom1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="radioButtonCustom2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rdoDangKinhDoanh" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="rdoNgungKinhDoanh" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Component id="button1" min="-2" max="-2" attributes="0"/>
-                              <Component id="textField9" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnCamBarCode" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtBarCode" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnSelectTacGia1" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="btnSelectTacGia" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="textField12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="combobox2" alignment="3" pref="51" max="32767" attributes="0"/>
+                          <Component id="cboViTri" alignment="3" pref="51" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="textField13" max="32767" attributes="0"/>
-                          <Component id="btnSelectTacGia" alignment="0" max="32767" attributes="0"/>
-                          <Component id="combobox1" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnSelectTheLoai" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cboNhaXuatBan" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnInBaoCao3" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
-                          <Component id="btnInBaoCao4" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
-                          <Component id="btnInBaoCao5" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnAdd" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnUpdate" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnClear" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
@@ -248,7 +250,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="View.ButtonDesign.Button" name="btnSelectTacGia">
+            <Component class="View.ButtonDesign.Button" name="btnSelectTheLoai">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="80" green="45" red="37" type="rgb"/>
@@ -269,10 +271,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectTacGiaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectTheLoaiActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField1">
+            <Component class="View.DesignComponent.TextField" name="txtId">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -296,7 +298,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField2">
+            <Component class="View.DesignComponent.TextField" name="txtMa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -319,7 +321,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField3">
+            <Component class="View.DesignComponent.TextField" name="txtTen">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -342,7 +344,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField4">
+            <Component class="View.DesignComponent.TextField" name="txtSoLuong">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -365,10 +367,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSoLuongActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField5">
+            <Component class="View.DesignComponent.TextField" name="txtSoTrang">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -391,10 +393,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSoTrangActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField6">
+            <Component class="View.DesignComponent.TextField" name="txtMoTa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -417,10 +419,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMoTaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField7">
+            <Component class="View.DesignComponent.TextField" name="txtGiaBan">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -443,10 +445,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField7ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGiaBanActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField8">
+            <Component class="View.DesignComponent.TextField" name="txtGiaNhap">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -469,7 +471,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField8ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtGiaNhapActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -483,7 +485,7 @@
                 <Property name="text" type="java.lang.String" value="Tr&#x1ea1;ng Th&#xe1;i"/>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField9">
+            <Component class="View.DesignComponent.TextField" name="txtBarCode">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -506,10 +508,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField9ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBarCodeActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ButtonDesign.Button" name="button1">
+            <Component class="View.ButtonDesign.Button" name="btnCamBarCode">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -517,9 +519,10 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/View/Image_Hub/icons8_camera_30px.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Qu&#xe9;t m&#xe3; barcode"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCamBarCodeActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -556,7 +559,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="View.ButtonDesign.Button" name="btnSelectTacGia1">
+            <Component class="View.ButtonDesign.Button" name="btnSelectTacGia">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="80" green="45" red="37" type="rgb"/>
@@ -577,10 +580,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectTacGia1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSelectTacGiaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ButtonDesign.Button" name="btnInBaoCao3">
+            <Component class="View.ButtonDesign.Button" name="btnAdd">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -594,16 +597,17 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="T&#x1ea1;o M&#x1edb;i"/>
+                <Property name="toolTipText" type="java.lang.String" value="Th&#xea;m m&#x1edb;i s&#xe1;ch"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Semibold" size="14" style="1"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao3ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ButtonDesign.Button" name="btnInBaoCao4">
+            <Component class="View.ButtonDesign.Button" name="btnUpdate">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -617,16 +621,17 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="C&#x1ead;p Nh&#x1ead;t"/>
+                <Property name="toolTipText" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t s&#xe1;ch"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Semibold" size="14" style="1"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ButtonDesign.Button" name="btnInBaoCao5">
+            <Component class="View.ButtonDesign.Button" name="btnClear">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -640,13 +645,14 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="L&#xe0;m M&#x1edb;i"/>
+                <Property name="toolTipText" type="java.lang.String" value="Clear form"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Semibold" size="14" style="1"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearActionPerformed"/>
               </Events>
             </Component>
             <Component class="View.DesignComponent.TextField" name="textField12">
@@ -701,29 +707,36 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField13ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ComboBoxDesign.RadioButtonCustom" name="radioButtonCustom1">
+            <Component class="View.ComboBoxDesign.RadioButtonCustom" name="rdoDangKinhDoanh">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
                 </Property>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroup1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&#x110;ang Ho&#x1ea1;t &#x110;&#x1ed9;ng"/>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="&#x110;ang kinh doanh"/>
               </Properties>
             </Component>
-            <Component class="View.ComboBoxDesign.RadioButtonCustom" name="radioButtonCustom2">
+            <Component class="View.ComboBoxDesign.RadioButtonCustom" name="rdoNgungKinhDoanh">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
                 </Property>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="buttonGroup1"/>
+                </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ng&#x1eeb;ng Ho&#x1ea1;t &#x110;&#x1ed9;ng"/>
+                <Property name="text" type="java.lang.String" value="Ng&#x1eeb;ng kinh doanh"/>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.Combobox" name="combobox1">
+            <Component class="View.DesignComponent.Combobox" name="cboNhaXuatBan">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -748,7 +761,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.Combobox" name="combobox2">
+            <Component class="View.DesignComponent.Combobox" name="cboViTri">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -794,13 +807,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lbAvatar" alignment="0" pref="316" max="32767" attributes="0"/>
-                                  <Component id="jPanel5" alignment="0" pref="316" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jPanel5" alignment="0" min="-2" pref="325" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnInBaoCao6" min="-2" pref="239" max="-2" attributes="0"/>
+                                      <Component id="btnChooseImage" min="-2" pref="239" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button2" max="32767" attributes="0"/>
+                                      <Component id="btnCameraImage" min="-2" pref="75" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -808,8 +820,12 @@
                               <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="lblAvartar" min="-2" pref="255" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace pref="20" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -819,13 +835,13 @@
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="39" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lbAvatar" min="-2" pref="336" max="-2" attributes="0"/>
+                      <Component id="lblAvartar" min="-2" pref="336" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="button2" pref="60" max="32767" attributes="0"/>
-                          <Component id="btnInBaoCao6" max="32767" attributes="0"/>
+                          <Component id="btnCameraImage" pref="60" max="32767" attributes="0"/>
+                          <Component id="btnChooseImage" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
@@ -833,7 +849,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lbAvatar">
+            <Component class="javax.swing.JLabel" name="lblAvartar">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -865,7 +881,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="325" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -875,7 +891,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="View.ButtonDesign.Button" name="btnInBaoCao6">
+            <Component class="View.ButtonDesign.Button" name="btnChooseImage">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5d" green="23" red="23" type="rgb"/>
@@ -889,16 +905,17 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Choose a picture for the book"/>
+                <Property name="toolTipText" type="java.lang.String" value="Ch&#x1ecd;n &#x1ea3;nh cho s&#xe1;ch"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Semibold" size="14" style="1"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChooseImageActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ButtonDesign.Button" name="button2">
+            <Component class="View.ButtonDesign.Button" name="btnCameraImage">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -906,9 +923,10 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/View/Image_Hub/icons8_camera_30px.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Ch&#x1ee5;p &#x1ea3;nh s&#xe1;ch"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCameraImageActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
