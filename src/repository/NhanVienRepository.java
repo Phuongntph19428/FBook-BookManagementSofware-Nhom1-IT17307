@@ -4,10 +4,17 @@
  */
 package repository;
 
+import java.util.List;
+import model.NhanVien;
+
 /**
  *
  * @author ppolo
  */
 public interface NhanVienRepository {
+    boolean addNhanVien(NhanVien nhanVien);
     
+    List<NhanVien> getAllNhanVien();
+    
+    List<NhanVien> getListNhanVienByName(String name);
 }

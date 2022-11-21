@@ -8,12 +8,13 @@ import Model.SachFake;
 import View.ButtonDesign.Button;
 import View.ScrollBarCustom;
 import java.awt.Color;
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import model.NhanVien;
+import service.NhanVienService;
+import service.impl.NhanVienServiceImpl;
 
 /**
  *
@@ -23,17 +24,12 @@ public class NhanVien_Form extends javax.swing.JPanel {
 
     private List<SachFake> listS = new ArrayList<>();
     private List<Button> listBtn = new ArrayList<>();
+    private List<NhanVien> listNhanVien;
+    private NhanVienService nhanVienService;
 
     public NhanVien_Form() {
         initComponents();
-        String columns[] = {"Mã", "Tên Sách", "Hình", "Số lượng", "Giá bán", "Barcode", "Mô Tả"};
-        Object rows[][] = {};
-        this.table1.setModel(new DefaultTableModel(rows, columns));
-        table1.setDefaultEditor(Object.class, null);
-        table1.setBackground(Color.WHITE);
-        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
-        this.table1.setRowHeight(50);
-        this.table1.setBackground(Color.white);
+        nhanVienService = new NhanVienServiceImpl();
         initTableData();
     }
 
@@ -42,14 +38,33 @@ public class NhanVien_Form extends javax.swing.JPanel {
     }
 
     public void initTableData() {
-
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        for (int i = 0; i <= 160; i++) {
-            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
-        }
-        for (int i = 0; i < listS.size(); i++) {
-            this.table1.addRow(listS.get(i).toRowTable());
-        }
+        listNhanVien = nhanVienService.getAllNhanVien();
+        String columns[] = {"Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
+        Object rows[][] = {};
+        this.table1.setModel(new DefaultTableModel(rows, columns));
+        table1.setDefaultEditor(Object.class, null);
+        table1.setBackground(Color.WHITE);
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        this.table1.setRowHeight(50);
+        this.table1.setBackground(Color.white);
+      
+        for (NhanVien nhanVien : listNhanVien) {
+            table1.addRow(new Object[]{nhanVien.getMa(), nhanVien.getHo()+ " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
+        }      
+    }
+    public void showListByName(List<NhanVien> list){
+        String columns[] = {"Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
+        Object rows[][] = {};
+        this.table1.setModel(new DefaultTableModel(rows, columns));
+        table1.setDefaultEditor(Object.class, null);
+        table1.setBackground(Color.WHITE);
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        this.table1.setRowHeight(50);
+        this.table1.setBackground(Color.white);
+        
+        for (NhanVien nhanVien : list) {
+            table1.addRow(new Object[]{nhanVien.getMa(), nhanVien.getHo()+ " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
+        }      
     }
 
     @SuppressWarnings("unchecked")
@@ -58,7 +73,7 @@ public class NhanVien_Form extends javax.swing.JPanel {
 
         pagePanel = new javax.swing.JPanel();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtTimKiem = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -79,13 +94,18 @@ public class NhanVien_Form extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setBackground(new java.awt.Color(17, 28, 68));
+        txtTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtTimKiem.setLabelText("Tìm Kiếm Theo Tên");
+        txtTimKiem.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -123,7 +143,7 @@ public class NhanVien_Form extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(483, 483, 483)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
@@ -143,7 +163,7 @@ public class NhanVien_Form extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -310,6 +330,12 @@ public class NhanVien_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTaoSPActionPerformed
 
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+      String txtName = this.txtTimKiem.getText().trim();
+      List<NhanVien> list = nhanVienService.getListbyName(txtName);
+        showListByName(list);
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnTaoSP;
@@ -326,6 +352,6 @@ public class NhanVien_Form extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pagePanel;
     private View.DesignComponent.Table table1;
-    private View.DesignComponent.TextField textField1;
+    private View.DesignComponent.TextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

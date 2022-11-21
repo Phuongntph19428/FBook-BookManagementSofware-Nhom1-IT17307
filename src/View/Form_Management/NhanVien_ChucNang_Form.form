@@ -31,7 +31,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="1360" height="800"/>
+          <AbsoluteConstraints x="10" y="0" width="1360" height="800"/>
         </Constraint>
       </Constraints>
 
@@ -77,15 +77,15 @@
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="combobox2" min="-2" pref="282" max="-2" attributes="0"/>
+                              <Component id="comboboxTrangThai" min="-2" pref="282" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                      <Component id="textField4" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
-                                      <Component id="textField1" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
-                                      <Component id="textField8" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
+                                      <Component id="txtTen" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
+                                      <Component id="txtID" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
+                                      <Component id="txtEmail" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
@@ -93,29 +93,29 @@
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       <Component id="radioButtonCustom2" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="textField10" alignment="0" min="-2" pref="282" max="-2" attributes="0"/>
+                                  <Component id="txtDiaChi" alignment="0" min="-2" pref="282" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="textField2" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="textField5" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="textField7" alignment="0" pref="295" max="32767" attributes="0"/>
-                                          <Component id="textField9" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtMaNhanVien" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtTenDem" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txtSDT" alignment="0" pref="295" max="32767" attributes="0"/>
+                                          <Component id="txtNgaySinh" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                      <Component id="textField12" max="32767" attributes="0"/>
+                                      <Component id="txtMatKhau" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="textField6" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Component id="txtHo" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
                                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                                   <Component id="btnInBaoCao5" alignment="0" min="-2" pref="217" max="-2" attributes="0"/>
                                                   <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
@@ -124,10 +124,7 @@
                                                   </Group>
                                               </Group>
                                           </Group>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                                          <Component id="combobox1" min="-2" pref="282" max="-2" attributes="0"/>
+                                          <Component id="comboboxChucVu" alignment="1" min="-2" pref="282" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
@@ -154,26 +151,26 @@
                       </Group>
                       <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="combobox1" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                          <Component id="txtID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMaNhanVien" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboboxChucVu" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTen" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTenDem" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtHo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="textField8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textField7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtSDT" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtNgaySinh" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -186,8 +183,8 @@
                               </Group>
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="textField10" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="textField12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMatKhau" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -199,14 +196,14 @@
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="combobox2" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="comboboxTrangThai" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace pref="117" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="View.DesignComponent.TextField" name="textField1">
+            <Component class="View.DesignComponent.TextField" name="txtID">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -229,8 +226,11 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIDActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField2">
+            <Component class="View.DesignComponent.TextField" name="txtMaNhanVien">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -253,7 +253,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField4">
+            <Component class="View.DesignComponent.TextField" name="txtTen">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -276,10 +276,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField4ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTenActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField5">
+            <Component class="View.DesignComponent.TextField" name="txtTenDem">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -302,10 +302,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTenDemActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField6">
+            <Component class="View.DesignComponent.TextField" name="txtHo">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -328,10 +328,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtHoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField7">
+            <Component class="View.DesignComponent.TextField" name="txtSDT">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -354,10 +354,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField7ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSDTActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField8">
+            <Component class="View.DesignComponent.TextField" name="txtEmail">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -380,7 +380,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField8ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -394,7 +394,7 @@
                 <Property name="text" type="java.lang.String" value="Gi&#x1edb;i T&#xed;nh"/>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField9">
+            <Component class="View.DesignComponent.TextField" name="txtNgaySinh">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -417,7 +417,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField9ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNgaySinhActionPerformed"/>
               </Events>
             </Component>
             <Component class="View.ButtonDesign.Button" name="btnNgaySinh">
@@ -530,7 +530,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao5ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField10">
+            <Component class="View.DesignComponent.TextField" name="txtDiaChi">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -553,10 +553,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField10ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDiaChiActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="textField12">
+            <Component class="View.DesignComponent.TextField" name="txtMatKhau">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -579,10 +579,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField12ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMatKhauActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.Combobox" name="combobox1">
+            <Component class="View.DesignComponent.Combobox" name="comboboxChucVu">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -617,6 +617,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Nam"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioButtonCustom1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="View.ComboBoxDesign.RadioButtonCustom" name="radioButtonCustom2">
               <Properties>
@@ -629,7 +632,7 @@
                 <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
               </Properties>
             </Component>
-            <Component class="View.DesignComponent.Combobox" name="combobox2">
+            <Component class="View.DesignComponent.Combobox" name="comboboxTrangThai">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -653,6 +656,9 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboboxTrangThaiActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

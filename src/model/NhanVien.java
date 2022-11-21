@@ -7,6 +7,7 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +35,7 @@ public class NhanVien implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "IdChucvu", nullable = false)
-    private NhanVien chucVu;
+    private ChucVu chucVu;
 
     @ManyToOne
     @JoinColumn(name = "IdGuiBC", nullable = true)
@@ -45,6 +46,9 @@ public class NhanVien implements Serializable {
 
     @Column(name = "Ten")
     private String ten;
+
+    @Column(name = "Ho")
+    private String ho;
 
     @Column(name = "TenDem")
     private String tenDem;
@@ -80,12 +84,13 @@ public class NhanVien implements Serializable {
     public NhanVien() {
     }
 
-    public NhanVien(String id, NhanVien chucVu, NhanVien guiBC, String ma, String ten, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai) {
+    public NhanVien(String id, ChucVu chucVu, NhanVien guiBC, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai, List<HoaDon> lstHoaDon) {
         this.id = id;
         this.chucVu = chucVu;
         this.guiBC = guiBC;
         this.ma = ma;
         this.ten = ten;
+        this.ho = ho;
         this.tenDem = tenDem;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
@@ -95,6 +100,7 @@ public class NhanVien implements Serializable {
         this.matKhau = matKhau;
         this.hinh = hinh;
         this.trangThai = trangThai;
+        this.lstHoaDon = lstHoaDon;
     }
 
     public String getId() {
@@ -105,11 +111,11 @@ public class NhanVien implements Serializable {
         this.id = id;
     }
 
-    public NhanVien getChucVu() {
+    public ChucVu getChucVu() {
         return chucVu;
     }
 
-    public void setChucVu(NhanVien chucVu) {
+    public void setChucVu(ChucVu chucVu) {
         this.chucVu = chucVu;
     }
 
@@ -217,9 +223,16 @@ public class NhanVien implements Serializable {
         this.lstHoaDon = lstHoaDon;
     }
 
+    public String getHo() {
+        return ho;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+
     @Override
     public String toString() {
         return "NhanVien{" + "id=" + id + ", chucVu=" + chucVu + ", guiBC=" + guiBC + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + ", matKhau=" + matKhau + ", hinh=" + hinh + ", trangThai=" + trangThai + '}';
     }
-
 }

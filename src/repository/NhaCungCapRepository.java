@@ -4,20 +4,10 @@
  */
 package repository;
 
-import java.util.List;
-import model.ChucVu;
-
 /**
  *
- * @author ECO
+ * @author Nam Anh
  */
-public interface ChucVuRepository {
-
-    boolean insert(ChucVu cv);
-
-    boolean update(ChucVu cv);
-
-    List<ChucVu> selectAll();
-
-    List<ChucVu> SelectbyName(String name);
+public interface NhaCungCapRepository {
+    
 }
