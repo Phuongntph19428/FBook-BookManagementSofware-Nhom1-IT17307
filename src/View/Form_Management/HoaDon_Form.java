@@ -4,111 +4,21 @@
  */
 package View.Form_Management;
 
-import Model.SachFake;
-import View.ButtonDesign.Button;
-import View.ManagementBookForm;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import model.Sach;
-import service.SachService;
-import service.impl.SachServiceImpl;
-//s
+
 /**
  *
  * @author quanc
  */
-public class Sach_Form extends javax.swing.JPanel {
+public class HoaDon_Form extends javax.swing.JPanel {
 
-    private SachService _sachService = new SachServiceImpl();
-
-    private final int RecordOneTable = 10;
-    private int indexSelected = 1;
-    private int indexRow = 1;
-    private int pageCurrently = 1;
-    private int countJbtn = 0;
-
-    private List<Sach> lstSach;
-    private List<Button> listBtn = new ArrayList<>();
-
-    public Sach_Form() {
+    /**
+     * Creates new form HoaDon_Form
+     */
+    public HoaDon_Form() {
         initComponents();
-//        String columns[] = {"Nhà xuất bản", "Vị trí", "Mã", "Tên", "Số lượng", "Số trang", "Giá nhập", "Giá bán", "Trạng thái", "Hình"};
-        Object rows[][] = {};
-
-        table1.setBackground(Color.WHITE);
         this.table1.setRowHeight(59);
         this.table1.setBackground(Color.white);
-        initTableData(0, 10);
-        showTarget(1);
-
-    }
-
-    public JButton getListbtn() {
-        return this.btnTaoSP1;
-    }
-
-    public void initTableData(int position, int pageSize) {
-        // Nơi đổ dữ liệu vào table
-        // Ví dụ về đối tượng SachFake khi add Row ( sẽ tùy vào đối tượng để sửa các trường
-        //new ModelTest(new ImageIcon("image/bookmark_30px.png"), "Bora", "Male", "C#", 300).toRowTable()
-        //new Object[]{new ModelProfile(icon, name), Ma, soLuong, df.format(giaBan), barCode, moTa}
-//        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-//        this.table1.addRow(new SachFake("SKL1", imageIcon, "Sách 1", 100, 30000, "01293123", "Mới vl").toRowTable());
-
-        lstSach = _sachService.getList(position, pageSize);
-
-        for (int i = 0; i < countJbtn; i++) {
-            Button btn = new Button();
-            listBtn.add(btn);
-            btn.setText("" + (i + 1));
-            btn.setSize(30, 30);
-            btn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    showTarget(Integer.parseInt(btn.getText()));
-                    setColorButtonSelected(Integer.parseInt(btn.getText()) - 1);
-
-                }
-            });
-
-            pagePanel.add(btn);
-        }
-
-    }
-
-    public void showTarget(int index) {
-        DefaultTableModel model = (DefaultTableModel) table1.getModel();
-        model.setRowCount(0);
-        int sizeIndex = RecordOneTable * index;
-        int indexStart = sizeIndex - RecordOneTable;
-        for (Sach sach : lstSach) {
-            this.table1.addRow(sach.toDataRow());
-        }
-
-    }
-
-    public void setColorButtonSelected(int index) {
-        for (Button btn : listBtn) {
-            btn.setBackground(Color.WHITE);
-            btn.setForeground(Color.BLACK);
-        }
-        listBtn.get(index).setBackground(new Color(31, 31, 111));
-        listBtn.get(index).setForeground(Color.WHITE);
-
     }
 
     /**
@@ -128,9 +38,6 @@ public class Sach_Form extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnInBaoCao3 = new View.ButtonDesign.Button();
-        btnInBaoCao1 = new View.ButtonDesign.Button();
-        btnTaoSP1 = new View.ButtonDesign.Button();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -139,7 +46,6 @@ public class Sach_Form extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(11, 20, 55));
-        setPreferredSize(new java.awt.Dimension(1373, 978));
 
         pagePanel.setBackground(new java.awt.Color(29, 32, 57));
         pagePanel.setLayout(new java.awt.GridLayout(1, 0));
@@ -156,7 +62,7 @@ public class Sach_Form extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
-        jLabel2.setText("List of Book");
+        jLabel2.setText("List of Receipt");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_previous_40px.png"))); // NOI18N
 
@@ -222,45 +128,6 @@ public class Sach_Form extends javax.swing.JPanel {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
-
-        btnInBaoCao3.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao3.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao3.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_new_copy_35px.png"))); // NOI18N
-        btnInBaoCao3.setText("Import Excel");
-        btnInBaoCao3.setFocusable(false);
-        btnInBaoCao3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao3ActionPerformed(evt);
-            }
-        });
-
-        btnInBaoCao1.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_microsoft_excel_35px.png"))); // NOI18N
-        btnInBaoCao1.setText("Export Excel");
-        btnInBaoCao1.setFocusable(false);
-        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao1ActionPerformed(evt);
-            }
-        });
-
-        btnTaoSP1.setBackground(new java.awt.Color(31, 31, 111));
-        btnTaoSP1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnTaoSP1.setForeground(new java.awt.Color(255, 255, 255));
-        btnTaoSP1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_add_35px.png"))); // NOI18N
-        btnTaoSP1.setText("Tạo Sản Phẩm");
-        btnTaoSP1.setFocusable(false);
-        btnTaoSP1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnTaoSP1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTaoSP1ActionPerformed(evt);
-            }
-        });
 
         jPanelBourder3.setBackground(new java.awt.Color(47, 55, 90));
 
@@ -341,7 +208,7 @@ public class Sach_Form extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Management Book - Quản Lý Sách");
+        jLabel1.setText("Management Book - Quản Lý Hóa Đơn");
 
         jPanel6.setBackground(new java.awt.Color(102, 102, 102));
         jPanel6.setPreferredSize(new java.awt.Dimension(1330, 1));
@@ -375,26 +242,15 @@ public class Sach_Form extends javax.swing.JPanel {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(557, 557, 557)
-                        .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btnTaoSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel1))
+                .addGap(0, 32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTaoSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,27 +258,12 @@ public class Sach_Form extends javax.swing.JPanel {
                 .addComponent(jPanelBourder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTaoSP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoSP1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTaoSP1ActionPerformed
-
-    private void btnInBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao1ActionPerformed
-
-    private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao3ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao1;
-    private View.ButtonDesign.Button btnInBaoCao3;
-    private View.ButtonDesign.Button btnTaoSP1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

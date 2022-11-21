@@ -7,11 +7,14 @@ package View;
 import View.Form_Management.BieuDo_Form;
 import View.DesignComponent.Notification;
 import View.Form_Management.ChucVu_Form;
+import View.Form_Management.HoaDon_Form;
 import View.Form_Management.KhachHang_Form;
 import View.Form_Management.KhuyenMai_Form;
 import View.Form_Management.NXB_Form;
+import View.Form_Management.NhaCungCap_Form;
 import View.Form_Management.NhanVien_ChucNang_Form;
 import View.Form_Management.NhanVien_Form;
+import View.Form_Management.PhieuNhap_Form;
 import View.Form_Management.Sach_ChucNang_Form;
 import View.Form_Management.Sach_Form;
 import View.Form_Management.TacGia_Form;
@@ -21,10 +24,9 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.Image;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+//s
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
@@ -37,6 +39,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import javax.swing.border.LineBorder;
+import model.PhieuNhap;
 
 /**
  *
@@ -75,6 +78,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         KhuyenMai_Form km = new KhuyenMai_Form();
         KhachHang_Form kh = new KhachHang_Form();
         Vitri_Form vt = new Vitri_Form();
+        HoaDon_Form hd = new HoaDon_Form();
+        NhaCungCap_Form ncc = new NhaCungCap_Form();
+        PhieuNhap_Form pn = new PhieuNhap_Form();
 
         this.Layout_1_Card.add(bieuDoForm);// 0
         this.Layout_1_Card.add(sach);// 1
@@ -87,7 +93,10 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.Layout_1_Card.add(nvcn); // 8
         this.Layout_1_Card.add(km); //9
         this.Layout_1_Card.add(kh); // 10
-        this.Layout_1_Card.add(vt); // 10
+        this.Layout_1_Card.add(vt); // 11
+        this.Layout_1_Card.add(hd); //12
+        this.Layout_1_Card.add(ncc); //13
+        this.Layout_1_Card.add(pn); //14
 
         this.Layout_1_Card.revalidate();
 
@@ -103,6 +112,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.add(km);
         listForm.add(kh);
         listForm.add(vt);
+        listForm.add(hd);
+        listForm.add(ncc);
+        listForm.add(pn);
 
         excute();
 
@@ -178,6 +190,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         Icon iconTTNV = new ImageIcon("image/icons8_video_conference_30px.png");
         Icon iconVitri = new ImageIcon("image/icons8_home_address_30px.png");
         Icon iconSearch = new ImageIcon("image/icons8_search_25px.png");
+        Icon iconPN = new ImageIcon("image/icons8_receipt_25px.png");
+        Icon iconNCC = new ImageIcon("image/icons8_supplier_25px.png");
 
         lbSearch.setIcon(iconSearch);
         MenuItem ItemSach = new MenuItem(iconsachMini, "                 Sách", null);
@@ -204,8 +218,10 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ItemHoaDonBan.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
         ActionListenerJLabel(ItemHoaDonBan.getIcon(), 1, ItemHoaDonBan, item_);
         MenuItem ItemPhieuTra = new MenuItem(iconHDTra, "                 Hóa Đơn Trả", null);
-        MenuItem ItemnhapKho = new MenuItem(null, "                 Nhập Kho", null);
-        MenuItem ItemKiemKho = new MenuItem(null, "                 Kiểm Kho", null);
+        MenuItem ItemnhapKho = new MenuItem(iconPN, "                 Phiếu Nhập", null);
+        ActionListenerJLabel(ItemnhapKho.getIcon(), 15, ItemnhapKho, item_);
+        MenuItem ItemNhaCC = new MenuItem(iconNCC, "                 Nhà Cung Cấp ", null);
+        ActionListenerJLabel(ItemNhaCC.getIcon(), 14, ItemNhaCC, item_);
         MenuItem ItemDoanhThu = new MenuItem(null, "                 Thu - Chi", null);
         MenuItem ItemCuaHang = new MenuItem(null, "                 Cửa Hàng", null);
         MenuItem ItemGiaoCa = new MenuItem(null, "                 Giao Ca", null);
@@ -226,6 +242,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem menuHoaDon = new MenuItem(iconhoaDon, "                 Hóa Đơn", null);
         menuHoaDon.setBackground(ColorFrame.COLOR_KEY);
         menuHoaDon.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
+        ActionListenerJLabel(menuHoaDon.getIcon(), 13, menuHoaDon, MenuItem_);
 
         MenuItem menuKM = new MenuItem(iconKM, "                 Khuyến Mãi", null);
         ActionListenerJLabel(menuKM.getIcon(), 10, menuKM, MenuItem_);
@@ -242,7 +259,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         menuthongKe.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         menuthongKe.setIconUpDown(down);
 
-        MenuItem menunhapKho = new MenuItem(iconKho, "                 Quản Lý Kho", null, ItemnhapKho, ItemKiemKho);
+        MenuItem menunhapKho = new MenuItem(iconKho, "                 Nhập Kho", null, ItemnhapKho, ItemNhaCC);
         menunhapKho.setBackground(ColorFrame.COLOR_KEY);
         menunhapKho.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         menunhapKho.setIconUpDown(down);
