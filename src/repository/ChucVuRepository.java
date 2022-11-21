@@ -9,9 +9,15 @@ import model.ChucVu;
 
 /**
  *
- * @author Nam Anh
+ * @author ECO
  */
 public interface ChucVuRepository {
 
-    List<ChucVu> getAllChucVu();
+    boolean insert(ChucVu cv);
+
+    boolean update(ChucVu cv);
+
+    List<ChucVu> selectAll();
+
+    List<ChucVu> SelectbyName(String name);
 }

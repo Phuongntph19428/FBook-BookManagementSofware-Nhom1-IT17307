@@ -19,4 +19,8 @@ public interface SachRepositoty {
     
     public List<Sach> getList(int position, int pageSize);
     
+    public int countAllSach();
+    
+    public List<Sach> getListByKeyword(String keyword);
+    
 }

@@ -11,7 +11,11 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.ChucVu;
+import service.ChucVuService;
+import service.impl.ChucVuServicelmpl;
 
 /**
  *
@@ -20,30 +24,67 @@ import javax.swing.table.DefaultTableModel;
 public class ChucVu_Form extends javax.swing.JPanel {
 
     private List<SachFake> listS = new ArrayList<>();
+    private List<ChucVu> listCv = new ArrayList<>();
+    private ChucVuService ChucVuServicer;
 
     public ChucVu_Form() {
         initComponents();
-        String columns[] = {"Mã", "Tên Sách", "Hình", "Số lượng", "Giá bán", "Barcode", "Mô Tả"};
+        String columns[] = {"ID", "Mã chức vụ", "Tên chức vụ ", "Mô tả chức vụ"};
         Object rows[][] = {};
-        this.table1.setModel(new DefaultTableModel(rows, columns));
-        table1.setDefaultEditor(Object.class, null);
-        table1.setBackground(Color.WHITE);
-        this.table1.setRowHeight(50);
+        ChucVuServicer = new ChucVuServicelmpl();
+        this.tbChucVu.setModel(new DefaultTableModel(rows, columns));
+        tbChucVu.setDefaultEditor(Object.class, null);
+        tbChucVu.setBackground(Color.WHITE);
+        this.tbChucVu.setRowHeight(50);
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
-        this.table1.setBackground(Color.white);
+        this.tbChucVu.setBackground(Color.white);
         initTableData();
+        xoaFrom();
     }
 
     public void initTableData() {
-        
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 
-        for (int i = 0; i <= 160; i++) {
-            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
+//        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+//
+//        for (int i = 0; i <= 160; i++) {
+//            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
+//        }
+//        for (SachFake sach : listS) {
+//            table1.addRow(sach.toRowTable());
+//        }
+        listCv = ChucVuServicer.selectAll();
+        DefaultTableModel dtm = (DefaultTableModel) tbChucVu.getModel();
+        dtm.setRowCount(0);
+        for (ChucVu cv : listCv) {
+            dtm.addRow(cv.toDaTaRow());
         }
-        for (SachFake sach : listS) {
-            table1.addRow(sach.toRowTable());
+    }
+
+    // nma nếu click như vậy thì cách này sẽ bị sai dữ liệu khi fill nhé oke
+    // nên tôi sẽ làm là click theo table kh theo vị trí trong list nữa
+    public void LoadTablebySearch(List<ChucVu> list) {
+        DefaultTableModel dtm = (DefaultTableModel) tbChucVu.getModel();
+        dtm.setRowCount(0);
+        for (ChucVu cv : list) {
+            dtm.addRow(cv.toDaTaRow());
         }
+    }
+
+    private void fillTable(int row) {
+        // String columns[] = {"ID", "Mã chức vụ", "Tên chức vụ ", "Mô tả chức vụ"};
+//        ChucVu cv = listCv.get(row); 
+        txtIdCV.setText(tbChucVu.getValueAt(row, 0).toString());
+        txtMaCV.setText(tbChucVu.getValueAt(row, 1).toString());
+        txtTenCV.setText(tbChucVu.getValueAt(row, 2).toString());
+        txtMoTa.setText(tbChucVu.getValueAt(row, 3).toString());
+
+    }
+
+    private void xoaFrom() {
+        txtIdCV.setText("");
+        txtMaCV.setText("");
+        txtTenCV.setText("");
+        txtMoTa.setText("");
 
     }
 
@@ -52,35 +93,40 @@ public class ChucVu_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtTimKiem = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new View.DesignComponent.Table();
+        tbChucVu = new View.DesignComponent.Table();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        textField2 = new View.DesignComponent.TextField();
-        textField3 = new View.DesignComponent.TextField();
-        textField4 = new View.DesignComponent.TextField();
-        textField5 = new View.DesignComponent.TextField();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao5 = new View.ButtonDesign.Button();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
+        txtIdCV = new View.DesignComponent.TextField();
+        txtTenCV = new View.DesignComponent.TextField();
+        txtMaCV = new View.DesignComponent.TextField();
+        txtMoTa = new View.DesignComponent.TextField();
+        btnCapNhat = new View.ButtonDesign.Button();
+        btnTaoMoi = new View.ButtonDesign.Button();
+        btnLamMoi = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setBackground(new java.awt.Color(17, 28, 68));
+        txtTimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtTimKiem.setLabelText("Tìm Kiếm Theo Tên");
+        txtTimKiem.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -110,7 +156,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanelBourder1Layout.setVerticalGroup(
@@ -122,7 +168,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2)))
@@ -138,7 +184,7 @@ public class ChucVu_Form extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tbChucVu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -163,9 +209,14 @@ public class ChucVu_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        table1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        table1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(table1);
+        tbChucVu.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tbChucVu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tbChucVu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbChucVuMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbChucVu);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
@@ -223,72 +274,77 @@ public class ChucVu_Form extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        textField2.setEditable(false);
-        textField2.setBackground(new java.awt.Color(47, 55, 90));
-        textField2.setForeground(new java.awt.Color(255, 255, 255));
-        textField2.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField2.setLabelText("ID");
-        textField2.setLineColor(new java.awt.Color(255, 255, 255));
-
-        textField3.setBackground(new java.awt.Color(47, 55, 90));
-        textField3.setForeground(new java.awt.Color(255, 255, 255));
-        textField3.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField3.setLabelText("Tên Chức Vụ");
-        textField3.setLineColor(new java.awt.Color(255, 255, 255));
-
-        textField4.setBackground(new java.awt.Color(47, 55, 90));
-        textField4.setForeground(new java.awt.Color(255, 255, 255));
-        textField4.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField4.setLabelText("Mã Chức Vụ");
-        textField4.setLineColor(new java.awt.Color(255, 255, 255));
-
-        textField5.setBackground(new java.awt.Color(47, 55, 90));
-        textField5.setForeground(new java.awt.Color(255, 255, 255));
-        textField5.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField5.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField5.setLabelText("Mô Tả");
-        textField5.setLineColor(new java.awt.Color(255, 255, 255));
-
-        btnInBaoCao4.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Cập Nhật");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        txtIdCV.setEditable(false);
+        txtIdCV.setBackground(new java.awt.Color(47, 55, 90));
+        txtIdCV.setForeground(new java.awt.Color(255, 255, 255));
+        txtIdCV.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtIdCV.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtIdCV.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtIdCV.setLabelText("ID");
+        txtIdCV.setLineColor(new java.awt.Color(255, 255, 255));
+        txtIdCV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                txtIdCVActionPerformed(evt);
             }
         });
 
-        btnInBaoCao5.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao5.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao5.setText("Tạo Mới");
-        btnInBaoCao5.setFocusable(false);
-        btnInBaoCao5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao5.addActionListener(new java.awt.event.ActionListener() {
+        txtTenCV.setBackground(new java.awt.Color(47, 55, 90));
+        txtTenCV.setForeground(new java.awt.Color(255, 255, 255));
+        txtTenCV.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTenCV.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTenCV.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTenCV.setLabelText("Tên Chức Vụ");
+        txtTenCV.setLineColor(new java.awt.Color(255, 255, 255));
+
+        txtMaCV.setBackground(new java.awt.Color(47, 55, 90));
+        txtMaCV.setForeground(new java.awt.Color(255, 255, 255));
+        txtMaCV.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMaCV.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMaCV.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMaCV.setLabelText("Mã Chức Vụ");
+        txtMaCV.setLineColor(new java.awt.Color(255, 255, 255));
+
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
+
+        btnCapNhat.setBackground(new java.awt.Color(31, 31, 111));
+        btnCapNhat.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapNhat.setText("Cập Nhật");
+        btnCapNhat.setFocusable(false);
+        btnCapNhat.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnCapNhat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao5ActionPerformed(evt);
+                btnCapNhatActionPerformed(evt);
             }
         });
 
-        btnInBaoCao6.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Làm Mới");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        btnTaoMoi.setBackground(new java.awt.Color(31, 31, 111));
+        btnTaoMoi.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnTaoMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoMoi.setText("Tạo Mới");
+        btnTaoMoi.setFocusable(false);
+        btnTaoMoi.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnTaoMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                btnTaoMoiActionPerformed(evt);
+            }
+        });
+
+        btnLamMoi.setBackground(new java.awt.Color(31, 31, 111));
+        btnLamMoi.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnLamMoi.setText("Làm Mới");
+        btnLamMoi.setFocusable(false);
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
             }
         });
 
@@ -305,18 +361,18 @@ public class ChucVu_Form extends javax.swing.JPanel {
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTenCV, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIdCV, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMaCV, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInBaoCao4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
+                            .addComponent(btnTaoMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -333,18 +389,18 @@ public class ChucVu_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIdCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMaCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtTenCV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnTaoMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
                 .addGap(10, 10, 10)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -354,23 +410,69 @@ public class ChucVu_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
+    private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
+        ChucVu cv = getDaTa();
+        int row = tbChucVu.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "chon dong can cap nhat");
+            return;
+        } else if (cv == null) {
+            JOptionPane.showMessageDialog(this, "khong duoc de trong");
+            return;
+        } else {
+            ChucVuServicer.update(cv);
+            JOptionPane.showMessageDialog(this, "Cap nhat thanh cong");
+            initTableData();
+        }
+    }//GEN-LAST:event_btnCapNhatActionPerformed
+    private void btnTaoMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoMoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+        ChucVu cv = getDaTa();
+        if (cv == null) {
 
-    private void btnInBaoCao5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao5ActionPerformed
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Tao moi thanh cong");
+        ChucVuServicer.insert(cv);
+        xoaFrom();
+        initTableData();
+    }//GEN-LAST:event_btnTaoMoiActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao5ActionPerformed
+        xoaFrom();
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
+    private void tbChucVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChucVuMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+        int row = tbChucVu.getSelectedRow();
+        fillTable(row);
+    }//GEN-LAST:event_tbChucVuMouseClicked
 
+    private void txtIdCVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdCVActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdCVActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        String txtName = this.txtTimKiem.getText().trim();
+        System.out.println(txtName);
+        List<ChucVu> list = this.ChucVuServicer.SelectbyName(txtName);
+        LoadTablebySearch(list);
+
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+    private ChucVu getDaTa() {
+        String id = txtIdCV.getText().trim();
+        String ma = txtMaCV.getText().trim();
+        String ten = txtTenCV.getText().trim();
+        String moTa = txtMoTa.getText().trim();
+        ChucVu chucVu = new ChucVu(id, ma, ten, moTa);
+        return chucVu;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao4;
-    private View.ButtonDesign.Button btnInBaoCao5;
-    private View.ButtonDesign.Button btnInBaoCao6;
+    private View.ButtonDesign.Button btnCapNhat;
+    private View.ButtonDesign.Button btnLamMoi;
+    private View.ButtonDesign.Button btnTaoMoi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -380,11 +482,11 @@ public class ChucVu_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private View.DesignComponent.Table table1;
-    private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.TextField textField2;
-    private View.DesignComponent.TextField textField3;
-    private View.DesignComponent.TextField textField4;
-    private View.DesignComponent.TextField textField5;
+    private View.DesignComponent.Table tbChucVu;
+    private View.DesignComponent.TextField txtIdCV;
+    private View.DesignComponent.TextField txtMaCV;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtTenCV;
+    private View.DesignComponent.TextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

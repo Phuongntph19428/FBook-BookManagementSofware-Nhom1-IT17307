@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package service;
 
@@ -9,8 +9,15 @@ import model.ChucVu;
 
 /**
  *
- * @author ppolo
+ * @author ECO
  */
-public interface ChucVuService {    
-    List<ChucVu> getAllChuVu();
+public interface ChucVuService {
+
+    String insert(ChucVu cv);
+
+    String update(ChucVu cv);
+
+    List<ChucVu> selectAll();
+    
+    List<ChucVu> SelectbyName(String name);
 }

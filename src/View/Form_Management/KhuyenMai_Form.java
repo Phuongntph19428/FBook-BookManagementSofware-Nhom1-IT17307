@@ -9,11 +9,19 @@ import View.ButtonDesign.Button;
 import View.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Image;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.KhuyenMai;
+import service.IKhuyenMaiServicer;
+import service.impl.KhuyenMaiServicer;
 
 /**
  *
@@ -21,35 +29,68 @@ import javax.swing.table.DefaultTableModel;
  */
 public class KhuyenMai_Form extends javax.swing.JPanel {
 
-    private List<SachFake> listS = new ArrayList<>();
     private List<Button> listBtn = new ArrayList<>();
-
-    private boolean Istoggle = false;
+    private List<KhuyenMai> listKhuyenMai = new ArrayList<>();
+    private IKhuyenMaiServicer iKhuyenMaiServicer;
 
     public KhuyenMai_Form() {
         initComponents();
-        String columns[] = {"Mã", "Tên Sách", "Hình", "Số lượng", "Giá bán", "Barcode", "Mô Tả"};
+        iKhuyenMaiServicer = new KhuyenMaiServicer();
+        String columns[] = {"Id", "Mã Khuyến Mại", "Tên Khuyến Mãi", "Chiết Khấu", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái", "Mô Tả"};
         Object rows[][] = {};
-        this.table1.setModel(new DefaultTableModel(rows, columns));
-        table1.setDefaultEditor(Object.class, null);
-        table1.setBackground(Color.WHITE);
-        this.table1.setRowHeight(50);
-        this.table1.setBackground(Color.white);
-        initTableData();
+        this.tbKhuyenMai.setModel(new DefaultTableModel(rows, columns));
+        tbKhuyenMai.setDefaultEditor(Object.class, null);
+        tbKhuyenMai.setBackground(Color.WHITE);
+        this.tbKhuyenMai.setRowHeight(50);
+        this.tbKhuyenMai.setBackground(Color.white);
+
         Icon iconbtnNgayBatDau = new ImageIcon("image/icons8_schedule_30px.png");
         this.btnNgayBatDau.setIcon(iconbtnNgayBatDau);
         this.btnNgayKetThuc.setIcon(iconbtnNgayBatDau);
         this.jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        loadTable();
+        xoaFrom();
     }
 
-    public void initTableData() {
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        for (int i = 0; i <= 160; i++) {
-            listS.add(new SachFake("SKL1", imageIcon, "Sách " + i, 100, 30000, "01293123", "Mới vl"));
+    private void loadTable() {
+        listKhuyenMai = iKhuyenMaiServicer.selectAll();
+        DefaultTableModel dtm = (DefaultTableModel) tbKhuyenMai.getModel();
+        dtm.setRowCount(0);
+        for (KhuyenMai km : listKhuyenMai) {
+            dtm.addRow(km.toDaTaRow());
         }
-        for (SachFake sach : listS) {
-            table1.addRow(sach.toRowTable());
+
+    }
+
+    private void fillTable(int row) {
+        KhuyenMai km = listKhuyenMai.get(row);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        txtId.setText(km.getId());
+        txtMaKM.setText(km.getMa());
+        txtTenKM.setText(km.getTen());
+        txtChietKhau.setText(String.valueOf(km.getChietKhau()));
+        txtNgayBD.setText(String.valueOf(df.format(km.getNgayBatDau())));
+        txtNgayKT.setText(String.valueOf(df.format(km.getNgayKetThuc())));
+        String trangThai = String.valueOf(km.getTrangThai() == 1 ? "Đang hoạt động" : "Ngừng hoạt động");
+        if (trangThai.equals("Đang hoạt động")) {
+            rdDangHD.setSelected(true);
+
+        } else {
+            rdNgungHD.setSelected(true);
+
         }
+        txtMoTa.setText(km.getMoTa());
+    }
+
+    private void xoaFrom() {
+        txtChietKhau.setText("");
+        txtId.setText("");
+        txtMaKM.setText("");
+        txtMoTa.setText("");
+        txtNgayBD.setText("");
+        txtNgayKT.setText("");
+        txtTenKM.setText("");
+        btgrTrangThai.clearSelection();
     }
 
     @SuppressWarnings("unchecked")
@@ -58,6 +99,7 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
 
         dateNgayBatDau = new View.DateChooser.DateChooser();
         dateNgayKetThuc = new View.DateChooser.DateChooser();
+        btgrTrangThai = new javax.swing.ButtonGroup();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
         textField1 = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
@@ -65,27 +107,31 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new View.DesignComponent.Table();
+        tbKhuyenMai = new View.DesignComponent.Table();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        textField2 = new View.DesignComponent.TextField();
-        textField3 = new View.DesignComponent.TextField();
-        textField4 = new View.DesignComponent.TextField();
-        textField5 = new View.DesignComponent.TextField();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao5 = new View.ButtonDesign.Button();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
+        txtId = new View.DesignComponent.TextField();
+        txtTenKM = new View.DesignComponent.TextField();
+        txtMaKM = new View.DesignComponent.TextField();
+        txtChietKhau = new View.DesignComponent.TextField();
+        btnSua = new View.ButtonDesign.Button();
+        btnThem = new View.ButtonDesign.Button();
+        btnXoaFrom = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
-        txtNgayBatDau = new View.DesignComponent.TextField();
-        txtNgayKetThuc = new View.DesignComponent.TextField();
+        txtNgayBD = new View.DesignComponent.TextField();
+        txtNgayKT = new View.DesignComponent.TextField();
         btnNgayBatDau = new View.ButtonDesign.Button();
         btnNgayKetThuc = new View.ButtonDesign.Button();
+        jLabel3 = new javax.swing.JLabel();
+        rdNgungHD = new View.ComboBoxDesign.RadioButtonCustom();
+        rdDangHD = new View.ComboBoxDesign.RadioButtonCustom();
+        txtMoTa = new View.DesignComponent.TextField();
 
         dateNgayBatDau.setForeground(new java.awt.Color(47, 55, 90));
-        dateNgayBatDau.setTextRefernce(txtNgayBatDau);
+        dateNgayBatDau.setTextRefernce(txtNgayBD);
 
         dateNgayKetThuc.setForeground(new java.awt.Color(47, 55, 90));
-        dateNgayKetThuc.setTextRefernce(txtNgayKetThuc);
+        dateNgayKetThuc.setTextRefernce(txtNgayKT);
 
         setBackground(new java.awt.Color(11, 20, 55));
 
@@ -155,7 +201,7 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tbKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -180,15 +226,20 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        table1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        table1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(table1);
+        tbKhuyenMai.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tbKhuyenMai.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tbKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbKhuyenMaiMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbKhuyenMai);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
         jPanelBourder2Layout.setHorizontalGroup(
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1322, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelBourder2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -240,93 +291,91 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        textField2.setEditable(false);
-        textField2.setBackground(new java.awt.Color(47, 55, 90));
-        textField2.setForeground(new java.awt.Color(255, 255, 255));
-        textField2.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField2.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField2.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField2.setLabelText("ID");
-        textField2.setLineColor(new java.awt.Color(255, 255, 255));
+        txtId.setEditable(false);
+        txtId.setBackground(new java.awt.Color(47, 55, 90));
+        txtId.setForeground(new java.awt.Color(255, 255, 255));
+        txtId.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtId.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtId.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtId.setLabelText("ID");
+        txtId.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField3.setBackground(new java.awt.Color(47, 55, 90));
-        textField3.setForeground(new java.awt.Color(255, 255, 255));
-        textField3.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField3.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField3.setLabelText("Tên Khuyến Mãi");
-        textField3.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTenKM.setBackground(new java.awt.Color(47, 55, 90));
+        txtTenKM.setForeground(new java.awt.Color(255, 255, 255));
+        txtTenKM.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTenKM.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTenKM.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTenKM.setLabelText("Tên Khuyến Mãi");
+        txtTenKM.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField4.setBackground(new java.awt.Color(47, 55, 90));
-        textField4.setForeground(new java.awt.Color(255, 255, 255));
-        textField4.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField4.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField4.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField4.setLabelText("Mã Khuyến Mãi");
-        textField4.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMaKM.setBackground(new java.awt.Color(47, 55, 90));
+        txtMaKM.setForeground(new java.awt.Color(255, 255, 255));
+        txtMaKM.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMaKM.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMaKM.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMaKM.setLabelText("Mã Khuyến Mãi");
+        txtMaKM.setLineColor(new java.awt.Color(255, 255, 255));
 
-        textField5.setBackground(new java.awt.Color(47, 55, 90));
-        textField5.setForeground(new java.awt.Color(255, 255, 255));
-        textField5.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField5.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField5.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField5.setLabelText("Chiết Khấu");
-        textField5.setLineColor(new java.awt.Color(255, 255, 255));
+        txtChietKhau.setBackground(new java.awt.Color(47, 55, 90));
+        txtChietKhau.setForeground(new java.awt.Color(255, 255, 255));
+        txtChietKhau.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtChietKhau.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtChietKhau.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtChietKhau.setLabelText("Chiết Khấu");
+        txtChietKhau.setLineColor(new java.awt.Color(255, 255, 255));
 
-        btnInBaoCao4.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Cập Nhật");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        btnSua.setBackground(new java.awt.Color(31, 31, 111));
+        btnSua.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnSua.setForeground(new java.awt.Color(255, 255, 255));
+        btnSua.setText("Cập Nhật");
+        btnSua.setFocusable(false);
+        btnSua.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                btnSuaActionPerformed(evt);
             }
         });
 
-        btnInBaoCao5.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao5.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao5.setText("Tạo Mới");
-        btnInBaoCao5.setFocusable(false);
-        btnInBaoCao5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao5.addActionListener(new java.awt.event.ActionListener() {
+        btnThem.setBackground(new java.awt.Color(31, 31, 111));
+        btnThem.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnThem.setForeground(new java.awt.Color(255, 255, 255));
+        btnThem.setText("Tạo Mới");
+        btnThem.setFocusable(false);
+        btnThem.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao5ActionPerformed(evt);
+                btnThemActionPerformed(evt);
             }
         });
 
-        btnInBaoCao6.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Làm Mới");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        btnXoaFrom.setBackground(new java.awt.Color(31, 31, 111));
+        btnXoaFrom.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnXoaFrom.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoaFrom.setText("Làm Mới");
+        btnXoaFrom.setFocusable(false);
+        btnXoaFrom.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnXoaFrom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                btnXoaFromActionPerformed(evt);
             }
         });
 
-        txtNgayBatDau.setBackground(new java.awt.Color(47, 55, 90));
-        txtNgayBatDau.setForeground(new java.awt.Color(255, 255, 255));
-        txtNgayBatDau.setText("");
-        txtNgayBatDau.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtNgayBatDau.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtNgayBatDau.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtNgayBatDau.setLabelText("Ngày Bắt Đầu");
-        txtNgayBatDau.setLineColor(new java.awt.Color(255, 255, 255));
-        txtNgayBatDau.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        txtNgayBD.setBackground(new java.awt.Color(47, 55, 90));
+        txtNgayBD.setForeground(new java.awt.Color(255, 255, 255));
+        txtNgayBD.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtNgayBD.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNgayBD.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtNgayBD.setLabelText("Ngày Bắt Đầu");
+        txtNgayBD.setLineColor(new java.awt.Color(255, 255, 255));
+        txtNgayBD.setMargin(new java.awt.Insets(2, 10, 2, 6));
 
-        txtNgayKetThuc.setBackground(new java.awt.Color(47, 55, 90));
-        txtNgayKetThuc.setForeground(new java.awt.Color(255, 255, 255));
-        txtNgayKetThuc.setText("");
-        txtNgayKetThuc.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtNgayKetThuc.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtNgayKetThuc.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtNgayKetThuc.setLabelText("Ngày Kết Thúc");
-        txtNgayKetThuc.setLineColor(new java.awt.Color(255, 255, 255));
+        txtNgayKT.setBackground(new java.awt.Color(47, 55, 90));
+        txtNgayKT.setForeground(new java.awt.Color(255, 255, 255));
+        txtNgayKT.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtNgayKT.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNgayKT.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtNgayKT.setLabelText("Ngày Kết Thúc");
+        txtNgayKT.setLineColor(new java.awt.Color(255, 255, 255));
 
         btnNgayBatDau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -340,6 +389,30 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel3.setText("Trạng Thái");
+
+        rdNgungHD.setBackground(new java.awt.Color(11, 20, 55));
+        btgrTrangThai.add(rdNgungHD);
+        rdNgungHD.setForeground(new java.awt.Color(255, 255, 255));
+        rdNgungHD.setText("Ngừng Hoạt Động");
+        rdNgungHD.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+
+        rdDangHD.setBackground(new java.awt.Color(11, 20, 55));
+        btgrTrangThai.add(rdDangHD);
+        rdDangHD.setForeground(new java.awt.Color(255, 255, 255));
+        rdDangHD.setText("Đang Hoạt Động");
+        rdDangHD.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -347,34 +420,41 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSeparator1)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(43, 43, 43)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(40, 40, 40)
+                                    .addComponent(btnNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTenKM, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnInBaoCao5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnInBaoCao4, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jSeparator1)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtChietKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(rdDangHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(rdNgungHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnSua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -383,54 +463,110 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelBourder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtTenKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanelBourder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtChietKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(rdNgungHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(15, 15, 15)
+                                        .addComponent(rdDangHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
 
-    private void btnInBaoCao5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao5ActionPerformed
+        int row = tbKhuyenMai.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn dòng cần cập nhập!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
+            if (JOptionPane.showConfirmDialog(this, "Cập nhập", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                KhuyenMai km = getDaTa();
+                if (km == null) {
+                    return;
+                }
+
+                iKhuyenMaiServicer.update(km);
+                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+                loadTable();
+
+            }
+
+        }
+        xoaFrom();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+        KhuyenMai km = getDaTa();
+        if (km == null) {
+
+            return;
+        }
+        for (KhuyenMai theLoai : listKhuyenMai) {
+            if (theLoai.getMa().equals(txtMaKM.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+        }
+        if (JOptionPane.showConfirmDialog(this, "Thêm", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
+            JOptionPane.showMessageDialog(this, "Thêm thành công");
+            iKhuyenMaiServicer.insert(km);
+            loadTable();
+        }
+        xoaFrom();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaFromActionPerformed
+        // TODO add your handling code here:
+        xoaFrom();
+    }//GEN-LAST:event_btnXoaFromActionPerformed
 
     private void btnNgayBatDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNgayBatDauActionPerformed
         dateNgayBatDau.showPopup();
@@ -441,17 +577,65 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
         dateNgayKetThuc.showPopup();
     }//GEN-LAST:event_btnNgayKetThucActionPerformed
 
+    private void tbKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKhuyenMaiMouseClicked
+        // TODO add your handling code here:
+        int row = tbKhuyenMai.getSelectedRow();
+        fillTable(row);
+    }//GEN-LAST:event_tbKhuyenMaiMouseClicked
 
+    private KhuyenMai getDaTa() {
+        int so = 0;
+        if (txtMaKM.getText().trim().length() == 0 || txtTenKM.getText().trim().length() == 0
+                || txtNgayBD.getText().trim().length() == 0 || txtNgayKT.getText().trim().length() == 0
+                || txtChietKhau.getText().trim().length() == 0
+                || txtMoTa.getText().trim().length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống, cần điền đầy đủ thông tin!", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } else if (!txtNgayBD.getText().trim().matches("[0-9]{2}-[0-9]{2}-[0-9]{4}+")) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng ngày tháng năm! Nhập theo dạng dd-MM-yyyy", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } else if (!txtNgayKT.getText().trim().matches("[0-9]{2}-[0-9]{2}-[0-9]{4}+")) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng ngày tháng năm! Nhập lại theo dạng dd-MM-yyyy", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } else if (!txtChietKhau.getText().trim().matches("[-0-9]+")) {
+            JOptionPane.showMessageDialog(this, "Chiết khấu phải là số", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } else if (Integer.parseInt(txtChietKhau.getText().trim()) <= so) {
+            JOptionPane.showMessageDialog(this, "Chiết khấu không được <=0", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        KhuyenMai km = new KhuyenMai();
+        km.setId(txtId.getText().trim());
+        km.setMa(txtMaKM.getText().trim());
+        km.setTen(txtTenKM.getText().trim());
+        km.setChietKhau(Integer.parseInt(txtChietKhau.getText().trim()));
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+
+        try {
+
+            km.setNgayBatDau(df.parse(txtNgayBD.getText().trim()));
+            km.setNgayKetThuc(df.parse(txtNgayKT.getText().trim()));
+
+        } catch (ParseException ex) {
+            Logger.getLogger(KhuyenMai_Form.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        km.setTrangThai(rdDangHD.isSelected() ? 1 : 0);
+        km.setMoTa(txtMoTa.getText().trim());
+
+        return km;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao4;
-    private View.ButtonDesign.Button btnInBaoCao5;
-    private View.ButtonDesign.Button btnInBaoCao6;
+    private javax.swing.ButtonGroup btgrTrangThai;
     private View.ButtonDesign.Button btnNgayBatDau;
     private View.ButtonDesign.Button btnNgayKetThuc;
+    private View.ButtonDesign.Button btnSua;
+    private View.ButtonDesign.Button btnThem;
+    private View.ButtonDesign.Button btnXoaFrom;
     private View.DateChooser.DateChooser dateNgayBatDau;
     private View.DateChooser.DateChooser dateNgayKetThuc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
@@ -459,13 +643,16 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private View.DesignComponent.Table table1;
+    private View.ComboBoxDesign.RadioButtonCustom rdDangHD;
+    private View.ComboBoxDesign.RadioButtonCustom rdNgungHD;
+    private View.DesignComponent.Table tbKhuyenMai;
     private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.TextField textField2;
-    private View.DesignComponent.TextField textField3;
-    private View.DesignComponent.TextField textField4;
-    private View.DesignComponent.TextField textField5;
-    private View.DesignComponent.TextField txtNgayBatDau;
-    private View.DesignComponent.TextField txtNgayKetThuc;
+    private View.DesignComponent.TextField txtChietKhau;
+    private View.DesignComponent.TextField txtId;
+    private View.DesignComponent.TextField txtMaKM;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtNgayBD;
+    private View.DesignComponent.TextField txtNgayKT;
+    private View.DesignComponent.TextField txtTenKM;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="37" green="14" red="b" type="rgb"/>
@@ -31,16 +31,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="textField2" min="-2" pref="382" max="-2" attributes="0"/>
+                              <Component id="txtID" min="-2" pref="382" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Component id="textField4" min="-2" pref="382" max="-2" attributes="0"/>
+                              <Component id="txtMaViTri" min="-2" pref="382" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="textField5" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
+                          <Component id="txtMoTa" alignment="0" min="-2" pref="382" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnInBaoCao5" alignment="0" max="32767" attributes="0"/>
-                          <Component id="btnInBaoCao4" alignment="0" pref="157" max="32767" attributes="0"/>
+                          <Component id="btnThem" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnSua" alignment="0" pref="157" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnInBaoCao6" min="-2" pref="157" max="-2" attributes="0"/>
@@ -64,19 +64,19 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtID" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMaViTri" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="textField5" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMoTa" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnInBaoCao5" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnThem" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                           <Component id="btnInBaoCao6" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao4" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="btnSua" min="-2" pref="49" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -274,7 +274,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="View.DesignComponent.Table" name="table1">
+                <Component class="View.DesignComponent.Table" name="tableViTri">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="10" rowCount="10">
@@ -408,6 +408,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableViTriMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -449,7 +452,7 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Component class="View.DesignComponent.TextField" name="textField2">
+    <Component class="View.DesignComponent.TextField" name="txtID">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -473,7 +476,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField4">
+    <Component class="View.DesignComponent.TextField" name="txtMaViTri">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -496,7 +499,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="textField5">
+    <Component class="View.DesignComponent.TextField" name="txtMoTa">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -519,7 +522,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao4">
+    <Component class="View.ButtonDesign.Button" name="btnSua">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -539,10 +542,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao5">
+    <Component class="View.ButtonDesign.Button" name="btnThem">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -562,7 +565,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
       </Events>
     </Component>
     <Component class="View.ButtonDesign.Button" name="btnInBaoCao6">

@@ -37,4 +37,13 @@ public class SachServiceImpl implements SachService {
         return _sachRepo.updateSach(sach);
     }
 
+    @Override
+    public int countAllSach() {
+        return _sachRepo.countAllSach();
+    }
+
+    @Override
+    public List<Sach> getListByKeyword(String keyword) {
+        return _sachRepo.getListByKeyword(keyword);
+    }
 }

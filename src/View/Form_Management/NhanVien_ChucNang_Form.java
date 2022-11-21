@@ -17,7 +17,7 @@ import model.ChucVu;
 import model.NhanVien;
 import service.ChucVuService;
 import service.NhanVienService;
-import service.impl.ChucVuServiceImpl;
+import service.impl.ChucVuServicelmpl;
 import service.impl.NhanVienServiceImpl;
 
 /**
@@ -36,8 +36,8 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     public NhanVien_ChucNang_Form() {
         initComponents();
         nhanVienService = new NhanVienServiceImpl();
-        chucVuService = new ChucVuServiceImpl();
-        listChucVu = chucVuService.getAllChuVu();
+        chucVuService = new ChucVuServicelmpl();
+        listChucVu = chucVuService.selectAll();
         comboboxChucVu.setModel(new DefaultComboBoxModel());
         for (int i = 0; i < listChucVu.size(); i++) {
             comboboxChucVu.addItem(listChucVu.get(i).getMoTa());

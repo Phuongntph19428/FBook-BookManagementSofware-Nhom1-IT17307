@@ -4,6 +4,8 @@
  */
 package model;
 
+import View.DesignComponent.ModelProfile;
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.swing.ImageIcon;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -105,6 +108,11 @@ public class TacGia implements Serializable {
     @Override
     public String toString() {
         return "TacGia{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", hinh=" + hinh + ", moTa=" + moTa + '}';
+    }
+    
+    public Object[] toDataRow() {
+        return new Object[]{ma, ten, hinh == null ? null :
+            new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(35, 50, Image.SCALE_DEFAULT)))};
     }
 
 }
