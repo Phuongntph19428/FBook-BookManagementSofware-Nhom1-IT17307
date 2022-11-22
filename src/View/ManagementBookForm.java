@@ -129,7 +129,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showJPanel(3);
-
             }
         });
         listBtn.get(1).addActionListener(new ActionListener() {
@@ -189,7 +188,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
                                 listBtn.get(1).doClick();
                                 nvcn.FillComponent(nvModel);
-
                             }
                         }
 
@@ -447,7 +445,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         for (int i = 0; i < listJPanel.size(); i += 2) {
             listJPanel.get(i).setBackground(new Color(13, 7, 48));
             listJPanel.get(i + 1).setBackground(new Color(13, 7, 48));
-
         }
         indexSelectedJPanel = index;
         if (index == 2) {
