@@ -92,7 +92,7 @@ public class NhaXuatBan implements Serializable {
 
     @Override
     public String toString() {
-        return ten + " - " + ma;
+        return "NhaXuatBan{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", moTa=" + moTa + '}';
     }
 
     public Object[] toDaTaRow() {

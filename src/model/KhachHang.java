@@ -5,7 +5,6 @@
 package model;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -40,9 +39,6 @@ public class KhachHang implements Serializable {
     @Column(name = "TenDem")
     private String tenDem;
 
-    @Column(name = "Ho")
-    private String ho;
-
     @Column(name = "GioiTinh")
     private String gioiTinh;
 
@@ -65,12 +61,11 @@ public class KhachHang implements Serializable {
     public KhachHang() {
     }
 
-    public KhachHang(String id, String ma, String ten, String tenDem, String ho, String gioiTinh, Date ngaySinh, String sdt, int diemTichLuy, String diaChi) {
+    public KhachHang(String id, String ma, String ten, String tenDem, String gioiTinh, Date ngaySinh, String sdt, int diemTichLuy, String diaChi) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
         this.tenDem = tenDem;
-        this.ho = ho;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
         this.sdt = sdt;
@@ -108,14 +103,6 @@ public class KhachHang implements Serializable {
 
     public void setTenDem(String tenDem) {
         this.tenDem = tenDem;
-    }
-
-    public String getHo() {
-        return ho;
-    }
-
-    public void setHo(String ho) {
-        this.ho = ho;
     }
 
     public String getGioiTinh() {
@@ -170,10 +157,5 @@ public class KhachHang implements Serializable {
     public String toString() {
         return "KhachHang{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", sdt=" + sdt + ", diemTichLuy=" + diemTichLuy + ", diaChi=" + diaChi + '}';
     }
-    
-    public Object[] toDataRow() {
-        SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String ngaySinhNew = newFormat.format(ngaySinh);
-        return new Object[] {ma, ten, tenDem, ho, ngaySinhNew, gioiTinh, sdt, diemTichLuy};
-    }
+
 }

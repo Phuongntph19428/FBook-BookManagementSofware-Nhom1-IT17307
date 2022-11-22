@@ -57,7 +57,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     List<JLabel> listJLabel = new ArrayList<>();
     List<JPanel> listJPanel = new ArrayList<>();
     Sach_ChucNang_Form scn = new Sach_ChucNang_Form();
-    Sach_Form sach = new Sach_Form();
+
     public ManagementBookForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -70,7 +70,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         scroll.getVerticalScrollBar().setUI(new ModernScrollBarUI());
         scroll.getVerticalScrollBar().setBackground(ColorFrame.COLOR_BGR);
 
-        
+        Sach_Form sach = new Sach_Form();
 
         NXB_Form nxb = new NXB_Form();
         TacGia_Form tg = new TacGia_Form();
@@ -123,8 +123,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         listBtn.add(sach.getListbtn());
         listBtn.add(nv.getListbtn());
-        listBtn.add(scn.getJButton());
-
         listBtn.add(nvcn.getButton());
         listBtn.get(0).addActionListener(new ActionListener() {
             @Override
@@ -140,15 +138,38 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
             }
         });
-        
-        listBtn.get(2).addActionListener(new ActionListener() {
+        listBtn.get(2).addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                sach.loadAll();
+                nv.showListByName();
+                
+            }
+            
+            
+        });
+        listBtn.get(2).addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 nv.showListByName();
+            }
 
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
             }
         });
-
+        
         Icon iconStore = new ImageIcon("image/icons8_online_store_30px.png");
         lbIcon.setIcon(iconStore);
         Icon iconInves = new ImageIcon("image/icons8_investment_portfolio_30px.png");
@@ -170,16 +191,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         setBgrJPanel();
         setJPanel(2);
         
-
-        sach.getJTable().addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2) {
-                    JTable target = (JTable) e.getSource();
-                    int row = target.getSelectedRow();
-                    String id = target.getValueAt(row, 0).toString();
-                    System.out.println(id);                    
-
         nv.getTable().addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -191,7 +202,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
                     
                     listBtn.get(1).doClick();
                     nvcn.FillComponent(nvModel);
-
                 }
             }
             
@@ -375,10 +385,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lb.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                if(index == 2){
-                    sach.loadAll();
-                }
+                
                 showJPanel(index);
 
             }
