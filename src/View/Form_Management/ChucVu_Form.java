@@ -4,7 +4,7 @@
  */
 package View.Form_Management;
 
-import Model.SachFake;
+import model.SachFake;
 import View.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Image;

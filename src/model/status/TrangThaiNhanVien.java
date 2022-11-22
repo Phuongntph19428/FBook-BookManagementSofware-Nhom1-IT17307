@@ -9,6 +9,6 @@ package model.status;
  * @author ppolo
  */
 public class TrangThaiNhanVien {
-    public static int DANGHI = 0;
-    public static int DANGLAM = 1;
+    public static final int DANGHI = 0;
+    public static final int DANGLAM = 1;
 }
