@@ -22,7 +22,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     public KhachHangServiceImpl() {
         _khachHangRepo = new KhachHangRepositoryImpl();
     }
-
     @Override
     public List<KhachHang> selectAll() {
         return _khachHangRepo.selectAll();
@@ -42,7 +41,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     public List<KhachHang> searchKhachHangByKeyWord(List<KhachHang> lstKhachHang, String keyword) {
         List<KhachHang> lst = new ArrayList<>();
         for (KhachHang khachHang : lstKhachHang) {
-
             if ((khachHang.getTen() + " " + khachHang.getHo() + " " + khachHang.getTenDem()).toLowerCase().contains(keyword.toLowerCase())
                     || khachHang.getMa().toLowerCase().contains(keyword.toLowerCase()) || khachHang.getSdt().contains(keyword)) {
 

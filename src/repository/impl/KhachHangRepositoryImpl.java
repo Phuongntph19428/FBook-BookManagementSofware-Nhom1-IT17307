@@ -21,16 +21,16 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
 
     @Override
     public List<KhachHang> selectAll() {
-        List<KhachHang> lstTacGia = new ArrayList<>();
+        List<KhachHang> lstKhachHang = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT k FROM KhachHang k";
+            String hql = "SELECT t FROM KhachHang t";
             TypedQuery<KhachHang> query = session.createQuery(hql);
 
-            lstTacGia = query.getResultList();
+            lstKhachHang = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return lstTacGia;
+        return lstKhachHang;
 
     }
 
