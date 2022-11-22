@@ -18,4 +18,6 @@ public interface ViTriService {
     boolean addViTri(ViTri viTri);
 
     boolean updateViTri(ViTri viTri);
+
+    List<ViTri> search(String ma);
 }

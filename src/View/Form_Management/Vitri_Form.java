@@ -65,7 +65,7 @@ public class Vitri_Form extends javax.swing.JPanel {
         txtMoTa = new View.DesignComponent.TextField();
         btnSua = new View.ButtonDesign.Button();
         btnThem = new View.ButtonDesign.Button();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
+        clear = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(11, 20, 55));
@@ -79,6 +79,11 @@ public class Vitri_Form extends javax.swing.JPanel {
         textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
         textField1.setLabelText("Tìm Kiếm Theo Tên");
         textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        textField1.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                textField1CaretUpdate(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
@@ -275,15 +280,15 @@ public class Vitri_Form extends javax.swing.JPanel {
             }
         });
 
-        btnInBaoCao6.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Làm Mới");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        clear.setBackground(new java.awt.Color(31, 31, 111));
+        clear.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        clear.setForeground(new java.awt.Color(255, 255, 255));
+        clear.setText("Làm Mới");
+        clear.setFocusable(false);
+        clear.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                clearActionPerformed(evt);
             }
         });
 
@@ -310,7 +315,7 @@ public class Vitri_Form extends javax.swing.JPanel {
                             .addComponent(btnThem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -334,7 +339,7 @@ public class Vitri_Form extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)))
@@ -345,13 +350,18 @@ public class Vitri_Form extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-     public void loadViTri(List<ViTri> listViTri) {
+    public void loadViTri(List<ViTri> listViTri) {
         model = (DefaultTableModel) tableViTri.getModel();
         model.setRowCount(0);
         for (ViTri viTri : listViTri) {
             model.addRow(new Object[]{viTri.getId(), viTri.getMa(), viTri.getMoTa()});
         }
+    }
 
+    public void clearForm() {
+        txtID.setText("");
+        txtMaViTri.setText("");
+        txtMoTa.setText("");
     }
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         int row = tableViTri.getSelectedRow();
@@ -361,6 +371,7 @@ public class Vitri_Form extends javax.swing.JPanel {
         viTriService.updateViTri(viTri);
         listViTri = viTriService.getAllViTri();
         loadViTri(listViTri);
+        clearForm();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -370,11 +381,12 @@ public class Vitri_Form extends javax.swing.JPanel {
         viTriService.addViTri(viTri);
         listViTri = viTriService.getAllViTri();
         loadViTri(listViTri);
+        clearForm();
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+        clearForm();
+    }//GEN-LAST:event_clearActionPerformed
 
     private void tableViTriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableViTriMouseClicked
         int row = tableViTri.getSelectedRow();
@@ -384,11 +396,17 @@ public class Vitri_Form extends javax.swing.JPanel {
         txtMoTa.setText(viTri.getMoTa());
     }//GEN-LAST:event_tableViTriMouseClicked
 
+    private void textField1CaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_textField1CaretUpdate
+        String ma = textField1.getText();
+        List<ViTri> listSearch = viTriService.search(ma);
+        loadViTri(listSearch);
+    }//GEN-LAST:event_textField1CaretUpdate
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao6;
     private View.ButtonDesign.Button btnSua;
     private View.ButtonDesign.Button btnThem;
+    private View.ButtonDesign.Button clear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

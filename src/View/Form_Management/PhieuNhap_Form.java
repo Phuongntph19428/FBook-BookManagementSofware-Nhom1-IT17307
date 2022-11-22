@@ -5,6 +5,20 @@
 package View.Form_Management;
 
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import model.NhaCungCap;
+import model.PhieuNhap;
+import service.PhieuNhapService;
+import service.impl.PhieuNhapServiceImpl;
 
 /**
  *
@@ -12,15 +26,26 @@ import java.awt.Color;
  */
 public class PhieuNhap_Form extends javax.swing.JPanel {
 
-   
+    private DefaultTableModel model = new DefaultTableModel();
+    private PhieuNhapService phieuNhapService = new PhieuNhapServiceImpl();
+    private DefaultComboBoxModel cbbModel = new DefaultComboBoxModel();
+    private List<PhieuNhap> listPN = new ArrayList<>();
+    private List<String> cbbNcc = new ArrayList<>();
+
     public PhieuNhap_Form() {
         initComponents();
-        this.table1.setRowHeight(59);
-        this.table1.setBackground(Color.white);
-        this.trangthai.disable();
+        String columns[] = {"ID", "Mã", "Nhà cung cap", "Ngày nhâp", "Trang thái"};
+        Object rows[][] = {};
+        this.cbbTTNCC.disable();
+        this.tablePhieuNhap.setRowHeight(59);
+        this.tablePhieuNhap.setBackground(Color.white);
+        this.tablePhieuNhap.setModel(new DefaultTableModel(rows, columns));
+        listPN = phieuNhapService.getAllPhieuNhap();
+        cbbNcc = phieuNhapService.cbbNcc();
+        loadCbbNcc(cbbNcc);
+        loadPhieuNhap(listPN);
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -28,34 +53,32 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         ngayNhap = new View.DateChooser.DateChooser();
         pagePanel = new javax.swing.JPanel();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        textField1 = new View.DesignComponent.TextField();
+        txtSearch = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnInBaoCao3 = new View.ButtonDesign.Button();
         btnInBaoCao1 = new View.ButtonDesign.Button();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table1 = new View.DesignComponent.Table();
+        tablePhieuNhap = new View.DesignComponent.Table();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         txtId = new View.DesignComponent.TextField();
-        txtMaKM = new View.DesignComponent.TextField();
-        txtChietKhau = new View.DesignComponent.TextField();
-        txtNgayKT = new View.DesignComponent.TextField();
-        combobox1 = new View.DesignComponent.Combobox();
+        txtMaPN = new View.DesignComponent.TextField();
+        txtNgayNhap = new View.DesignComponent.TextField();
+        txtMoTa = new View.DesignComponent.TextField();
+        cbbNCC = new View.DesignComponent.Combobox();
         btnNgayKetThuc = new View.ButtonDesign.Button();
-        trangthai = new View.DesignComponent.Combobox();
-        btnXoaFrom = new View.ButtonDesign.Button();
+        cbbTTNCC = new View.DesignComponent.Combobox();
+        btnXoa = new View.ButtonDesign.Button();
+        txtClear = new View.ButtonDesign.Button();
         btnThem = new View.ButtonDesign.Button();
         btnSua = new View.ButtonDesign.Button();
 
         ngayNhap.setForeground(new java.awt.Color(47, 55, 90));
-        ngayNhap.setTextRefernce(txtChietKhau);
+        ngayNhap.setTextRefernce(txtNgayNhap);
 
         setBackground(new java.awt.Color(11, 20, 55));
 
@@ -64,25 +87,22 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        textField1.setBackground(new java.awt.Color(17, 28, 68));
-        textField1.setForeground(new java.awt.Color(255, 255, 255));
-        textField1.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        textField1.setLabelText("Tìm Kiếm Theo Tên");
-        textField1.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSearch.setBackground(new java.awt.Color(17, 28, 68));
+        txtSearch.setForeground(new java.awt.Color(255, 255, 255));
+        txtSearch.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtSearch.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtSearch.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtSearch.setLabelText("Tìm Kiếm Theo Tên");
+        txtSearch.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSearch.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearchCaretUpdate(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(104, 143, 222));
         jLabel2.setText("List of Receipt");
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_previous_40px.png"))); // NOI18N
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_next_40px.png"))); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Viewing 1-10 of 36");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1, 30));
@@ -108,13 +128,8 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(497, 497, 497)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel3)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel4))
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(771, 771, 771))
         );
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,16 +143,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -177,7 +183,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        table1.setModel(new javax.swing.table.DefaultTableModel(
+        tablePhieuNhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -202,15 +208,20 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        table1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        table1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(table1);
+        tablePhieuNhap.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tablePhieuNhap.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tablePhieuNhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePhieuNhapMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablePhieuNhap);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
         jPanelBourder2Layout.setHorizontalGroup(
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1383, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelBourder2Layout.createSequentialGroup()
                     .addContainerGap()
@@ -273,39 +284,38 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         txtId.setLabelText("ID");
         txtId.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtMaKM.setBackground(new java.awt.Color(47, 55, 90));
-        txtMaKM.setForeground(new java.awt.Color(255, 255, 255));
-        txtMaKM.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtMaKM.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtMaKM.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtMaKM.setLabelText("Mã Phiếu Nhập");
-        txtMaKM.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMaPN.setBackground(new java.awt.Color(47, 55, 90));
+        txtMaPN.setForeground(new java.awt.Color(255, 255, 255));
+        txtMaPN.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMaPN.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMaPN.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMaPN.setLabelText("Mã Phiếu Nhập");
+        txtMaPN.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtChietKhau.setBackground(new java.awt.Color(47, 55, 90));
-        txtChietKhau.setForeground(new java.awt.Color(255, 255, 255));
-        txtChietKhau.setText("");
-        txtChietKhau.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtChietKhau.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtChietKhau.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtChietKhau.setLabelText("Ngày Nhập");
-        txtChietKhau.setLineColor(new java.awt.Color(255, 255, 255));
+        txtNgayNhap.setBackground(new java.awt.Color(47, 55, 90));
+        txtNgayNhap.setForeground(new java.awt.Color(255, 255, 255));
+        txtNgayNhap.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtNgayNhap.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNgayNhap.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtNgayNhap.setLabelText("Ngày Nhập");
+        txtNgayNhap.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtNgayKT.setBackground(new java.awt.Color(47, 55, 90));
-        txtNgayKT.setForeground(new java.awt.Color(255, 255, 255));
-        txtNgayKT.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtNgayKT.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtNgayKT.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtNgayKT.setLabelText("Mô Tả");
-        txtNgayKT.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
 
-        combobox1.setBackground(new java.awt.Color(47, 55, 90));
-        combobox1.setForeground(new java.awt.Color(255, 255, 255));
-        combobox1.setMaximumRowCount(10);
-        combobox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
-        combobox1.setSelectedIndex(-1);
-        combobox1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        combobox1.setLabeText("Nhà Cung Cấp");
-        combobox1.setLineColor(new java.awt.Color(255, 255, 255));
+        cbbNCC.setBackground(new java.awt.Color(47, 55, 90));
+        cbbNCC.setForeground(new java.awt.Color(255, 255, 255));
+        cbbNCC.setMaximumRowCount(10);
+        cbbNCC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
+        cbbNCC.setSelectedIndex(-1);
+        cbbNCC.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        cbbNCC.setLabeText("Nhà Cung Cấp");
+        cbbNCC.setLineColor(new java.awt.Color(255, 255, 255));
 
         btnNgayKetThuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,14 +323,25 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             }
         });
 
-        trangthai.setBackground(new java.awt.Color(47, 55, 90));
-        trangthai.setForeground(new java.awt.Color(255, 255, 255));
-        trangthai.setMaximumRowCount(10);
-        trangthai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Đã Thêm Vào Kho", "Chưa Thêm Vào Kho", " " }));
-        trangthai.setSelectedIndex(1);
-        trangthai.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        trangthai.setLabeText("Nhà Cung Cấp");
-        trangthai.setLineColor(new java.awt.Color(255, 255, 255));
+        cbbTTNCC.setBackground(new java.awt.Color(47, 55, 90));
+        cbbTTNCC.setForeground(new java.awt.Color(255, 255, 255));
+        cbbTTNCC.setMaximumRowCount(10);
+        cbbTTNCC.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Đã Thêm Vào Kho", "Chưa Thêm Vào Kho" }));
+        cbbTTNCC.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        cbbTTNCC.setLabeText("Nhà Cung Cấp");
+        cbbTTNCC.setLineColor(new java.awt.Color(255, 255, 255));
+
+        btnXoa.setBackground(new java.awt.Color(31, 31, 111));
+        btnXoa.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnXoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoa.setText("Xóa");
+        btnXoa.setFocusable(false);
+        btnXoa.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -330,18 +351,21 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(combobox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbbNCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(48, 48, 48)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(trangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbTTNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtChietKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(63, 63, 63))
+                        .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtMaPN, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,29 +374,31 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(combobox1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbbNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMaPN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnNgayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtChietKhau, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                            .addComponent(txtNgayNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
-                        .addComponent(trangthai, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(cbbTTNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        btnXoaFrom.setBackground(new java.awt.Color(31, 31, 111));
-        btnXoaFrom.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnXoaFrom.setForeground(new java.awt.Color(255, 255, 255));
-        btnXoaFrom.setText("Làm Mới");
-        btnXoaFrom.setFocusable(false);
-        btnXoaFrom.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnXoaFrom.addActionListener(new java.awt.event.ActionListener() {
+        txtClear.setBackground(new java.awt.Color(31, 31, 111));
+        txtClear.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        txtClear.setForeground(new java.awt.Color(255, 255, 255));
+        txtClear.setText("Làm Mới");
+        txtClear.setFocusable(false);
+        txtClear.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        txtClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaFromActionPerformed(evt);
+                txtClearActionPerformed(evt);
             }
         });
 
@@ -412,7 +438,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtClear, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnSua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
@@ -422,7 +448,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                         .addGap(6, 6, 6)
                         .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 59, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(313, 313, 313)
                 .addComponent(pagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -451,7 +477,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtClear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -465,7 +491,30 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    public void loadPhieuNhap(List<PhieuNhap> listPN) {
+        model = (DefaultTableModel) tablePhieuNhap.getModel();
+        model.setRowCount(0);
+        for (PhieuNhap phieuNhap : listPN) {
+            model.addRow(new Object[]{phieuNhap.getId(), phieuNhap.getMa(), phieuNhap.getNhaCungCap().getTen(), phieuNhap.getNgayNhap(), phieuNhap.trangThai()});
+        }
+    }
 
+    public void loadCbbNcc(List<String> listNcc) {
+        cbbModel = (DefaultComboBoxModel) cbbNCC.getModel();
+        cbbNCC.removeAllItems();
+        for (String string : listNcc) {
+            cbbModel.addElement(string);
+        }
+    }
+
+    public void clearForm() {
+        txtId.setText("");
+        txtMaPN.setText("");
+        txtNgayNhap.setText("");
+        txtMoTa.setText("");
+        cbbNCC.setSelectedIndex(0);
+//        txtId.setText("");
+    }
     private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInBaoCao3ActionPerformed
@@ -478,17 +527,91 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         ngayNhap.showPopup();
     }//GEN-LAST:event_btnNgayKetThucActionPerformed
 
-    private void btnXoaFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaFromActionPerformed
-
-    }//GEN-LAST:event_btnXoaFromActionPerformed
+    private void txtClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClearActionPerformed
+        clearForm();
+    }//GEN-LAST:event_txtClearActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        String tenNcc = cbbNCC.getSelectedItem().toString();
+        String idNcc = phieuNhapService.findById(tenNcc);
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setId(idNcc);
+        SimpleDateFormat ngayNhap = new SimpleDateFormat("dd-mm-yyyy");
+        PhieuNhap phieuNhap = new PhieuNhap();
+        phieuNhap.setMa(txtMaPN.getText());
+        phieuNhap.setNhaCungCap(ncc);
+        try {
+            phieuNhap.setNgayNhap(ngayNhap.parse(txtNgayNhap.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(PhieuNhap_Form.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        phieuNhap.setMoTa(txtMoTa.getText());
+        if (cbbTTNCC.getSelectedItem().toString().equalsIgnoreCase("Da them vao kho")) {
+            phieuNhap.setTrangThai(1);
+        } else {
+            phieuNhap.setTrangThai(0);
+
+        }
+
+        phieuNhapService.addphieuNhap(phieuNhap);
+        listPN = phieuNhapService.getAllPhieuNhap();
+        loadPhieuNhap(listPN);
 
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        String tenNcc = cbbNCC.getSelectedItem().toString();
+        String idNcc = phieuNhapService.findById(tenNcc);
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setId(idNcc);
+        SimpleDateFormat ngayNhap = new SimpleDateFormat("dd-mm-yyyy");
+        PhieuNhap phieuNhap = new PhieuNhap();
+        phieuNhap.setMa(txtMaPN.getText());
+        phieuNhap.setNhaCungCap(ncc);
+        try {
+            phieuNhap.setNgayNhap(ngayNhap.parse(txtNgayNhap.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(PhieuNhap_Form.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        phieuNhap.setMoTa(txtMoTa.getText());
+        if (cbbTTNCC.getSelectedItem().toString().equalsIgnoreCase("Da them vao kho")) {
+            phieuNhap.setTrangThai(1);
+        } else {
+            phieuNhap.setTrangThai(0);
+
+        }
+
+        phieuNhapService.updatePhieuNhap(phieuNhap);
+        listPN = phieuNhapService.getAllPhieuNhap();
+        loadPhieuNhap(listPN);
 
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
+        String ten = txtSearch.getText();
+        List<PhieuNhap> listSearch = phieuNhapService.listSearch(ten);
+        loadPhieuNhap(listSearch);
+    }//GEN-LAST:event_txtSearchCaretUpdate
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        String id = txtId.getText();
+        phieuNhapService.xoa(id);
+        listPN = phieuNhapService.getAllPhieuNhap();
+        loadPhieuNhap(listPN);
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void tablePhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePhieuNhapMouseClicked
+        int row = tablePhieuNhap.getSelectedRow();
+        PhieuNhap phieuNhap = phieuNhapService.getAllPhieuNhap().get(row);
+//        SimpleDateFormat ngayNhap = new SimpleDateFormat("dd-mm-yyyy");
+        txtId.setText(phieuNhap.getId());
+        txtMaPN.setText(phieuNhap.getMoTa());
+        txtNgayNhap.setText(String.valueOf(phieuNhap.getNgayNhap()));
+        cbbNCC.setSelectedIndex(0);
+        txtId.setText(phieuNhap.getId());
+        txtMoTa.setText(phieuNhap.getMoTa());
+        
+    }//GEN-LAST:event_tablePhieuNhapMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -497,13 +620,11 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnNgayKetThuc;
     private View.ButtonDesign.Button btnSua;
     private View.ButtonDesign.Button btnThem;
-    private View.ButtonDesign.Button btnXoaFrom;
-    private View.DesignComponent.Combobox combobox1;
+    private View.ButtonDesign.Button btnXoa;
+    private View.DesignComponent.Combobox cbbNCC;
+    private View.DesignComponent.Combobox cbbTTNCC;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
@@ -513,12 +634,12 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private View.DateChooser.DateChooser ngayNhap;
     private javax.swing.JPanel pagePanel;
-    private View.DesignComponent.Table table1;
-    private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.Combobox trangthai;
-    private View.DesignComponent.TextField txtChietKhau;
+    private View.DesignComponent.Table tablePhieuNhap;
+    private View.ButtonDesign.Button txtClear;
     private View.DesignComponent.TextField txtId;
-    private View.DesignComponent.TextField txtMaKM;
-    private View.DesignComponent.TextField txtNgayKT;
+    private View.DesignComponent.TextField txtMaPN;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtNgayNhap;
+    private View.DesignComponent.TextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

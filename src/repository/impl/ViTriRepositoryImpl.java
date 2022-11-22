@@ -6,6 +6,7 @@ package repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.TypedQuery;
 import model.ViTri;
 import repository.ViTriRepository;
 import org.hibernate.Transaction;
@@ -74,9 +75,21 @@ public class ViTriRepositoryImpl implements ViTriRepository {
             }
         }
     }
+
+    public List<ViTri> search(String ma) {
+        List<ViTri> lists = new ArrayList<ViTri>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT vt FROM ViTri vt where vt.ma like Concat('%',:ma,'%')";
+            TypedQuery<ViTri> query = session.createQuery(hql, ViTri.class);
+            query.setParameter("ma", ma);
+            lists = query.getResultList();
+        }
+        return lists;
+
+    }
 //    public static void main(String[] args) {
-//        ViTri viTri= new ViTri("hihi", "hihihi");
-//        ViTriRepositoryImpl viTriRepositoryImpl= new ViTriRepositoryImpl();
-//        viTriRepositoryImpl.addViTri(viTri);
+//        List<ViTri> listVT= new ViTriRepositoryImpl().search("viTri02");
+//        System.out.println(listVT);
+//        ViTriRepository viTriRepository= new ViTriRepository
 //    }
 }

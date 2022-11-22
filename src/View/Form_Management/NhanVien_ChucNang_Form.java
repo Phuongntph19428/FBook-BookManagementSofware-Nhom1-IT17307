@@ -12,7 +12,9 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import model.ChucVu;
 import model.NhanVien;
 import service.ChucVuService;
@@ -42,7 +44,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         for (int i = 0; i < listChucVu.size(); i++) {
             comboboxChucVu.addItem(listChucVu.get(i).getMoTa());
         }
-        
+
         comboboxTrangThai.setModel(new DefaultComboBoxModel());
         comboboxTrangThai.addItem(0);
         comboboxTrangThai.addItem(1);
@@ -53,6 +55,38 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         Icon iconBtnNgaySinh = new ImageIcon("image/icons8_schedule_30px.png");
         this.btnNgaySinh.setIcon(iconBtnNgaySinh);
 
+    }
+
+    public void FillComponent(NhanVien nv) {
+        this.txtID.setText(nv.getId());
+        NhanVien nhanVien = nhanVienService.getNhanVienById(nv.getId());
+
+        if (nhanVien != null) {
+            setForm(nhanVien);
+        }
+    }
+
+    public JButton getButton() {
+        return this.btnThemNhanVien;
+    }
+
+    private void setForm(NhanVien nhanVien) {
+        txtMaNhanVien.setText(nhanVien.getMa());
+        txtTen.setText(nhanVien.getTen());
+        txtTenDem.setText(nhanVien.getTenDem());
+        txtHo.setText(nhanVien.getHo());
+        txtEmail.setText(nhanVien.getEmail());
+        txtSDT.setText(nhanVien.getSdt());
+        txtDiaChi.setText(nhanVien.getDiaChi());
+        txtMatKhau.setText(nhanVien.getMatKhau());
+        txtNgaySinh.setText(nhanVien.getNgaySinh().toString());
+        comboboxChucVu.setSelectedItem(nhanVien.getChucVu().getMoTa());
+        comboboxTrangThai.setSelectedItem(nhanVien.getTrangThai());
+        if (nhanVien.getGioiTinh().equals("Nam")) {
+            radioButtonCustom1.setSelected(true);
+        } else {
+            radioButtonCustom2.setSelected(true);
+        }
     }
 
     private NhanVien getForm() {
@@ -75,6 +109,10 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         String moTaChucVu = comboboxChucVu.getSelectedItem().toString();
         Integer trangThai = (Integer) comboboxTrangThai.getSelectedItem();
         NhanVien nhanvien = new NhanVien();
+
+        if (txtID.getText() != null) {
+            nhanvien.setId(txtID.getText());
+        }
         nhanvien.setMa(maNhanVien);
         nhanvien.setTen(ten);
         nhanvien.setTenDem(tenDem);
@@ -119,9 +157,9 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         btnNgaySinh = new View.ButtonDesign.Button();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnInBaoCao3 = new View.ButtonDesign.Button();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao5 = new View.ButtonDesign.Button();
+        btnThemNhanVien = new View.ButtonDesign.Button();
+        btnCapNhatNhanVien = new View.ButtonDesign.Button();
+        btnLamMoi = new View.ButtonDesign.Button();
         txtDiaChi = new View.DesignComponent.TextField();
         txtMatKhau = new View.DesignComponent.TextField();
         comboboxChucVu = new View.DesignComponent.Combobox();
@@ -273,39 +311,39 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        btnInBaoCao3.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao3.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao3.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao3.setText("Tạo Mới");
-        btnInBaoCao3.setFocusable(false);
-        btnInBaoCao3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao3.addActionListener(new java.awt.event.ActionListener() {
+        btnThemNhanVien.setBackground(new java.awt.Color(31, 31, 111));
+        btnThemNhanVien.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnThemNhanVien.setForeground(new java.awt.Color(255, 255, 255));
+        btnThemNhanVien.setText("Tạo Mới");
+        btnThemNhanVien.setFocusable(false);
+        btnThemNhanVien.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnThemNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao3ActionPerformed(evt);
+                btnThemNhanVienActionPerformed(evt);
             }
         });
 
-        btnInBaoCao4.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Cập Nhật");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        btnCapNhatNhanVien.setBackground(new java.awt.Color(31, 31, 111));
+        btnCapNhatNhanVien.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnCapNhatNhanVien.setForeground(new java.awt.Color(255, 255, 255));
+        btnCapNhatNhanVien.setText("Cập Nhật");
+        btnCapNhatNhanVien.setFocusable(false);
+        btnCapNhatNhanVien.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnCapNhatNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                btnCapNhatNhanVienActionPerformed(evt);
             }
         });
 
-        btnInBaoCao5.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao5.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao5.setText("Làm Mới");
-        btnInBaoCao5.setFocusable(false);
-        btnInBaoCao5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao5.addActionListener(new java.awt.event.ActionListener() {
+        btnLamMoi.setBackground(new java.awt.Color(31, 31, 111));
+        btnLamMoi.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnLamMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btnLamMoi.setText("Làm Mới");
+        btnLamMoi.setFocusable(false);
+        btnLamMoi.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao5ActionPerformed(evt);
+                btnLamMoiActionPerformed(evt);
             }
         });
 
@@ -417,10 +455,10 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                                     .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(txtHo, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(btnInBaoCao4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                                                .addComponent(btnInBaoCao3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                .addComponent(btnCapNhatNhanVien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                                                .addComponent(btnThemNhanVien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                     .addComponent(comboboxChucVu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -467,14 +505,14 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                             .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnThemNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCapNhatNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(46, 46, 46)
+                        .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37)
                 .addComponent(comboboxTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(117, Short.MAX_VALUE))
         );
 
         TruongThongTin.add(jPanelBourder1);
@@ -595,19 +633,22 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNgaySinhActionPerformed
 
-    private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
+    private void btnThemNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanVienActionPerformed
         NhanVien nhanVien = getForm();
         String insertStatus = nhanVienService.addNhanVien(nhanVien);
         JOptionPane.showMessageDialog(this, insertStatus);
-    }//GEN-LAST:event_btnInBaoCao3ActionPerformed
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+    }//GEN-LAST:event_btnThemNhanVienActionPerformed
 
-    private void btnInBaoCao5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao5ActionPerformed
+    private void btnCapNhatNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNhanVienActionPerformed
+        NhanVien nhanVien = getForm();
+        String insertStatus = nhanVienService.updateNhanVien(nhanVien);
+        JOptionPane.showMessageDialog(this, insertStatus);
+    }//GEN-LAST:event_btnCapNhatNhanVienActionPerformed
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao5ActionPerformed
+    }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void txtDiaChiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChiActionPerformed
         // TODO add your handling code here:
@@ -636,11 +677,11 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel TruongThongTin;
-    private View.ButtonDesign.Button btnInBaoCao3;
-    private View.ButtonDesign.Button btnInBaoCao4;
-    private View.ButtonDesign.Button btnInBaoCao5;
+    private View.ButtonDesign.Button btnCapNhatNhanVien;
     private View.ButtonDesign.Button btnInBaoCao6;
+    private View.ButtonDesign.Button btnLamMoi;
     private View.ButtonDesign.Button btnNgaySinh;
+    private View.ButtonDesign.Button btnThemNhanVien;
     private View.ButtonDesign.Button button2;
     private View.DesignComponent.Combobox comboboxChucVu;
     private View.DesignComponent.Combobox comboboxTrangThai;

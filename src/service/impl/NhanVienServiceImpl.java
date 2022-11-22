@@ -33,4 +33,15 @@ public class NhanVienServiceImpl implements NhanVienService {
         return nhanVienRepositoryImpl.getListNhanVienByName(name);
     }
 
+    @Override
+    public NhanVien getNhanVienById(String Id) {
+        return nhanVienRepositoryImpl.getNhanVienById(Id);
+    }
+
+    @Override
+    public String updateNhanVien(NhanVien nhanVien) {
+        boolean result = nhanVienRepositoryImpl.updateNhanVien(nhanVien);
+        return result ? "Sửa nhân viên thành công" : "Sửa nhân viên thất bại";
+    }
+
 }

@@ -10,11 +10,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.NhanVien;
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import static org.hibernate.criterion.Projections.id;
 import repository.NhanVienRepository;
 import util.HibernateUtil;
 
@@ -59,25 +59,56 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
 
             TypedQuery<NhanVien> allQuery = session.createQuery(all);
             listNhanVien = allQuery.getResultList();
-            session.close();
         }
+
         return listNhanVien;
     }
-    
-    
+
     @Override
     public List<NhanVien> getListNhanVienByName(String name) {
-        List<NhanVien> listNhanVien = null ;
+        List<NhanVien> listNhanVien = null;
         String nameSelect = "%" + name + "%";
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<NhanVien> query = session.createQuery("From NhanVien WHERE Ten like :key");
             query.setParameter("key", nameSelect);
             listNhanVien = query.getResultList();
-            session.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listNhanVien;
 
+    }
+
+    @Override
+    public NhanVien getNhanVienById(String Id) {
+        NhanVien nhanVien = null;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            nhanVien = session.get(NhanVien.class, Id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nhanVien != null ? nhanVien : null;
+    }
+
+    @Override
+    public boolean updateNhanVien(NhanVien nhanVien) {
+        Session session = factory.openSession();
+        Transaction tx = null;
+
+        try {
+            tx = session.beginTransaction();
+            session.saveOrUpdate(nhanVien);
+            tx.commit();
+            return true;
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+            return false;
+
+        } finally {
+            session.close();
+        }
     }
 }
