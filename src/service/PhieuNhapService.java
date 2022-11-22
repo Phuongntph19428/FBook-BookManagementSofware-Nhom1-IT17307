@@ -23,6 +23,8 @@ public interface PhieuNhapService {
     List<String> cbbNcc();
 
     String xoa(String id);
-    
+
     String findById(String ten);
+
+    boolean updatePhieuNhap(PhieuNhap phieuNhap);
 }

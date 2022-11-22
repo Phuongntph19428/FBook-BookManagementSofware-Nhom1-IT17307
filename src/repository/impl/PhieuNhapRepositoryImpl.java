@@ -118,4 +118,24 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
         return uuid;
 
     }
+
+    @Override
+    public boolean updatePhieuNhap(PhieuNhap phieuNhap) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                session.save(phieuNhap);
+                tran.commit();
+                return true;
+            } catch (Exception e) {
+                tran.rollback();
+                e.printStackTrace();
+                return false;
+            } finally {
+//                session.flush();
+                session.close();
+            }
+        }
+
+    }
 }

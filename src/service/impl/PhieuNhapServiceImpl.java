@@ -49,4 +49,9 @@ public class PhieuNhapServiceImpl implements PhieuNhapService {
         return PhieuNhapRepository.findById(ten);
     }
 
+    @Override
+    public boolean updatePhieuNhap(PhieuNhap phieuNhap) {
+        return PhieuNhapRepository.updatePhieuNhap(phieuNhap);
+    }
+
 }

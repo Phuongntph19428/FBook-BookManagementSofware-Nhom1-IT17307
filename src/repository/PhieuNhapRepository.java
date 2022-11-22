@@ -25,4 +25,6 @@ public interface PhieuNhapRepository {
     String xoa(String id);
 
     String findById(String ten);
+
+    boolean updatePhieuNhap(PhieuNhap phieuNhap);
 }

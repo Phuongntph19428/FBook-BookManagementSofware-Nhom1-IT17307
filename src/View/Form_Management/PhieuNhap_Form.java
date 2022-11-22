@@ -25,13 +25,13 @@ import service.impl.PhieuNhapServiceImpl;
  * @author quanc
  */
 public class PhieuNhap_Form extends javax.swing.JPanel {
-    
+
     private DefaultTableModel model = new DefaultTableModel();
     private PhieuNhapService phieuNhapService = new PhieuNhapServiceImpl();
     private DefaultComboBoxModel cbbModel = new DefaultComboBoxModel();
     private List<PhieuNhap> listPN = new ArrayList<>();
     private List<String> cbbNcc = new ArrayList<>();
-    
+
     public PhieuNhap_Form() {
         initComponents();
         String columns[] = {"ID", "Mã", "Nhà cung cap", "Ngày nhâp", "Trang thái"};
@@ -45,7 +45,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         loadCbbNcc(cbbNcc);
         loadPhieuNhap(listPN);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -498,7 +498,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             model.addRow(new Object[]{phieuNhap.getId(), phieuNhap.getMa(), phieuNhap.getNhaCungCap().getTen(), phieuNhap.getNgayNhap(), phieuNhap.trangThai()});
         }
     }
-    
+
     public void loadCbbNcc(List<String> listNcc) {
         cbbModel = (DefaultComboBoxModel) cbbNCC.getModel();
         cbbNCC.removeAllItems();
@@ -506,7 +506,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             cbbModel.addElement(string);
         }
     }
-    
+
     public void clearForm() {
         txtId.setText("");
         txtMaPN.setText("");
@@ -550,9 +550,9 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             phieuNhap.setTrangThai(1);
         } else {
             phieuNhap.setTrangThai(0);
-            
+
         }
-        
+
         phieuNhapService.addphieuNhap(phieuNhap);
         listPN = phieuNhapService.getAllPhieuNhap();
         loadPhieuNhap(listPN);
@@ -560,19 +560,31 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-//        SimpleDateFormat ngayNhap= new SimpleDateFormat("dd-mm-yyyy");
-//        PhieuNhap phieuNhap = new PhieuNhap();
-//        phieuNhap.setMa(txtMaPN.getText());
-//        phieuNhap.setNhaCungCap((NhaCungCap) cbbNCC.getSelectedItem());
-//        try {
-//            phieuNhap.setNgayNhap(ngayNhap.parse(txtNgayNhap.getText()));
-//        } catch (ParseException ex) {
-//            Logger.getLogger(PhieuNhap_Form.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        phieuNhap.setMoTa(txtMoTa.getText());
-//        phieuNhapService.(phieuNhap);
-//        listPN = phieuNhapService.getAllPhieuNhap();
-//        loadPhieuNhap(listPN);
+        String tenNcc = cbbNCC.getSelectedItem().toString();
+        String idNcc = phieuNhapService.findById(tenNcc);
+        NhaCungCap ncc = new NhaCungCap();
+        ncc.setId(idNcc);
+        SimpleDateFormat ngayNhap = new SimpleDateFormat("dd-mm-yyyy");
+        PhieuNhap phieuNhap = new PhieuNhap();
+        phieuNhap.setMa(txtMaPN.getText());
+        phieuNhap.setNhaCungCap(ncc);
+        try {
+            phieuNhap.setNgayNhap(ngayNhap.parse(txtNgayNhap.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(PhieuNhap_Form.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        phieuNhap.setMoTa(txtMoTa.getText());
+        if (cbbTTNCC.getSelectedItem().toString().equalsIgnoreCase("Da them vao kho")) {
+            phieuNhap.setTrangThai(1);
+        } else {
+            phieuNhap.setTrangThai(0);
+
+        }
+
+        phieuNhapService.updatePhieuNhap(phieuNhap);
+        listPN = phieuNhapService.getAllPhieuNhap();
+        loadPhieuNhap(listPN);
+
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
@@ -595,8 +607,10 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         txtId.setText(phieuNhap.getId());
         txtMaPN.setText(phieuNhap.getMoTa());
         txtNgayNhap.setText(String.valueOf(phieuNhap.getNgayNhap()));
-//        cbbNCC=phieuNhap.getNhaCungCap()
+        cbbNCC.setSelectedIndex(0);
         txtId.setText(phieuNhap.getId());
+        txtMoTa.setText(phieuNhap.getMoTa());
+        
     }//GEN-LAST:event_tablePhieuNhapMouseClicked
 
 
