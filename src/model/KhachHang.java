@@ -23,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "KhachHang")
 public class KhachHang implements Serializable {
-
+    
     @Id
     @Column(name = "Id")
     @GeneratedValue(generator = "uuid2")
@@ -168,5 +168,4 @@ public class KhachHang implements Serializable {
     public String toString() {
         return "KhachHang{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", ho= " + ho + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", sdt=" + sdt + ", diemTichLuy=" + diemTichLuy + ", diaChi=" + diaChi + '}';
     }
-
 }
