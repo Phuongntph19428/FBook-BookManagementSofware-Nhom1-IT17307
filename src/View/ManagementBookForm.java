@@ -127,7 +127,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showJPanel(3);
-
             }
         });
         listBtn.get(1).addActionListener(new ActionListener() {
@@ -191,6 +190,31 @@ public class ManagementBookForm extends javax.swing.JFrame {
         setJPanel(2);
 
         nv.getTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    String id = target.getValueAt(row, 0).toString();
+                    System.out.println(id);
+
+                    nv.getTable().addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                JTable target = (JTable) e.getSource();
+                                int row = target.getSelectedRow();
+                                NhanVien nvModel = new NhanVien();
+                                nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
+
+                                listBtn.get(1).doClick();
+                                nvcn.FillComponent(nvModel);
+                            }
+                        }
+
+                    });
+        
+        nv.getTable().addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -502,7 +526,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         for (int i = 0; i < listJPanel.size(); i += 2) {
             listJPanel.get(i).setBackground(new Color(13, 7, 48));
             listJPanel.get(i + 1).setBackground(new Color(13, 7, 48));
-
         }
         indexSelectedJPanel = index;
         if (index == 2) {
