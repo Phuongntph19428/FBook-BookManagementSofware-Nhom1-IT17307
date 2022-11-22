@@ -26,6 +26,7 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 //s
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,6 +38,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import javax.swing.border.LineBorder;
 import model.PhieuNhap;
@@ -54,7 +56,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     List<JLabel> listJLabel = new ArrayList<>();
     List<JPanel> listJPanel = new ArrayList<>();
     Sach_ChucNang_Form scn = new Sach_ChucNang_Form();
-
+    Sach_Form sach = new Sach_Form();
     public ManagementBookForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -67,7 +69,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         scroll.getVerticalScrollBar().setUI(new ModernScrollBarUI());
         scroll.getVerticalScrollBar().setBackground(ColorFrame.COLOR_BGR);
 
-        Sach_Form sach = new Sach_Form();
+        
 
         NXB_Form nxb = new NXB_Form();
         TacGia_Form tg = new TacGia_Form();
@@ -120,6 +122,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         listBtn.add(sach.getListbtn());
         listBtn.add(nv.getListbtn());
+        listBtn.add(scn.getJButton());
+        
         listBtn.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,6 +135,14 @@ public class ManagementBookForm extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 showJPanel(9);
+
+            }
+        });
+        
+        listBtn.get(2).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sach.loadAll();
 
             }
         });
@@ -154,6 +166,19 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setBgrJPanel();
         setJPanel(2);
+        
+        sach.getJTable().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    String id = target.getValueAt(row, 0).toString();
+                    System.out.println(id);                    
+                }
+            }
+            
+        });
 
     }
 
@@ -333,6 +358,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lb.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if(index == 2){
+                    sach.loadAll();
+                }
                 showJPanel(index);
 
             }

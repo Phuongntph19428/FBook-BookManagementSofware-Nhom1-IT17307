@@ -79,7 +79,7 @@ public class ViTri implements Serializable {
 
     @Override
     public String toString() {
-        return "ViTri{" + "id=" + id + ", ma=" + ma + ", moTa=" + moTa + '}';
+        return moTa + " - " + ma;
     }
 
 }
