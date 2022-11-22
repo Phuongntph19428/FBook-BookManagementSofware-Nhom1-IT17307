@@ -17,4 +17,8 @@ public interface NhanVienRepository {
     List<NhanVien> getAllNhanVien();
     
     List<NhanVien> getListNhanVienByName(String name);
+    
+    NhanVien getNhanVienById(String Id);
+    
+    boolean updateNhanVien(NhanVien nhanVien);
 }

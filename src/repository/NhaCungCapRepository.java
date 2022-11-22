@@ -4,10 +4,18 @@
  */
 package repository;
 
+import java.util.List;
+import model.NhaCungCap;
+
 /**
  *
  * @author Nam Anh
  */
 public interface NhaCungCapRepository {
-    
+
+    boolean addNhaCungCap(NhaCungCap ncc);
+
+    List<NhaCungCap> getAllNhaCungCap();
+
+    public boolean updateNhaCungCap(NhaCungCap nhaCungCap);
 }

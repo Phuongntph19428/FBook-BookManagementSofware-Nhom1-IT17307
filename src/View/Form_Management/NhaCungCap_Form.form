@@ -33,14 +33,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="txtId" pref="481" max="32767" attributes="0"/>
-                              <Component id="txtTenKM" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtNgayBD" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtTenNhaCungCap" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtDiaChi" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtMaKM" pref="481" max="32767" attributes="0"/>
-                              <Component id="txtChietKhau" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtNgayKT" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtNhaCungCap" pref="481" max="32767" attributes="0"/>
+                              <Component id="txtSDT" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtMoTa" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="167" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -73,7 +73,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="txtId" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtTenKM" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTenNhaCungCap" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="btnXoaFrom" min="-2" pref="50" max="-2" attributes="0"/>
@@ -85,7 +85,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                              <Component id="txtNgayBD" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtDiaChi" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -94,11 +94,11 @@
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
-                      <Component id="txtMaKM" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtNhaCungCap" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="txtChietKhau" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtSDT" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="txtNgayKT" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMoTa" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -497,7 +497,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtTenKM">
+    <Component class="View.DesignComponent.TextField" name="txtTenNhaCungCap">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -519,8 +519,11 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+      </AuxValues>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtMaKM">
+    <Component class="View.DesignComponent.TextField" name="txtNhaCungCap">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -543,7 +546,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtChietKhau">
+    <Component class="View.DesignComponent.TextField" name="txtSDT">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -637,7 +640,7 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtNgayBD">
+    <Component class="View.DesignComponent.TextField" name="txtDiaChi">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -663,7 +666,7 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.TextField" name="txtNgayKT">
+    <Component class="View.DesignComponent.TextField" name="txtMoTa">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="5a" green="37" red="2f" type="rgb"/>
