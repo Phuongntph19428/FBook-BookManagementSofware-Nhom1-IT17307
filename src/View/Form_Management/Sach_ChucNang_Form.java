@@ -21,11 +21,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -33,22 +31,14 @@ import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import model.NhaXuatBan;
 import model.Sach;
-import model.ViTri;
-import model.status.TrangThaiSach;
-import service.NhaXuatBanService;
 import service.SachService;
-import service.ViTriService;
-import service.impl.NhaXuatBanServicelmpl;
 import service.impl.SachServiceImpl;
-import service.impl.ViTriServiceImpl;
 
 /**
  *
@@ -61,8 +51,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private String currentDirectory;
     private byte[] _hinh = null;
     private final SachService _sachService;
-    private final ViTriService _viTriService;
-    private final NhaXuatBanService _nhaXuatBanService;
 
     public Sach_ChucNang_Form() {
         initComponents();
@@ -90,16 +78,16 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.background.setBackground(new Color(0, 0, 0, 0));
 
         _sachService = new SachServiceImpl();
-        _nhaXuatBanService = new NhaXuatBanServicelmpl();
-        _viTriService = new ViTriServiceImpl();
 
-        loadCbo();
-
-    }
-
-    public void loadCbo() {
-        cboNhaXuatBan.setModel(new DefaultComboBoxModel(_nhaXuatBanService.selectAll().toArray()));
-        cboViTri.setModel(new DefaultComboBoxModel(_viTriService.getAllViTri().toArray()));
+        j.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                Form_Chon.show(false);
+                background.show(false);
+                btnSelectTheLoai.show(true);
+                TruongThongTin.show(true);
+            }
+        });
     }
 
     public void setForm(Sach sach) {
@@ -118,8 +106,15 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         txtTen.setText(sach.getTen());
 
     }
-    public JButton getJButton(){
-        return this.btnAdd;
+
+    private void OpenCamera(String title) {
+        j.setSize(1018, 750);
+        Camera_Form cameraF = new Camera_Form();
+        cameraF.setSize(1018, 750);
+        cameraF.setTitle(title);
+        j.add(cameraF, BorderLayout.CENTER);
+        j.setLocationRelativeTo(this);
+        j.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -127,6 +122,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         jSeparator4 = new javax.swing.JSeparator();
+        j = new javax.swing.JDialog();
         buttonGroup1 = new javax.swing.ButtonGroup();
         TruongThongTin = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -173,6 +169,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         lbNameForm = new javax.swing.JLabel();
         background = new View.ButtonDesign.Background();
+
+        j.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
+        j.setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        j.setResizable(false);
+
+        javax.swing.GroupLayout jLayout = new javax.swing.GroupLayout(j.getContentPane());
+        j.getContentPane().setLayout(jLayout);
+        jLayout.setHorizontalGroup(
+            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jLayout.setVerticalGroup(
+            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setBackground(new java.awt.Color(29, 32, 57));
         setPreferredSize(new java.awt.Dimension(1373, 850));
@@ -827,67 +838,16 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         revalidate();
     }//GEN-LAST:event_btnSelectTacGiaActionPerformed
 
-    private void clear() {
-        _hinh = null;
-        lblAvartar.setIcon(new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT)));
-        txtId.setText("");
-        txtBarCode.setText("");
-        txtGiaBan.setText("");
-        txtGiaNhap.setText("");
-        txtMa.setText("");
-        txtMoTa.setText("");
-        txtSoLuong.setText("");
-        txtSoTrang.setText("");
-        txtTen.setText("");
-        rdoDangKinhDoanh.setSelected(true);
-        cboNhaXuatBan.setSelectedIndex(0);
-        cboViTri.setSelectedIndex(0);
-    }
-
-    private Sach getForm() {
-        String id = txtId.getText();
-        String ma = txtMa.getText().trim();
-        String barCode = txtBarCode.getText().trim();
-        String giaBanStr = txtGiaBan.getText().trim();
-        String giaNhapStr = txtGiaNhap.getText().trim();
-        String moTa = txtMoTa.getText().trim();
-        String soLuongStr = txtSoLuong.getText().trim();
-        String soTrang = txtSoTrang.getText().trim();
-        String ten = txtTen.getText().trim();
-        int trangThai = rdoDangKinhDoanh.isSelected() ? TrangThaiSach.DANGKINHDOANH : TrangThaiSach.NGUNGKINHDOANH;
-        
-        int soLuong = Integer.parseInt(soLuongStr);
-        BigDecimal giaNhap = BigDecimal.valueOf(Double.parseDouble(giaNhapStr));
-        BigDecimal giaBan = BigDecimal.valueOf(Double.parseDouble(giaBanStr));
-
-        return new Sach(id.isBlank() ? null : id, (NhaXuatBan)cboNhaXuatBan.getSelectedItem(), (ViTri)cboViTri.getSelectedItem(), ma, ten, 
-                soLuong, trangThai, giaNhap, giaBan, trangThai, _hinh, barCode, moTa);
-    }
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Sach sach = getForm();
-        if (sach.getId() != null) {
-            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
-            return;
-        }
-        _sachService.insertSach(sach);
-        JOptionPane.showMessageDialog(this, "Insert successfully");
-        clear();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        Sach sach = getForm();
-        if (sach.getId() == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách");
-            return;
-        }
-        _sachService.updateSach(sach);
-        JOptionPane.showMessageDialog(this, "Update successfully");
-        clear();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        clear();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnClearActionPerformed
 
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
@@ -956,11 +916,12 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     private void btnCamBarCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamBarCodeActionPerformed
 //        openedCam();
-        btnCamBarCode.setEnabled(false);
         CamJFrame cam = new CamJFrame();
         cam.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                cam.webcam.close();
+                cam.dispose();
                 closedCam(cam);
             }
         });
@@ -993,7 +954,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     }
                     txtBarCode.setText(result + "");
                     closedCam(cam);
-                    btnCamBarCode.setEnabled(true);
                 }
 
             }
@@ -1012,7 +972,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     }
                     if (!cam.isFocusOwner()) {
                         closedCam(cam);
-                        btnCamBarCode.setEnabled(true);
+                        btnCameraImage.setEnabled(true);
                         x = false;
                     }
 
@@ -1039,6 +999,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         cam.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                cam.webcam.close();
                 btnCameraImage.setEnabled(true);
                 closedCam(cam);
             }
@@ -1116,6 +1077,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ComboBoxDesign.ComboBoxSuggestion cbSelect;
     private View.DesignComponent.Combobox cboNhaXuatBan;
     private View.DesignComponent.Combobox cboViTri;
+    private javax.swing.JDialog j;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

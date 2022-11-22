@@ -18,5 +18,4 @@ public interface KhachHangRepository {
     public boolean insertKhachHang(KhachHang khachHang);
 
     public boolean updateKhachHang(KhachHang khachHang);
-
 }

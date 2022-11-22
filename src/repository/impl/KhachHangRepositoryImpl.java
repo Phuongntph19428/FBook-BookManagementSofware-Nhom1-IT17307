@@ -31,6 +31,7 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
             e.printStackTrace();
         }
         return lstKhachHang;
+
     }
 
     @Override

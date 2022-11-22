@@ -12,7 +12,7 @@ import model.KhachHang;
  * @author ppolo
  */
 public interface KhachHangService {
-    
+
     public List<KhachHang> selectAll();
 
     public boolean insertKhachHang(KhachHang khachHang);

@@ -423,7 +423,7 @@ public class TacGia_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private TacGia getForm() {
+    private TacGia getFrom() {
         String id = txtId.getText();
         String ma = txtMaTacGia.getText().trim();
         String ten = txtTenTacGia.getText().trim();
@@ -446,28 +446,25 @@ public class TacGia_Form extends javax.swing.JPanel {
     }
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        TacGia tacGia = getForm();
+        TacGia tacGia = getFrom();
         if (tacGia.getId() == null) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn tác giả");
             return;
         }
         _tacGiaService.updateTacGia(tacGia);
-        JOptionPane.showMessageDialog(this, "Update Successfully");
         _lstAllTacGia = _tacGiaService.selectAll();
-        _lstTacGia = _lstAllTacGia;
         clear();
         loadTable(_lstAllTacGia);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        TacGia tacGia = getForm();
+        TacGia tacGia = getFrom();
         if (tacGia.getId() != null) {
             JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
             return;
         }
         _tacGiaService.insertTacGia(tacGia);
         _lstAllTacGia = _tacGiaService.selectAll();
-        _lstTacGia = _lstAllTacGia;
         clear();
         loadTable(_lstAllTacGia);
     }//GEN-LAST:event_btnAddActionPerformed
@@ -477,7 +474,6 @@ public class TacGia_Form extends javax.swing.JPanel {
         txtMaTacGia.setText("");
         txtMoTa.setText("");
         txtTenTacGia.setText("");
-        txtSearch.setText("");
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
