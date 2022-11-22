@@ -17,7 +17,7 @@ import util.HibernateUtil;
  *
  * @author ppolo
  */
-public class KhachHangRepositoryImpl implements KhachHangRepository{
+public class KhachHangRepositoryImpl implements KhachHangRepository {
 
     @Override
     public List<KhachHang> selectAll() {
@@ -31,6 +31,7 @@ public class KhachHangRepositoryImpl implements KhachHangRepository{
             e.printStackTrace();
         }
         return lstTacGia;
+
     }
 
     @Override
@@ -68,5 +69,4 @@ public class KhachHangRepositoryImpl implements KhachHangRepository{
             }
         }
     }
-    
 }
