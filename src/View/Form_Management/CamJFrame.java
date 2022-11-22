@@ -73,6 +73,7 @@ public class CamJFrame extends javax.swing.JFrame {
         btnCapture = new View.ButtonDesign.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
