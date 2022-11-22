@@ -217,6 +217,30 @@ public class ManagementBookForm extends javax.swing.JFrame {
         panelss.showNotification();
     }
 
+    public void runNotificationXoa() {
+        //DucAnh
+        Notification panelss = new Notification(this, Notification.Type.SUCCESS, "Xóa thành công");
+        panelss.showNotification();
+    }
+
+    public void runNotificationThem() {
+        //DucAnh
+        Notification panelss = new Notification(this, Notification.Type.SUCCESS, "Tạo mới thành công");
+        panelss.showNotification();
+    }
+
+    public void runNotificationSua() {
+        //DucAnh
+        Notification panelss = new Notification(this, Notification.Type.SUCCESS, "Cập nhập thành công");
+        panelss.showNotification();
+    }
+
+    public void runNotificationTim() {
+        //DucAnh
+        Notification panelss = new Notification(this, Notification.Type.SUCCESS, "Đã tìm thấy");
+        panelss.showNotification();
+    }
+
     private void excute() {
         boolean MenuItem_ = true;
         boolean item_ = false;
@@ -363,7 +387,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 
                 showJPanel(index);
-            
 
             }
 

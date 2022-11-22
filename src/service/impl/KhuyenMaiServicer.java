@@ -21,9 +21,9 @@ public class KhuyenMaiServicer implements IKhuyenMaiServicer {
     private List<KhuyenMai> listKhuyenMai;
 
     @Override
-    public List<KhuyenMai> selectAll() {
+    public List<KhuyenMai> selectAll(String ma) {
         listKhuyenMai = new ArrayList<>();
-        var ems = repository.selectAll();
+        var ems = repository.selectAll(ma);
         for (KhuyenMai em : ems) {
             listKhuyenMai.add(new KhuyenMai(em.getId().toString(), em.getMa(), em.getTen(), em.getChietKhau(), em.getNgayBatDau(), em.getNgayKetThuc(), em.getTrangThai(), em.getMoTa()));
         }
@@ -38,6 +38,17 @@ public class KhuyenMaiServicer implements IKhuyenMaiServicer {
     @Override
     public boolean update(KhuyenMai km) {
         return repository.update(km);
+    }
+
+    @Override
+    public void delete(String id) {
+        repository.delete(id);
+    }
+
+    @Override
+    public String findById(String ma) {
+
+        return repository.findById(ma);
     }
 
 }

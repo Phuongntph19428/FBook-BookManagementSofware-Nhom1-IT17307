@@ -17,20 +17,20 @@ import repository.impl.TheLoaiRepository;
  * @author adm
  */
 public class TheLoaiServicer implements ITheLoaiServicer {
-    
+
     private final ITheLoaiRepository repository = new TheLoaiRepository();
     private List<TheLoai> listKhuyenMai;
-    
+
     @Override
     public boolean insert(TheLoai tl) {
         return repository.insert(tl);
     }
-    
+
     @Override
     public boolean update(TheLoai tl) {
         return repository.update(tl);
     }
-    
+
     @Override
     public List<TheLoai> selectAll() {
         listKhuyenMai = new ArrayList<>();
@@ -40,5 +40,10 @@ public class TheLoaiServicer implements ITheLoaiServicer {
         }
         return listKhuyenMai;
     }
-    
+
+    @Override
+    public List<TheLoai> selectTimKiem(String ma) {
+        return repository.selectTimKiem(ma);
+    }
+
 }
