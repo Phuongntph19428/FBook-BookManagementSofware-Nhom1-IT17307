@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Sach;
 import service.SachService;
@@ -46,12 +47,16 @@ public class Sach_Form extends javax.swing.JPanel {
         table1.setBackground(Color.WHITE);
         this.table1.setRowHeight(59);
         this.table1.setBackground(Color.white);
-        loadTable(0, _pageSize);
-        setPageLabel(false);
+        loadAll();
 //        showTarget(1);
 
     }
 
+    public void loadAll() {
+        loadTable(0, _pageSize);
+        setPageLabel(false);
+    }
+    
     private void setPageLabel(boolean searching) {
         if (searching == false) {
             int result = _sachService.countAllSach();
@@ -99,6 +104,12 @@ public class Sach_Form extends javax.swing.JPanel {
 ////        }
 //
 //    }
+    
+    public JTable getJTable() {
+        return this.table1;
+    }
+    
+    
     public void loadTable(int position, int pageSize) {
         _lstSach = _sachService.getList(position, pageSize);
         DefaultTableModel dtm = (DefaultTableModel) table1.getModel();

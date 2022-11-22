@@ -142,15 +142,14 @@ public class ManagementBookForm extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 nv.showListByName();
-                
+
             }
-            
-            
+
         });
         listBtn.get(2).addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                 nv.showListByName();
+                nv.showListByName();
             }
 
             @Override
@@ -169,7 +168,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             public void mouseExited(MouseEvent e) {
             }
         });
-        
+
         Icon iconStore = new ImageIcon("image/icons8_online_store_30px.png");
         lbIcon.setIcon(iconStore);
         Icon iconInves = new ImageIcon("image/icons8_investment_portfolio_30px.png");
@@ -190,45 +189,48 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setBgrJPanel();
         setJPanel(2);
-        
-        nv.getTable().addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2){
-                    JTable target = (JTable) e.getSource();
-                    int row = target.getSelectedRow();
-                    NhanVien nvModel = new NhanVien();
-                    nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
-                    
-                    listBtn.get(1).doClick();
-                    nvcn.FillComponent(nvModel);
 
-        sach.getJTable().addMouseListener(new MouseAdapter() {
+        nv.getTable().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
-                    String id = target.getValueAt(row, 0).toString();
-                    System.out.println(id);
+                    NhanVien nvModel = new NhanVien();
+                    nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
 
-                    nv.getTable().addMouseListener(new MouseAdapter() {
+                    listBtn.get(1).doClick();
+                    nvcn.FillComponent(nvModel);
+
+                    sach.getJTable().addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             if (e.getClickCount() == 2) {
                                 JTable target = (JTable) e.getSource();
                                 int row = target.getSelectedRow();
-                                NhanVien nvModel = new NhanVien();
-                                nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
+                                String id = target.getValueAt(row, 0).toString();
+                                System.out.println(id);
 
-                                listBtn.get(1).doClick();
-                                nvcn.FillComponent(nvModel);
+                                nv.getTable().addMouseListener(new MouseAdapter() {
+                                    @Override
+                                    public void mouseClicked(MouseEvent e) {
+                                        if (e.getClickCount() == 2) {
+                                            JTable target = (JTable) e.getSource();
+                                            int row = target.getSelectedRow();
+                                            NhanVien nvModel = new NhanVien();
+                                            nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
+
+                                            listBtn.get(1).doClick();
+                                            nvcn.FillComponent(nvModel);
+
+                                        }
+                                    }
+
+                                });
 
                             }
                         }
-
                     });
-
                 }
             }
         });

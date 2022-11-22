@@ -39,6 +39,9 @@ public class KhachHang implements Serializable {
     @Column(name = "TenDem")
     private String tenDem;
 
+    @Column(name = "Ho")
+    private String ho;
+
     @Column(name = "GioiTinh")
     private String gioiTinh;
 
@@ -103,6 +106,14 @@ public class KhachHang implements Serializable {
 
     public void setTenDem(String tenDem) {
         this.tenDem = tenDem;
+    }
+
+    public String getHo() {
+        return ho;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
     }
 
     public String getGioiTinh() {
