@@ -69,5 +69,4 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
             }
         }
     }
-
 }

@@ -15,7 +15,6 @@ import service.KhachHangService;
  *
  * @author ppolo
  */
-
 public class KhachHangServiceImpl implements KhachHangService {
 
     private final KhachHangRepository _khachHangRepo;
@@ -23,7 +22,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     public KhachHangServiceImpl() {
         _khachHangRepo = new KhachHangRepositoryImpl();
     }
-    
     @Override
     public List<KhachHang> selectAll() {
         return _khachHangRepo.selectAll();
