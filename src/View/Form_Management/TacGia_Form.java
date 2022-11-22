@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class TacGia_Form extends javax.swing.JPanel {
     private final TacGiaService _tacGiaService = new TacGiaServiceImpl();
     private List<TacGia> _lstAllTacGia;
     private List<TacGia> _lstTacGia;
-    
+
     private byte[] _hinh;
 
     public TacGia_Form() {
@@ -498,6 +499,8 @@ public class TacGia_Form extends javax.swing.JPanel {
                         return;
                     }
                     lblAvatar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
+                } catch (NoSuchFileException nofile) {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy file");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
