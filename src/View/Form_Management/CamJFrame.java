@@ -8,6 +8,7 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +42,12 @@ public class CamJFrame extends javax.swing.JFrame {
     }
 
     public void record() {
-        webcam.open();
+        try {
+            webcam.open();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không thể mở camera");
+            this.dispose();
+        }
         while (true) {
             Image image = webcam.getImage();
             if (image != null) {
@@ -73,6 +79,7 @@ public class CamJFrame extends javax.swing.JFrame {
         btnCapture = new View.ButtonDesign.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
@@ -868,6 +869,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         return;
                     }
                     lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
+                } catch (NoSuchFileException nofile) {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy file");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -930,7 +933,12 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         cam.btnCapture.setEnabled(false);
 
         Thread th = new Thread(() -> {
-            cam.webcam.open();
+            try {
+                cam.webcam.open();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Không thể mở camera");
+                closedCam(cam);
+            }
             while (true) {
                 Image image = cam.getImage();
                 try {
