@@ -58,6 +58,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     List<JPanel> listJPanel = new ArrayList<>();
     Sach_ChucNang_Form scn = new Sach_ChucNang_Form();
     Sach_Form sach = new Sach_Form();
+
     public ManagementBookForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -69,8 +70,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.scroll.getViewport().setBackground(new Color(13, 7, 48));
         scroll.getVerticalScrollBar().setUI(new ModernScrollBarUI());
         scroll.getVerticalScrollBar().setBackground(ColorFrame.COLOR_BGR);
-
-        
 
         NXB_Form nxb = new NXB_Form();
         TacGia_Form tg = new TacGia_Form();
@@ -140,7 +139,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
             }
         });
-        
+
         listBtn.get(2).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -169,34 +168,36 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setBgrJPanel();
         setJPanel(2);
-        
 
-        sach.getJTable().addMouseListener(new MouseAdapter(){
+        sach.getJTable().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2) {
+                if (e.getClickCount() == 2) {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
                     String id = target.getValueAt(row, 0).toString();
-                    System.out.println(id);                    
+                    System.out.println(id);
 
-        nv.getTable().addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if(e.getClickCount() == 2){
-                    JTable target = (JTable) e.getSource();
-                    int row = target.getSelectedRow();
-                    NhanVien nvModel = new NhanVien();
-                    nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
-                    
-                    listBtn.get(1).doClick();
-                    nvcn.FillComponent(nvModel);
+                    nv.getTable().addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                JTable target = (JTable) e.getSource();
+                                int row = target.getSelectedRow();
+                                NhanVien nvModel = new NhanVien();
+                                nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
+
+                                listBtn.get(1).doClick();
+                                nvcn.FillComponent(nvModel);
+
+                            }
+                        }
+
+                    });
 
                 }
             }
-            
         });
-
     }
 
     private List<MenuItem> listItemCha = new ArrayList<>();
@@ -376,7 +377,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                if(index == 2){
+                if (index == 2) {
                     sach.loadAll();
                 }
                 showJPanel(index);
