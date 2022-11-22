@@ -190,6 +190,32 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setBgrJPanel();
         setJPanel(2);
+
+        sach.getJTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    String id = target.getValueAt(row, 0).toString();
+                    System.out.println(id);
+
+                    nv.getTable().addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (e.getClickCount() == 2) {
+                                JTable target = (JTable) e.getSource();
+                                int row = target.getSelectedRow();
+                                NhanVien nvModel = new NhanVien();
+                                nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
+
+                                listBtn.get(1).doClick();
+                                nvcn.FillComponent(nvModel);
+
+                            }
+                        }
+
+                    });
         
         nv.getTable().addMouseListener(new MouseAdapter(){
             @Override

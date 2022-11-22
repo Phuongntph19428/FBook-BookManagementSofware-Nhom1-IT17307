@@ -15,14 +15,14 @@ import service.KhachHangService;
  *
  * @author ppolo
  */
-public class KhachHangServiceImpl implements KhachHangService{
+
+public class KhachHangServiceImpl implements KhachHangService {
 
     private final KhachHangRepository _khachHangRepo;
 
     public KhachHangServiceImpl() {
         _khachHangRepo = new KhachHangRepositoryImpl();
     }
-    
     
     @Override
     public List<KhachHang> selectAll() {
@@ -43,12 +43,12 @@ public class KhachHangServiceImpl implements KhachHangService{
     public List<KhachHang> searchKhachHangByKeyWord(List<KhachHang> lstKhachHang, String keyword) {
         List<KhachHang> lst = new ArrayList<>();
         for (KhachHang khachHang : lstKhachHang) {
-            if((khachHang.getTen() + " " + khachHang.getHo() + " " + khachHang.getTenDem()).toLowerCase().contains(keyword.toLowerCase()) || 
-                    khachHang.getMa().toLowerCase().contains(keyword.toLowerCase()) || khachHang.getSdt().contains(keyword)) {
+            if ((khachHang.getTen() + " " + khachHang.getHo() + " " + khachHang.getTenDem()).toLowerCase().contains(keyword.toLowerCase())
+                    || khachHang.getMa().toLowerCase().contains(keyword.toLowerCase()) || khachHang.getSdt().contains(keyword)) {
+
                 lst.add(khachHang);
             }
         }
         return lst;
     }
-    
 }
