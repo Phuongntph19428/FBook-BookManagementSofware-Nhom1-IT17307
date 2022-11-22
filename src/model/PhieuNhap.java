@@ -122,7 +122,14 @@ public class PhieuNhap implements Serializable {
 
     @Override
     public String toString() {
-        return "PhieuNhap{" + "id=" + id + ", nhaCungCap=" + nhaCungCap + ", ma=" + ma + ", ngayNhap=" + ngayNhap + ", moTa=" + moTa + ", trangThai" + trangThai + '}';
+        return "PhieuNhap{" + "id=" + id + ", nhaCungCap=" + nhaCungCap.getTen() + ", ma=" + ma + ", ngayNhap=" + ngayNhap + ", moTa=" + moTa + ", trangThai" + trangThai + '}';
     }
 
+    public String trangThai() {
+        if (trangThai == 1) {
+            return "Da them vao kho";
+        } else {
+            return "Chua them vao kho";
+        }
+    }
 }

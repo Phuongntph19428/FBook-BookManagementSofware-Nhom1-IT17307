@@ -5,6 +5,7 @@
 package repository;
 
 import java.util.List;
+import java.util.UUID;
 import model.PhieuNhap;
 
 /**
@@ -16,4 +17,14 @@ public interface PhieuNhapRepository {
     List<PhieuNhap> getAllPhieuNhap();
 
     boolean addphieuNhap(PhieuNhap phieuNhap);
+
+    List<PhieuNhap> search(String ma);
+
+    List<String> cbbNcc();
+
+    String xoa(String id);
+
+    String findById(String ten);
+
+    boolean updatePhieuNhap(PhieuNhap phieuNhap);
 }

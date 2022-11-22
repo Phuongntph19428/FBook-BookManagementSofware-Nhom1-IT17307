@@ -43,7 +43,7 @@
                           <Component id="btnSua" alignment="0" pref="157" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao6" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Component id="clear" min="-2" pref="157" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
               </Group>
@@ -73,7 +73,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnThem" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="btnInBaoCao6" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="clear" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnSua" min="-2" pref="49" max="-2" attributes="0"/>
@@ -156,6 +156,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="textField1CaretUpdate"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -568,7 +571,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao6">
+    <Component class="View.ButtonDesign.Button" name="clear">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -588,7 +591,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">

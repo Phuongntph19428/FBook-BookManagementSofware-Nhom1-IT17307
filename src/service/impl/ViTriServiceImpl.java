@@ -33,4 +33,9 @@ public class ViTriServiceImpl implements ViTriService {
         return ViTriRepository.updateViTri(viTri);
     }
 
+    @Override
+    public List<ViTri> search(String ma) {
+        return ViTriRepository.search(ma);
+    }
+
 }
