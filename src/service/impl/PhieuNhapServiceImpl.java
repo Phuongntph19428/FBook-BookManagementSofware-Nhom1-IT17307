@@ -5,6 +5,7 @@
 package service.impl;
 
 import java.util.List;
+import java.util.UUID;
 import model.PhieuNhap;
 import repository.PhieuNhapRepository;
 import repository.impl.PhieuNhapRepositoryImpl;
@@ -26,6 +27,26 @@ public class PhieuNhapServiceImpl implements PhieuNhapService {
     @Override
     public boolean addphieuNhap(PhieuNhap phieuNhap) {
         return PhieuNhapRepository.addphieuNhap(phieuNhap);
+    }
+
+    @Override
+    public List<PhieuNhap> listSearch(String ma) {
+        return PhieuNhapRepository.search(ma);
+    }
+
+    @Override
+    public List<String> cbbNcc() {
+        return PhieuNhapRepository.cbbNcc();
+    }
+
+    @Override
+    public String xoa(String id) {
+        return PhieuNhapRepository.xoa(id);
+    }
+
+    @Override
+    public String findById(String ten) {
+        return PhieuNhapRepository.findById(ten);
     }
 
 }

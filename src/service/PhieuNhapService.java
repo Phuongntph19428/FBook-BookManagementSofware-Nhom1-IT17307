@@ -5,6 +5,7 @@
 package service;
 
 import java.util.List;
+import java.util.UUID;
 import model.PhieuNhap;
 
 /**
@@ -16,4 +17,12 @@ public interface PhieuNhapService {
     List<PhieuNhap> getAllPhieuNhap();
 
     boolean addphieuNhap(PhieuNhap phieuNhap);
+
+    List<PhieuNhap> listSearch(String ma);
+
+    List<String> cbbNcc();
+
+    String xoa(String id);
+    
+    String findById(String ten);
 }
