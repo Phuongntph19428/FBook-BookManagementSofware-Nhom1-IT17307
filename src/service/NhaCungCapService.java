@@ -5,22 +5,17 @@
 package service;
 
 import java.util.List;
-import model.NhanVien;
+import model.NhaCungCap;
 
 /**
  *
  * @author ppolo
  */
-public interface NhanVienService {
+public interface NhaCungCapService {
 
-    String addNhanVien(NhanVien nhanVien);
+    String addNhaCungCap(NhaCungCap ncc);
 
-    List<NhanVien> getAllNhanVien();
+    List<NhaCungCap> getAllNhaCungCap();
 
-    List<NhanVien> getListbyName(String name);
-
-    NhanVien getNhanVienById(String Id);
-
-    String updateNhanVien(NhanVien nhanVien);
-
+    public String updateNhaCungCap(NhaCungCap nhaCungCap);
 }

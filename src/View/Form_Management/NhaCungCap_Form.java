@@ -4,7 +4,14 @@
  */
 package View.Form_Management;
 
+import View.ScrollBarCustom;
 import java.awt.Color;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.NhaCungCap;
+import service.NhaCungCapService;
+import service.impl.NhaCungCapServiceImpl;
 
 /**
  *
@@ -12,14 +19,62 @@ import java.awt.Color;
  */
 public class NhaCungCap_Form extends javax.swing.JPanel {
 
-    
+    private NhaCungCapService nhaCungCapService;
+    private List<NhaCungCap> lstNhaCungCap;
+    private List<NhaCungCap> lstAllNhaCungCap;
+
     public NhaCungCap_Form() {
         initComponents();
+        nhaCungCapService = new NhaCungCapServiceImpl();
         this.table1.setRowHeight(59);
         this.table1.setBackground(Color.white);
+
+        lstNhaCungCap = nhaCungCapService.getAllNhaCungCap();
+        loadTable(lstNhaCungCap);
     }
 
-   
+    private NhaCungCap getForm() {
+        String maNCC = txtNhaCungCap.getText();
+        String tenNCC = txtTenNhaCungCap.getText();
+        String sdtNCC = txtSDT.getText();
+        String diaChiNCC = txtDiaChi.getText();
+        String moTaNCC = txtMoTa.getText();
+
+        NhaCungCap nhaCungCap = new NhaCungCap();
+        if (txtId.getText() != null) {
+            nhaCungCap.setId(txtId.getText());
+        }
+        nhaCungCap.setMa(maNCC);
+        nhaCungCap.setTen(tenNCC);
+        nhaCungCap.setSdt(sdtNCC);
+        nhaCungCap.setDiaChi(diaChiNCC);
+        nhaCungCap.setMoTa(moTaNCC);
+        return nhaCungCap;
+    }
+
+    private void loadTable(List<NhaCungCap> lstNhaCungCap) {
+        String columns[] = {"ID", "Mã", "Tên", "SĐT", "Địa Chỉ", "Mô Tả"};
+        Object rows[][] = {};
+        this.table1.setModel(new DefaultTableModel(rows, columns));
+        table1.setDefaultEditor(Object.class, null);
+        table1.setBackground(Color.WHITE);
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        this.table1.setRowHeight(50);
+        this.table1.setBackground(Color.white);
+        for (NhaCungCap nhaCungCap : lstNhaCungCap) {
+            table1.addRow(nhaCungCap.toDataRow());
+        }
+    }
+
+    private void setForm(NhaCungCap nhaCungCap) {
+        txtId.setText(nhaCungCap.getId());
+        txtNhaCungCap.setText(nhaCungCap.getMa());
+        txtTenNhaCungCap.setText(nhaCungCap.getTen());
+        txtSDT.setText(nhaCungCap.getSdt());
+        txtDiaChi.setText(nhaCungCap.getDiaChi());
+        txtMoTa.setText(nhaCungCap.getMoTa());
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,15 +90,15 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         txtId = new View.DesignComponent.TextField();
-        txtTenKM = new View.DesignComponent.TextField();
-        txtMaKM = new View.DesignComponent.TextField();
-        txtChietKhau = new View.DesignComponent.TextField();
+        txtTenNhaCungCap = new View.DesignComponent.TextField();
+        txtNhaCungCap = new View.DesignComponent.TextField();
+        txtSDT = new View.DesignComponent.TextField();
         btnSua = new View.ButtonDesign.Button();
         btnThem = new View.ButtonDesign.Button();
         btnXoaFrom = new View.ButtonDesign.Button();
         jSeparator1 = new javax.swing.JSeparator();
-        txtNgayBD = new View.DesignComponent.TextField();
-        txtNgayKT = new View.DesignComponent.TextField();
+        txtDiaChi = new View.DesignComponent.TextField();
+        txtMoTa = new View.DesignComponent.TextField();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
@@ -212,29 +267,29 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
         txtId.setLabelText("ID");
         txtId.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtTenKM.setBackground(new java.awt.Color(47, 55, 90));
-        txtTenKM.setForeground(new java.awt.Color(255, 255, 255));
-        txtTenKM.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtTenKM.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtTenKM.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtTenKM.setLabelText("Tên Nhà Cung Cấp");
-        txtTenKM.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTenNhaCungCap.setBackground(new java.awt.Color(47, 55, 90));
+        txtTenNhaCungCap.setForeground(new java.awt.Color(255, 255, 255));
+        txtTenNhaCungCap.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTenNhaCungCap.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTenNhaCungCap.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTenNhaCungCap.setLabelText("Tên Nhà Cung Cấp");
+        txtTenNhaCungCap.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtMaKM.setBackground(new java.awt.Color(47, 55, 90));
-        txtMaKM.setForeground(new java.awt.Color(255, 255, 255));
-        txtMaKM.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtMaKM.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtMaKM.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtMaKM.setLabelText("Mã Nhà Cung Cấp");
-        txtMaKM.setLineColor(new java.awt.Color(255, 255, 255));
+        txtNhaCungCap.setBackground(new java.awt.Color(47, 55, 90));
+        txtNhaCungCap.setForeground(new java.awt.Color(255, 255, 255));
+        txtNhaCungCap.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtNhaCungCap.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNhaCungCap.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtNhaCungCap.setLabelText("Mã Nhà Cung Cấp");
+        txtNhaCungCap.setLineColor(new java.awt.Color(255, 255, 255));
 
-        txtChietKhau.setBackground(new java.awt.Color(47, 55, 90));
-        txtChietKhau.setForeground(new java.awt.Color(255, 255, 255));
-        txtChietKhau.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtChietKhau.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtChietKhau.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtChietKhau.setLabelText("Số Điện Thoại");
-        txtChietKhau.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSDT.setBackground(new java.awt.Color(47, 55, 90));
+        txtSDT.setForeground(new java.awt.Color(255, 255, 255));
+        txtSDT.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtSDT.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtSDT.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtSDT.setLabelText("Số Điện Thoại");
+        txtSDT.setLineColor(new java.awt.Color(255, 255, 255));
 
         btnSua.setBackground(new java.awt.Color(31, 31, 111));
         btnSua.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
@@ -272,22 +327,22 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
             }
         });
 
-        txtNgayBD.setBackground(new java.awt.Color(47, 55, 90));
-        txtNgayBD.setForeground(new java.awt.Color(255, 255, 255));
-        txtNgayBD.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtNgayBD.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtNgayBD.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtNgayBD.setLabelText("Địa Chỉ");
-        txtNgayBD.setLineColor(new java.awt.Color(255, 255, 255));
-        txtNgayBD.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        txtDiaChi.setBackground(new java.awt.Color(47, 55, 90));
+        txtDiaChi.setForeground(new java.awt.Color(255, 255, 255));
+        txtDiaChi.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtDiaChi.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtDiaChi.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtDiaChi.setLabelText("Địa Chỉ");
+        txtDiaChi.setLineColor(new java.awt.Color(255, 255, 255));
+        txtDiaChi.setMargin(new java.awt.Insets(2, 10, 2, 6));
 
-        txtNgayKT.setBackground(new java.awt.Color(47, 55, 90));
-        txtNgayKT.setForeground(new java.awt.Color(255, 255, 255));
-        txtNgayKT.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtNgayKT.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtNgayKT.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtNgayKT.setLabelText("Mô Tả");
-        txtNgayKT.setLineColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setBackground(new java.awt.Color(47, 55, 90));
+        txtMoTa.setForeground(new java.awt.Color(255, 255, 255));
+        txtMoTa.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtMoTa.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtMoTa.setLabelText("Mô Tả");
+        txtMoTa.setLineColor(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -305,13 +360,13 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(txtId, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-                                .addComponent(txtTenKM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNgayBD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtTenNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtDiaChi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGap(48, 48, 48)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtMaKM, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-                                .addComponent(txtChietKhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNgayKT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtNhaCungCap, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+                                .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtMoTa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +391,7 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTenKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTenNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnXoaFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -345,16 +400,16 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(txtNgayBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNhaCungCap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtChietKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -364,19 +419,34 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void table1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseClicked
-       
+        int row = table1.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        setForm(lstNhaCungCap.get(row));
     }//GEN-LAST:event_table1MouseClicked
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-      
+        NhaCungCap nhaCungCap = getForm();
+        if (nhaCungCap.getId() == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn nhà cung cấp");
+            return;
+        }
+        String updateResult = nhaCungCapService.updateNhaCungCap(nhaCungCap);
+        JOptionPane.showMessageDialog(this, updateResult);
+        lstAllNhaCungCap = nhaCungCapService.getAllNhaCungCap();
+        loadTable(lstAllNhaCungCap);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-      
+        NhaCungCap nhaCungCap = getForm();
+        String insertForm = nhaCungCapService.addNhaCungCap(nhaCungCap);
+        JOptionPane.showMessageDialog(this, insertForm);
+        loadTable(lstNhaCungCap);
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaFromActionPerformed
-    
+
     }//GEN-LAST:event_btnXoaFromActionPerformed
 
 
@@ -395,11 +465,12 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private View.DesignComponent.Table table1;
     private View.DesignComponent.TextField textField1;
-    private View.DesignComponent.TextField txtChietKhau;
+    private View.DesignComponent.TextField txtDiaChi;
     private View.DesignComponent.TextField txtId;
-    private View.DesignComponent.TextField txtMaKM;
-    private View.DesignComponent.TextField txtNgayBD;
-    private View.DesignComponent.TextField txtNgayKT;
-    private View.DesignComponent.TextField txtTenKM;
+    private View.DesignComponent.TextField txtMoTa;
+    private View.DesignComponent.TextField txtNhaCungCap;
+    private View.DesignComponent.TextField txtSDT;
+    View.DesignComponent.TextField txtTenNhaCungCap;
     // End of variables declaration//GEN-END:variables
+
 }

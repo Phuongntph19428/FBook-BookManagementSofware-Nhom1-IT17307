@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.NhanVien;
 import service.NhanVienService;
@@ -39,7 +40,7 @@ public class NhanVien_Form extends javax.swing.JPanel {
 
     public void initTableData() {
         listNhanVien = nhanVienService.getAllNhanVien();
-        String columns[] = {"Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
+        String columns[] = {"ID", "Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
         Object rows[][] = {};
         this.table1.setModel(new DefaultTableModel(rows, columns));
         table1.setDefaultEditor(Object.class, null);
@@ -47,13 +48,18 @@ public class NhanVien_Form extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         this.table1.setRowHeight(50);
         this.table1.setBackground(Color.white);
-      
+
         for (NhanVien nhanVien : listNhanVien) {
-            table1.addRow(new Object[]{nhanVien.getMa(), nhanVien.getHo()+ " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
-        }      
+            table1.addRow(new Object[]{nhanVien.getId(), nhanVien.getMa(), nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
+        }
     }
-    public void showListByName(List<NhanVien> list){
-        String columns[] = {"Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
+
+    public JTable getTable() {
+        return this.table1;
+    }
+
+    public void showListByName(List<NhanVien> list) {
+        String columns[] = {"ID", "Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
         Object rows[][] = {};
         this.table1.setModel(new DefaultTableModel(rows, columns));
         table1.setDefaultEditor(Object.class, null);
@@ -61,10 +67,27 @@ public class NhanVien_Form extends javax.swing.JPanel {
         jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         this.table1.setRowHeight(50);
         this.table1.setBackground(Color.white);
-        
+
         for (NhanVien nhanVien : list) {
-            table1.addRow(new Object[]{nhanVien.getMa(), nhanVien.getHo()+ " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
-        }      
+            table1.addRow(new Object[]{nhanVien.getId(), nhanVien.getMa(), nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
+        }
+    }
+
+    public void showListByName() {
+        String txtName = "";
+        List<NhanVien> list = nhanVienService.getListbyName(txtName);
+        String columns[] = {"ID", "Mã", "Họ và tên", "Giới tính", "Ngày sinh", "Email", "SĐT", "Địa chỉ"};
+        Object rows[][] = {};
+        this.table1.setModel(new DefaultTableModel(rows, columns));
+        table1.setDefaultEditor(Object.class, null);
+        table1.setBackground(Color.WHITE);
+        jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
+        this.table1.setRowHeight(50);
+        this.table1.setBackground(Color.white);
+
+        for (NhanVien nhanVien : list) {
+            table1.addRow(new Object[]{nhanVien.getId(), nhanVien.getMa(), nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), nhanVien.getGioiTinh(), nhanVien.getNgaySinh(), nhanVien.getEmail(), nhanVien.getSdt(), nhanVien.getDiaChi()});
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -331,8 +354,8 @@ public class NhanVien_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTaoSPActionPerformed
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-      String txtName = this.txtTimKiem.getText().trim();
-      List<NhanVien> list = nhanVienService.getListbyName(txtName);
+        String txtName = this.txtTimKiem.getText().trim();
+        List<NhanVien> list = nhanVienService.getListbyName(txtName);
         showListByName(list);
     }//GEN-LAST:event_txtTimKiemKeyReleased
 

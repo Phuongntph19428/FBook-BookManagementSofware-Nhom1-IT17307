@@ -26,6 +26,7 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 //s
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,8 +38,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 
 import javax.swing.border.LineBorder;
+import model.NhanVien;
 import model.PhieuNhap;
 
 /**
@@ -120,6 +123,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         listBtn.add(sach.getListbtn());
         listBtn.add(nv.getListbtn());
+        listBtn.add(nvcn.getButton());
         listBtn.get(0).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -134,6 +138,38 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
             }
         });
+        listBtn.get(2).addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                nv.showListByName();
+                
+            }
+            
+            
+        });
+        listBtn.get(2).addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                 nv.showListByName();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        
         Icon iconStore = new ImageIcon("image/icons8_online_store_30px.png");
         lbIcon.setIcon(iconStore);
         Icon iconInves = new ImageIcon("image/icons8_investment_portfolio_30px.png");
@@ -154,6 +190,22 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setBgrJPanel();
         setJPanel(2);
+        
+        nv.getTable().addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2){
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    NhanVien nvModel = new NhanVien();
+                    nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
+                    
+                    listBtn.get(1).doClick();
+                    nvcn.FillComponent(nvModel);
+                }
+            }
+            
+        });
 
     }
 
@@ -333,6 +385,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lb.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                
                 showJPanel(index);
 
             }
