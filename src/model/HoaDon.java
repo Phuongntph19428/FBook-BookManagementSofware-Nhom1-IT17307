@@ -74,8 +74,8 @@ public class HoaDon implements Serializable {
     @OneToMany(mappedBy = "hoaDon", targetEntity = HoaDonChiTiet.class)
     private List<HoaDonChiTiet> lstHoaDonCT;
 
-//    @OneToMany(mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
-//    private List<HinhThucThanhToan> lstHinhThucThanhToan;
+    @OneToMany(mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
+    private List<HinhThucThanhToan> lstHinhThucThanhToan;
 
     public HoaDon() {
     }
