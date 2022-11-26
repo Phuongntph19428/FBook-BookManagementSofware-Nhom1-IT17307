@@ -34,20 +34,16 @@ public class ViTri implements Serializable {
     @Column(name = "MoTa")
     private String moTa;
 
-    @Column(name = "TrangThai")
-    private int trangThai;
-
     @OneToMany(mappedBy = "viTri", targetEntity = Sach.class)
     private List<Sach> lstSach;
 
     public ViTri() {
     }
 
-    public ViTri(String id, String ma, String moTa, int trangThai) {
+    public ViTri(String id, String ma, String moTa) {
         this.id = id;
         this.ma = ma;
         this.moTa = moTa;
-        this.trangThai = trangThai;
     }
 
     public String getId() {
@@ -72,14 +68,6 @@ public class ViTri implements Serializable {
 
     public void setMoTa(String moTa) {
         this.moTa = moTa;
-    }
-
-    public int getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(int trangThai) {
-        this.trangThai = trangThai;
     }
 
     public List<Sach> getLstSach() {
