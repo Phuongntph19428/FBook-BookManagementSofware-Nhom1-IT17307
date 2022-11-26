@@ -74,8 +74,8 @@ public class HoaDon implements Serializable {
     @OneToMany(mappedBy = "hoaDon", targetEntity = HoaDonChiTiet.class)
     private List<HoaDonChiTiet> lstHoaDonCT;
 
-    @OneToMany(mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
-    private List<HinhThucThanhToan> lstHinhThucThanhToan;
+//    @OneToMany(mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
+//    private List<HinhThucThanhToan> lstHinhThucThanhToan;
 
     public HoaDon() {
     }
@@ -199,13 +199,13 @@ public class HoaDon implements Serializable {
         this.lstHoaDonCT = lstHoaDonCT;
     }
 
-    public List<HinhThucThanhToan> getLstHinhThucThanhToan() {
-        return lstHinhThucThanhToan;
-    }
-
-    public void setLstHinhThucThanhToan(List<HinhThucThanhToan> lstHinhThucThanhToan) {
-        this.lstHinhThucThanhToan = lstHinhThucThanhToan;
-    }
+//    public List<HinhThucThanhToan> getLstHinhThucThanhToan() {
+//        return lstHinhThucThanhToan;
+//    }
+//
+//    public void setLstHinhThucThanhToan(List<HinhThucThanhToan> lstHinhThucThanhToan) {
+//        this.lstHinhThucThanhToan = lstHinhThucThanhToan;
+//    }
 
     @Override
     public String toString() {
