@@ -25,6 +25,8 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -38,8 +40,13 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Sach;
+import model.TacGia;
+import model.TheLoai;
 import service.SachService;
+import service.TacGiaService;
 import service.impl.SachServiceImpl;
+import service.impl.TacGiaServiceImpl;
+import service.impl.TheLoaiServicer;
 
 /**
  *
@@ -53,9 +60,17 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private byte[] _hinh = null;
     private final SachService _sachService;
 
+    private final TacGiaService _tacGiaService;
+    private List<TacGia> _lstAllTacGia;
+    private HashMap<String, TacGia> _lstTacGia;
+
+    private final TheLoaiServicer _theLoaiService;
+    private List<TheLoai> _lstAllTheLoai;
+    private HashMap<String, TheLoai> _lstTheLoai;
+
     public Sach_ChucNang_Form() {
         initComponents();
-        this.Form_Chon.show(false);
+        this.Form_Chon_TacGia.show(false);
         this.background.show(false);
 //            this.jScrollPane1.show(false);
         ScrollBarCustom scr = new ScrollBarCustom();
@@ -79,11 +94,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.background.setBackground(new Color(0, 0, 0, 0));
 
         _sachService = new SachServiceImpl();
+        _tacGiaService = new TacGiaServiceImpl();
+        _theLoaiService = new TheLoaiServicer();
 
         j.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                Form_Chon.show(false);
+                Form_Chon_TacGia.show(false);
                 background.show(false);
                 btnSelectTheLoai.show(true);
                 TruongThongTin.show(true);
@@ -91,7 +108,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         });
     }
 
-    public void setForm(Sach sach) {
+    private void setForm(Sach sach) {
         _hinh = sach.getHinh();
         if (_hinh != null) {
             lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT)));
@@ -146,8 +163,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnAdd = new View.ButtonDesign.Button();
         btnUpdate = new View.ButtonDesign.Button();
         btnClear = new View.ButtonDesign.Button();
-        textField12 = new View.DesignComponent.TextField();
-        textField13 = new View.DesignComponent.TextField();
+        txtTacGia = new View.DesignComponent.TextField();
+        txtTheLoai = new View.DesignComponent.TextField();
         rdoDangKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
         rdoNgungKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
         cboNhaXuatBan = new View.DesignComponent.Combobox();
@@ -160,7 +177,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnCameraImage = new View.ButtonDesign.Button();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        Form_Chon = new View.DesignComponent.JPanelBourder();
+        Form_Chon_TacGia = new View.DesignComponent.JPanelBourder();
         cbSelect = new View.ComboBoxDesign.ComboBoxSuggestion();
         jPanel3 = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
@@ -169,6 +186,15 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lbNameForm = new javax.swing.JLabel();
+        Form_Chon_TheLoai = new View.DesignComponent.JPanelBourder();
+        cbSelect1 = new View.ComboBoxDesign.ComboBoxSuggestion();
+        jPanel6 = new javax.swing.JPanel();
+        scroll1 = new javax.swing.JScrollPane();
+        jPanel7 = new javax.swing.JPanel();
+        btnInBaoCao1 = new View.ButtonDesign.Button();
+        jLabel7 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        lbNameForm1 = new javax.swing.JLabel();
         background = new View.ButtonDesign.Background();
 
         j.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -398,29 +424,31 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             }
         });
 
-        textField12.setBackground(new java.awt.Color(47, 55, 90));
-        textField12.setForeground(new java.awt.Color(255, 255, 255));
-        textField12.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField12.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField12.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField12.setLabelText("Tác Giả");
-        textField12.setLineColor(new java.awt.Color(255, 255, 255));
-        textField12.addActionListener(new java.awt.event.ActionListener() {
+        txtTacGia.setEditable(false);
+        txtTacGia.setBackground(new java.awt.Color(47, 55, 90));
+        txtTacGia.setForeground(new java.awt.Color(255, 255, 255));
+        txtTacGia.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTacGia.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTacGia.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTacGia.setLabelText("Tác Giả");
+        txtTacGia.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTacGia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField12ActionPerformed(evt);
+                txtTacGiaActionPerformed(evt);
             }
         });
 
-        textField13.setBackground(new java.awt.Color(47, 55, 90));
-        textField13.setForeground(new java.awt.Color(255, 255, 255));
-        textField13.setCaretColor(new java.awt.Color(255, 255, 255));
-        textField13.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        textField13.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        textField13.setLabelText("Thể Loại");
-        textField13.setLineColor(new java.awt.Color(255, 255, 255));
-        textField13.addActionListener(new java.awt.event.ActionListener() {
+        txtTheLoai.setEditable(false);
+        txtTheLoai.setBackground(new java.awt.Color(47, 55, 90));
+        txtTheLoai.setForeground(new java.awt.Color(255, 255, 255));
+        txtTheLoai.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtTheLoai.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtTheLoai.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtTheLoai.setLabelText("Thể Loại");
+        txtTheLoai.setLineColor(new java.awt.Color(255, 255, 255));
+        txtTheLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField13ActionPerformed(evt);
+                txtTheLoaiActionPerformed(evt);
             }
         });
 
@@ -467,11 +495,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(textField13, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -556,11 +584,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 51, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(textField13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cboNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(32, 32, 32)
@@ -673,17 +701,16 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         add(TruongThongTin);
         TruongThongTin.setBounds(0, 0, 1370, 800);
 
-        Form_Chon.setBackground(new java.awt.Color(47, 55, 90));
+        Form_Chon_TacGia.setBackground(new java.awt.Color(47, 55, 90));
 
         cbSelect.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        cbSelect.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbSelectItemStateChanged(evt);
+        cbSelect.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
             }
-        });
-        cbSelect.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbSelectActionPerformed(evt);
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cbSelectPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
             }
         });
 
@@ -705,11 +732,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnInBaoCao.setFocusable(false);
         btnInBaoCao.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         btnInBaoCao.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        btnInBaoCao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCaoActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -717,47 +739,133 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         lbNameForm.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         lbNameForm.setForeground(new java.awt.Color(255, 255, 255));
-        lbNameForm.setText("Thêm Tác Giả");
 
-        javax.swing.GroupLayout Form_ChonLayout = new javax.swing.GroupLayout(Form_Chon);
-        Form_Chon.setLayout(Form_ChonLayout);
-        Form_ChonLayout.setHorizontalGroup(
-            Form_ChonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Form_ChonLayout.createSequentialGroup()
+        Form_Chon_TheLoai.setBackground(new java.awt.Color(47, 55, 90));
+
+        cbSelect1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        cbSelect1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cbSelect1PopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
+
+        scroll1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jPanel7.setBackground(new java.awt.Color(17, 28, 68));
+        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.Y_AXIS));
+        scroll1.setViewportView(jPanel7);
+
+        jPanel6.add(scroll1);
+
+        btnInBaoCao1.setBackground(new java.awt.Color(62, 77, 144));
+        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao1.setText("Thêm Mới");
+        btnInBaoCao1.setFocusable(false);
+        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao1.setMargin(new java.awt.Insets(2, 2, 2, 2));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Danh Sách Chọn ");
+
+        lbNameForm1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        lbNameForm1.setForeground(new java.awt.Color(255, 255, 255));
+        lbNameForm1.setText("Thêm Tác Giả");
+
+        javax.swing.GroupLayout Form_Chon_TheLoaiLayout = new javax.swing.GroupLayout(Form_Chon_TheLoai);
+        Form_Chon_TheLoai.setLayout(Form_Chon_TheLoaiLayout);
+        Form_Chon_TheLoaiLayout.setHorizontalGroup(
+            Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Form_Chon_TheLoaiLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(Form_ChonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(Form_ChonLayout.createSequentialGroup()
+                .addGroup(Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(Form_Chon_TheLoaiLayout.createSequentialGroup()
+                        .addComponent(cbSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TheLoaiLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbNameForm1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+        Form_Chon_TheLoaiLayout.setVerticalGroup(
+            Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TheLoaiLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(lbNameForm1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addGroup(Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
+        );
+
+        javax.swing.GroupLayout Form_Chon_TacGiaLayout = new javax.swing.GroupLayout(Form_Chon_TacGia);
+        Form_Chon_TacGia.setLayout(Form_Chon_TacGiaLayout);
+        Form_Chon_TacGiaLayout.setHorizontalGroup(
+            Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
                         .addComponent(cbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_ChonLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TacGiaLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1))
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNameForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(Form_Chon_TheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
-        Form_ChonLayout.setVerticalGroup(
-            Form_ChonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_ChonLayout.createSequentialGroup()
+        Form_Chon_TacGiaLayout.setVerticalGroup(
+            Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TacGiaLayout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(lbNameForm, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(Form_ChonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
-                .addGroup(Form_ChonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
+            .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(Form_Chon_TheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        add(Form_Chon);
-        Form_Chon.setBounds(440, 110, 520, 500);
+        add(Form_Chon_TacGia);
+        Form_Chon_TacGia.setBounds(440, 110, 520, 500);
 
         background.setBackground(new java.awt.Color(0, 0, 0));
         background.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -774,24 +882,55 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     private EventTags event;
     private void backgroundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backgroundActionPerformed
-        this.Form_Chon.show(false);
+        this.Form_Chon_TacGia.show(false);
         this.background.show(false);
         this.btnSelectTheLoai.show(true);
         this.TruongThongTin.show(true);
 //        revalidate();
     }//GEN-LAST:event_backgroundActionPerformed
 
+    private void loadTheLoai() {
+        jPanel4.removeAll();
+        String theLoaiStr = "";
+        txtTheLoai.setText("");
+        if (_lstTheLoai == null) {
+            _lstTheLoai = new HashMap<>();
+        }
+
+        for (TheLoai theLoai : _lstTheLoai.values()) {
+            Item item = new Item(theLoai.toString());
+            theLoaiStr = theLoaiStr + ", " + theLoai.getTen();
+            item.addEventRemove(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jPanel4.remove(item);
+                    repaint();
+                    revalidate();
+                }
+            }
+            );
+            jPanel4.add(item);
+        }
+        if (!theLoaiStr.equals("")) {
+            txtTheLoai.setText(theLoaiStr.substring(1));
+        }
+        revalidate();
+
+    }
+
     private void btnSelectTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTheLoaiActionPerformed
         this.lbNameForm.setText("Thêm Thể Loại");
-//        this.txtReset.requestFocusInWindow();
+        _lstAllTheLoai = _theLoaiService.selectAll();
+        DefaultComboBoxModel model = new DefaultComboBoxModel(_lstAllTheLoai.toArray());
+        this.cbSelect.setModel(model);
+        loadTheLoai();
+
         this.background.show(true);
         this.btnSelectTheLoai.show(false);
-        this.Form_Chon.show(true);
+        this.Form_Chon_TacGia.show(true);
         this.TruongThongTin.show(false);
         //        this.background.doClick();
         //        this.jScrollPane1.show(true);
-
-        revalidate();
 
     }//GEN-LAST:event_btnSelectTheLoaiActionPerformed
 
@@ -819,19 +958,45 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBarCodeActionPerformed
 
+    private void loadTacGia() {
+
+        jPanel4.removeAll();
+        String tacGiaStr = "";
+        txtTacGia.setText("");
+        if (_lstTacGia == null) {
+            _lstTacGia = new HashMap<>();
+        }
+
+        for (TacGia tacGia : _lstTacGia.values()) {
+            Item item = new Item(tacGia.toString());
+            tacGiaStr = tacGiaStr + ", " + tacGia.getTen();
+            item.addEventRemove(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jPanel4.remove(item);
+                    repaint();
+                    revalidate();
+                }
+            }
+            );
+            jPanel4.add(item);
+        }
+        if (!tacGiaStr.equals("")) {
+            txtTacGia.setText(tacGiaStr.substring(1));
+        }
+        revalidate();
+    }
+
     private void btnSelectTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGiaActionPerformed
         this.lbNameForm.setText("Thêm Tác Giả");
-        String tacgia[] = {"TG",
-            "Thế Phương",
-            "Đức Anh",
-            "Linh",
-            "Hương",
-            "Nam"};
-        DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
+        _lstAllTacGia = _tacGiaService.selectAll();
+        DefaultComboBoxModel model = new DefaultComboBoxModel(_lstAllTacGia.toArray());
+        loadTacGia();
+
         this.cbSelect.setModel(model);
         this.background.show(true);
         this.btnSelectTheLoai.show(false);
-        this.Form_Chon.show(true);
+        this.Form_Chon_TacGia.show(true);
         this.TruongThongTin.show(false);
         //        this.background.doClick();
         //        this.jScrollPane1.show(true);
@@ -881,41 +1046,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnChooseImageActionPerformed
 
-    private void textField12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textField12ActionPerformed
+    private void txtTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTacGiaActionPerformed
+        btnSelectTacGia.doClick();
+    }//GEN-LAST:event_txtTacGiaActionPerformed
 
-    private void textField13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textField13ActionPerformed
-
-    private void cbSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSelectActionPerformed
-
-        String tacgia = this.cbSelect.getSelectedItem().toString();
-        Item item = new Item(tacgia);
-
-        item.addEventRemove(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jPanel4.remove(item);
-                repaint();
-                revalidate();
-            }
-        }
-        );
-        this.jPanel4.add(item);
-        revalidate();
-        System.out.println(item.getText());
-    }//GEN-LAST:event_cbSelectActionPerformed
-
-    private void cbSelectItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSelectItemStateChanged
-
-    }//GEN-LAST:event_cbSelectItemStateChanged
-
-    private void btnInBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCaoActionPerformed
-        ManagementBookForm mng = new ManagementBookForm();
-        mng.runNotification();
-    }//GEN-LAST:event_btnInBaoCaoActionPerformed
+    private void txtTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTheLoaiActionPerformed
+        btnSelectTheLoai.doClick();
+    }//GEN-LAST:event_txtTheLoaiActionPerformed
 
     private void btnCamBarCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCamBarCodeActionPerformed
 //        openedCam();
@@ -1062,6 +1199,35 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCameraImageActionPerformed
 
+    private void cbSelectPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbSelectPopupMenuWillBecomeInvisible
+        if (lbNameForm.getText().equals("Thêm Tác Giả")) {
+            TacGia tacGia = (TacGia) this.cbSelect.getSelectedItem();
+            _lstTacGia.put(tacGia.getMa(), tacGia);
+            loadTacGia();
+        } else if (lbNameForm.getText().equals("Thêm Thể Loại")) {
+            TheLoai theLoai = (TheLoai) this.cbSelect.getSelectedItem();
+            _lstTheLoai.put(theLoai.getMa(), theLoai);
+            loadTheLoai();
+        }
+    }//GEN-LAST:event_cbSelectPopupMenuWillBecomeInvisible
+
+    private void cbSelect1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbSelect1PopupMenuWillBecomeInvisible
+        String tacgia = this.cbSelect.getSelectedItem().toString();
+        Item item = new Item(tacgia);
+
+        item.addEventRemove(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jPanel4.remove(item);
+                repaint();
+                revalidate();
+            }
+        }
+        );
+        this.jPanel4.add(item);
+        revalidate();
+    }//GEN-LAST:event_cbSelect1PopupMenuWillBecomeInvisible
+
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
         cam.dispose();
@@ -1069,7 +1235,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.DesignComponent.JPanelBourder Form_Chon;
+    private View.DesignComponent.JPanelBourder Form_Chon_TacGia;
+    private View.DesignComponent.JPanelBourder Form_Chon_TheLoai;
     private javax.swing.JPanel TruongThongTin;
     private View.ButtonDesign.Background background;
     private View.ButtonDesign.Button btnAdd;
@@ -1078,11 +1245,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnChooseImage;
     private View.ButtonDesign.Button btnClear;
     private View.ButtonDesign.Button btnInBaoCao;
+    private View.ButtonDesign.Button btnInBaoCao1;
     private View.ButtonDesign.Button btnSelectTacGia;
     private View.ButtonDesign.Button btnSelectTheLoai;
     private View.ButtonDesign.Button btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private View.ComboBoxDesign.ComboBoxSuggestion cbSelect;
+    private View.ComboBoxDesign.ComboBoxSuggestion cbSelect1;
     private View.DesignComponent.Combobox cboNhaXuatBan;
     private View.DesignComponent.Combobox cboViTri;
     private javax.swing.JDialog j;
@@ -1092,22 +1261,26 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private View.DesignComponent.JPanelBourder jPanelBourder2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lbNameForm;
+    private javax.swing.JLabel lbNameForm1;
     private javax.swing.JLabel lblAvartar;
     private View.ComboBoxDesign.RadioButtonCustom rdoDangKinhDoanh;
     private View.ComboBoxDesign.RadioButtonCustom rdoNgungKinhDoanh;
     private javax.swing.JScrollPane scroll;
-    private View.DesignComponent.TextField textField12;
-    private View.DesignComponent.TextField textField13;
+    private javax.swing.JScrollPane scroll1;
     private View.DesignComponent.TextField txtBarCode;
     private View.DesignComponent.TextField txtGiaBan;
     private View.DesignComponent.TextField txtGiaNhap;
@@ -1116,6 +1289,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.DesignComponent.TextField txtMoTa;
     private View.DesignComponent.TextField txtSoLuong;
     private View.DesignComponent.TextField txtSoTrang;
+    private View.DesignComponent.TextField txtTacGia;
     private View.DesignComponent.TextField txtTen;
+    private View.DesignComponent.TextField txtTheLoai;
     // End of variables declaration//GEN-END:variables
 }

@@ -85,7 +85,7 @@ public class TheLoai implements Serializable {
 
     @Override
     public String toString() {
-        return "TheLoai{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", moTa=" + moTa + '}';
+        return ten + " - " + ma;
     }
 
     public Object[] toDaTaRow() {
