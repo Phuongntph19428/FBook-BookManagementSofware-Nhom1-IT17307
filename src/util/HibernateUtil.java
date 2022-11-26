@@ -45,7 +45,7 @@ public class HibernateUtil {
         Properties prop = new Properties();
         prop.put(Environment.DIALECT, "org.hibernate.dialect.SQLServer2008Dialect");
         prop.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        prop.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=PROP1041_QuanLySach;encrypt=true;trustServerCertificate=true;");
+        prop.put(Environment.URL, "jdbc:sqlserver://DESKTOP-0AAN2UB\\SQLEXPRESS:1433;databaseName=PROP1041_QuanLySach;encrypt=true;trustServerCertificate=true;");
         prop.put(Environment.USER, "sa");
         prop.put(Environment.PASS, "123456");
         prop.put(Environment.SHOW_SQL, "true");
@@ -60,6 +60,7 @@ public class HibernateUtil {
         cfg.addAnnotatedClass(ChucVu.class);
         cfg.addAnnotatedClass(HoaDon.class);
         cfg.addAnnotatedClass(HoaDonChiTiet.class);
+        cfg.addAnnotatedClass(HinhThucThanhToan.class);
         cfg.addAnnotatedClass(KhachHang.class);
         cfg.addAnnotatedClass(KhuyenMai.class);
         cfg.addAnnotatedClass(KhuyenMaiChiTiet.class);
@@ -73,7 +74,6 @@ public class HibernateUtil {
         cfg.addAnnotatedClass(TheLoai.class);
         cfg.addAnnotatedClass(TheLoaiChiTiet.class);
         cfg.addAnnotatedClass(ViTri.class);
-        cfg.addAnnotatedClass(HinhThucThanhToan.class);
         
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
         FACTORY = cfg.buildSessionFactory(registry);
