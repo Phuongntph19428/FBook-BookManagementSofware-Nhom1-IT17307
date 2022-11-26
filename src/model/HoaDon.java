@@ -57,7 +57,7 @@ public class HoaDon implements Serializable {
     @Column(name = "NgayNhan")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ngayNhan;
-    
+
     @Column(name = "NgayThanhToan")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ngayThanhToan;
@@ -68,13 +68,19 @@ public class HoaDon implements Serializable {
     @Column(name = "MoTa")
     private String moTa;
 
+    @Column(name = "SoDiemSuDung")
+    private int soDiemSuDung;
+
     @OneToMany(mappedBy = "hoaDon", targetEntity = HoaDonChiTiet.class)
     private List<HoaDonChiTiet> lstHoaDonCT;
+
+    @OneToMany(mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
+    private List<HinhThucThanhToan> lstHinhThucThanhToan;
 
     public HoaDon() {
     }
 
-    public HoaDon(String id, NhanVien nhanVien, KhachHang khachHang, String ma, String ten, Date ngayTao, Date ngayShip, Date ngayNhan, int trangThai, String moTa) {
+    public HoaDon(String id, NhanVien nhanVien, KhachHang khachHang, String ma, String ten, Date ngayTao, Date ngayShip, Date ngayNhan, Date ngayThanhToan, int trangThai, String moTa, int soDiemSuDung) {
         this.id = id;
         this.nhanVien = nhanVien;
         this.khachHang = khachHang;
@@ -83,8 +89,10 @@ public class HoaDon implements Serializable {
         this.ngayTao = ngayTao;
         this.ngayShip = ngayShip;
         this.ngayNhan = ngayNhan;
+        this.ngayThanhToan = ngayThanhToan;
         this.trangThai = trangThai;
         this.moTa = moTa;
+        this.soDiemSuDung = soDiemSuDung;
     }
 
     public String getId() {
@@ -167,12 +175,36 @@ public class HoaDon implements Serializable {
         this.trangThai = trangThai;
     }
 
+    public Date getNgayThanhToan() {
+        return ngayThanhToan;
+    }
+
+    public void setNgayThanhToan(Date ngayThanhToan) {
+        this.ngayThanhToan = ngayThanhToan;
+    }
+
+    public int getSoDiemSuDung() {
+        return soDiemSuDung;
+    }
+
+    public void setSoDiemSuDung(int soDiemSuDung) {
+        this.soDiemSuDung = soDiemSuDung;
+    }
+
     public List<HoaDonChiTiet> getLstHoaDonCT() {
         return lstHoaDonCT;
     }
 
     public void setLstHoaDonCT(List<HoaDonChiTiet> lstHoaDonCT) {
         this.lstHoaDonCT = lstHoaDonCT;
+    }
+
+    public List<HinhThucThanhToan> getLstHinhThucThanhToan() {
+        return lstHinhThucThanhToan;
+    }
+
+    public void setLstHinhThucThanhToan(List<HinhThucThanhToan> lstHinhThucThanhToan) {
+        this.lstHinhThucThanhToan = lstHinhThucThanhToan;
     }
 
     @Override
