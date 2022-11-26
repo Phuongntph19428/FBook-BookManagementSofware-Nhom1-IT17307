@@ -5,6 +5,7 @@
 package util;
 import java.util.Properties;
 import model.ChucVu;
+import model.HinhThucThanhToan;
 import model.HoaDon;
 import model.HoaDonChiTiet;
 import model.KhachHang;
@@ -72,6 +73,7 @@ public class HibernateUtil {
         cfg.addAnnotatedClass(TheLoai.class);
         cfg.addAnnotatedClass(TheLoaiChiTiet.class);
         cfg.addAnnotatedClass(ViTri.class);
+        cfg.addAnnotatedClass(HinhThucThanhToan.class);
         
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
         FACTORY = cfg.buildSessionFactory(registry);

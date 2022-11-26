@@ -86,6 +86,6 @@ public class HinhThucThanhToan {
 
     public void setTienThanhToan(BigDecimal tienThanhToan) {
         this.tienThanhToan = tienThanhToan;
-    }
+    } 
 
 }

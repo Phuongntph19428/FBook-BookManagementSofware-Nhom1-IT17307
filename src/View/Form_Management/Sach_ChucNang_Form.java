@@ -4,6 +4,7 @@ import View.ManagementBookForm;
 import View.PanelTagDesign.EventTags;
 import View.PanelTagDesign.Item;
 import View.ScrollBarCustom;
+import View.soundeffect.MySoundEffect;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -1067,7 +1068,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         });
         cam.setTitle("QR/ BarCode Scanner");
         cam.setVisible(true);
-        cam.btnCapture.setEnabled(false);
+        cam.btnCapture.setVisible(false);
 
         Thread th = new Thread(() -> {
             try {
@@ -1093,6 +1094,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     //not result
                 }
                 if (result != null) {
+                    MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
                     if (!(result + "").matches("\\d+")) {
                         JOptionPane.showMessageDialog(this, "BarCode không hợp lệ");
                         return;
@@ -1160,6 +1162,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 ex.printStackTrace();
             }
             _hinh = baos.toByteArray();
+            MySoundEffect.play(MySoundEffect.PATH_CAPTURE_PICTURE);
             if (_hinh != null) {
                 lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
                 System.out.println(_hinh);
