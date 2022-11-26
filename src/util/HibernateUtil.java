@@ -45,7 +45,7 @@ public class HibernateUtil {
         Properties prop = new Properties();
         prop.put(Environment.DIALECT, "org.hibernate.dialect.SQLServer2008Dialect");
         prop.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        prop.put(Environment.URL, "jdbc:sqlserver://DESKTOP-0AAN2UB\\SQLEXPRESS:1433;databaseName=PROP1041_QuanLySach;encrypt=true;trustServerCertificate=true;");
+        prop.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=PROP1041_QuanLySach;encrypt=true;trustServerCertificate=true;");
         prop.put(Environment.USER, "sa");
         prop.put(Environment.PASS, "123456");
         prop.put(Environment.SHOW_SQL, "true");
