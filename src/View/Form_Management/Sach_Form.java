@@ -5,6 +5,7 @@
 package View.Form_Management;
 
 import View.ButtonDesign.Button;
+import View.soundeffect.MySoundEffect;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -489,7 +490,7 @@ public class Sach_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInBaoCao1ActionPerformed
 
     private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
-        // TODO add your handling code here:
+        MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
     }//GEN-LAST:event_btnInBaoCao3ActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed

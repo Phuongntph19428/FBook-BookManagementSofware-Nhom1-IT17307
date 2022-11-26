@@ -107,7 +107,7 @@ public class TacGia implements Serializable {
 
     @Override
     public String toString() {
-        return "TacGia{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", hinh=" + hinh + ", moTa=" + moTa + '}';
+        return ten + " - " + ma;
     }
     
     public Object[] toDataRow() {

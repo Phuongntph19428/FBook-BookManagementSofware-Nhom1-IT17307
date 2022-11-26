@@ -4,10 +4,15 @@
  */
 package repository.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
+import javax.swing.text.html.HTML;
 import model.Sach;
+import model.SachTacGia;
+import model.TheLoaiChiTiet;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.SachRepositoty;
@@ -99,6 +104,90 @@ public class SachRepositoryImpl implements SachRepositoty {
             e.printStackTrace();
         }
         return lstSach;
+    }
+
+    private void deleteSachTacGia(Sach sach) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+            session.beginTransaction();
+            String hql = "DELETE FROM SachTacGia s WHERE s.sach = :sach";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("sach", sach);
+            query.executeUpdate();
+//            session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia) {
+        if (lstSachTacGia.isEmpty()) {
+            return true;
+        }
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+
+            Transaction tran = session.beginTransaction();
+            deleteSachTacGia(lstSachTacGia.get(0).getSach());
+            try {
+                final int batchSize = 20;
+                int size = lstSachTacGia.size();
+                for (int i = 1; i < size; i++) {
+                    session.persist(lstSachTacGia.get(i-1));
+
+                    if (i % batchSize == 0 && i != size) {
+                        session.flush();
+                        session.clear();
+                    }
+
+                }
+
+                tran.commit();
+                return true;
+            } catch (HibernateException e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+    
+    private void deleteTheLoaiChiTiet(Sach sach) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+            session.beginTransaction();
+            String hql = "DELETE FROM TheLoaiChiTiet t WHERE t.sach = :sach";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("sach", sach);
+            query.executeUpdate();
+//            session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet) {
+        if (lstTheLoaiChiTiet.isEmpty()) {
+            return true;
+        }
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+
+            Transaction tran = session.beginTransaction();
+            deleteTheLoaiChiTiet(lstTheLoaiChiTiet.get(0).getSach());
+            try {
+                final int batchSize = 20;
+                int size = lstTheLoaiChiTiet.size();
+                for (int i = 1; i < size; i++) {
+                    session.persist(lstTheLoaiChiTiet.get(i-1));
+
+                    if (i % batchSize == 0 && i != size) {
+                        session.flush();
+                        session.clear();
+                    }
+
+                }
+
+                tran.commit();
+                return true;
+            } catch (HibernateException e) {
+                tran.rollback();
+                return false;
+            }
+        }
     }
 
 }
