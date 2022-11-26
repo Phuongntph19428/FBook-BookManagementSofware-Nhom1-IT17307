@@ -42,7 +42,6 @@ import javax.swing.JTable;
 
 import javax.swing.border.LineBorder;
 import model.NhanVien;
-import model.PhieuNhap;
 
 /**
  *

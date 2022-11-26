@@ -6,6 +6,8 @@ package repository;
 
 import java.util.List;
 import model.Sach;
+import model.SachTacGia;
+import model.TheLoaiChiTiet;
 
 /**
  *
@@ -21,6 +23,10 @@ public interface SachRepositoty {
     
     public int countAllSach();
     
-    public List<Sach> getListByKeyword(String keyword);
+    public List<Sach> getListByKeyword(String keyword);  
+    
+    public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia);
+    
+    public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet);
     
 }

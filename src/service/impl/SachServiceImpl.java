@@ -6,6 +6,8 @@ package service.impl;
 
 import java.util.List;
 import model.Sach;
+import model.SachTacGia;
+import model.TheLoaiChiTiet;
 import repository.SachRepositoty;
 import repository.impl.SachRepositoryImpl;
 import service.SachService;
@@ -45,5 +47,15 @@ public class SachServiceImpl implements SachService {
     @Override
     public List<Sach> getListByKeyword(String keyword) {
         return _sachRepo.getListByKeyword(keyword);
+    }
+
+    @Override
+    public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia) {
+        return _sachRepo.updateSachTacGia(lstSachTacGia);
+    }
+
+    @Override
+    public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet) {
+        return _sachRepo.updateTheLoaiChiTiet(lstTheLoaiChiTiet);
     }
 }
