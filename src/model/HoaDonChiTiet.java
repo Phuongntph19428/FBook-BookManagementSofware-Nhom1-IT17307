@@ -8,10 +8,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -22,11 +24,15 @@ import javax.persistence.Table;
 public class HoaDonChiTiet implements Serializable {
 
     @Id
+    @Column(name = "Id")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private String id;
+
     @ManyToOne
     @JoinColumn(name = "IdHoaDon", nullable = false)
     private HoaDon hoaDon;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "IdSach", nullable = false)
     private Sach sach;
@@ -37,14 +43,19 @@ public class HoaDonChiTiet implements Serializable {
     @Column(name = "DonGia")
     private BigDecimal donGia;
 
+    @Column(name = "MoTa")
+    private String moTa;
+
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(HoaDon hoaDon, Sach sach, int soLuong, BigDecimal donGia) {
+    public HoaDonChiTiet(String id, HoaDon hoaDon, Sach sach, int soLuong, BigDecimal donGia, String moTa) {
+        this.id = id;
         this.hoaDon = hoaDon;
         this.sach = sach;
         this.soLuong = soLuong;
         this.donGia = donGia;
+        this.moTa = moTa;
     }
 
     public HoaDon getHoaDon() {
@@ -79,11 +90,25 @@ public class HoaDonChiTiet implements Serializable {
         this.donGia = donGia;
     }
 
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "HoaDonChiTiet{" + "hoaDon=" + hoaDon + ", sach=" + sach + ", soLuong=" + soLuong + ", donGia=" + donGia + '}';
     }
 
-    
-    
 }
