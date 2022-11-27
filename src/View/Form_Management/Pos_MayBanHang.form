@@ -67,7 +67,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanelBourder2" max="32767" attributes="0"/>
-                          <Component id="jPanelBourder1" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanelBourder1" pref="527" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanelBourder4" max="32767" attributes="0"/>
