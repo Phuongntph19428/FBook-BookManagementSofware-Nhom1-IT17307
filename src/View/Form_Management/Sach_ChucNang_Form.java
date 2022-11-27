@@ -22,10 +22,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -40,14 +42,23 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import model.NhaXuatBan;
 import model.Sach;
+import model.SachTacGia;
 import model.TacGia;
 import model.TheLoai;
+import model.TheLoaiChiTiet;
+import model.ViTri;
+import model.status.TrangThaiSach;
+import service.NhaXuatBanService;
 import service.SachService;
 import service.TacGiaService;
+import service.ViTriService;
+import service.impl.NhaXuatBanServicelmpl;
 import service.impl.SachServiceImpl;
 import service.impl.TacGiaServiceImpl;
 import service.impl.TheLoaiServicer;
+import service.impl.ViTriServiceImpl;
 
 /**
  *
@@ -56,6 +67,10 @@ import service.impl.TheLoaiServicer;
 public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     private boolean isToggle = false;
+    private final String DEFAULT_IMAGE = "image/dacnhantam.jpg";
+
+    private final ViTriService _viTriService;
+    private final NhaXuatBanService _nhaXuatBanService;
 
     private String currentDirectory;
     private byte[] _hinh = null;
@@ -78,16 +93,16 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.scroll.setVerticalScrollBar(scr);
         this.cbSelect.removeAllItems();
 
-        String tacgia[] = {"Quân Minh",
-            "Thế Phương",
-            "Đức Anh",
-            "Linh",
-            "Hương",
-            "Nam"};
-
-        DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
-        this.cbSelect.setModel(model);
-        Icon icon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
+//        String tacgia[] = {"Quân Minh",
+//            "Thế Phương",
+//            "Đức Anh",
+//            "Linh",
+//            "Hương",
+//            "Nam"};
+//
+//        DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
+//        this.cbSelect.setModel(model);
+        Icon icon = new ImageIcon(new ImageIcon(DEFAULT_IMAGE).getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
         this.lblAvartar.setIcon(icon);
 
         Icon iconbgr = new ImageIcon("image/demobgr.png");
@@ -95,25 +110,23 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.background.setBackground(new Color(0, 0, 0, 0));
 
         _sachService = new SachServiceImpl();
+        _nhaXuatBanService = new NhaXuatBanServicelmpl();
+        _viTriService = new ViTriServiceImpl();
+
+        loadCbo();
         _tacGiaService = new TacGiaServiceImpl();
         _theLoaiService = new TheLoaiServicer();
 
-        j.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                Form_Chon_TacGia.show(false);
-                background.show(false);
-                btnSelectTheLoai.show(true);
-                TruongThongTin.show(true);
-            }
-        });
+    }
+
+    public void loadCbo() {
+        cboNhaXuatBan.setModel(new DefaultComboBoxModel(_nhaXuatBanService.selectAll().toArray()));
+        cboViTri.setModel(new DefaultComboBoxModel(_viTriService.getAllViTri().toArray()));
     }
 
     private void setForm(Sach sach) {
         _hinh = sach.getHinh();
-        if (_hinh != null) {
-            lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT)));
-        }
+        setAvartar();
         txtId.setText(sach.getId());
         txtBarCode.setText(sach.getBarCode());
         txtGiaBan.setText(sach.getGiaBan() + "");
@@ -178,6 +191,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnCameraImage = new View.ButtonDesign.Button();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        btnRefresh = new View.ButtonDesign.Button();
         Form_Chon_TacGia = new View.DesignComponent.JPanelBourder();
         cbSelect = new View.ComboBoxDesign.ComboBoxSuggestion();
         jPanel3 = new javax.swing.JPanel();
@@ -187,15 +201,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lbNameForm = new javax.swing.JLabel();
-        Form_Chon_TheLoai = new View.DesignComponent.JPanelBourder();
-        cbSelect1 = new View.ComboBoxDesign.ComboBoxSuggestion();
-        jPanel6 = new javax.swing.JPanel();
-        scroll1 = new javax.swing.JScrollPane();
-        jPanel7 = new javax.swing.JPanel();
-        btnInBaoCao1 = new View.ButtonDesign.Button();
-        jLabel7 = new javax.swing.JLabel();
-        jSeparator3 = new javax.swing.JSeparator();
-        lbNameForm1 = new javax.swing.JLabel();
         background = new View.ButtonDesign.Background();
 
         j.setModalExclusionType(java.awt.Dialog.ModalExclusionType.APPLICATION_EXCLUDE);
@@ -389,7 +394,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnAdd.setBackground(new java.awt.Color(31, 31, 111));
         btnAdd.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
-        btnAdd.setText("Tạo Mới");
+        btnAdd.setText("Thêm sách");
         btnAdd.setToolTipText("Thêm mới sách");
         btnAdd.setFocusable(false);
         btnAdd.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -699,6 +704,17 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         TruongThongTin.add(jLabel6);
         jLabel6.setBounds(20, 20, 420, 33);
 
+        btnRefresh.setBackground(new java.awt.Color(47, 55, 90));
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
+        btnRefresh.setToolTipText("Quét mã barcode");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+        TruongThongTin.add(btnRefresh);
+        btnRefresh.setBounds(1320, 10, 44, 32);
+
         add(TruongThongTin);
         TruongThongTin.setBounds(0, 0, 1370, 800);
 
@@ -741,83 +757,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         lbNameForm.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         lbNameForm.setForeground(new java.awt.Color(255, 255, 255));
 
-        Form_Chon_TheLoai.setBackground(new java.awt.Color(47, 55, 90));
-
-        cbSelect1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        cbSelect1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-                cbSelect1PopupMenuWillBecomeInvisible(evt);
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-        });
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
-
-        scroll1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        jPanel7.setBackground(new java.awt.Color(17, 28, 68));
-        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.Y_AXIS));
-        scroll1.setViewportView(jPanel7);
-
-        jPanel6.add(scroll1);
-
-        btnInBaoCao1.setBackground(new java.awt.Color(62, 77, 144));
-        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao1.setText("Thêm Mới");
-        btnInBaoCao1.setFocusable(false);
-        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao1.setMargin(new java.awt.Insets(2, 2, 2, 2));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Danh Sách Chọn ");
-
-        lbNameForm1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        lbNameForm1.setForeground(new java.awt.Color(255, 255, 255));
-        lbNameForm1.setText("Thêm Tác Giả");
-
-        javax.swing.GroupLayout Form_Chon_TheLoaiLayout = new javax.swing.GroupLayout(Form_Chon_TheLoai);
-        Form_Chon_TheLoai.setLayout(Form_Chon_TheLoaiLayout);
-        Form_Chon_TheLoaiLayout.setHorizontalGroup(
-            Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Form_Chon_TheLoaiLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(Form_Chon_TheLoaiLayout.createSequentialGroup()
-                        .addComponent(cbSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TheLoaiLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator3))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbNameForm1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-        Form_Chon_TheLoaiLayout.setVerticalGroup(
-            Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TheLoaiLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(lbNameForm1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbSelect1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(2, 2, 2)
-                .addGroup(Form_Chon_TheLoaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
-        );
-
         javax.swing.GroupLayout Form_Chon_TacGiaLayout = new javax.swing.GroupLayout(Form_Chon_TacGia);
         Form_Chon_TacGia.setLayout(Form_Chon_TacGiaLayout);
         Form_Chon_TacGiaLayout.setHorizontalGroup(
@@ -836,11 +775,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbNameForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(52, Short.MAX_VALUE))
-            .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(Form_Chon_TheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         Form_Chon_TacGiaLayout.setVerticalGroup(
             Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -858,11 +792,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
-            .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(Form_Chon_TheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         add(Form_Chon_TacGia);
@@ -887,12 +816,17 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.background.show(false);
         this.btnSelectTheLoai.show(true);
         this.TruongThongTin.show(true);
+        if (_lstTacGia != null) {
+            getTacGiaString();
+        }
+        if (_lstTheLoai != null) {
+            getTheLoaiString();
+        }
 //        revalidate();
     }//GEN-LAST:event_backgroundActionPerformed
 
     private void loadTheLoai() {
         jPanel4.removeAll();
-        String theLoaiStr = "";
         txtTheLoai.setText("");
         if (_lstTheLoai == null) {
             _lstTheLoai = new HashMap<>();
@@ -900,11 +834,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         for (TheLoai theLoai : _lstTheLoai.values()) {
             Item item = new Item(theLoai.toString());
-            theLoaiStr = theLoaiStr + ", " + theLoai.getTen();
             item.addEventRemove(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     jPanel4.remove(item);
+                    _lstTheLoai.remove(theLoai.getMa());
                     repaint();
                     revalidate();
                 }
@@ -912,11 +846,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             );
             jPanel4.add(item);
         }
+        getTheLoaiString();
+
+        revalidate();
+
+    }
+
+    private String getTheLoaiString() {
+        String theLoaiStr = "";
+        for (TheLoai theLoai : _lstTheLoai.values()) {
+            theLoaiStr = theLoaiStr + ", " + theLoai.getTen();
+        }
         if (!theLoaiStr.equals("")) {
             txtTheLoai.setText(theLoaiStr.substring(1));
         }
-        revalidate();
-
+        return theLoaiStr;
     }
 
     private void btnSelectTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTheLoaiActionPerformed
@@ -962,7 +906,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private void loadTacGia() {
 
         jPanel4.removeAll();
-        String tacGiaStr = "";
         txtTacGia.setText("");
         if (_lstTacGia == null) {
             _lstTacGia = new HashMap<>();
@@ -970,11 +913,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         for (TacGia tacGia : _lstTacGia.values()) {
             Item item = new Item(tacGia.toString());
-            tacGiaStr = tacGiaStr + ", " + tacGia.getTen();
             item.addEventRemove(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     jPanel4.remove(item);
+                    _lstTacGia.remove(tacGia.getMa());
                     repaint();
                     revalidate();
                 }
@@ -982,10 +925,20 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             );
             jPanel4.add(item);
         }
+        revalidate();
+    }
+
+    private String getTacGiaString() {
+
+        String tacGiaStr = "";
+        for (TacGia tacGia : _lstTacGia.values()) {
+            tacGiaStr = tacGiaStr + ", " + tacGia.getTen();
+        }
         if (!tacGiaStr.equals("")) {
             txtTacGia.setText(tacGiaStr.substring(1));
         }
-        revalidate();
+        return tacGiaStr;
+
     }
 
     private void btnSelectTacGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTacGiaActionPerformed
@@ -1005,17 +958,100 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         revalidate();
     }//GEN-LAST:event_btnSelectTacGiaActionPerformed
 
+    private void clear() {
+        _hinh = null;
+        setAvartar();
+        txtId.setText("");
+        txtBarCode.setText("");
+        txtGiaBan.setText("");
+        txtGiaNhap.setText("");
+        txtMa.setText("");
+        txtMoTa.setText("");
+        txtSoLuong.setText("");
+        txtSoTrang.setText("");
+        txtTen.setText("");
+        rdoDangKinhDoanh.setSelected(true);
+        cboNhaXuatBan.setSelectedIndex(0);
+        cboViTri.setSelectedIndex(0);
+        _lstTacGia = new HashMap<>();
+        getTacGiaString();
+        _lstTheLoai = new HashMap<>();
+        getTheLoaiString();
+    }
+
+    private Sach getForm() {
+        String id = txtId.getText();
+        String ma = txtMa.getText().trim();
+        String barCode = txtBarCode.getText().trim();
+        String giaBanStr = txtGiaBan.getText().trim();
+        String giaNhapStr = txtGiaNhap.getText().trim();
+        String moTa = txtMoTa.getText().trim();
+        String soLuongStr = txtSoLuong.getText().trim();
+        String soTrang = txtSoTrang.getText().trim();
+        String ten = txtTen.getText().trim();
+        int trangThai = rdoDangKinhDoanh.isSelected() ? TrangThaiSach.DANGKINHDOANH : TrangThaiSach.NGUNGKINHDOANH;
+
+        int soLuong = Integer.parseInt(soLuongStr);
+        BigDecimal giaNhap = BigDecimal.valueOf(Double.parseDouble(giaNhapStr));
+        BigDecimal giaBan = BigDecimal.valueOf(Double.parseDouble(giaBanStr));
+
+        return new Sach(id.isBlank() ? null : id, (NhaXuatBan) cboNhaXuatBan.getSelectedItem(), (ViTri) cboViTri.getSelectedItem(), ma, ten,
+                soLuong, trangThai, giaNhap, giaBan, trangThai, _hinh, barCode, moTa);
+    }
+
+    private List<SachTacGia> getListSachTacGia(Sach sach) {
+        List<SachTacGia> lstSachTacGia = new ArrayList<>();
+        for (TacGia tacGia : _lstTacGia.values()) {
+            SachTacGia sachTacGia = new SachTacGia(tacGia, sach);
+            lstSachTacGia.add(sachTacGia);
+        }
+        return lstSachTacGia;
+    }
+    
+    private List<TheLoaiChiTiet> getListTheLoaiCT(Sach sach) {
+        List<TheLoaiChiTiet> lstTheLoaiCT = new ArrayList<>();
+        for (TheLoai theLoai : _lstTheLoai.values()) {
+            TheLoaiChiTiet theLoaiCT = new TheLoaiChiTiet(theLoai, sach);
+            lstTheLoaiCT.add(theLoaiCT);
+        }
+        return lstTheLoaiCT;
+    }
+    
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        Sach sach = getForm();
+        if (sach.getId() != null) {
+            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
+            return;
+        }
+        _sachService.insertSach(sach);
+        JOptionPane.showMessageDialog(this, "Insert successfully");
+        clear();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+        Sach sach = getForm();
+        if (sach.getId() == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách");
+            return;
+        }
+        _sachService.updateSach(sach);
+        _sachService.updateSachTacGia(getListSachTacGia(sach));
+        _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+        JOptionPane.showMessageDialog(this, "Update successfully");
+        clear();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_btnClearActionPerformed
+
+    private void setAvartar() {
+        if (_hinh == null) {
+            lblAvartar.setIcon(new ImageIcon(new ImageIcon(DEFAULT_IMAGE).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
+            return;
+        }
+        lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
+    }
 
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         JFileChooser fileChooser = new JFileChooser(currentDirectory);
@@ -1034,7 +1070,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         _hinh = null;
                         return;
                     }
-                    lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
+                    setAvartar();
                 } catch (NoSuchFileException nofile) {
                     JOptionPane.showMessageDialog(this, "Không tìm thấy file");
                 } catch (IOException ex) {
@@ -1165,7 +1201,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             MySoundEffect.play(MySoundEffect.PATH_CAPTURE_PICTURE);
             if (_hinh != null) {
                 lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
-                System.out.println(_hinh);
                 this.TruongThongTin.show(true);
             }
             btnCameraImage.setEnabled(true);
@@ -1190,8 +1225,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                     if (!cam.isFocusOwner()) {
 //                        cam.webcam.close();
 //                        cam.dispose();
-                        btnCameraImage.setEnabled(true);
                         closedCam(cam);
+                        btnCameraImage.setEnabled(true);
                         x = false;
                     }
 
@@ -1214,22 +1249,9 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbSelectPopupMenuWillBecomeInvisible
 
-    private void cbSelect1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbSelect1PopupMenuWillBecomeInvisible
-        String tacgia = this.cbSelect.getSelectedItem().toString();
-        Item item = new Item(tacgia);
-
-        item.addEventRemove(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jPanel4.remove(item);
-                repaint();
-                revalidate();
-            }
-        }
-        );
-        this.jPanel4.add(item);
-        revalidate();
-    }//GEN-LAST:event_cbSelect1PopupMenuWillBecomeInvisible
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
@@ -1239,7 +1261,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.DesignComponent.JPanelBourder Form_Chon_TacGia;
-    private View.DesignComponent.JPanelBourder Form_Chon_TheLoai;
     private javax.swing.JPanel TruongThongTin;
     private View.ButtonDesign.Background background;
     private View.ButtonDesign.Button btnAdd;
@@ -1248,13 +1269,12 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnChooseImage;
     private View.ButtonDesign.Button btnClear;
     private View.ButtonDesign.Button btnInBaoCao;
-    private View.ButtonDesign.Button btnInBaoCao1;
+    private View.ButtonDesign.Button btnRefresh;
     private View.ButtonDesign.Button btnSelectTacGia;
     private View.ButtonDesign.Button btnSelectTheLoai;
     private View.ButtonDesign.Button btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private View.ComboBoxDesign.ComboBoxSuggestion cbSelect;
-    private View.ComboBoxDesign.ComboBoxSuggestion cbSelect1;
     private View.DesignComponent.Combobox cboNhaXuatBan;
     private View.DesignComponent.Combobox cboViTri;
     private javax.swing.JDialog j;
@@ -1264,26 +1284,20 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private View.DesignComponent.JPanelBourder jPanelBourder2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lbNameForm;
-    private javax.swing.JLabel lbNameForm1;
     private javax.swing.JLabel lblAvartar;
     private View.ComboBoxDesign.RadioButtonCustom rdoDangKinhDoanh;
     private View.ComboBoxDesign.RadioButtonCustom rdoNgungKinhDoanh;
     private javax.swing.JScrollPane scroll;
-    private javax.swing.JScrollPane scroll1;
     private View.DesignComponent.TextField txtBarCode;
     private View.DesignComponent.TextField txtGiaBan;
     private View.DesignComponent.TextField txtGiaNhap;
