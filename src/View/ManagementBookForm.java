@@ -6,6 +6,7 @@ package View;
 
 import View.Form_Management.BieuDo_Form;
 import View.DesignComponent.Notification;
+import View.Form_Management.Pos_MayBanHang;
 import View.Form_Management.ChucVu_Form;
 import View.Form_Management.HoaDon_Form;
 import View.Form_Management.KhachHang_Form;
@@ -82,7 +83,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         HoaDon_Form hd = new HoaDon_Form();
         NhaCungCap_Form ncc = new NhaCungCap_Form();
         PhieuNhap_Form pn = new PhieuNhap_Form();
-
+        Pos_MayBanHang pos = new Pos_MayBanHang();
         this.Layout_1_Card.add(bieuDoForm);// 0
         this.Layout_1_Card.add(sach);// 1
         this.Layout_1_Card.add(scn); // 2
@@ -98,7 +99,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.Layout_1_Card.add(hd); //12
         this.Layout_1_Card.add(ncc); //13
         this.Layout_1_Card.add(pn); //14
-
+        this.Layout_1_Card.add(pos); //15
         this.Layout_1_Card.revalidate();
 
         listForm.add(bieuDoForm);
@@ -116,6 +117,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.add(hd);
         listForm.add(ncc);
         listForm.add(pn);
+        listForm.add(pos);
 
         excute();
 
@@ -497,6 +499,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             int indexJpanel = i;
             int fixFistSize = -1;
             fixFistSize = i == 0 ? 1 : i;
+            
             listJLabel.get(fixFistSize - 1).addMouseListener(new MouseListener() {
 
                 @Override
@@ -534,6 +537,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
             showJPanel(1);
             bieuDoForm.startTrungGian();
 
+        }
+        if(index != 2 ){
+            showJPanel(16);
         }
         System.out.println("ra" + indexSelectedJPanel + " - " + index);
 
@@ -927,7 +933,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1)
-                .addGap(16, 16, 16))
+                .addGap(31, 31, 31))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
