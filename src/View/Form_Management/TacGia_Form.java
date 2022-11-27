@@ -475,6 +475,8 @@ public class TacGia_Form extends javax.swing.JPanel {
         txtMaTacGia.setText("");
         txtMoTa.setText("");
         txtTenTacGia.setText("");
+        _hinh = null;
+        lblAvatar.setIcon(new ImageIcon(_hinh));
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
