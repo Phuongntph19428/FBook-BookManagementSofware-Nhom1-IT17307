@@ -5,6 +5,7 @@
 package repository.impl;
 
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -110,5 +111,21 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
         } finally {
             session.close();
         }
+    }
+
+    public NhanVien getNhanVien(String ma, String password) {
+        NhanVien nhanVien = null;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            TypedQuery<NhanVien> query = session.createQuery("from NhanVien n where n.ma = :ma and n.matKhau = :matKhau");
+            query.setParameter("ma", ma);
+            query.setParameter("matKhau", password);
+
+            nhanVien = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nhanVien;
     }
 }

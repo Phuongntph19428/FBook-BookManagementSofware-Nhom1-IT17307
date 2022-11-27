@@ -37,14 +37,11 @@ public class HoaDon implements Serializable {
     private NhanVien nhanVien;
 
     @ManyToOne
-    @JoinColumn(name = "IdKhachHang", nullable = false)
+    @JoinColumn(name = "IdKhachHang")
     private KhachHang khachHang;
 
     @Column(name = "Ma")
     private String ma;
-
-    @Column(name = "Ten")
-    private String ten;
 
     @Column(name = "NgayTao")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
@@ -80,12 +77,11 @@ public class HoaDon implements Serializable {
     public HoaDon() {
     }
 
-    public HoaDon(String id, NhanVien nhanVien, KhachHang khachHang, String ma, String ten, Date ngayTao, Date ngayShip, Date ngayNhan, Date ngayThanhToan, int trangThai, String moTa, int soDiemSuDung) {
+    public HoaDon(String id, NhanVien nhanVien, KhachHang khachHang, String ma, Date ngayTao, Date ngayShip, Date ngayNhan, Date ngayThanhToan, int trangThai, String moTa, int soDiemSuDung) {
         this.id = id;
         this.nhanVien = nhanVien;
         this.khachHang = khachHang;
         this.ma = ma;
-        this.ten = ten;
         this.ngayTao = ngayTao;
         this.ngayShip = ngayShip;
         this.ngayNhan = ngayNhan;
@@ -125,14 +121,6 @@ public class HoaDon implements Serializable {
 
     public void setMa(String ma) {
         this.ma = ma;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
     }
 
     public Date getNgayTao() {
@@ -199,17 +187,17 @@ public class HoaDon implements Serializable {
         this.lstHoaDonCT = lstHoaDonCT;
     }
 
-//    public List<HinhThucThanhToan> getLstHinhThucThanhToan() {
-//        return lstHinhThucThanhToan;
-//    }
-//
-//    public void setLstHinhThucThanhToan(List<HinhThucThanhToan> lstHinhThucThanhToan) {
-//        this.lstHinhThucThanhToan = lstHinhThucThanhToan;
-//    }
+    public List<HinhThucThanhToan> getLstHinhThucThanhToan() {
+        return lstHinhThucThanhToan;
+    }
+
+    public void setLstHinhThucThanhToan(List<HinhThucThanhToan> lstHinhThucThanhToan) {
+        this.lstHinhThucThanhToan = lstHinhThucThanhToan;
+    }
 
     @Override
     public String toString() {
-        return "HoaDon{" + "id=" + id + ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", ma=" + ma + ", ten=" + ten + ", ngayTao=" + ngayTao + ", ngayShip=" + ngayShip + ", ngayNhan=" + ngayNhan + ", trangThai=" + trangThai + ", moTa=" + moTa + '}';
+        return "HoaDon{" + "id=" + id + ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", ma=" + ma + ", ngayTao=" + ngayTao + ", ngayShip=" + ngayShip + ", ngayNhan=" + ngayNhan + ", trangThai=" + trangThai + ", moTa=" + moTa + '}';
     }
 
 }

@@ -5,42 +5,111 @@
 package View.Form_Management;
 
 import View.DesignComponent.Item_Pos;
-import View.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import model.HoaDon;
 import model.SachFake;
+import model.status.TrangThaiHoaDon;
+import service.HoaDonService;
+import service.impl.HoaDonServiceImpl;
+import util.Auth;
 
 public class Pos_MayBanHang extends javax.swing.JPanel {
+
+    private final HoaDonService _hoaDonService;
+    private List<HoaDon> _lstHoaDon;
 
     List<SachFake> listS = new ArrayList<>();
     // mỗi Item sẽ có 1 STT tương ứng với phần tử trong list 
     // toi set nó thông qua Jlabel ẩn bên trong thg Item_Pos ( ông qua xem sẽ thấy)
-    
+
     public Pos_MayBanHang() {
         initComponents();
+        _hoaDonService = new HoaDonServiceImpl();
+        setComponent();
+        loadTableHoaDon();
+
+    }
+
+    private void addHoaDonCT() {
+    }
+
+    private void setComponent() {
         tblHoaDonChiTiet.setRowHeight(60);
-        tblHoaDon.setRowHeight(50);
-        Icon icon = new ImageIcon("image/dacnhantam.jpg");
+        tblHoaDon.setRowHeight(40);
+        ImageIcon icon = new ImageIcon("image/dacnhantam.jpg");
         ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 60, Image.SCALE_DEFAULT));
         for (int i = 0; i <= 100; i++) {
-            SachFake s = new SachFake("Mã "+i, imageIcon, "Cuốn sách có tên dài 50 ký tự và nó có số trang là", 100, 20000, "203023", "Mới");
+            SachFake s = new SachFake("Mã " + i, imageIcon, "Cuốn sách có tên dài 50 ký tự và nó có số trang là", 100, 20000, "203023", "Mới");
             listS.add(s); // lấy list Sách từ DB
         }
 
         for (int i = 0; i < listS.size(); i++) {
             // tạo Sản Phẩm từ list
             Item_Pos item = new Item_Pos();
-            item.setIcon(listS.get(i).getIcon());
+            item.setIcon(icon);
             item.setName(listS.get(i).getName());
             item.setGia((int) listS.get(i).getGiaBan());
             item.setSTT(i);
+            item.setToolTipText(listS.get(i).getName());
 
+            item.jPanelBourder1.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+            item.lbGia.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+            item.jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+            item.jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+
+            item.lbName.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+            item.lbIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+            item.lblSoLuongTon.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
+            item.lbGiaSale.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                }
+            });
             item.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -58,13 +127,16 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
+                    item.hovering();
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
+                    item.exited();
                 }
 
             });
+
             JpanelShowBook.add(item);
         }
         Color color = new Color(17, 28, 68);
@@ -84,12 +156,21 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         btnSearchKhachHang.setIcon(kh);
     }
 
+    private void loadTableHoaDon() {
+        _lstHoaDon = _hoaDonService.sellectAllHoaDonCho();
+        DefaultTableModel dtm = (DefaultTableModel) tblHoaDon.getModel();
+        dtm.setRowCount(0);
+        for (HoaDon hoaDon : _lstHoaDon) {
+            dtm.addRow(new Object[]{hoaDon.getMa()});
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
-        btnInBaoCao = new View.ButtonDesign.Button();
+        btnTaoHoaDon = new View.ButtonDesign.Button();
         jLabel13 = new javax.swing.JLabel();
         jPanelBourder6 = new View.DesignComponent.JPanelBourder();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -101,7 +182,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         tblHoaDonChiTiet = new View.DesignComponent.Table();
         jLabel14 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnInBaoCao2 = new View.ButtonDesign.Button();
+        btnInBaoCao4 = new View.ButtonDesign.Button();
+        btnInBaoCao7 = new View.ButtonDesign.Button();
+        btnInBaoCao9 = new View.ButtonDesign.Button();
         jPanelBourder4 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
         JpanelShowBook = new javax.swing.JPanel();
@@ -111,6 +194,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         btnNext = new View.ButtonDesign.Button();
         btnLast = new View.ButtonDesign.Button();
         jLabel27 = new javax.swing.JLabel();
+        btnInBaoCao2 = new View.ButtonDesign.Button();
+        btnInBaoCao10 = new View.ButtonDesign.Button();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder7 = new View.DesignComponent.JPanelBourder();
@@ -160,21 +245,22 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
-        btnInBaoCao.setBackground(new java.awt.Color(19, 29, 243));
-        btnInBaoCao.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao.setText("Tạo Hóa Đơn");
-        btnInBaoCao.setFocusable(false);
-        btnInBaoCao.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao.addActionListener(new java.awt.event.ActionListener() {
+        btnTaoHoaDon.setBackground(new java.awt.Color(19, 29, 243));
+        btnTaoHoaDon.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnTaoHoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        btnTaoHoaDon.setText("Tạo Hóa Đơn");
+        btnTaoHoaDon.setFocusable(false);
+        btnTaoHoaDon.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnTaoHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCaoActionPerformed(evt);
+                btnTaoHoaDonActionPerformed(evt);
             }
         });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 0, 28)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Hóa Đơn");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jPanelBourder6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -190,8 +276,20 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             new String [] {
                 "Mã Hóa Đơn"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblHoaDon.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(tblHoaDon);
+        if (tblHoaDon.getColumnModel().getColumnCount() > 0) {
+            tblHoaDon.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanelBourder6Layout = new javax.swing.GroupLayout(jPanelBourder6);
         jPanelBourder6.setLayout(jPanelBourder6Layout);
@@ -206,8 +304,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             jPanelBourder6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75))
         );
 
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
@@ -215,17 +313,17 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         jPanelBourder1Layout.setHorizontalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel13)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelBourder1Layout.createSequentialGroup()
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelBourder6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator2))
-                    .addComponent(btnInBaoCao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanelBourder1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,10 +333,10 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 .addGap(8, 8, 8)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelBourder6, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(127, 127, 127))
+                .addComponent(jPanelBourder6, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         jPanelBourder2.setBackground(new java.awt.Color(17, 28, 68));
@@ -270,7 +368,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             jPanelBourder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -278,15 +376,39 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Hóa Đơn Chi Tiết");
 
-        btnInBaoCao2.setBackground(new java.awt.Color(35, 35, 132));
-        btnInBaoCao2.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao2.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao2.setText("Xóa");
-        btnInBaoCao2.setFocusable(false);
-        btnInBaoCao2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao2.addActionListener(new java.awt.event.ActionListener() {
+        btnInBaoCao4.setBackground(new java.awt.Color(35, 35, 132));
+        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao4.setText("Xóa toàn bộ");
+        btnInBaoCao4.setFocusable(false);
+        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao2ActionPerformed(evt);
+                btnInBaoCao4ActionPerformed(evt);
+            }
+        });
+
+        btnInBaoCao7.setBackground(new java.awt.Color(35, 35, 132));
+        btnInBaoCao7.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao7.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao7.setText("Xóa");
+        btnInBaoCao7.setFocusable(false);
+        btnInBaoCao7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCao7ActionPerformed(evt);
+            }
+        });
+
+        btnInBaoCao9.setBackground(new java.awt.Color(35, 35, 132));
+        btnInBaoCao9.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao9.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao9.setText("Scan");
+        btnInBaoCao9.setFocusable(false);
+        btnInBaoCao9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCao9ActionPerformed(evt);
             }
         });
 
@@ -296,19 +418,22 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder2Layout.createSequentialGroup()
                 .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanelBourder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelBourder2Layout.createSequentialGroup()
                         .addGap(263, 263, 263)
                         .addComponent(jLabel14)
-                        .addGap(0, 323, Short.MAX_VALUE)))
+                        .addGap(0, 323, Short.MAX_VALUE))
+                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanelBourder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnInBaoCao9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnInBaoCao7, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnInBaoCao2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelBourder2Layout.setVerticalGroup(
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,12 +444,18 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelBourder5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnInBaoCao2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnInBaoCao9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBaoCao7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelBourder4.setBackground(new java.awt.Color(17, 28, 68));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         JpanelShowBook.setLayout(new javax.swing.BoxLayout(JpanelShowBook, javax.swing.BoxLayout.X_AXIS));
         jScrollPane1.setViewportView(JpanelShowBook);
@@ -334,7 +465,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         txtTimKiem.setCaretColor(new java.awt.Color(255, 255, 255));
         txtTimKiem.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtTimKiem.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        txtTimKiem.setLabelText("Tìm Kiếm Theo Tên");
+        txtTimKiem.setLabelText("Tìm kiếm theo tên, thể loại, tác giả, barcode, ...");
         txtTimKiem.setLineColor(new java.awt.Color(255, 255, 255));
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -391,17 +522,39 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setText("1/12");
 
+        btnInBaoCao2.setBackground(new java.awt.Color(35, 35, 132));
+        btnInBaoCao2.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao2.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao2.setText("All");
+        btnInBaoCao2.setFocusable(false);
+        btnInBaoCao2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCao2ActionPerformed(evt);
+            }
+        });
+
+        btnInBaoCao10.setBackground(new java.awt.Color(35, 35, 132));
+        btnInBaoCao10.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao10.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao10.setText("Tìm kiếm");
+        btnInBaoCao10.setFocusable(false);
+        btnInBaoCao10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCao10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder4Layout = new javax.swing.GroupLayout(jPanelBourder4);
         jPanelBourder4.setLayout(jPanelBourder4Layout);
         jPanelBourder4Layout.setHorizontalGroup(
             jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder4Layout.createSequentialGroup()
                 .addGroup(jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 988, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelBourder4Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBourder4Layout.createSequentialGroup()
-                        .addGap(349, 349, 349)
+                        .addGap(351, 351, 351)
                         .addComponent(btnFist, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -412,17 +565,24 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 983, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addGap(15, 15, 15)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInBaoCao10, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnInBaoCao2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanelBourder4Layout.setVerticalGroup(
             jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBaoCao2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBaoCao10, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -431,7 +591,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addContainerGap())
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(51, 51, 255));
@@ -568,7 +728,6 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
         txtSearch.setBackground(new java.awt.Color(16, 31, 86));
         txtSearch.setForeground(new java.awt.Color(255, 255, 255));
-        txtSearch.setText("0Đ");
         txtSearch.setCaretColor(new java.awt.Color(255, 255, 255));
         txtSearch.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtSearch.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -582,7 +741,6 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
         txtSearch1.setBackground(new java.awt.Color(16, 31, 86));
         txtSearch1.setForeground(new java.awt.Color(255, 255, 255));
-        txtSearch1.setText("0Đ");
         txtSearch1.setCaretColor(new java.awt.Color(255, 255, 255));
         txtSearch1.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtSearch1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -954,30 +1112,41 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanelBourder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBourder4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelBourder4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("Bán");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCaoActionPerformed
+    private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
+        int maHoaDon = _hoaDonService.genMaHoaDon();
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.setMa("HD" + maHoaDon);
+        hoaDon.setNhanVien(Auth.getNhanVien());
+        hoaDon.setNgayTao(new Date());
+        hoaDon.setTrangThai(TrangThaiHoaDon.CHUATHANHTOAN);
 
-    }//GEN-LAST:event_btnInBaoCaoActionPerformed
+        _hoaDonService.taoHoaDon(hoaDon);
+
+        loadTableHoaDon();
+        tblHoaDon.setRowSelectionInterval(0, 0);
+
+    }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnInBaoCao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao2ActionPerformed
     }//GEN-LAST:event_btnInBaoCao2ActionPerformed
@@ -1034,20 +1203,40 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     }//GEN-LAST:event_txtTimKiem1KeyReleased
 
+    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+
+    private void btnInBaoCao7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInBaoCao7ActionPerformed
+
+    private void btnInBaoCao9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInBaoCao9ActionPerformed
+
+    private void btnInBaoCao10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInBaoCao10ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JpanelShowBook;
     private View.ButtonDesign.Button btnFist;
-    private View.ButtonDesign.Button btnInBaoCao;
+    private View.ButtonDesign.Button btnInBaoCao10;
     private View.ButtonDesign.Button btnInBaoCao2;
     private View.ButtonDesign.Button btnInBaoCao3;
+    private View.ButtonDesign.Button btnInBaoCao4;
     private View.ButtonDesign.Button btnInBaoCao5;
     private View.ButtonDesign.Button btnInBaoCao6;
+    private View.ButtonDesign.Button btnInBaoCao7;
     private View.ButtonDesign.Button btnInBaoCao8;
+    private View.ButtonDesign.Button btnInBaoCao9;
     private View.ButtonDesign.Button btnLast;
     private View.ButtonDesign.Button btnNext;
     private View.ButtonDesign.Button btnPrev;
     private View.ButtonDesign.Button btnSearchKhachHang;
+    private View.ButtonDesign.Button btnTaoHoaDon;
     private View.DesignComponent.Combobox comboboxTrangThai;
     private View.DesignComponent.Combobox comboboxTrangThai1;
     private View.DesignComponent.Combobox comboboxTrangThai2;
