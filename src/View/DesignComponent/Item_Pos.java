@@ -25,18 +25,18 @@ public class Item_Pos extends javax.swing.JPanel {
         System.out.println(lbName.getText().length());
     }
 
-    public void setGia(BigDecimal Gia) {
+    public void setGia(BigDecimal Gia, int chietKhau) {
         DecimalFormat df = new DecimalFormat("#,##0.00");
-        this.lbGia.setText(df.format(Gia) + " VND");
+        this.lbGia.setText("<html><s>" + df.format(Gia) + " VNĐ" + "</s><sup style=\"color: 5DEB1B\"> - " + chietKhau + "%</sup></html>");
     }
-    
+
     public void setSoluongTon(int soLuong) {
         this.lblSoLuongTon.setText("Số lượng tồn: " + soLuong);
     }
 
     public void setGiaSale(BigDecimal gia) {
         DecimalFormat df = new DecimalFormat("#,##0.00");
-        this.lbGiaSale.setText(df.format(gia) + " VND");
+        this.lbGiaSale.setText("<html>" + df.format(gia) + "<sup> vnđ<sup></hmtl>");
     }
 
     public void setSTT(int index) {

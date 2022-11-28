@@ -168,7 +168,7 @@ public class KhachHang implements Serializable {
 
     @Override
     public String toString() {
-        return "KhachHang{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", ho= " + ho + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", sdt=" + sdt + ", diemTichLuy=" + diemTichLuy + ", diaChi=" + diaChi + '}';
+        return ho + " " + ten + " " + tenDem + " - " + sdt;
     }
     
     public Object[] toDataRow() {
