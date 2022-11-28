@@ -36,10 +36,6 @@ public class NhanVien implements Serializable {
     @JoinColumn(name = "IdChucvu", nullable = false)
     private ChucVu chucVu;
 
-    @ManyToOne
-    @JoinColumn(name = "IdGuiBC", nullable = true)
-    private NhanVien guiBC;
-
     @Column(name = "Ma")
     private String ma;
 
@@ -83,10 +79,9 @@ public class NhanVien implements Serializable {
     public NhanVien() {
     }
 
-    public NhanVien(String id, ChucVu chucVu, NhanVien guiBC, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai, List<HoaDon> lstHoaDon) {
+    public NhanVien(String id, ChucVu chucVu, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai){
         this.id = id;
         this.chucVu = chucVu;
-        this.guiBC = guiBC;
         this.ma = ma;
         this.ten = ten;
         this.ho = ho;
@@ -99,7 +94,6 @@ public class NhanVien implements Serializable {
         this.matKhau = matKhau;
         this.hinh = hinh;
         this.trangThai = trangThai;
-        this.lstHoaDon = lstHoaDon;
     }
 
     public String getId() {
@@ -116,14 +110,6 @@ public class NhanVien implements Serializable {
 
     public void setChucVu(ChucVu chucVu) {
         this.chucVu = chucVu;
-    }
-
-    public NhanVien getGuiBC() {
-        return guiBC;
-    }
-
-    public void setGuiBC(NhanVien guiBC) {
-        this.guiBC = guiBC;
     }
 
     public String getMa() {
@@ -232,6 +218,6 @@ public class NhanVien implements Serializable {
 
     @Override
     public String toString() {
-        return "NhanVien{" + "id=" + id + ", chucVu=" + chucVu + ", guiBC=" + guiBC + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + ", matKhau=" + matKhau + ", hinh=" + hinh + ", trangThai=" + trangThai + '}';
+        return "NhanVien{" + "id=" + id + ", chucVu=" + chucVu + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + ", matKhau=" + matKhau + ", hinh=" + hinh + ", trangThai=" + trangThai + '}';
     }
 }

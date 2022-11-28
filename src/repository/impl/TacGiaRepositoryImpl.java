@@ -23,7 +23,7 @@ public class TacGiaRepositoryImpl implements TacGiaRepository {
     public List<TacGia> selectAll() {
         List<TacGia> lstTacGia = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT t FROM TacGia t";
+            String hql = "SELECT t FROM TacGia t order by t.ma asc";
             TypedQuery<TacGia> query = session.createQuery(hql);
 
             lstTacGia = query.getResultList();

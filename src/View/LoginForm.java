@@ -151,7 +151,7 @@ public class LoginForm extends javax.swing.JFrame {
 
         jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBox1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jCheckBox1.setText("Remember for 30 days");
+        jCheckBox1.setText("Remember password?");
         jPanel4.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 170, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N

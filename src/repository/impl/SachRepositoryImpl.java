@@ -29,7 +29,7 @@ public class SachRepositoryImpl implements SachRepositoty {
 
         List<Sach> lstSach = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT s FROM Sach s";
+            String hql = "SELECT s FROM Sach s order by s.ma asc";
             TypedQuery<Sach> query = session.createQuery(hql);
             query.setFirstResult(position);
             query.setMaxResults(pageSize);
