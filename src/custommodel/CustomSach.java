@@ -4,7 +4,12 @@
  */
 package custommodel;
 
+import View.DesignComponent.ModelProfile;
+import java.awt.Image;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import javax.swing.ImageIcon;
+import model.Sach;
 
 /**
  *
@@ -97,6 +102,16 @@ public class CustomSach {
 
     public void setHinh(byte[] hinh) {
         this.hinh = hinh;
+    }
+    
+    public Sach getSach() {
+        return new Sach(id, null, null, ma, ten, soLuong, 0, giaBan, giaBan, 1, hinh, null, null);
+    }
+    
+    public Object[] toDataRow() {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        return new Object[]{ma, ten, soLuong, giaSale == null? df.format(giaBan) : df.format(giaSale), 
+            hinh == null ? null : new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)))};
     }
 
 }

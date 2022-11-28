@@ -5,20 +5,26 @@
 package View.Form_Management;
 
 import View.DesignComponent.Item_Pos;
+import View.DesignComponent.ModelProfile;
+import custommodel.CustomSach;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.HoaDon;
-import model.SachFake;
+import model.HoaDonChiTiet;
 import model.status.TrangThaiHoaDon;
+import service.CustomSachService;
 import service.HoaDonService;
+import service.impl.CustomSachServiceImpl;
 import service.impl.HoaDonServiceImpl;
 import util.Auth;
 
@@ -27,94 +33,205 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private final HoaDonService _hoaDonService;
     private List<HoaDon> _lstHoaDon;
 
-    List<SachFake> listS = new ArrayList<>();
-    // mỗi Item sẽ có 1 STT tương ứng với phần tử trong list 
-    // toi set nó thông qua Jlabel ẩn bên trong thg Item_Pos ( ông qua xem sẽ thấy)
+    private final CustomSachService _customSachService;
+    private List<CustomSach> _lstCustomSach;
 
+    private HashMap<String, HoaDonChiTiet> _lstHoaDonChiTiet;
+
+    private int _totalPage;
+    private int _currentPage = 1;
+    private final int _pageSize = 6;
+    private boolean searcher = false;
+
+//    List<SachFake> listS = new ArrayList<>();
     public Pos_MayBanHang() {
         initComponents();
-        _hoaDonService = new HoaDonServiceImpl();
         setComponent();
+        _hoaDonService = new HoaDonServiceImpl();
+        _customSachService = new CustomSachServiceImpl();
+
+        loadCustomSach();
         loadTableHoaDon();
+    }
+
+    public void loadCustomSach() {
+        loadSach(1, _pageSize);
+        setPageLabel(false);
+    }
+
+    private void setPageLabel(boolean searching) {
+        if (searching) {
+            int result = _lstCustomSach.size();
+            if (result % _pageSize == 0) {
+                _totalPage = result / _pageSize;
+            } else {
+                _totalPage = result / _pageSize + 1;
+            }
+        } else {
+            int result = _customSachService.countAllSach();
+            if (result % _pageSize == 0) {
+                _totalPage = result / _pageSize;
+            } else {
+                _totalPage = result / _pageSize + 1;
+            }
+        }
+        setLabelPage();
 
     }
 
-    private void addHoaDonCT() {
+    private void setLabelPage() {
+        lblPage.setText(_currentPage + "/" + _totalPage);
     }
 
     private void setComponent() {
         tblHoaDonChiTiet.setRowHeight(60);
         tblHoaDon.setRowHeight(40);
-        ImageIcon icon = new ImageIcon("image/dacnhantam.jpg");
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/dacnhantam.jpg").getImage().getScaledInstance(50, 60, Image.SCALE_DEFAULT));
-        for (int i = 0; i <= 100; i++) {
-            SachFake s = new SachFake("Mã " + i, imageIcon, "Cuốn sách có tên dài 50 ký tự và nó có số trang là", 100, 20000, "203023", "Mới");
-            listS.add(s); // lấy list Sách từ DB
-        }
+        Color color = new Color(17, 28, 68);
+        Icon prev = new ImageIcon("image/icons8_previous_37px.png");
+        Icon next = new ImageIcon("image/icons8_next_37px.png");
+        Icon fist = new ImageIcon("image/icons8_skip_to_start_37px.png");
+        Icon last = new ImageIcon("image/icons8_end_37px.png");
+        Icon kh = new ImageIcon("image/icons8_search_25px.png");
+        btnPrev.setIcon(prev);
+        btnPrev.setBackground(color);
+        btnNext.setIcon(next);
+        btnNext.setBackground(color);
+        btnFist.setIcon(fist);
+        btnFist.setBackground(color);
+        btnLast.setIcon(last);
+        btnLast.setBackground(color);
+        btnSearchKhachHang.setIcon(kh);
+    }
 
-        for (int i = 0; i < listS.size(); i++) {
+    private void loadSach(int position, int pageSize) {
+        _lstCustomSach = _customSachService.getList(position, pageSize);
+        int size = _lstCustomSach.size();
+        initJpanelSach(0, size);
+    }
+
+    private void initJpanelSach(int start, int size) {
+        JpanelShowBook.removeAll();
+
+        for (int i = start; i < size && i < _lstCustomSach.size(); i++) {
             // tạo Sản Phẩm từ list
+            CustomSach customSach = _lstCustomSach.get(i);
             Item_Pos item = new Item_Pos();
-            item.setIcon(icon);
-            item.setName(listS.get(i).getName());
-            item.setGia((int) listS.get(i).getGiaBan());
+            item.setIcon(customSach.getHinh());
+            item.setName(customSach.getTen());
+            item.setGia(customSach.getGiaBan());
+            item.setGiaSale(customSach.getGiaSale());
+            item.setSoluongTon(customSach.getSoLuong());
             item.setSTT(i);
-            item.setToolTipText(listS.get(i).getName());
+            item.setToolTipText(customSach.getTen());
 
             item.jPanelBourder1.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
+
                 }
             });
             item.lbGia.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
             item.jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
             item.jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
 
             item.lbName.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
             item.lbIcon.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
             item.lblSoLuongTon.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
             item.lbGiaSale.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (evt.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
             });
             item.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // chỗ này tôi chỉ add Fake ( thực hiện vc click sẽ fill lên Table
-                    tblHoaDonChiTiet.addRow(listS.get(item.getSTT()).toRowTable());
+                    if (e.getClickCount() == 2) {
+                        CustomSach newCustomSach = getCustomSach(customSach);
+                        if (newCustomSach == null) {
+                            return;
+                        }
+                        addHoaDonCT(newCustomSach);
+                    }
                 }
 
                 @Override
@@ -139,21 +256,15 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
             JpanelShowBook.add(item);
         }
-        Color color = new Color(17, 28, 68);
-        Icon prev = new ImageIcon("image/icons8_previous_37px.png");
-        Icon next = new ImageIcon("image/icons8_next_37px.png");
-        Icon fist = new ImageIcon("image/icons8_skip_to_start_37px.png");
-        Icon last = new ImageIcon("image/icons8_end_37px.png");
-        Icon kh = new ImageIcon("image/icons8_search_25px.png");
-        btnPrev.setIcon(prev);
-        btnPrev.setBackground(color);
-        btnNext.setIcon(next);
-        btnNext.setBackground(color);
-        btnFist.setIcon(fist);
-        btnFist.setBackground(color);
-        btnLast.setIcon(last);
-        btnLast.setBackground(color);
-        btnSearchKhachHang.setIcon(kh);
+        repaint();
+        revalidate();
+    }
+
+    public void loadSachSearch(List<CustomSach> lst, int position, int pageSize) {
+        _lstCustomSach = lst;
+        int size = pageSize * position;
+        initJpanelSach((position - 1) * pageSize, size);
+        JpanelShowBook.removeAll();
     }
 
     private void loadTableHoaDon() {
@@ -164,6 +275,78 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             dtm.addRow(new Object[]{hoaDon.getMa()});
         }
     }
+
+    private CustomSach getCustomSach(CustomSach customSach) {
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
+            return null;
+        }
+        String input = JOptionPane.showInputDialog(this, "Mời bạn nhập số lượng: ");
+        if (input == null) {
+            return null;
+        }
+        if (!input.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Không đúng định dạng");
+            return null;
+        }
+
+        if (customSach.getSoLuong() < Integer.parseInt(input)) {
+            JOptionPane.showMessageDialog(this, "Số lượng không đủ.");
+            return null;
+        }
+        customSach.setSoLuong(Integer.parseInt(input));
+        return customSach;
+    }
+
+    private void addHoaDonCT(CustomSach customSach) {
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
+            return;
+        }
+
+        HoaDonChiTiet hoaDonCT = new HoaDonChiTiet();
+        hoaDonCT.setSach(customSach.getSach());
+        hoaDonCT.setDonGia(customSach.getGiaSale());
+        hoaDonCT.setSoLuong(customSach.getSoLuong());
+        hoaDonCT.setHoaDon(_lstHoaDon.get(row));
+        if (_lstHoaDonChiTiet.get(hoaDonCT.getSach().getId()) == null) {
+            _hoaDonService.insertHoaDonChiTiet(hoaDonCT);
+        } else {
+            int soLuong = _lstHoaDonChiTiet.get(hoaDonCT.getSach().getId()).getSoLuong() + customSach.getSoLuong();
+            hoaDonCT.setSoLuong(soLuong);
+            hoaDonCT.setId(_lstHoaDonChiTiet.get(hoaDonCT.getSach().getId()).getId());
+            _hoaDonService.updateHoaDonChiTiet(hoaDonCT);
+        }
+        _lstHoaDonChiTiet.put(hoaDonCT.getSach().getId(), hoaDonCT);
+        for (HoaDonChiTiet value : _lstHoaDonChiTiet.values()) {
+            System.out.println(value);
+        }
+        loadTableHoaDonCT(hoaDonCT.getHoaDon().getMa());
+        if (searcher) {
+            loadSachSearch(_lstCustomSach, _currentPage, _pageSize);
+        } else {
+            loadSach(_currentPage, _pageSize);
+        }
+
+    }
+
+    private void loadTableHoaDonCT(String maHD) {
+        List<HoaDonChiTiet> lst = _hoaDonService.getAllByMaHD(maHD);
+        _lstHoaDonChiTiet = new HashMap<>();
+        for (HoaDonChiTiet hoaDonChiTiet : lst) {
+            _lstHoaDonChiTiet.put(hoaDonChiTiet.getSach().getId(), hoaDonChiTiet);
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
+        dtm.setRowCount(0);
+        for (HoaDonChiTiet hoaDonChiTiet : _lstHoaDonChiTiet.values()) {
+            dtm.addRow(new Object[]{hoaDonChiTiet.getSach().getMa(), hoaDonChiTiet.getSach().getTen(), hoaDonChiTiet.getSoLuong(), df.format(hoaDonChiTiet.getDonGia()),
+                hoaDonChiTiet.getSach().getHinh() == null ? "" : new ModelProfile(new ImageIcon(new ImageIcon(hoaDonChiTiet.getSach().getHinh()).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)))});
+        }
+    }
+    private final DecimalFormat df = new DecimalFormat("#,##0.00");
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -182,8 +365,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         tblHoaDonChiTiet = new View.DesignComponent.Table();
         jLabel14 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnInBaoCao4 = new View.ButtonDesign.Button();
-        btnInBaoCao7 = new View.ButtonDesign.Button();
+        btnDeleteAll = new View.ButtonDesign.Button();
+        btnXoa = new View.ButtonDesign.Button();
         btnInBaoCao9 = new View.ButtonDesign.Button();
         jPanelBourder4 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -193,9 +376,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         btnPrev = new View.ButtonDesign.Button();
         btnNext = new View.ButtonDesign.Button();
         btnLast = new View.ButtonDesign.Button();
-        jLabel27 = new javax.swing.JLabel();
-        btnInBaoCao2 = new View.ButtonDesign.Button();
-        btnInBaoCao10 = new View.ButtonDesign.Button();
+        lblPage = new javax.swing.JLabel();
+        btnAll = new View.ButtonDesign.Button();
+        btnSearch = new View.ButtonDesign.Button();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder7 = new View.DesignComponent.JPanelBourder();
@@ -286,6 +469,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
         });
         tblHoaDon.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHoaDonMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblHoaDon);
         if (tblHoaDon.getColumnModel().getColumnCount() > 0) {
             tblHoaDon.getColumnModel().getColumn(0).setResizable(false);
@@ -350,9 +538,25 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "Tên Sách", "Hình", "Số Lượng", "Đơn Giá", "Mô Tả"
+                "Mã", "Tên Sách", "Số Lượng", "Đơn Giá", "Hình"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblHoaDonChiTiet.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(tblHoaDonChiTiet);
 
         javax.swing.GroupLayout jPanelBourder5Layout = new javax.swing.GroupLayout(jPanelBourder5);
@@ -376,27 +580,27 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Hóa Đơn Chi Tiết");
 
-        btnInBaoCao4.setBackground(new java.awt.Color(35, 35, 132));
-        btnInBaoCao4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao4.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao4.setText("Xóa toàn bộ");
-        btnInBaoCao4.setFocusable(false);
-        btnInBaoCao4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao4.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteAll.setBackground(new java.awt.Color(35, 35, 132));
+        btnDeleteAll.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnDeleteAll.setForeground(new java.awt.Color(255, 255, 255));
+        btnDeleteAll.setText("Xóa toàn bộ");
+        btnDeleteAll.setFocusable(false);
+        btnDeleteAll.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnDeleteAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao4ActionPerformed(evt);
+                btnDeleteAllActionPerformed(evt);
             }
         });
 
-        btnInBaoCao7.setBackground(new java.awt.Color(35, 35, 132));
-        btnInBaoCao7.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao7.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao7.setText("Xóa");
-        btnInBaoCao7.setFocusable(false);
-        btnInBaoCao7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao7.addActionListener(new java.awt.event.ActionListener() {
+        btnXoa.setBackground(new java.awt.Color(35, 35, 132));
+        btnXoa.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnXoa.setForeground(new java.awt.Color(255, 255, 255));
+        btnXoa.setText("Xóa");
+        btnXoa.setFocusable(false);
+        btnXoa.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao7ActionPerformed(evt);
+                btnXoaActionPerformed(evt);
             }
         });
 
@@ -430,9 +634,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(btnInBaoCao9, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInBaoCao7, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelBourder2Layout.setVerticalGroup(
@@ -447,8 +651,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInBaoCao9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -517,32 +721,34 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
         });
 
-        jLabel27.setBackground(new java.awt.Color(102, 102, 102));
-        jLabel27.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel27.setText("1/12");
+        lblPage.setBackground(new java.awt.Color(102, 102, 102));
+        lblPage.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        lblPage.setForeground(new java.awt.Color(255, 255, 255));
+        lblPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPage.setText("1/12");
+        lblPage.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        btnInBaoCao2.setBackground(new java.awt.Color(35, 35, 132));
-        btnInBaoCao2.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao2.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao2.setText("All");
-        btnInBaoCao2.setFocusable(false);
-        btnInBaoCao2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao2.addActionListener(new java.awt.event.ActionListener() {
+        btnAll.setBackground(new java.awt.Color(35, 35, 132));
+        btnAll.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnAll.setForeground(new java.awt.Color(255, 255, 255));
+        btnAll.setText("All");
+        btnAll.setFocusable(false);
+        btnAll.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao2ActionPerformed(evt);
+                btnAllActionPerformed(evt);
             }
         });
 
-        btnInBaoCao10.setBackground(new java.awt.Color(35, 35, 132));
-        btnInBaoCao10.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao10.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao10.setText("Tìm kiếm");
-        btnInBaoCao10.setFocusable(false);
-        btnInBaoCao10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao10.addActionListener(new java.awt.event.ActionListener() {
+        btnSearch.setBackground(new java.awt.Color(35, 35, 132));
+        btnSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.setFocusable(false);
+        btnSearch.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao10ActionPerformed(evt);
+                btnSearchActionPerformed(evt);
             }
         });
 
@@ -558,9 +764,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addComponent(btnFist, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel27)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPage, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -568,9 +774,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addGap(15, 15, 15)
                         .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnInBaoCao10, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(btnInBaoCao2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAll, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanelBourder4Layout.setVerticalGroup(
@@ -579,8 +785,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao10, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAll, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -590,7 +796,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addComponent(btnPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnLast, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1148,9 +1354,6 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
-    private void btnInBaoCao2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao2ActionPerformed
-    }//GEN-LAST:event_btnInBaoCao2ActionPerformed
-
     private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInBaoCao3ActionPerformed
@@ -1184,59 +1387,144 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void btnFistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFistActionPerformed
-        // TODO add your handling code here:
+        if (_currentPage == 1) {
+            return;
+        }
+        _currentPage = 1;
+        if (searcher) {
+            loadSachSearch(_lstCustomSach, 1, _pageSize);
+        } else {
+            loadCustomSach();
+        }
+        setLabelPage();
     }//GEN-LAST:event_btnFistActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        // TODO add your handling code here:
+        if (_currentPage == 1) {
+            return;
+        }
+        setLabelPage();
+        _currentPage = _currentPage--;
+        refreshSP();
     }//GEN-LAST:event_btnPrevActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
+        if (_currentPage == _totalPage || _currentPage > _totalPage) {
+            return;
+        }
+        _currentPage = _currentPage++;
+        refreshSP();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
-        // TODO add your handling code here:
+        if (_currentPage == _totalPage || _currentPage > _totalPage) {
+            return;
+        }
+        setLabelPage();
+        _currentPage = _totalPage;
+        refreshSP();
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void txtTimKiem1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiem1KeyReleased
 
     }//GEN-LAST:event_txtTimKiem1KeyReleased
 
-    private void btnInBaoCao4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao4ActionPerformed
+    private void btnDeleteAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAllActionPerformed
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
+            return;
+        }
+        if (_lstHoaDonChiTiet.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không có gì để xóa");
+            return;
+        }
+        _hoaDonService.removeAllHoaDonCT(_lstHoaDon.get(row));
+        refreshSP();
+    }//GEN-LAST:event_btnDeleteAllActionPerformed
 
-    private void btnInBaoCao7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao7ActionPerformed
+    private void refreshSP() {
+        setPageLabel(searcher);
+        if (searcher) {
+            loadSachSearch(_lstCustomSach, _currentPage, _totalPage);
+        } else {
+            loadSach(_currentPage, _totalPage);
+        }
+    }
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        int row = tblHoaDonChiTiet.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn sản phẩm");
+            return;
+        }
+
+        int row2 = tblHoaDon.getSelectedRow();
+        if (row2 == -1) {
+            JOptionPane.showMessageDialog(this, "Chưa chọn hóa đơn");
+            return;
+        }
+        for (HoaDonChiTiet hoaDonCT : _lstHoaDonChiTiet.values()) {
+            if (hoaDonCT.getSach().getMa().equalsIgnoreCase(tblHoaDonChiTiet.getValueAt(row, 0) + "")) {
+                JOptionPane.showConfirmDialog(this, "Xóa?");
+                _hoaDonService.removeHoaDonChiTiet(hoaDonCT);
+                loadTableHoaDonCT(_lstHoaDon.get(row).getMa());
+                refreshSP();
+            }
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnInBaoCao9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInBaoCao9ActionPerformed
 
-    private void btnInBaoCao10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao10ActionPerformed
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String keyword = txtTimKiem.getText();
+        searcher = true;
+        if (keyword.isBlank()) {
+            setPageLabel(false);
+            loadSach(1, _pageSize);
+            searcher = false;
+            return;
+        }
+        _currentPage = 1;
+        loadSachSearch(_customSachService.getAllByKeyword(keyword), _currentPage, _pageSize);
+        System.out.println(_lstCustomSach.size());
+        setPageLabel(true);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllActionPerformed
+        searcher = false;
+        _currentPage = 1;
+        loadSach(_currentPage, _pageSize);
+        txtTimKiem.setText("");
+    }//GEN-LAST:event_btnAllActionPerformed
+
+    private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        loadTableHoaDonCT(_lstHoaDon.get(row).getMa());
+    }//GEN-LAST:event_tblHoaDonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JpanelShowBook;
+    private View.ButtonDesign.Button btnAll;
+    private View.ButtonDesign.Button btnDeleteAll;
     private View.ButtonDesign.Button btnFist;
-    private View.ButtonDesign.Button btnInBaoCao10;
-    private View.ButtonDesign.Button btnInBaoCao2;
     private View.ButtonDesign.Button btnInBaoCao3;
-    private View.ButtonDesign.Button btnInBaoCao4;
     private View.ButtonDesign.Button btnInBaoCao5;
     private View.ButtonDesign.Button btnInBaoCao6;
-    private View.ButtonDesign.Button btnInBaoCao7;
     private View.ButtonDesign.Button btnInBaoCao8;
     private View.ButtonDesign.Button btnInBaoCao9;
     private View.ButtonDesign.Button btnLast;
     private View.ButtonDesign.Button btnNext;
     private View.ButtonDesign.Button btnPrev;
+    private View.ButtonDesign.Button btnSearch;
     private View.ButtonDesign.Button btnSearchKhachHang;
     private View.ButtonDesign.Button btnTaoHoaDon;
+    private View.ButtonDesign.Button btnXoa;
     private View.DesignComponent.Combobox comboboxTrangThai;
     private View.DesignComponent.Combobox comboboxTrangThai1;
     private View.DesignComponent.Combobox comboboxTrangThai2;
@@ -1257,7 +1545,6 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1285,6 +1572,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lblPage;
     private View.DesignComponent.Table tblHoaDon;
     private View.DesignComponent.Table tblHoaDonChiTiet;
     private View.DesignComponent.TextField txtSearch;

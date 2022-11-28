@@ -8,8 +8,9 @@ import custommodel.CustomSach;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TypedQuery;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import repository.CustomSachRepository;
 import util.HibernateUtil;
 
@@ -23,8 +24,8 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
     public List<CustomSach> getList(int position, int pageSize) {
         List<CustomSach> lstCustomSach = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            StoredProcedureQuery query = session.createStoredProcedureQuery("{CALL proc_getListCustomSach (:position, :pageSize)}");
-            query.setParameter("positon", position);
+            Query query = session.createSQLQuery("{CALL proc_getListCustomSach (:position, :pageSize)}");
+            query.setParameter("position", (position -1) * pageSize );
             query.setParameter("pageSize", pageSize);
             
             List lst = query.getResultList();
@@ -37,13 +38,15 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
                 String giaBanStr = CsArr[4] + "";
                 BigDecimal giaBan = BigDecimal.valueOf(Double.parseDouble(giaBanStr));
                 String giaSaleStr = CsArr[5] + "";
-                BigDecimal giaSale = null;
+                BigDecimal giaSale;
                 if(!giaSaleStr.equalsIgnoreCase("null")) {
                     giaSale = BigDecimal.valueOf(Double.parseDouble(giaSaleStr));
+                }else {
+                    giaSale = giaBan;
                 }
                 String chietKhauStr = CsArr[6] + "";
-                Integer chietKhau = null;
-                if(chietKhauStr.equalsIgnoreCase("null")) {
+                Integer chietKhau = 0;
+                if(!chietKhauStr.equalsIgnoreCase("null")) {
                     chietKhau = Integer.valueOf(chietKhauStr);
                 }
                 byte[] hinh = (byte[]) CsArr[7];
@@ -60,8 +63,9 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
     public List<CustomSach> getAllByKeyword(String keyword) {
         List<CustomSach> lstCustomSach = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            StoredProcedureQuery query = session.createStoredProcedureQuery("{CALL proc_getListCustomSach (:keyword)}");
+            Query query = session.createSQLQuery("{CALL proc_getAllByKeyword (:keyword)}");
             query.setParameter("keyword", keyword);
+            
             List lst = query.getResultList();
             for (Object object : lst) {
                 Object[] CsArr = (Object[]) object;
@@ -72,13 +76,15 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
                 String giaBanStr = CsArr[4] + "";
                 BigDecimal giaBan = BigDecimal.valueOf(Double.parseDouble(giaBanStr));
                 String giaSaleStr = CsArr[5] + "";
-                BigDecimal giaSale = null;
+                BigDecimal giaSale;
                 if(!giaSaleStr.equalsIgnoreCase("null")) {
                     giaSale = BigDecimal.valueOf(Double.parseDouble(giaSaleStr));
+                }else {
+                    giaSale = giaBan;
                 }
                 String chietKhauStr = CsArr[6] + "";
-                Integer chietKhau = null;
-                if(chietKhauStr.equalsIgnoreCase("null")) {
+                Integer chietKhau = 0;
+                if(!chietKhauStr.equalsIgnoreCase("null")) {
                     chietKhau = Integer.valueOf(chietKhauStr);
                 }
                 byte[] hinh = (byte[]) CsArr[7];
@@ -89,6 +95,17 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
 
         }
         return lstCustomSach;
+    }
+    
+    @Override
+    public int countAllSach() {
+        int total = 0;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT COUNT(s.id) FROM Sach s";
+            TypedQuery<Long> query = session.createQuery(hql, Long.class);
+            total = Integer.parseInt(query.getSingleResult() + "");
+        }
+        return total;
     }
 
 }

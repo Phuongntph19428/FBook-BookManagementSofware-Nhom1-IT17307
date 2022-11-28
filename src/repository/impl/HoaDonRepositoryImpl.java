@@ -12,6 +12,7 @@ import model.HoaDon;
 import model.HoaDonChiTiet;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import repository.HoaDonRepository;
 import util.HibernateUtil;
 
@@ -45,11 +46,12 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
-                String hql = "delete FROM HoaDonChiTiet h WHERE h.hoaDon = :hoaDon";
-                TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+                String hql = "delete HoaDonChiTiet h WHERE h.hoaDon = :hoaDon";
+                Query<HoaDonChiTiet> query = session.createQuery(hql);
                 query.setParameter("hoaDon", hoaDon);
 
                 query.executeUpdate();
+                tran.commit();
                 return true;
             } catch (Exception e) {
                 tran.rollback();
@@ -67,6 +69,41 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             Transaction tran = session.beginTransaction();
             try {
                 session.save(hoaDonCT);
+                tran.commit();
+                return true;
+            } catch (Exception e) {
+                tran.rollback();
+                e.printStackTrace();
+                return false;
+            } finally {
+                session.close();
+            }
+        }
+    }
+    
+    @Override
+    public boolean removeHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                session.delete(hoaDonCT);
+                tran.commit();
+                return true;
+            } catch (Exception e) {
+                tran.rollback();
+                e.printStackTrace();
+                return false;
+            } finally {
+                session.close();
+            }
+        }
+    }
+    @Override
+    public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                session.update(hoaDonCT);
                 tran.commit();
                 return true;
             } catch (Exception e) {
@@ -203,6 +240,24 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             e.printStackTrace();
         }
         return lstHoaDon;
+    }
+    
+    @Override
+    public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
+        List<HoaDonChiTiet> lstHoaDonCT = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT h FROM HoaDonChiTiet h where h.hoaDon.ma = :ma";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+            query.setParameter("ma", maHD);
+            try {
+                lstHoaDonCT = query.getResultList();
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDonCT;
     }
 
 }

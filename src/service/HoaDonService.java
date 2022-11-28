@@ -17,8 +17,12 @@ public interface HoaDonService {
     public boolean taoHoaDon(HoaDon hoaDon);
 
     public boolean removeAllHoaDonCT(HoaDon hoaDon);
+    
+    public boolean removeHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
 
     public boolean insertHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
+    
+    public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
 
     public boolean updateHoaDon(HoaDon hoaDon);
 
@@ -33,4 +37,6 @@ public interface HoaDonService {
     public List<HoaDon> sellectAllHoaDonDaHuy();
 
     public List<HoaDon> selectAllHoaDonDaThanhToan();
+    
+    public List<HoaDonChiTiet> getAllByMaHD(String maHD);
 }

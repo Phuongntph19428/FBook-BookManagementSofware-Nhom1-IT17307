@@ -34,8 +34,18 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public boolean removeHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
+        return _hoaDonRepo.removeHoaDonChiTiet(hoaDonCT);
+    }
+
+    @Override
     public boolean insertHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
         return _hoaDonRepo.insertHoaDonChiTiet(hoaDonCT);
+    }
+    
+    @Override
+    public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
+        return _hoaDonRepo.updateHoaDonChiTiet(hoaDonCT);
     }
 
     @Override
@@ -73,6 +83,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDon> selectAllHoaDonDaThanhToan() {
         return _hoaDonRepo.selectAllHoaDonDaThanhToan();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
+        return _hoaDonRepo.getAllByMaHD(maHD);
     }
 
 }

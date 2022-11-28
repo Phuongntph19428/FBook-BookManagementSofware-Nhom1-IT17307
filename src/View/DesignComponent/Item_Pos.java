@@ -6,6 +6,8 @@ package View.DesignComponent;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 
 public class Item_Pos extends javax.swing.JPanel {
@@ -23,12 +25,18 @@ public class Item_Pos extends javax.swing.JPanel {
         System.out.println(lbName.getText().length());
     }
 
-    public void setGia(int Gia) {
-        this.lbGia.setText(Gia + " VND");
+    public void setGia(BigDecimal Gia) {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        this.lbGia.setText(df.format(Gia) + " VND");
+    }
+    
+    public void setSoluongTon(int soLuong) {
+        this.lblSoLuongTon.setText("Số lượng tồn: " + soLuong);
     }
 
-    public void setGiaSale(int Gia) {
-        this.lbGiaSale.setText(Gia + " VND");
+    public void setGiaSale(BigDecimal gia) {
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        this.lbGiaSale.setText(df.format(gia) + " VND");
     }
 
     public void setSTT(int index) {
@@ -39,20 +47,20 @@ public class Item_Pos extends javax.swing.JPanel {
         return Integer.parseInt(lbSTT.getText());
     }
 
-    public void setIcon(ImageIcon imageIcon) {
-        if (imageIcon == null) {
+    public void setIcon(byte[] hinh) {
+        if (hinh == null) {
             return;
         }
+        this.imageIcon = new ImageIcon(hinh);
         this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
-        this.imageIcon = imageIcon;
     }
-    
+
     public void hovering() {
         lbIcon.setSize(lbIcon.getWidth() + 10, lbIcon.getHeight() + 10);
         this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
-        lbName.setForeground(new Color(0,255,0));
+        lbName.setForeground(new Color(0, 255, 0));
     }
-    
+
     public void exited() {
         lbIcon.setSize(lbIcon.getWidth() - 10, lbIcon.getHeight() - 10);
         this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));

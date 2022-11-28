@@ -93,15 +93,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.scroll.setVerticalScrollBar(scr);
         this.cbSelect.removeAllItems();
 
-//        String tacgia[] = {"Quân Minh",
-//            "Thế Phương",
-//            "Đức Anh",
-//            "Linh",
-//            "Hương",
-//            "Nam"};
-//
-//        DefaultComboBoxModel model = new DefaultComboBoxModel(tacgia);
-//        this.cbSelect.setModel(model);
         Icon icon = new ImageIcon(new ImageIcon(DEFAULT_IMAGE).getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
         this.lblAvartar.setIcon(icon);
 
@@ -1250,7 +1241,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_cbSelectPopupMenuWillBecomeInvisible
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        // TODO add your handling code here:
+        loadCbo();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private void closedCam(CamJFrame cam) {
