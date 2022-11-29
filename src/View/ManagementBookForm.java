@@ -3,18 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
-
 import View.Form_Management.BieuDo_Form;
 import View.DesignComponent.Notification;
 import View.Form_Management.Pos_MayBanHang;
 import View.Form_Management.ChucVu_Form;
 import View.Form_Management.HoaDon_Form;
 import View.Form_Management.KhachHang_Form;
+import View.Form_Management.KhuyenMaiChiTiet_Form;
 import View.Form_Management.KhuyenMai_Form;
 import View.Form_Management.NXB_Form;
 import View.Form_Management.NhaCungCap_Form;
 import View.Form_Management.NhanVien_ChucNang_Form;
 import View.Form_Management.NhanVien_Form;
+import View.Form_Management.PhieuNhapChiTiet_Form;
 import View.Form_Management.PhieuNhap_Form;
 import View.Form_Management.Sach_ChucNang_Form;
 import View.Form_Management.Sach_Form;
@@ -37,12 +38,15 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import javax.swing.border.LineBorder;
 import model.NhanVien;
+import model.PhieuNhapChiTiet;
 
 /**
  *
@@ -84,6 +88,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         NhaCungCap_Form ncc = new NhaCungCap_Form();
         PhieuNhap_Form pn = new PhieuNhap_Form();
         Pos_MayBanHang pos = new Pos_MayBanHang();
+        KhuyenMaiChiTiet_Form kmct = new KhuyenMaiChiTiet_Form();
+        PhieuNhapChiTiet_Form pnct = new PhieuNhapChiTiet_Form();
+
         this.Layout_1_Card.add(bieuDoForm);// 0
         this.Layout_1_Card.add(sach);// 1
         this.Layout_1_Card.add(scn); // 2
@@ -100,6 +107,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.Layout_1_Card.add(ncc); //13
         this.Layout_1_Card.add(pn); //14
         this.Layout_1_Card.add(pos); //15
+        this.Layout_1_Card.add(kmct); //16
+        this.Layout_1_Card.add(pnct); //17
         this.Layout_1_Card.revalidate();
 
         listForm.add(bieuDoForm);
@@ -118,6 +127,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.add(ncc);
         listForm.add(pn);
         listForm.add(pos);
+        listForm.add(kmct);
+        listForm.add(pnct);
 
         excute();
 
@@ -339,8 +350,11 @@ public class ManagementBookForm extends javax.swing.JFrame {
         Icon iconTTNV = new ImageIcon("image/icons8_video_conference_30px.png");
         Icon iconVitri = new ImageIcon("image/icons8_home_address_30px.png");
         Icon iconSearch = new ImageIcon("image/icons8_search_25px.png");
-        Icon iconPN = new ImageIcon("image/icons8_receipt_25px.png");
-        Icon iconNCC = new ImageIcon("image/icons8_supplier_25px.png");
+        Icon iconPN = new ImageIcon("image/icons8_import_30px.png");
+        Icon iconNCC = new ImageIcon("image/icons8_organization_30px.png");
+        Icon iconPNCT = new ImageIcon("image/icons8_upload_link_document_30px.png");
+        Icon iconKMM = new ImageIcon("image/icons8_sale_price_tag_30px.png");
+        Icon iconKMCT = new ImageIcon("image/icons8_ledger_30px.png");
 
         lbSearch.setIcon(iconSearch);
         MenuItem ItemSach = new MenuItem(iconsachMini, "                 Sách", null);
@@ -367,13 +381,30 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ItemHoaDonBan.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
         ActionListenerJLabel(ItemHoaDonBan.getIcon(), 1, ItemHoaDonBan, item_);
         MenuItem ItemPhieuTra = new MenuItem(iconHDTra, "                 Hóa Đơn Trả", null);
+        
         MenuItem ItemnhapKho = new MenuItem(iconPN, "                 Phiếu Nhập", null);
         ActionListenerJLabel(ItemnhapKho.getIcon(), 15, ItemnhapKho, item_);
+        ItemnhapKho.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
+        
+        MenuItem itemPNCT = new MenuItem(iconPNCT, "                 Phiếu Nhập Chi Tiết", null);
+        ActionListenerJLabel(itemPNCT.getIcon(), 18, itemPNCT, item_);
+        itemPNCT.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
+        
         MenuItem ItemNhaCC = new MenuItem(iconNCC, "                 Nhà Cung Cấp ", null);
         ActionListenerJLabel(ItemNhaCC.getIcon(), 14, ItemNhaCC, item_);
+        ItemNhaCC.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
+        
         MenuItem ItemDoanhThu = new MenuItem(null, "                 Thu - Chi", null);
         MenuItem ItemCuaHang = new MenuItem(null, "                 Cửa Hàng", null);
         MenuItem ItemGiaoCa = new MenuItem(null, "                 Giao Ca", null);
+
+        MenuItem itemdskm = new MenuItem(iconKMM, "                 Danh Sách", null);
+        ActionListenerJLabel(itemdskm.getIcon(), 10, itemdskm, item_);
+        itemdskm.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
+
+        MenuItem itemkmct = new MenuItem(iconKMCT, "                 Khuyến Mãi Chi Tiêt", null);
+        ActionListenerJLabel(itemkmct.getIcon(), 17, itemkmct, item_);
+        itemkmct.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
 
         MenuItem ItemChucVu = new MenuItem(iconTTNV, "                 Chức Vụ", null);
         ActionListenerJLabel(ItemChucVu.getIcon(), 8, ItemTheLoai, item_);
@@ -393,8 +424,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         menuHoaDon.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         ActionListenerJLabel(menuHoaDon.getIcon(), 13, menuHoaDon, MenuItem_);
 
-        MenuItem menuKM = new MenuItem(iconKM, "                 Khuyến Mãi", null);
-        ActionListenerJLabel(menuKM.getIcon(), 10, menuKM, MenuItem_);
+        MenuItem menuKM = new MenuItem(iconKM, "                 Khuyến Mãi", null, itemdskm, itemkmct);
+
+        menuKM.setIconUpDown(down);
 
         menuKM.setBackground(ColorFrame.COLOR_KEY);
         menuKM.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
@@ -408,7 +440,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         menuthongKe.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         menuthongKe.setIconUpDown(down);
 
-        MenuItem menunhapKho = new MenuItem(iconKho, "                 Nhập Kho", null, ItemnhapKho, ItemNhaCC);
+        MenuItem menunhapKho = new MenuItem(iconKho, "                 Nhập Kho", null, ItemnhapKho,itemPNCT, ItemNhaCC);
         menunhapKho.setBackground(ColorFrame.COLOR_KEY);
         menunhapKho.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         menunhapKho.setIconUpDown(down);
@@ -499,7 +531,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             int indexJpanel = i;
             int fixFistSize = -1;
             fixFistSize = i == 0 ? 1 : i;
-            
+
             listJLabel.get(fixFistSize - 1).addMouseListener(new MouseListener() {
 
                 @Override
@@ -538,7 +570,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             bieuDoForm.startTrungGian();
 
         }
-        if(index != 2 ){
+        if (index != 2) {
             showJPanel(16);
         }
         System.out.println("ra" + indexSelectedJPanel + " - " + index);
@@ -547,7 +579,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listJPanel.get(indexSelectedJPanel + 1).setBackground(new Color(19, 29, 243));
 
     }
-
+    
 // Kết Thúc Giao Diện
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -836,6 +868,11 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         button2.setBackground(new java.awt.Color(29, 32, 57));
         button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_doorbell_25px.png"))); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         jPanelBourder1.setBackground(new java.awt.Color(37, 44, 72));
 
@@ -1026,6 +1063,18 @@ public class ManagementBookForm extends javax.swing.JFrame {
     private void lbIcon1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbIcon1MouseClicked
 
     }//GEN-LAST:event_lbIcon1MouseClicked
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        ThongBao.showConfirm(this,"Bạn có muốn tắt cái này đi k ?"); // Confirm
+//        if(ThongBao.Selected == 1){
+//            JOptionPane.showMessageDialog(this, "Bạn đã chọn có");
+//        }else{
+//            JOptionPane.showMessageDialog(this, "Bạn đã chọn ko");
+//        } 
+//        Ví dụ về việc get kết quả khi ng dùng chọn Yes hoặc No trong form thông báo
+
+//        ThongBao.showMessage(this,"Bạn có muốn tắt cái này đi k ?"); // Message
+    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments
