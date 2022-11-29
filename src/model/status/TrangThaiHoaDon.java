@@ -12,4 +12,5 @@ public class TrangThaiHoaDon {
     public static final int DAHUY = 0;
     public static final int DATHANHTOAN = 1;
     public static final int DANGVANCHUYEN = 2;
+    public static final int CHUATHANHTOAN = 3;
 }

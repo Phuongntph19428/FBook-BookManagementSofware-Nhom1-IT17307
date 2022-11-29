@@ -432,6 +432,13 @@ public class ChucVu_Form extends javax.swing.JPanel {
 
             return;
         }
+        for (ChucVu cv1 : listCv) {
+            if (cv1.getMa().equals(txtMaCV.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã Chức Vụ", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+        }
         JOptionPane.showMessageDialog(this, "Tao moi thanh cong");
         ChucVuServicer.insert(cv);
         xoaFrom();

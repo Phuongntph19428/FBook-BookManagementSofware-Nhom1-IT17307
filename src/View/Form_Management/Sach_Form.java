@@ -61,7 +61,7 @@ public class Sach_Form extends javax.swing.JPanel {
             if (result % _pageSize == 0) {
                 _totalPage = result / _pageSize;
             } else {
-                _totalPage = result / _pageSize + 1;
+                _totalPage = (result / _pageSize) + 1;
             }
             lblPage.setText("Viewing " + ((_currentPage - 1) * _pageSize + 1) + " - " + ((_currentPage - 1) * _pageSize + _pageSize) + " of " + result);
         } else {
@@ -74,6 +74,10 @@ public class Sach_Form extends javax.swing.JPanel {
             lblPage.setText("Viewing " + ((_currentPage - 1) * _pageSize + 1) + " - " + ((_currentPage - 1) * _pageSize + _pageSize) + " of " + result);
         }
 
+    }
+    
+    private void setLabelPage() {
+        lblPage.setText("Viewing " + ((_currentPage - 1) * _pageSize + 1) + " - " + ((_currentPage - 1) * _pageSize + _pageSize) + " of " + _sachService.countAllSach());
     }
 
     public JButton getListbtn() {
@@ -502,6 +506,7 @@ public class Sach_Form extends javax.swing.JPanel {
             return;
         }
         searcher = true;
+        _currentPage = 1;
         loadTableSearch(_sachService.getListByKeyword(keyword), 0, _pageSize);
         setPageLabel(true);
 
@@ -512,11 +517,13 @@ public class Sach_Form extends javax.swing.JPanel {
             return;
         }
         if (!searcher) {
-            _currentPage--;
+            _currentPage = _currentPage--;
             loadTable(_currentPage - 1, _pageSize);
+            setLabelPage();
         } else {
             loadTableSearch(_lstSach, _currentPage - 1, _pageSize);
-            _currentPage--;
+            _currentPage = _currentPage--;
+            setLabelPage();
         }
     }//GEN-LAST:event_btnPreviousMouseClicked
 
@@ -525,11 +532,13 @@ public class Sach_Form extends javax.swing.JPanel {
             return;
         }
         if (!searcher) {
-            _currentPage++;
+            _currentPage = _currentPage++;
             loadTable(_currentPage - 1, _pageSize);
+            setLabelPage();
         } else {
+            _currentPage = _currentPage++;
             loadTableSearch(_lstSach, _currentPage - 1, _pageSize);
-            _currentPage++;
+            setLabelPage();
         }
     }//GEN-LAST:event_btnNextMouseClicked
 

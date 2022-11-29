@@ -4,20 +4,19 @@
  */
 package repository;
 
+import custommodel.CustomSach;
 import java.util.List;
-import model.KhachHang;
 
 /**
  *
  * @author ppolo
  */
-public interface KhachHangRepository {
+public interface CustomSachRepository {
 
-    public List<KhachHang> selectAll();
+    public List<CustomSach> getList(int position, int pageSize);
+    
+    public List<CustomSach> getAllByKeyword(String keyword); 
+    
+    public int countAllSach();
 
-    public boolean insertKhachHang(KhachHang khachHang);
-
-    public boolean updateKhachHang(KhachHang khachHang);
-
-    public List<KhachHang> sellectAllBySDT(String sdt);
 }

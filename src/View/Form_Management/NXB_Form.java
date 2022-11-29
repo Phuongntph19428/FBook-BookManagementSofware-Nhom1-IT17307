@@ -458,6 +458,13 @@ public class NXB_Form extends javax.swing.JPanel {
 
             return;
         }
+        for (NhaXuatBan nxb1 : listNxb) {
+            if (nxb1.getMa().equals(txtMaNXB.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã Nhà Xuất bản", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+        }
         JOptionPane.showMessageDialog(this, "Tao moi thanh cong");
         NhaXuatBanServicer.insert(nxb);
         xoaFrom();
@@ -480,7 +487,7 @@ public class NXB_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_tbNXBMouseClicked
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-         String txtName = this.txtTimKiem.getText().trim();
+        String txtName = this.txtTimKiem.getText().trim();
         System.out.println(txtName);
         List<NhaXuatBan> list = this.NhaXuatBanServicer.SelectbyName(txtName);
         LoadTablebySearch(list);

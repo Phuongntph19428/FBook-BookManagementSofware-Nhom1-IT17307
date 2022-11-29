@@ -49,4 +49,9 @@ public class KhachHangServiceImpl implements KhachHangService {
         }
         return lst;
     }
+
+    @Override
+    public List<KhachHang> sellectAllBySDT(String sdt) {
+        return _khachHangRepo.sellectAllBySDT(sdt);
+    }
 }
