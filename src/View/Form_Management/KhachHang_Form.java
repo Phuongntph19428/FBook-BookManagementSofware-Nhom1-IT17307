@@ -222,23 +222,23 @@ public class KhachHang_Form extends javax.swing.JPanel {
 
         tblKhachHang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000"},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nhà Xuất Bản", "Vị Trí", "Mã", "Tên", "Số Lượng", "Số Trang", "Giá Nhập", "Giá Bán", "Trạng thái", "Hình"
+                "Mã", "Tên", "Tên Đệm", "Họ", "Ngày sinh", "Giới tính", "SĐT", "Điểm tích lũy"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -409,6 +409,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
         rdoNam.setBackground(new java.awt.Color(47, 55, 90));
         buttonGroup1.add(rdoNam);
         rdoNam.setForeground(new java.awt.Color(255, 255, 255));
+        rdoNam.setSelected(true);
         rdoNam.setText("Nam");
 
         rdoNu.setBackground(new java.awt.Color(47, 55, 90));

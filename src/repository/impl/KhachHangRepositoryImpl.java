@@ -69,4 +69,19 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
             }
         }
     }
+
+    @Override
+    public List<KhachHang> sellectAllBySDT(String sdt) {
+        List<KhachHang> lstKhachHang = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT t FROM KhachHang t where t.sdt like :sdt";
+            TypedQuery<KhachHang> query = session.createQuery(hql);
+            query.setParameter("sdt", "%" + sdt);
+
+            lstKhachHang = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstKhachHang;
+    }
 }

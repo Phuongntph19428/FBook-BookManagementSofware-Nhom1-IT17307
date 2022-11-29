@@ -20,4 +20,6 @@ public interface KhachHangService {
     public boolean updateKhachHang(KhachHang khachHang);
 
     public List<KhachHang> searchKhachHangByKeyWord(List<KhachHang> lstKhachHang, String keyword);
+    
+    public List<KhachHang> sellectAllBySDT(String sdt);
 }

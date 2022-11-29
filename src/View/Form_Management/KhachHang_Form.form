@@ -359,8 +359,8 @@
                 <Component class="View.DesignComponent.Table" name="tblKhachHang">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="10" rowCount="10">
-                        <Column editable="false" title="Nh&#xe0; Xu&#x1ea5;t B&#x1ea3;n" type="java.lang.Object">
+                      <Table columnCount="8" rowCount="10">
+                        <Column editable="false" title="M&#xe3;" type="java.lang.Object">
                           <Data value="NXB1"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -372,7 +372,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="V&#x1ecb; Tr&#xed;" type="java.lang.Object">
+                        <Column editable="false" title="T&#xea;n" type="java.lang.Object">
                           <Data value="VT1"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -384,7 +384,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="M&#xe3;" type="java.lang.Object">
+                        <Column editable="false" title="T&#xea;n &#x110;&#x1ec7;m" type="java.lang.Object">
                           <Data value="S1"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -396,7 +396,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="T&#xea;n" type="java.lang.Object">
+                        <Column editable="false" title="H&#x1ecd;" type="java.lang.Object">
                           <Data value="&#x110;&#x1eaf;c Nh&#xe2;n T&#xe2;m"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -408,7 +408,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object">
+                        <Column editable="false" title="Ng&#xe0;y sinh" type="java.lang.Object">
                           <Data value="15"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -420,7 +420,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="S&#x1ed1; Trang" type="java.lang.Object">
+                        <Column editable="false" title="Gi&#x1edb;i t&#xed;nh" type="java.lang.Object">
                           <Data value="200"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -432,7 +432,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="Gi&#xe1; Nh&#x1ead;p" type="java.lang.Object">
+                        <Column editable="false" title="S&#x110;T" type="java.lang.Object">
                           <Data value="20000"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -444,7 +444,7 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="Gi&#xe1; B&#xe1;n" type="java.lang.Object">
+                        <Column editable="false" title="&#x110;i&#x1ec3;m t&#xed;ch l&#x169;y" type="java.lang.Object">
                           <Data value="30000"/>
                           <Data value="null"/>
                           <Data value="null"/>
@@ -456,31 +456,51 @@
                           <Data value="null"/>
                           <Data value="null"/>
                         </Column>
-                        <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object">
-                          <Data value="&#x110;ang B&#xe1;n"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="H&#xec;nh" type="java.lang.Object">
-                          <Data value="None"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
                       </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI Semibold" size="14" style="1"/>
@@ -774,6 +794,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Nam"/>
       </Properties>
     </Component>

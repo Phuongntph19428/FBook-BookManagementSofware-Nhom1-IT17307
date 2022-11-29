@@ -56,6 +56,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public int genMaHoaDon() {
         String lastHD = _hoaDonRepo.getLastHoaDon();
+        System.out.println(lastHD);
         int maHoaDonInt = Integer.parseInt(lastHD.substring(2));
         return maHoaDonInt + 1;
     }

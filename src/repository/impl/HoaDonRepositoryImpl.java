@@ -142,7 +142,8 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             TypedQuery<String> query = session.createQuery(hql);
 
             try {
-                ma = query.getSingleResult();
+                List<String> lst = query.getResultList();
+                ma = lst.get(0);
             } catch (NoResultException e) {
                 return "HD00";
             }
