@@ -15,6 +15,7 @@ import model.TheLoaiChiTiet;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import repository.SachRepositoty;
 import util.HibernateUtil;
 
@@ -76,6 +77,24 @@ public class SachRepositoryImpl implements SachRepositoty {
             }
         }
     }
+    
+    @Override
+    public boolean updateSoLuongSach(String id, int soLuong) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                Sach sachUpdate = session.get(Sach.class, id);
+                sachUpdate.setSoLuong(sachUpdate.getSoLuong() + soLuong);
+                session.update(sachUpdate);
+                tran.commit();
+                return true;
+                
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
 
     @Override
     public int countAllSach() {
@@ -119,9 +138,6 @@ public class SachRepositoryImpl implements SachRepositoty {
 
     @Override
     public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia) {
-        if (lstSachTacGia.isEmpty()) {
-            return true;
-        }
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
 
             Transaction tran = session.beginTransaction();
@@ -129,10 +145,9 @@ public class SachRepositoryImpl implements SachRepositoty {
             try {
                 final int batchSize = 20;
                 int size = lstSachTacGia.size();
-                for (int i = 1; i < size; i++) {
-                    session.persist(lstSachTacGia.get(i-1));
-
-                    if (i % batchSize == 0 && i != size) {
+                for (int i = 0; i < size; i++) {
+                    session.persist(lstSachTacGia.get(i));
+                    if (i % batchSize == 0 && i != size && i != 0) {
                         session.flush();
                         session.clear();
                     }
@@ -147,7 +162,7 @@ public class SachRepositoryImpl implements SachRepositoty {
             }
         }
     }
-    
+
     private void deleteTheLoaiChiTiet(Sach sach) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
             session.beginTransaction();
@@ -161,9 +176,6 @@ public class SachRepositoryImpl implements SachRepositoty {
 
     @Override
     public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet) {
-        if (lstTheLoaiChiTiet.isEmpty()) {
-            return true;
-        }
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
 
             Transaction tran = session.beginTransaction();
@@ -171,10 +183,10 @@ public class SachRepositoryImpl implements SachRepositoty {
             try {
                 final int batchSize = 20;
                 int size = lstTheLoaiChiTiet.size();
-                for (int i = 1; i < size; i++) {
-                    session.persist(lstTheLoaiChiTiet.get(i-1));
+                for (int i = 0; i < size; i++) {
+                    session.persist(lstTheLoaiChiTiet.get(i));
 
-                    if (i % batchSize == 0 && i != size) {
+                    if (i % batchSize == 0 && i != size && i != 0) {
                         session.flush();
                         session.clear();
                     }

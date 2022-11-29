@@ -18,6 +18,8 @@ public interface SachService {
     public boolean insertSach(Sach sach);
 
     public boolean updateSach(Sach sach);
+    
+    public boolean updateSoLuongSach(String id, int soLuong);
 
     public List<Sach> getList(int position, int pageSize);
 

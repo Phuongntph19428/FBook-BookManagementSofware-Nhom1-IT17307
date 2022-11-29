@@ -182,7 +182,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnCameraImage = new View.ButtonDesign.Button();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        btnRefresh = new View.ButtonDesign.Button();
         Form_Chon_TacGia = new View.DesignComponent.JPanelBourder();
         cbSelect = new View.ComboBoxDesign.ComboBoxSuggestion();
         jPanel3 = new javax.swing.JPanel();
@@ -235,7 +234,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             }
         });
 
-        txtId.setEditable(false);
         txtId.setBackground(new java.awt.Color(47, 55, 90));
         txtId.setForeground(new java.awt.Color(255, 255, 255));
         txtId.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -695,17 +693,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         TruongThongTin.add(jLabel6);
         jLabel6.setBounds(20, 20, 420, 33);
 
-        btnRefresh.setBackground(new java.awt.Color(47, 55, 90));
-        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
-        btnRefresh.setToolTipText("Quét mã barcode");
-        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRefreshActionPerformed(evt);
-            }
-        });
-        TruongThongTin.add(btnRefresh);
-        btnRefresh.setBounds(1320, 10, 44, 32);
-
         add(TruongThongTin);
         TruongThongTin.setBounds(0, 0, 1370, 800);
 
@@ -968,6 +955,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         getTacGiaString();
         _lstTheLoai = new HashMap<>();
         getTheLoaiString();
+        txtTacGia.setText("");
+        txtTheLoai.setText("");
     }
 
     private Sach getForm() {
@@ -978,16 +967,17 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         String giaNhapStr = txtGiaNhap.getText().trim();
         String moTa = txtMoTa.getText().trim();
         String soLuongStr = txtSoLuong.getText().trim();
-        String soTrang = txtSoTrang.getText().trim();
+        String soTrangStr = txtSoTrang.getText().trim();
         String ten = txtTen.getText().trim();
         int trangThai = rdoDangKinhDoanh.isSelected() ? TrangThaiSach.DANGKINHDOANH : TrangThaiSach.NGUNGKINHDOANH;
 
         int soLuong = Integer.parseInt(soLuongStr);
+        int soTrang = Integer.parseInt(soTrangStr);
         BigDecimal giaNhap = BigDecimal.valueOf(Double.parseDouble(giaNhapStr));
         BigDecimal giaBan = BigDecimal.valueOf(Double.parseDouble(giaBanStr));
 
         return new Sach(id.isBlank() ? null : id, (NhaXuatBan) cboNhaXuatBan.getSelectedItem(), (ViTri) cboViTri.getSelectedItem(), ma, ten,
-                soLuong, trangThai, giaNhap, giaBan, trangThai, _hinh, barCode, moTa);
+                soLuong, soTrang, giaNhap, giaBan, trangThai, _hinh, barCode, moTa);
     }
 
     private List<SachTacGia> getListSachTacGia(Sach sach) {
@@ -1009,12 +999,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }
     
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Sach sach = getForm();
-        if (sach.getId() != null) {
-            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
+        String id = txtId.getText();
+        if (!id.isBlank()) {
+            String slStr = txtSoLuong.getText().trim();
+            if(!slStr.matches("\\d+") || slStr.equals("0") || slStr.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Só lượng không đúng định dạng");
+                return;
+            }
+            boolean updateStatus = _sachService.updateSoLuongSach(id, Integer.parseInt(slStr));
+            JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
             return;
         }
+        Sach sach = getForm();
         _sachService.insertSach(sach);
+        _sachService.updateSachTacGia(getListSachTacGia(sach));
+        _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
         JOptionPane.showMessageDialog(this, "Insert successfully");
         clear();
     }//GEN-LAST:event_btnAddActionPerformed
@@ -1240,10 +1239,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbSelectPopupMenuWillBecomeInvisible
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-        loadCbo();
-    }//GEN-LAST:event_btnRefreshActionPerformed
-
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
         cam.dispose();
@@ -1260,7 +1255,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnChooseImage;
     private View.ButtonDesign.Button btnClear;
     private View.ButtonDesign.Button btnInBaoCao;
-    private View.ButtonDesign.Button btnRefresh;
     private View.ButtonDesign.Button btnSelectTacGia;
     private View.ButtonDesign.Button btnSelectTheLoai;
     private View.ButtonDesign.Button btnUpdate;

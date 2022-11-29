@@ -19,6 +19,8 @@ public interface SachRepositoty {
     
     public boolean updateSach(Sach sach);
     
+    public boolean updateSoLuongSach(String id, int soLuong);
+    
     public List<Sach> getList(int position, int pageSize);
     
     public int countAllSach();

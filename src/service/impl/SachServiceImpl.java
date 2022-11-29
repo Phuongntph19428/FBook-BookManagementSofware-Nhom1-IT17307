@@ -58,4 +58,9 @@ public class SachServiceImpl implements SachService {
     public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet) {
         return _sachRepo.updateTheLoaiChiTiet(lstTheLoaiChiTiet);
     }
+
+    @Override
+    public boolean updateSoLuongSach(String id, int soLuong) {
+        return _sachRepo.updateSoLuongSach(id, soLuong);
+    }
 }
