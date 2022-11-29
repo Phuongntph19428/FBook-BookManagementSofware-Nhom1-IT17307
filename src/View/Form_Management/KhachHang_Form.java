@@ -5,6 +5,7 @@
 package View.Form_Management;
 
 import View.ScrollBarCustom;
+import View.soundeffect.MySoundEffect;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
 import com.google.zxing.MultiFormatReader;
@@ -645,6 +646,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
                     //not result
                 }
                 if (result != null) {
+                    MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
                     fillByCode(result + "");
                     closedCam(cam);
                     btnQRCode.setEnabled(true);

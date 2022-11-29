@@ -22,6 +22,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "HinhThucThanhToan")
 public class HinhThucThanhToan {
 
+    public static final int THANHTOANBANGTIENMAT = 0;
+    public static final int THANHTOANBANGBANKING = 1;    
+    
     @Id
     @Column(name = "Id")
     @GeneratedValue(generator = "uuid2")
@@ -31,10 +34,7 @@ public class HinhThucThanhToan {
     @ManyToOne
     @JoinColumn(name = "IdHoaDon", nullable = false)
     private HoaDon hoaDon;
-
-    @Column(name = "Ma")
-    private String ma;
-
+    
     @Column(name = "HinhThucThanhToan")
     private int hinhThucThanhToan;
 
@@ -44,10 +44,9 @@ public class HinhThucThanhToan {
     public HinhThucThanhToan() {
     }
 
-    public HinhThucThanhToan(String id, HoaDon hoaDon, String ma, int hinhThucThanhToan, BigDecimal tienThanhToan) {
+    public HinhThucThanhToan(String id, HoaDon hoaDon, int hinhThucThanhToan, BigDecimal tienThanhToan) {
         this.id = id;
         this.hoaDon = hoaDon;
-        this.ma = ma;
         this.hinhThucThanhToan = hinhThucThanhToan;
         this.tienThanhToan = tienThanhToan;
     }
@@ -66,14 +65,6 @@ public class HinhThucThanhToan {
 
     public void setHoaDon(HoaDon hoaDon) {
         this.hoaDon = hoaDon;
-    }
-
-    public String getMa() {
-        return ma;
-    }
-
-    public void setMa(String ma) {
-        this.ma = ma;
     }
 
     public int getHinhThucThanhToan() {

@@ -53,4 +53,9 @@ public class SachTacGia implements Serializable {
         this.sach = sach;
     }
 
+    @Override
+    public String toString() {
+        return "SachTacGia{" + "tacGia=" + tacGia + ", sach=" + sach + '}';
+    }
+
 }
