@@ -6,8 +6,20 @@ package View.Form_Management;
 
 import View.ManagementBookForm;
 import View.ThongBao;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.KhuyenMai;
+import model.KhuyenMaiChiTiet;
+import model.Sach;
+import net.miginfocom.layout.AC;
+import service.IKhuyenMaiChiTietService;
+import service.SachService;
+import service.impl.KhuyenMaiChiTietService;
+import service.impl.SachServiceImpl;
 
 /**
  *
@@ -15,11 +27,30 @@ import javax.swing.JOptionPane;
  */
 public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
 
+    private List<KhuyenMai> listKhuyenMai = new ArrayList<>();
+    private List<KhuyenMaiChiTiet> listKhuyenMaiChiTiets = new ArrayList<>();
+    private List<KhuyenMaiChiTiet> listNewAdd = new ArrayList<>();
+    private IKhuyenMaiChiTietService iKhuyenMaiChiTietService;
+    private SachService iSachser;
+    private String id = "[]";
+    private int SizelstSach = -1;
+
     public KhuyenMaiChiTiet_Form() {
         initComponents();
+        iKhuyenMaiChiTietService = new KhuyenMaiChiTietService();
+        iSachser = new SachServiceImpl();
+        SizelstSach = iSachser.countAllSach();
+        String columns[] = {"Id", "Mã Khuyến Mại", "Tên Khuyến Mãi", "Chiết Khấu", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái", "Mô Tả"};
+        Object rows[][] = {};
+        String columnsCiTietKM[] = {"ID KhuyenMai", "ID Sach"};
+        Object rowsCT[][] = {};
+        this.tblChiTietKhuyenMai.setModel(new DefaultTableModel(rowsCT, columnsCiTietKM));
+        this.tblKhuyenMai.setModel(new DefaultTableModel(rows, columns));
         this.tblChiTietKhuyenMai.setRowHeight(30);
         this.tblKhuyenMai.setRowHeight(30);
-
+        loadTableKM();
+        loadTableKMCT();
+        loadComboBoxSach();
     }
 
     @SuppressWarnings("unchecked")
@@ -319,16 +350,63 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadTableKM() {
+        listKhuyenMai = iKhuyenMaiChiTietService.selectAll();
+        DefaultTableModel dtm = (DefaultTableModel) tblKhuyenMai.getModel();
+        dtm.setRowCount(0);
+        for (KhuyenMai km : listKhuyenMai) {
+            dtm.addRow(km.toDaTaRow());
+        }
+
+    }
+
+    private void loadComboBoxSach() {
+        List<Sach> lstS = iSachser.getList(0, SizelstSach);
+        for (Sach s : lstS) {
+            comboboxChucVu.addItem(s.getTen() + " - " + s.getId().toString());
+        }
+    }
+
+    private void loadTableKMCT() {
+        listKhuyenMaiChiTiets = iKhuyenMaiChiTietService.selectAll(id);
+        DefaultTableModel dtm = (DefaultTableModel) tblChiTietKhuyenMai.getModel();
+        dtm.setRowCount(0);
+        for (KhuyenMaiChiTiet k : listKhuyenMaiChiTiets) {
+            dtm.addRow(new Object[]{
+                k.getKhuyenMai().getId(),
+                k.getSach().getId()
+
+            });
+        }
+
+    }
+    private boolean CheckExist(String id){
+        for (KhuyenMaiChiTiet km : listNewAdd) {
+            if(km.getSach().getId().equalsIgnoreCase(id)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
         int row = this.tblKhuyenMai.getSelectedRow();
         String ma;
         try {
-            ma = tblKhuyenMai.getValueAt(row, 0).toString();
+            ma = tblKhuyenMai.getValueAt(row, 1).toString();
         } catch (Exception e) {
             e.printStackTrace();
             ma = "-";
         }
         this.lbKhuyenMai.setText("" + ma);
+
+        id = tblKhuyenMai.getValueAt(row, 0).toString();
+        loadTableKMCT();
+//        KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet();
+//        kmct.setKhuyenMai((KhuyenMai) tblKhuyenMai.getValueAt(row, 0));
+//        kmct.setSach((Sach) tblKhuyenMai.getValueAt(row, 1));
+//        iKhuyenMaiChiTietService.insert(kmct);
+
     }//GEN-LAST:event_tblKhuyenMaiMouseClicked
 
     private void tblChiTietKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietKhuyenMaiMouseClicked
@@ -341,10 +419,22 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
 
     private void btnTimKiem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem1ActionPerformed
         // TODO add your handling code here:
+
+        iKhuyenMaiChiTietService.delete();
+//        loadTableKMCT();
+
     }//GEN-LAST:event_btnTimKiem1ActionPerformed
 
     private void btnTimKiem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem2ActionPerformed
         // TODO add your handling code here:
+        int row = tblChiTietKhuyenMai.getSelectedRow();
+        if (row == -1) {
+            return;
+        } else {
+            String idString = tblChiTietKhuyenMai.getValueAt(row, 0).toString();
+            iKhuyenMaiChiTietService.delete(idString);
+//            loadTableKMCT();
+        }
     }//GEN-LAST:event_btnTimKiem2ActionPerformed
 
     private void comboboxChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxChucVuActionPerformed
@@ -352,9 +442,36 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         ma = this.lbKhuyenMai.getText().trim();
         if (ma.equals("-")) {
             ThongBao.showConfirm(this, "Vui lòng chọn Mã Khuyến Mãi");
-        }
-    }//GEN-LAST:event_comboboxChucVuActionPerformed
 
+            return;
+        }
+
+        String maSach = comboboxChucVu.getSelectedItem().toString();
+        String SplitString[] = maSach.split(" ");
+
+        maSach = SplitString[SplitString.length - 1];
+        String masString = maSach;
+
+        Sach s = new Sach();
+        s.setId(maSach);
+        KhuyenMai km = new KhuyenMai();
+        km.setId(ma);
+        
+        KhuyenMaiChiTiet kmModel = new KhuyenMaiChiTiet(km, s);
+        boolean check = CheckExist(s.getId());
+        if(check == false){
+            JOptionPane.showMessageDialog(this,"Ðã ton tai Sach");
+            return;
+        }
+        tblChiTietKhuyenMai.addRow(new Object[]{ma, maSach});
+        listNewAdd.add(kmModel);
+    }//GEN-LAST:event_comboboxChucVuActionPerformed
+//    private KhuyenMaiChiTiet getDaTa() {
+//        int row = tblKhuyenMai.getSelectedRow();
+//        String khuyenMai = tblKhuyenMai.getValueAt(row, 0).toString();
+//        String sach = tblKhuyenMai.getValueAt(row, 1).toString();
+//        KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet(khuyenMai, sach);
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnTimKiem;

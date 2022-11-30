@@ -15,13 +15,9 @@ import model.KhuyenMai;
 public interface IKhuyenMaiServicer {
 
     boolean insert(KhuyenMai km);
-
-    boolean update(KhuyenMai km);
-
     List<KhuyenMai> selectAll(String ma);
-
     public void delete(String id);
-
+    boolean update(KhuyenMai km);
     public String findById(String ma);
 
 }
