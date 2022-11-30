@@ -4,18 +4,15 @@
  */
 package repository.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.TypedQuery;
-import javax.swing.text.html.HTML;
 import model.Sach;
 import model.SachTacGia;
 import model.TheLoaiChiTiet;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import repository.SachRepositoty;
 import util.HibernateUtil;
 
@@ -200,6 +197,6 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return false;
             }
         }
-    }
+    }    
 
 }

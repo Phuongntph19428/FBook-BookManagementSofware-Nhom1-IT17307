@@ -7,12 +7,21 @@ package View.Form_Management;
 import View.ButtonDesign.Button;
 import View.soundeffect.MySoundEffect;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.Sach;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import service.SachService;
 import service.impl.SachServiceImpl;
 //s
@@ -23,7 +32,7 @@ import service.impl.SachServiceImpl;
  */
 public class Sach_Form extends javax.swing.JPanel {
 
-    private SachService _sachService = new SachServiceImpl();
+    private final SachService _sachService = new SachServiceImpl();
 
     private final int _pageSize = 10;
     private int _currentPage = 1;
@@ -40,7 +49,6 @@ public class Sach_Form extends javax.swing.JPanel {
     public Sach_Form() {
         initComponents();
 //        String columns[] = {"Nhà xuất bản", "Vị trí", "Mã", "Tên", "Số lượng", "Số trang", "Giá nhập", "Giá bán", "Trạng thái", "Hình"};
-        Object rows[][] = {};
 
         table1.setBackground(Color.WHITE);
         this.table1.setRowHeight(59);
@@ -54,7 +62,7 @@ public class Sach_Form extends javax.swing.JPanel {
         loadTable(0, _pageSize);
         setPageLabel(false);
     }
-    
+
     private void setPageLabel(boolean searching) {
         if (searching == false) {
             int result = _sachService.countAllSach();
@@ -75,7 +83,7 @@ public class Sach_Form extends javax.swing.JPanel {
         }
 
     }
-    
+
     private void setLabelPage() {
         lblPage.setText("Viewing " + ((_currentPage - 1) * _pageSize + 1) + " - " + ((_currentPage - 1) * _pageSize + _pageSize) + " of " + _sachService.countAllSach());
     }
@@ -106,12 +114,10 @@ public class Sach_Form extends javax.swing.JPanel {
 ////        }
 //
 //    }
-    
     public JTable getJTable() {
         return this.table1;
     }
-    
-    
+
     public void loadTable(int position, int pageSize) {
         _lstSach = _sachService.getList(position, pageSize);
         DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
@@ -126,7 +132,7 @@ public class Sach_Form extends javax.swing.JPanel {
         DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
         dtm.setRowCount(0);
         for (int i = position * 10; i < position * 10 + 10; i++) {
-            if(_lstSach.size() <= i) {
+            if (_lstSach.size() <= i) {
                 return;
             }
             dtm.addRow(_lstSach.get(i).toDataRow());
@@ -171,8 +177,8 @@ public class Sach_Form extends javax.swing.JPanel {
         lblPage = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnSearch = new View.ButtonDesign.Button();
-        btnInBaoCao3 = new View.ButtonDesign.Button();
-        btnInBaoCao1 = new View.ButtonDesign.Button();
+        btnImport = new View.ButtonDesign.Button();
+        btnExport = new View.ButtonDesign.Button();
         btnTaoSP1 = new View.ButtonDesign.Button();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
@@ -252,7 +258,7 @@ public class Sach_Form extends javax.swing.JPanel {
         jPanelBourder1Layout.setHorizontalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,29 +300,29 @@ public class Sach_Form extends javax.swing.JPanel {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        btnInBaoCao3.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao3.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao3.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_new_copy_35px.png"))); // NOI18N
-        btnInBaoCao3.setText("Import Excel");
-        btnInBaoCao3.setFocusable(false);
-        btnInBaoCao3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao3.addActionListener(new java.awt.event.ActionListener() {
+        btnImport.setBackground(new java.awt.Color(31, 31, 111));
+        btnImport.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnImport.setForeground(new java.awt.Color(255, 255, 255));
+        btnImport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_new_copy_35px.png"))); // NOI18N
+        btnImport.setText("Import Excel");
+        btnImport.setFocusable(false);
+        btnImport.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao3ActionPerformed(evt);
+                btnImportActionPerformed(evt);
             }
         });
 
-        btnInBaoCao1.setBackground(new java.awt.Color(31, 31, 111));
-        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_microsoft_excel_35px.png"))); // NOI18N
-        btnInBaoCao1.setText("Export Excel");
-        btnInBaoCao1.setFocusable(false);
-        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao1.addActionListener(new java.awt.event.ActionListener() {
+        btnExport.setBackground(new java.awt.Color(31, 31, 111));
+        btnExport.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnExport.setForeground(new java.awt.Color(255, 255, 255));
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_microsoft_excel_35px.png"))); // NOI18N
+        btnExport.setText("Export Excel");
+        btnExport.setFocusable(false);
+        btnExport.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao1ActionPerformed(evt);
+                btnExportActionPerformed(evt);
             }
         });
 
@@ -451,9 +457,9 @@ public class Sach_Form extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(557, 557, 557)
-                        .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(btnTaoSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -462,15 +468,15 @@ public class Sach_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInBaoCao3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTaoSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
@@ -489,13 +495,70 @@ public class Sach_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTaoSP1ActionPerformed
 
-    private void btnInBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao1ActionPerformed
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        int confirmExport = JOptionPane.showConfirmDialog(this, "Xác nhận?");
+        if (confirmExport == JOptionPane.YES_OPTION) {
+            String fileName = JOptionPane.showInputDialog("Tên file muốn lưu?");
+            boolean exportStatus = exportExcel(fileName);
+            JOptionPane.showMessageDialog(this, exportStatus ? "Thành công" : "Thất bại");
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
 
-    private void btnInBaoCao3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao3ActionPerformed
+    private boolean exportExcel(String fileName) {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("book");
+        String[] header = new String[]{"Id", "IdNXB", "IdViTri", "Mã sách", "Tên sách", "Số lượng", "Số trang", "Giá nhập", "Giá bán", "Trạng thái", "BarCode", "Mô tả"};
+
+        int rowCount = 0;
+        Row row = sheet.createRow(rowCount++);
+        int columnCount = 0;
+        for (String string : header) {
+            Cell cell = row.createCell(columnCount++);
+            cell.setCellValue(string);
+        }
+
+        for (Sach sach : _lstSach) {
+            row = sheet.createRow(rowCount++);
+            columnCount = 0;
+            for (String string : sach.getStringArray()) {
+                Cell cell = row.createCell(columnCount++);
+                cell.setCellValue(string);
+            }
+
+        }
+
+        File directory = new File("Excel");
+        File file = new File("Excel//DanhSachSach" + fileName + ".xlsx");
+        if (!file.exists()) {
+            directory.mkdirs();
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "File đã tồn tại. Bạn muốn ghi đè không?");
+            if (confirm != JOptionPane.YES_OPTION) {
+                return false;
+            }
+        }
+
+        try ( FileOutputStream outputStream = new FileOutputStream(file)) {
+            workbook.write(outputStream);
+            System.out.println("Ghi thành công");
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "File đang được mở ở một nơi khác không thể sửa");
+            return false;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
-    }//GEN-LAST:event_btnInBaoCao3ActionPerformed
+    }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String keyword = txtSearch.getText();
@@ -548,8 +611,8 @@ public class Sach_Form extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao1;
-    private View.ButtonDesign.Button btnInBaoCao3;
+    private View.ButtonDesign.Button btnExport;
+    private View.ButtonDesign.Button btnImport;
     private javax.swing.JLabel btnNext;
     private javax.swing.JLabel btnPrevious;
     private View.ButtonDesign.Button btnSearch;

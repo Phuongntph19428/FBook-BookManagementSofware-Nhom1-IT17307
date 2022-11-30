@@ -61,6 +61,11 @@ public class CamJFrame extends javax.swing.JFrame {
             }
         }
     }
+    
+    public int continuteScan() {
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn muốn quét nữa không?");
+        return confirm;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
