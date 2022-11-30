@@ -58,4 +58,7 @@ public class KhuyenMaiChiTiet implements Serializable {
         return "KhuyenMaiChiTiet{" + "khuyenMai=" + khuyenMai + ", sach=" + sach + '}';
     }
 
+    public Object[] toDaTaRow() {
+        return new Object[]{khuyenMai, sach};
+    }
 }
