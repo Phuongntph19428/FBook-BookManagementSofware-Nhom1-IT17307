@@ -37,4 +37,9 @@ public class CustomSachServiceImpl implements CustomSachService {
         return _customSachRepo.countAllSach();
     }
 
+    @Override
+    public CustomSach getSachByBarCode(String barCode) {
+        return _customSachRepo.getSachByBarCode(barCode);
+    }
+
 }

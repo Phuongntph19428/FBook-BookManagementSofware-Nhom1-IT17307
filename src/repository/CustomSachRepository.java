@@ -18,5 +18,7 @@ public interface CustomSachRepository {
     public List<CustomSach> getAllByKeyword(String keyword); 
     
     public int countAllSach();
+    
+    public CustomSach getSachByBarCode(String barCode);
 
 }

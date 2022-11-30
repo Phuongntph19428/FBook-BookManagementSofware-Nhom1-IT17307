@@ -46,9 +46,8 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
-                String hql = "delete HoaDonChiTiet h WHERE h.hoaDon = :hoaDon";
-                Query<HoaDonChiTiet> query = session.createQuery(hql);
-                query.setParameter("hoaDon", hoaDon);
+                Query query = session.createSQLQuery("{CALL proc_deleteAllHDCT (:idHoaDon)}");
+                query.setParameter("idHoaDon", hoaDon.getId());
 
                 query.executeUpdate();
                 tran.commit();
@@ -138,7 +137,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     public String getLastHoaDon() {
         String ma = "";
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h.ma FROM HoaDon h order by h.ma desc";
+            String hql = "SELECT h.ma FROM HoaDon h order by len(h.ma) desc, h.ma desc";
             TypedQuery<String> query = session.createQuery(hql);
 
             try {
