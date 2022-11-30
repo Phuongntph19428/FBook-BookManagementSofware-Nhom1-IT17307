@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package View;
+
 import View.Form_Management.BieuDo_Form;
 import View.DesignComponent.Notification;
 import View.Form_Management.Pos_MayBanHang;
@@ -292,6 +293,20 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 }
             }
         });
+
+        hd.getJTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    String id = target.getValueAt(row, 0).toString();
+                    hd.showTab();
+                    
+
+                }
+            }
+        });
     }
     private List<MenuItem> listItemCha = new ArrayList<>();
 
@@ -381,19 +396,19 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ItemHoaDonBan.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
         ActionListenerJLabel(ItemHoaDonBan.getIcon(), 1, ItemHoaDonBan, item_);
         MenuItem ItemPhieuTra = new MenuItem(iconHDTra, "                 Hóa Đơn Trả", null);
-        
+
         MenuItem ItemnhapKho = new MenuItem(iconPN, "                 Phiếu Nhập", null);
         ActionListenerJLabel(ItemnhapKho.getIcon(), 15, ItemnhapKho, item_);
         ItemnhapKho.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
-        
+
         MenuItem itemPNCT = new MenuItem(iconPNCT, "                 Phiếu Nhập Chi Tiết", null);
         ActionListenerJLabel(itemPNCT.getIcon(), 18, itemPNCT, item_);
         itemPNCT.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
-        
+
         MenuItem ItemNhaCC = new MenuItem(iconNCC, "                 Nhà Cung Cấp ", null);
         ActionListenerJLabel(ItemNhaCC.getIcon(), 14, ItemNhaCC, item_);
         ItemNhaCC.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
-        
+
         MenuItem ItemDoanhThu = new MenuItem(null, "                 Thu - Chi", null);
         MenuItem ItemCuaHang = new MenuItem(null, "                 Cửa Hàng", null);
         MenuItem ItemGiaoCa = new MenuItem(null, "                 Giao Ca", null);
@@ -439,8 +454,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         menuthongKe.setBackground(ColorFrame.COLOR_KEY);
         menuthongKe.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         menuthongKe.setIconUpDown(down);
-
-        MenuItem menunhapKho = new MenuItem(iconKho, "                 Nhập Kho", null, ItemnhapKho,itemPNCT, ItemNhaCC);
+        MenuItem menunhapKho = new MenuItem(iconKho, "                 Nhập Kho", null, ItemnhapKho, itemPNCT, ItemNhaCC);
         menunhapKho.setBackground(ColorFrame.COLOR_KEY);
         menunhapKho.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
         menunhapKho.setIconUpDown(down);
@@ -579,7 +593,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listJPanel.get(indexSelectedJPanel + 1).setBackground(new Color(19, 29, 243));
 
     }
-    
+
 // Kết Thúc Giao Diện
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1065,7 +1079,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lbIcon1MouseClicked
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        ThongBao.showConfirm(this,"Bạn có muốn tắt cái này đi k ?"); // Confirm
+        ThongBao.showConfirm(this, "Bạn có muốn tắt cái này đi k ?"); // Confirm
 //        if(ThongBao.Selected == 1){
 //            JOptionPane.showMessageDialog(this, "Bạn đã chọn có");
 //        }else{
