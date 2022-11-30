@@ -23,6 +23,7 @@ import model.KhuyenMai;
 
 import service.IKhuyenMaiServicer;
 import service.impl.KhuyenMaiServicer;
+import View.Form_Management.KhuyenMaiChiTiet_Form;
 
 /**
  *
@@ -34,10 +35,12 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
     private List<KhuyenMai> listKhuyenMai = new ArrayList<>();
     private IKhuyenMaiServicer iKhuyenMaiServicer;
     private String ma = "";
+    private KhuyenMaiChiTiet_Form form;
 
     public KhuyenMai_Form() {
         initComponents();
         iKhuyenMaiServicer = new KhuyenMaiServicer();
+
         String columns[] = {"Id", "Mã Khuyến Mại", "Tên Khuyến Mãi", "Chiết Khấu", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái", "Mô Tả"};
         Object rows[][] = {};
         this.tbKhuyenMai.setModel(new DefaultTableModel(rows, columns));
@@ -616,6 +619,10 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
             mng.runNotificationThem();
             iKhuyenMaiServicer.insert(km);
             loadTable();
+//
+//            form = new KhuyenMaiChiTiet_Form();
+//            form.loadTableKM();
+
         }
 
         xoaFrom();
@@ -671,6 +678,7 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
             String id = txtId.getText().trim();
             iKhuyenMaiServicer.delete(id);
             lamMoi();
+            xoaFrom();
 
         }
     }//GEN-LAST:event_btnXoaActionPerformed
