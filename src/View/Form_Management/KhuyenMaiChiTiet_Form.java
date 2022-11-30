@@ -351,7 +351,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         String ma;
         ma = this.lbKhuyenMai.getText().trim();
         if (ma.equals("-")) {
-           ThongBao.showConfirm(this, "Vui lòng chọn Mã Khuyến Mãi");
+            ThongBao.showConfirm(this, "Vui lòng chọn Mã Khuyến Mãi");
         }
     }//GEN-LAST:event_comboboxChucVuActionPerformed
 
