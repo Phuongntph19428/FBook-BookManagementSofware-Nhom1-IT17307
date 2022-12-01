@@ -34,7 +34,7 @@ public class NewJDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        notification_Form_Key1 = new View.Notification_Form_Key();
+        notification_Form_Key1 = new View.Notification_Success();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -155,6 +155,6 @@ public class NewJDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private View.Notification_Form_Key notification_Form_Key1;
+    private View.Notification_Success notification_Form_Key1;
     // End of variables declaration//GEN-END:variables
 }

@@ -80,7 +80,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.Notification_Form_Key" name="notification_Form_Key1">
+    <Component class="View.Notification_Success" name="notification_Form_Key1">
     </Component>
   </SubComponents>
 </Form>

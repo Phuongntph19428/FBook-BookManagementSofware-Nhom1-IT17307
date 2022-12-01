@@ -4,8 +4,12 @@
  */
 package View.DesignComponent;
 
+import View.Notification_Error;
+import View.Notification_Quest;
+import View.Notification_Success;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 
 /**
  *
@@ -19,6 +23,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         initTableData();
+        this.setLocationRelativeTo(null);
     }
 
     private void initTableData() {
@@ -30,7 +35,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             @Override
             public void update(ModelSinhVien student) {
-                  System.out.println("User click Cancel");
+                System.out.println("User click Cancel");
             }
         };
     }
@@ -45,17 +50,31 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         dateChooser1 = new View.DateChooser.DateChooser();
-        textField1 = new View.DesignComponent.TextField();
-        button1 = new View.ButtonDesign.Button();
-
-        dateChooser1.setTextRefernce(textField1);
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(11, 20, 55));
 
-        button1.setText("button1");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setText("Thành Công");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Thất Bại");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Xác Nhận");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -64,28 +83,67 @@ public class NewJFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(868, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(144, 144, 144)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(280, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(594, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(53, 53, 53))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-      dateChooser1.showPopup();
-    }//GEN-LAST:event_button1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JDialog j = new JDialog(this);
+        j.setUndecorated(true);
+        j.setSize(531, 186);
+        Notification_Success n = new Notification_Success();
+//        Notification_Quest n = new Notification_Quest();
+//        Notification_Error n = new Notification_Error();
+//        n.setContent("qdqwdqw");
+        j.add(n);
+        j.setLocationRelativeTo(this);
+        j.setVisible(true);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       JDialog j = new JDialog(this);
+        j.setUndecorated(true);
+        j.setSize(531, 186);
+//        Notification_Success n = new Notification_Success();
+//        Notification_Quest n = new Notification_Quest();
+        Notification_Error n = new Notification_Error();
+//        n.setContent("qdqwdqw");
+        j.add(n);
+        j.setLocationRelativeTo(this);
+        j.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      JDialog j = new JDialog(this);
+        j.setUndecorated(true);
+        j.setSize(531, 186);
+//        Notification_Success n = new Notification_Success();
+        Notification_Quest n = new Notification_Quest();
+//        Notification_Error n = new Notification_Error();
+//        n.setContent("qdqwdqw");
+        j.add(n);
+        j.setLocationRelativeTo(this);
+        j.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,8 +181,9 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button button1;
     private View.DateChooser.DateChooser dateChooser1;
-    private View.DesignComponent.TextField textField1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     // End of variables declaration//GEN-END:variables
 }
