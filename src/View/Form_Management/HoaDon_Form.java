@@ -572,48 +572,50 @@ public class HoaDon_Form extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Management Book - Quản Lý Hóa Đơn");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText("Mã HD:");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Ngày Tạo :");
 
-        lblMaHD.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblMaHD.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblMaHD.setForeground(new java.awt.Color(255, 255, 255));
         lblMaHD.setText("HD1");
 
-        lblNgayTao.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblNgayTao.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblNgayTao.setForeground(new java.awt.Color(255, 255, 255));
         lblNgayTao.setText("23/03/2022");
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Khách hàng:");
 
-        lblKhachHang.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblKhachHang.setForeground(new java.awt.Color(255, 255, 255));
         lblKhachHang.setText("Nguyễn Văn A");
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Mô Tả :");
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Nhân viên:");
 
-        lblNhanVien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblNhanVien.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblNhanVien.setForeground(new java.awt.Color(255, 255, 255));
         lblNhanVien.setText("Nguyễn Văn A");
 
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtMoTa.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Trạng thái:");
 
-        lblTrangThai.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTrangThai.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTrangThai.setForeground(new java.awt.Color(255, 255, 255));
         lblTrangThai.setText("Đã thanh toán");
 
@@ -631,10 +633,8 @@ public class HoaDon_Form extends javax.swing.JPanel {
                             .addComponent(jLabel7))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(lblMaHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(184, 184, 184))
-                            .addComponent(lblNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
