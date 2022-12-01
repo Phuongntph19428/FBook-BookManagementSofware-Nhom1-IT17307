@@ -33,6 +33,7 @@ public class ThongBao {
         j.setResizable(false);
         j.setLocation(frame.getSize().width + 20 / 2, frame.getSize().height / 2 - 140);
         j.setSize(width, height);
+        j.setUndecorated(true);
         j.add(notifi, BorderLayout.CENTER);
 
         notifi.getButtonNo().addActionListener(new ActionListener() {
@@ -79,7 +80,7 @@ public class ThongBao {
     }
 
     //[0,153,51]
-    static int getSelected() {
+    public static int getSelected() {
         return Selected;
     }
 

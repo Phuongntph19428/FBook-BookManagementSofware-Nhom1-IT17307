@@ -48,7 +48,7 @@ public class KhuyenMaiChiTietRepository implements IKhuyenMaiChiTietRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
-                TypedQuery<KhuyenMaiChiTietRepository> query = session.createQuery("DELETE FROM KhuyenMaiChiTiet km WHERE km.IdKhuyenMai = :IdKhuyenMai");
+                TypedQuery<KhuyenMaiChiTietRepository> query = session.createQuery("DELETE FROM KhuyenMaiChiTiet km WHERE km.khuyenMai.id = :IdKhuyenMai");
                 query.setParameter("IdKhuyenMai", id);
                 query.executeUpdate();
                 tran.commit();
