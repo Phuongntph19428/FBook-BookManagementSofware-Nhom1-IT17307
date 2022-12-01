@@ -24,15 +24,17 @@ public class ThongBao {
     static int YES = 1;
     static int NO = 0;
     static int Selected = -1;
-    static void showConfirm(Frame frame, String s) {
+    static int width = 441, height = 215;
+
+    public static void showConfirm(Component frame, String s) {
         Notification_Form notifi = new Notification_Form();
         notifi.setText(s);
-        JDialog j = new JDialog(frame);
+        JDialog j = new JDialog();
         j.setResizable(false);
-        j.setLocation(frame.getSize().width+20 / 2, frame.getSize().height / 2 - 140);
-        j.setSize(452, 184);
+        j.setLocation(frame.getSize().width + 20 / 2, frame.getSize().height / 2 - 140);
+        j.setSize(width, height);
         j.add(notifi, BorderLayout.CENTER);
-        
+
         notifi.getButtonNo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,22 +50,22 @@ public class ThongBao {
                 j.dispose();
             }
         });
-        j.setLocationRelativeTo(frame);
         j.setModal(true);
         j.setVisible(true);
     }
-    
-    static void showMessage(Frame frame, String s) {
+
+    public static void showMessage(Component frame, String s) {
         Notification_Form notifi = new Notification_Form();
         notifi.setText(s);
-        JDialog j = new JDialog(frame);
+        JDialog j = new JDialog();
         j.setResizable(false);
-        j.setLocation(frame.getSize().width+20 / 2, frame.getSize().height / 2 - 140);
-        j.setSize(452, 184);
-        
+        j.setLocation(frame.getSize().width / 2 + 150, frame.getSize().height / 2 - 80);
+        j.setSize(width, height);
+        j.setUndecorated(true);
+        //[0,102,34]
         notifi.getButtonNo().setText("OK");
         notifi.getButtonYes().show(false);
-        notifi.getButtonNo().setBackground(new Color(0,153,51));
+        notifi.getButtonNo().setBackground(new Color(0, 153, 51));
         notifi.getButtonNo().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,10 +74,10 @@ public class ThongBao {
         });
 
         j.add(notifi, BorderLayout.CENTER);
-        j.setLocationRelativeTo(frame);
         j.setModal(true);
         j.setVisible(true);
     }
+
     //[0,153,51]
     static int getSelected() {
         return Selected;

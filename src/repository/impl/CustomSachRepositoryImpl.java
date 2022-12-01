@@ -108,4 +108,41 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
         return total;
     }
 
+    @Override
+    public CustomSach getSachByBarCode(String barCode) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query query = session.createSQLQuery("{CALL proc_getCustomSachByBarCode (:keyword)}");
+            query.setParameter("keyword", barCode);
+            
+            List lst = query.getResultList();
+            for (Object object : lst) {
+                Object[] CsArr = (Object[]) object;
+                String id = CsArr[0] + "";
+                String ma = CsArr[1] + ""; 
+                String ten = CsArr[2] + ""; 
+                int soLuong = Integer.parseInt(CsArr[3] + ""); 
+                String giaBanStr = CsArr[4] + "";
+                BigDecimal giaBan = BigDecimal.valueOf(Double.parseDouble(giaBanStr));
+                String giaSaleStr = CsArr[5] + "";
+                BigDecimal giaSale;
+                if(!giaSaleStr.equalsIgnoreCase("null")) {
+                    giaSale = BigDecimal.valueOf(Double.parseDouble(giaSaleStr));
+                }else {
+                    giaSale = giaBan;
+                }
+                String chietKhauStr = CsArr[6] + "";
+                Integer chietKhau = 0;
+                if(!chietKhauStr.equalsIgnoreCase("null")) {
+                    chietKhau = Integer.valueOf(chietKhauStr);
+                }
+                byte[] hinh = (byte[]) CsArr[7];
+                
+                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh);
+                return customSach;
+            }
+
+        }
+        return null;
+    }
+
 }

@@ -36,9 +36,9 @@
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="557" max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao3" min="-2" pref="152" max="-2" attributes="0"/>
+                      <Component id="btnImport" min="-2" pref="152" max="-2" attributes="0"/>
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao1" min="-2" pref="152" max="-2" attributes="0"/>
+                      <Component id="btnExport" min="-2" pref="152" max="-2" attributes="0"/>
                       <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                       <Component id="btnTaoSP1" min="-2" pref="153" max="-2" attributes="0"/>
                   </Group>
@@ -60,8 +60,8 @@
           <Group type="102" attributes="0">
               <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnInBaoCao3" min="-2" pref="53" max="-2" attributes="0"/>
-                  <Component id="btnInBaoCao1" min="-2" pref="53" max="-2" attributes="0"/>
+                  <Component id="btnImport" min="-2" pref="53" max="-2" attributes="0"/>
+                  <Component id="btnExport" min="-2" pref="53" max="-2" attributes="0"/>
                   <Component id="btnTaoSP1" min="-2" pref="53" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
@@ -274,7 +274,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao3">
+    <Component class="View.ButtonDesign.Button" name="btnImport">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -297,10 +297,10 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportActionPerformed"/>
       </Events>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="btnInBaoCao1">
+    <Component class="View.ButtonDesign.Button" name="btnExport">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="6f" green="1f" red="1f" type="rgb"/>
@@ -323,7 +323,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExportActionPerformed"/>
       </Events>
     </Component>
     <Component class="View.ButtonDesign.Button" name="btnTaoSP1">
