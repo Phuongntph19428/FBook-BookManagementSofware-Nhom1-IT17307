@@ -15,6 +15,7 @@ import com.google.zxing.common.HybridBinarizer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -1045,6 +1046,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         JFileChooser fileChooser = new JFileChooser(currentDirectory);
+        fileChooser.setPreferredSize(new Dimension(800, 600));
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
         int result = fileChooser.showDialog(this, "Chọn ảnh");
@@ -1052,7 +1054,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             File file = fileChooser.getSelectedFile();
             currentDirectory = file.getAbsolutePath();
             Path p = Paths.get(currentDirectory);
-            if (currentDirectory.endsWith(".png") || currentDirectory.endsWith(".jpg")) {
+            if (currentDirectory.toLowerCase().endsWith(".png") || currentDirectory.toLowerCase().endsWith(".jpg")) {
                 try {
                     _hinh = Files.readAllBytes(p);
                     if (_hinh.length > 1024000) {

@@ -7,6 +7,7 @@ package View.Form_Management;
 import View.ButtonDesign.Button;
 import View.ScrollBarCustom;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -476,7 +477,12 @@ public class TacGia_Form extends javax.swing.JPanel {
         txtMoTa.setText("");
         txtTenTacGia.setText("");
         _hinh = null;
-        lblAvatar.setIcon(new ImageIcon(_hinh));
+        if (_hinh != null) {
+            lblAvatar.setIcon(new ImageIcon(_hinh));
+        } else {
+            ImageIcon imageIcon = new ImageIcon(new ImageIcon("image/imagedefault.jpg").getImage().getScaledInstance(195, 232, Image.SCALE_DEFAULT));
+            this.lblAvatar.setIcon(imageIcon);
+        }
     }
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -486,13 +492,14 @@ public class TacGia_Form extends javax.swing.JPanel {
     private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         JFileChooser fileChooser = new JFileChooser(currentDirectory);
         fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setPreferredSize(new Dimension(800, 600));
         fileChooser.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
         int result = fileChooser.showDialog(this, "Chọn ảnh");
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             currentDirectory = file.getAbsolutePath();
             Path p = Paths.get(currentDirectory);
-            if (currentDirectory.endsWith(".png") || currentDirectory.endsWith(".jpg")) {
+            if (currentDirectory.toLowerCase().endsWith(".png") || currentDirectory.toLowerCase().endsWith(".jpg")) {
                 try {
                     _hinh = Files.readAllBytes(p);
                     if (_hinh.length > 1024000) {
