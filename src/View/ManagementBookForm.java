@@ -258,38 +258,24 @@ public class ManagementBookForm extends javax.swing.JFrame {
                                     }
 
                                 });
-                                sach.getJTable().addMouseListener(new MouseAdapter() {
-                                    @Override
-                                    public void mouseClicked(MouseEvent e) {
-                                        if (e.getClickCount() == 2) {
-                                            JTable target = (JTable) e.getSource();
-                                            int row = target.getSelectedRow();
-                                            String id = target.getValueAt(row, 0).toString();
-                                            System.out.println(id);
 
-                                            nv.getTable().addMouseListener(new MouseAdapter() {
-                                                @Override
-                                                public void mouseClicked(MouseEvent e) {
-                                                    if (e.getClickCount() == 2) {
-                                                        JTable target = (JTable) e.getSource();
-                                                        int row = target.getSelectedRow();
-                                                        NhanVien nvModel = new NhanVien();
-                                                        nvModel.setId(nv.getTable().getValueAt(row, 0).toString());
-
-                                                        listBtn.get(1).doClick();
-                                                        nvcn.FillComponent(nvModel);
-
-                                                    }
-                                                }
-
-                                            });
-
-                                        }
-                                    }
-                                });
                             }
                         }
                     });
+                }
+            }
+        });
+        // Double click Sách
+        sach.getJTable().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    JTable target = (JTable) e.getSource();
+                    int row = target.getSelectedRow();
+                    String id = target.getValueAt(row, 0).toString();
+                    System.out.println(id);
+                    showJPanel(3);
+
                 }
             }
         });
@@ -302,7 +288,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
                     int row = target.getSelectedRow();
                     String id = target.getValueAt(row, 0).toString();
                     hd.showTab();
-                    
 
                 }
             }
@@ -1079,15 +1064,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
     }//GEN-LAST:event_lbIcon1MouseClicked
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        ThongBao.showConfirm(this, "Bạn có muốn tắt cái này đi k ?"); // Confirm
-//        if(ThongBao.Selected == 1){
-//            JOptionPane.showMessageDialog(this, "Bạn đã chọn có");
-//        }else{
-//            JOptionPane.showMessageDialog(this, "Bạn đã chọn ko");
-//        } 
-//        Ví dụ về việc get kết quả khi ng dùng chọn Yes hoặc No trong form thông báo
-
-//        ThongBao.showMessage(this,"Bạn có muốn tắt cái này đi k ?"); // Message
+        ThongBao thongbao = new ThongBao();
+        thongbao.showNoti_Succes(this, "");
     }//GEN-LAST:event_button2ActionPerformed
 
     /**

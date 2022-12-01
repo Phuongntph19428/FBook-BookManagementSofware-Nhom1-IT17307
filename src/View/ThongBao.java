@@ -78,9 +78,28 @@ public class ThongBao {
         j.setModal(true);
         j.setVisible(true);
     }
+    
+    public void showNoti_Succes(Component frame, String s) {
+        Notification_Success notifi = new Notification_Success();
+        JDialog j = new JDialog();
+        j.setResizable(false);
+        j.setSize(531, 186);
+        j.setLocation(frame.getSize().width / 2-30 , frame.getSize().height / 2 - 110);
+        j.setUndecorated(true);
+        notifi.getJButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                j.dispose();
+            }
+        });
+
+        j.add(notifi, BorderLayout.CENTER);
+        j.setModal(true);
+        j.setVisible(true);
+    }
 
     //[0,153,51]
-    public static int getSelected() {
+    public int getSelected() {
         return Selected;
     }
 
