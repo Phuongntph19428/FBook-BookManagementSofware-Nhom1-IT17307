@@ -273,7 +273,7 @@ public class Sach implements Serializable {
     }
 
     public Object[] toDataRow() {
-        DecimalFormat df = new DecimalFormat("#,##0.00");
+        DecimalFormat df = new DecimalFormat("#,###");
         return new Object[]{nhaXuatBan.getTen(), viTri.getMa(), ma, ten, soLuong, soTrang, df.format(giaNhap), df.format(giaBan), trangThai == 0 ? "Ngừng kinh doanh" : "Đang kinh doanh",
             hinh == null ? null : new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)))};
     }

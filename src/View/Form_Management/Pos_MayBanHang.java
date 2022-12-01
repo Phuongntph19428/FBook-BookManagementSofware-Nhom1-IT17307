@@ -349,7 +349,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         _lstCustomSach = lst;
         int size = pageSize * position;
         initJpanelSach((position - 1) * pageSize, size);
-        JpanelShowBook.removeAll();
+//        JpanelShowBook.removeAll();
     }
 
     private void loadTableHoaDon() {
@@ -1985,7 +1985,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
         setLabelPage();
-        _currentPage = _currentPage--;
+        _currentPage = _currentPage -1;
         refreshSP();
     }//GEN-LAST:event_btnPrevActionPerformed
 
@@ -1993,7 +1993,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         if (_currentPage == _totalPage || _currentPage > _totalPage) {
             return;
         }
-        _currentPage = _currentPage++;
+        _currentPage = _currentPage + 1;
+        System.out.println("Current: " + _currentPage);
         refreshSP();
     }//GEN-LAST:event_btnNextActionPerformed
 
@@ -2021,10 +2022,10 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
         int confirm = JOptionPane.showConfirmDialog(this, "Xóa toàn bộ?");
-        if(confirm == JOptionPane.YES_OPTION) {
+        if (confirm == JOptionPane.YES_OPTION) {
             _hoaDonService.removeAllHoaDonCT(_hoaDon);
             btnDeleteAll.setBackground(new Color(204, 204, 204));
-            btnDeleteAll.setEnabled(false); 
+            btnDeleteAll.setEnabled(false);
             JOptionPane.showMessageDialog(this, "Đã xóa");
         }
     }//GEN-LAST:event_btnDeleteAllActionPerformed
@@ -2050,8 +2051,10 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         }
         for (HoaDonChiTiet hoaDonCT : _lstHoaDonChiTiet.values()) {
             if (hoaDonCT.getSach().getMa().equalsIgnoreCase(tblHoaDonChiTiet.getValueAt(row, 0) + "")) {
-                JOptionPane.showConfirmDialog(this, "Xóa?");
-                _hoaDonService.removeHoaDonChiTiet(hoaDonCT);
+                int confirm = JOptionPane.showConfirmDialog(this, "Xóa?");
+                if (confirm == JOptionPane.YES_OPTION) {
+                    _hoaDonService.removeHoaDonChiTiet(hoaDonCT);
+                }
             }
         }
         loadTableHoaDonCT();
@@ -2181,6 +2184,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         _currentPage = 1;
         loadSach(_currentPage, _pageSize);
         txtTimKiem.setText("");
+        setPageLabel(true);
     }//GEN-LAST:event_btnAllActionPerformed
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked

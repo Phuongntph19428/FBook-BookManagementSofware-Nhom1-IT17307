@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="37" green="14" red="b" type="rgb"/>
@@ -26,11 +26,9 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="jPanelBourder5" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnTimKiem" alignment="0" min="-2" pref="157" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jPanelBourder2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanelBourder3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanelBourder1" alignment="0" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jPanelBourder2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanelBourder3" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanelBourder1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
@@ -108,11 +106,11 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="View.DesignComponent.Table" name="tbKhuyenMai">
+            <Component class="View.DesignComponent.Table" name="tablePhieuNhap">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="10" rowCount="10">
-                    <Column editable="false" title="Nh&#xe0; Xu&#x1ea5;t B&#x1ea3;n" type="java.lang.Object">
+                  <Table columnCount="4" rowCount="10">
+                    <Column editable="false" title="M&#xe3;" type="java.lang.Object">
                       <Data value="NXB1"/>
                       <Data value="null"/>
                       <Data value="null"/>
@@ -124,7 +122,7 @@
                       <Data value="null"/>
                       <Data value="null"/>
                     </Column>
-                    <Column editable="false" title="V&#x1ecb; Tr&#xed;" type="java.lang.Object">
+                    <Column editable="false" title="Nh&#xe0; cung cap" type="java.lang.Object">
                       <Data value="VT1"/>
                       <Data value="null"/>
                       <Data value="null"/>
@@ -136,7 +134,7 @@
                       <Data value="null"/>
                       <Data value="null"/>
                     </Column>
-                    <Column editable="false" title="M&#xe3;" type="java.lang.Object">
+                    <Column editable="false" title="Ng&#xe0;y nhap" type="java.lang.Object">
                       <Data value="S1"/>
                       <Data value="null"/>
                       <Data value="null"/>
@@ -148,80 +146,8 @@
                       <Data value="null"/>
                       <Data value="null"/>
                     </Column>
-                    <Column editable="false" title="T&#xea;n" type="java.lang.Object">
+                    <Column editable="false" title="Trang th&#xe1;i" type="java.lang.Object">
                       <Data value="&#x110;&#x1eaf;c Nh&#xe2;n T&#xe2;m"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object">
-                      <Data value="15"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="false" title="S&#x1ed1; Trang" type="java.lang.Object">
-                      <Data value="200"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="false" title="Gi&#xe1; Nh&#x1ead;p" type="java.lang.Object">
-                      <Data value="20000"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="false" title="Gi&#xe1; B&#xe1;n" type="java.lang.Object">
-                      <Data value="30000"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object">
-                      <Data value="&#x110;ang B&#xe1;n"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="false" title="H&#xec;nh" type="java.lang.Object">
-                      <Data value="None"/>
                       <Data value="null"/>
                       <Data value="null"/>
                       <Data value="null"/>
@@ -234,6 +160,30 @@
                     </Column>
                   </Table>
                 </Property>
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                  <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                  </TableColumnModel>
+                </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Semibold" size="14" style="1"/>
                 </Property>
@@ -243,7 +193,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbKhuyenMaiMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tablePhieuNhapMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

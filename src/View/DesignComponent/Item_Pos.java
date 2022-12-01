@@ -26,7 +26,7 @@ public class Item_Pos extends javax.swing.JPanel {
     }
 
     public void setGia(BigDecimal Gia, int chietKhau) {
-        DecimalFormat df = new DecimalFormat("#,##0.00");
+        DecimalFormat df = new DecimalFormat("#,###");
         this.lbGia.setText("<html><s>" + df.format(Gia) + " VNĐ" + "</s><sup style=\"color: 5DEB1B\"> - " + chietKhau + "%</sup></html>");
     }
 
@@ -35,7 +35,7 @@ public class Item_Pos extends javax.swing.JPanel {
     }
 
     public void setGiaSale(BigDecimal gia) {
-        DecimalFormat df = new DecimalFormat("#,##0.00");
+        DecimalFormat df = new DecimalFormat("#,###");
         this.lbGiaSale.setText("<html>" + df.format(gia) + "<sup> vnđ<sup></hmtl>");
     }
 
@@ -56,14 +56,18 @@ public class Item_Pos extends javax.swing.JPanel {
     }
 
     public void hovering() {
-        lbIcon.setSize(lbIcon.getWidth() + 10, lbIcon.getHeight() + 10);
-        this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
+        if (imageIcon != null) {
+            lbIcon.setSize(lbIcon.getWidth() + 10, lbIcon.getHeight() + 10);
+            this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
+        }
         lbName.setForeground(new Color(0, 255, 0));
     }
 
     public void exited() {
-        lbIcon.setSize(lbIcon.getWidth() - 10, lbIcon.getHeight() - 10);
-        this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
+        if (imageIcon != null) {
+            lbIcon.setSize(lbIcon.getWidth() - 10, lbIcon.getHeight() - 10);
+            this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
+        }
         lbName.setForeground(new Color(255, 255, 255));
     }
 
