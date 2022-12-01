@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "HinhThucThanhToan")
-public class HinhThucThanhToan {
+public class HinhThucThanhToan implements Serializable {
 
     public static final int THANHTOANBANGTIENMAT = 0;
     public static final int THANHTOANBANGBANKING = 1;    

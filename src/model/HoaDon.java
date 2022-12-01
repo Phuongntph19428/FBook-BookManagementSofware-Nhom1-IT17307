@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import model.status.TrangThaiHoaDon;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -198,6 +199,12 @@ public class HoaDon implements Serializable {
     @Override
     public String toString() {
         return "HoaDon{" + "id=" + id + ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", ma=" + ma + ", ngayTao=" + ngayTao + ", ngayShip=" + ngayShip + ", ngayNhan=" + ngayNhan + ", trangThai=" + trangThai + ", moTa=" + moTa + '}';
+    }
+
+    public Object[] toDataRow() {
+        return new Object[]{ma, nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), khachHang==null?"":(khachHang.getHo() + " " + khachHang.getTenDem() + " " + khachHang.getTen()),
+            ngayTao, ngayShip == null ? "" : ngayShip, ngayNhan == null ? "" : ngayNhan, trangThai == TrangThaiHoaDon.CHUATHANHTOAN ?
+                "Chưa thanh toán" : trangThai == TrangThaiHoaDon.DAHUY ? "Đã hủy" : trangThai == TrangThaiHoaDon.DANGVANCHUYEN ? "Đang vận chuyển" : "Đã thanh toán", soDiemSuDung};
     }
 
 }
