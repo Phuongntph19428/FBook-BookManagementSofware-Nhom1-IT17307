@@ -4,17 +4,32 @@
  */
 package View.Form_Management;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import model.PhieuNhap;
+import service.PhieuNhapService;
+import service.impl.PhieuNhapServiceImpl;
+
 /**
  *
  * @author quanc
  */
 public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PhieuNhapChiTiet
-     */
+    private DefaultTableModel model = new DefaultTableModel();
+    private DefaultTableModel modelpn = new DefaultTableModel();
+    private PhieuNhapService phieuNhapService = new PhieuNhapServiceImpl();
+    private DefaultComboBoxModel cbbModel = new DefaultComboBoxModel();
+    private List<PhieuNhap> listPN = new ArrayList<>();
+    private List<String> cbbNcc = new ArrayList<>();
+    
     public PhieuNhapChiTiet_Form() {
         initComponents();
+        listPN = phieuNhapService.getAllPhieuNhap();
+        cbbNcc = phieuNhapService.cbbNcc();
+        loadPhieuNhap(listPN);
     }
 
     /**
@@ -28,7 +43,7 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
 
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbKhuyenMai = new View.DesignComponent.Table();
+        tablePhieuNhap = new View.DesignComponent.Table();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbKhuyenMai1 = new View.DesignComponent.Table();
@@ -48,39 +63,39 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        tbKhuyenMai.setModel(new javax.swing.table.DefaultTableModel(
+        tablePhieuNhap.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"NXB1", "VT1", "S1", "Đắc Nhân Tâm", "15", "200", "20000", "30000", "Đang Bán", "None"},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {"NXB1", "VT1", "S1", "Đắc Nhân Tâm"},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nhà Xuất Bản", "Vị Trí", "Mã", "Tên", "Số Lượng", "Số Trang", "Giá Nhập", "Giá Bán", "Trạng thái", "Hình"
+                "Mã", "Nhà cung cap", "Ngày nhap", "Trang thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tbKhuyenMai.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        tbKhuyenMai.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        tbKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablePhieuNhap.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tablePhieuNhap.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tablePhieuNhap.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbKhuyenMaiMouseClicked(evt);
+                tablePhieuNhapMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbKhuyenMai);
+        jScrollPane1.setViewportView(tablePhieuNhap);
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
@@ -247,10 +262,9 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelBourder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanelBourder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanelBourder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -269,10 +283,16 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+     public void loadPhieuNhap(List<PhieuNhap> listPN) {
+        model = (DefaultTableModel) tablePhieuNhap.getModel();
+        model.setRowCount(0);
+        for (PhieuNhap phieuNhap : listPN) {
+            model.addRow(new Object[]{phieuNhap.getMa(), phieuNhap.getNhaCungCap().getTen(), phieuNhap.getNgayNhap(), phieuNhap.trangThai()});
+        }
+    }
+    private void tablePhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePhieuNhapMouseClicked
 
-    private void tbKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKhuyenMaiMouseClicked
-
-    }//GEN-LAST:event_tbKhuyenMaiMouseClicked
+    }//GEN-LAST:event_tablePhieuNhapMouseClicked
 
     private void tbKhuyenMai1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbKhuyenMai1MouseClicked
 
@@ -294,7 +314,7 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private View.DesignComponent.Table tbKhuyenMai;
+    private View.DesignComponent.Table tablePhieuNhap;
     private View.DesignComponent.Table tbKhuyenMai1;
     // End of variables declaration//GEN-END:variables
 }
