@@ -144,6 +144,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        NgaySinh = new View.DateChooser.DateChooser();
         TruongThongTin = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
@@ -177,6 +178,9 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         button2 = new View.ButtonDesign.Button();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+
+        NgaySinh.setForeground(new java.awt.Color(47, 55, 90));
+        NgaySinh.setTextRefernce(txtNgaySinh);
 
         setBackground(new java.awt.Color(11, 20, 55));
         setLayout(null);
@@ -283,6 +287,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
         txtNgaySinh.setBackground(new java.awt.Color(47, 55, 90));
         txtNgaySinh.setForeground(new java.awt.Color(255, 255, 255));
+        txtNgaySinh.setText("");
         txtNgaySinh.setCaretColor(new java.awt.Color(255, 255, 255));
         txtNgaySinh.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNgaySinh.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -295,6 +300,11 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         });
 
         btnNgaySinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
+        btnNgaySinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNgaySinhActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
@@ -518,7 +528,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(radioButtonCustom1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btnNgaySinh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21)
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -708,8 +718,13 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_button2ActionPerformed
 
+    private void btnNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNgaySinhActionPerformed
+        NgaySinh.showPopup();
+    }//GEN-LAST:event_btnNgaySinhActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private View.DateChooser.DateChooser NgaySinh;
     private javax.swing.JPanel TruongThongTin;
     private View.ButtonDesign.Button btnCapNhatNhanVien;
     private View.ButtonDesign.Button btnInBaoCao6;
