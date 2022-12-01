@@ -27,9 +27,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="button2" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Component id="btnCancel" min="-2" pref="142" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="button1" min="-2" pref="142" max="-2" attributes="0"/>
+                      <Component id="btnYes" min="-2" pref="142" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -70,8 +70,8 @@
               </Group>
               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="button1" pref="47" max="32767" attributes="0"/>
-                  <Component id="button2" max="32767" attributes="0"/>
+                  <Component id="btnYes" pref="47" max="32767" attributes="0"/>
+                  <Component id="btnCancel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -151,7 +151,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="View.ButtonDesign.Button" name="button1">
+    <Component class="View.ButtonDesign.Button" name="btnYes">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ea" green="86" red="31" type="rgb"/>
@@ -169,7 +169,7 @@
         <Property name="round" type="int" value="3"/>
       </Properties>
     </Component>
-    <Component class="View.ButtonDesign.Button" name="button2">
+    <Component class="View.ButtonDesign.Button" name="btnCancel">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="99" red="99" type="rgb"/>

@@ -6,6 +6,7 @@ package View;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
  *
@@ -26,6 +27,14 @@ public class Notification_Quest extends javax.swing.JPanel {
     public void setContent(String string) {
 //    this.jLabel3.setText(string);
     }
+    
+    public JButton getButtonCancel(){
+        return this.btnCancel;
+    }
+    
+    public JButton getButtonYes(){
+        return this.btnCancel;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,8 +51,8 @@ public class Notification_Quest extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        button1 = new View.ButtonDesign.Button();
-        button2 = new View.ButtonDesign.Button();
+        btnYes = new View.ButtonDesign.Button();
+        btnCancel = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -79,19 +88,19 @@ public class Notification_Quest extends javax.swing.JPanel {
         jTextArea1.setMargin(new java.awt.Insets(2, 0, 2, 6));
         jScrollPane1.setViewportView(jTextArea1);
 
-        button1.setBackground(new java.awt.Color(49, 134, 234));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setText("Yes, I agree");
-        button1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        button1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        button1.setRound(3);
+        btnYes.setBackground(new java.awt.Color(49, 134, 234));
+        btnYes.setForeground(new java.awt.Color(255, 255, 255));
+        btnYes.setText("Yes, I agree");
+        btnYes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnYes.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnYes.setRound(3);
 
-        button2.setBackground(new java.awt.Color(153, 153, 153));
-        button2.setForeground(new java.awt.Color(255, 255, 255));
-        button2.setText("Cancel");
-        button2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        button2.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        button2.setRound(3);
+        btnCancel.setBackground(new java.awt.Color(153, 153, 153));
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancel.setText("Cancel");
+        btnCancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCancel.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnCancel.setRound(3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,9 +112,9 @@ public class Notification_Quest extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnYes, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,8 +143,8 @@ public class Notification_Quest extends javax.swing.JPanel {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnYes, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -143,8 +152,8 @@ public class Notification_Quest extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button button1;
-    private View.ButtonDesign.Button button2;
+    private View.ButtonDesign.Button btnCancel;
+    private View.ButtonDesign.Button btnYes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
