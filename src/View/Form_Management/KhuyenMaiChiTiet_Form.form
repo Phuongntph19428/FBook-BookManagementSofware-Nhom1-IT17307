@@ -27,6 +27,8 @@
                   <Component id="jPanelBourder5" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="btnTimKiem" min="-2" pref="157" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
+                      <Component id="lbIDKhuyenMai" min="-2" pref="0" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnTimKiem2" min="-2" pref="157" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -56,6 +58,7 @@
                   <Component id="btnTimKiem" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
                   <Component id="btnTimKiem1" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
                   <Component id="btnTimKiem2" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="lbIDKhuyenMai" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="24" max="32767" attributes="0"/>
           </Group>
@@ -415,10 +418,7 @@
             </Property>
             <Property name="maximumRowCount" type="int" value="10"/>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
-                <StringItem index="1" value="A-Z"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -566,6 +566,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiem2ActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbIDKhuyenMai">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel3"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

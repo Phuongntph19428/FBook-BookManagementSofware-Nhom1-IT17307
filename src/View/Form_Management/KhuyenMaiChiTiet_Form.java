@@ -30,6 +30,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private List<KhuyenMai> listKhuyenMai = new ArrayList<>();
     private List<KhuyenMaiChiTiet> listKhuyenMaiChiTiets = new ArrayList<>();
     private List<KhuyenMaiChiTiet> listNewAdd = new ArrayList<>();
+    private List<Sach> lstSach = new ArrayList<>();
     private IKhuyenMaiChiTietService iKhuyenMaiChiTietService;
     private SachService iSachser;
     private String id = "[]";
@@ -40,9 +41,10 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         iKhuyenMaiChiTietService = new KhuyenMaiChiTietService();
         iSachser = new SachServiceImpl();
         SizelstSach = iSachser.countAllSach();
+        lstSach = iSachser.getList(0, SizelstSach);
         String columns[] = {"Id", "Mã Khuyến Mại", "Tên Khuyến Mãi", "Chiết Khấu", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái", "Mô Tả"};
         Object rows[][] = {};
-        String columnsCiTietKM[] = {"ID KhuyenMai", "ID Sach"};
+        String columnsCiTietKM[] = {"Mã Khuyến Mãi", "Mã Sách"};
         Object rowsCT[][] = {};
         this.tblChiTietKhuyenMai.setModel(new DefaultTableModel(rowsCT, columnsCiTietKM));
         this.tblKhuyenMai.setModel(new DefaultTableModel(rows, columns));
@@ -73,6 +75,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         btnTimKiem = new View.ButtonDesign.Button();
         btnTimKiem1 = new View.ButtonDesign.Button();
         btnTimKiem2 = new View.ButtonDesign.Button();
+        lbIDKhuyenMai = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
@@ -203,7 +206,6 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         comboboxChucVu.setBackground(new java.awt.Color(17, 28, 68));
         comboboxChucVu.setForeground(new java.awt.Color(255, 255, 255));
         comboboxChucVu.setMaximumRowCount(10);
-        comboboxChucVu.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
         comboboxChucVu.setSelectedIndex(-1);
         comboboxChucVu.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         comboboxChucVu.setLabeText("Chọn Sách");
@@ -311,6 +313,8 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
             }
         });
 
+        lbIDKhuyenMai.setText("jLabel3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -321,6 +325,8 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
                     .addComponent(jPanelBourder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146)
+                        .addComponent(lbIDKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTimKiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -345,7 +351,8 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimKiem1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTimKiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbIDKhuyenMai))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -361,9 +368,8 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     }
 
     private void loadComboBoxSach() {
-        List<Sach> lstS = iSachser.getList(0, SizelstSach);
-        for (Sach s : lstS) {
-            comboboxChucVu.addItem(s.getTen() + " - " + s.getId().toString());
+        for (Sach s : lstSach) {
+            comboboxChucVu.addItem(s.getTen());
         }
     }
 
@@ -371,18 +377,33 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         listKhuyenMaiChiTiets = iKhuyenMaiChiTietService.selectAll(id);
         DefaultTableModel dtm = (DefaultTableModel) tblChiTietKhuyenMai.getModel();
         dtm.setRowCount(0);
-        for (KhuyenMaiChiTiet k : listKhuyenMaiChiTiets) {
+        listNewAdd = listKhuyenMaiChiTiets;
+        for (KhuyenMaiChiTiet k : listNewAdd) {
             dtm.addRow(new Object[]{
-                k.getKhuyenMai().getId(),
-                k.getSach().getId()
+                k.getKhuyenMai().getMa(),
+                k.getSach().getTen()
 
             });
         }
 
     }
-    private boolean CheckExist(String id){
+
+    private void loadListNew() {
+        DefaultTableModel dtm = (DefaultTableModel) tblChiTietKhuyenMai.getModel();
+        dtm.setRowCount(0);
+        for (KhuyenMaiChiTiet k : listNewAdd) {
+            dtm.addRow(new Object[]{
+                k.getKhuyenMai().getMa(),
+                k.getSach().getTen()
+
+            });
+        }
+
+    }
+
+    private boolean CheckExist(String id) {
         for (KhuyenMaiChiTiet km : listNewAdd) {
-            if(km.getSach().getId().equalsIgnoreCase(id)){
+            if (km.getSach().getId().equalsIgnoreCase(id)) {
                 return false;
             }
         }
@@ -394,19 +415,16 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         String ma;
         try {
             ma = tblKhuyenMai.getValueAt(row, 1).toString();
+            id = tblKhuyenMai.getValueAt(row, 0).toString();
         } catch (Exception e) {
             e.printStackTrace();
             ma = "-";
+            id = "-";
         }
         this.lbKhuyenMai.setText("" + ma);
-
+        this.lbIDKhuyenMai.setText(id);
         id = tblKhuyenMai.getValueAt(row, 0).toString();
         loadTableKMCT();
-//        KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet();
-//        kmct.setKhuyenMai((KhuyenMai) tblKhuyenMai.getValueAt(row, 0));
-//        kmct.setSach((Sach) tblKhuyenMai.getValueAt(row, 1));
-//        iKhuyenMaiChiTietService.insert(kmct);
-
     }//GEN-LAST:event_tblKhuyenMaiMouseClicked
 
     private void tblChiTietKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietKhuyenMaiMouseClicked
@@ -414,14 +432,17 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_tblChiTietKhuyenMaiMouseClicked
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-
+        iKhuyenMaiChiTietService.delete(id);
+        for (KhuyenMaiChiTiet km : listNewAdd) {
+            iKhuyenMaiChiTietService.insert(km);
+        }
+        loadTableKMCT();
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void btnTimKiem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem1ActionPerformed
-        // TODO add your handling code here:
 
-        iKhuyenMaiChiTietService.delete();
-//        loadTableKMCT();
+        listNewAdd = new ArrayList<>();
+        loadListNew();
 
     }//GEN-LAST:event_btnTimKiem1ActionPerformed
 
@@ -431,39 +452,32 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         if (row == -1) {
             return;
         } else {
-            String idString = tblChiTietKhuyenMai.getValueAt(row, 0).toString();
-            iKhuyenMaiChiTietService.delete(idString);
-//            loadTableKMCT();
+            listNewAdd.remove(row);
+            loadListNew();
         }
     }//GEN-LAST:event_btnTimKiem2ActionPerformed
 
     private void comboboxChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxChucVuActionPerformed
-        String ma;
-        ma = this.lbKhuyenMai.getText().trim();
-        if (ma.equals("-")) {
-            ThongBao.showConfirm(this, "Vui lòng chọn Mã Khuyến Mãi");
+        String maKM,IdKM;
+        maKM = this.lbKhuyenMai.getText().trim();
+        if (maKM.equals("-")) {
             return;
         }
-
-        String maSach = comboboxChucVu.getSelectedItem().toString();
-        String SplitString[] = maSach.split(" ");
-
-        maSach = SplitString[SplitString.length - 1];
-        String masString = maSach;
-
-        Sach s = new Sach();
-        s.setId(maSach);
+        IdKM = this.lbIDKhuyenMai.getText().trim();
+        int indexSelected = comboboxChucVu.getSelectedIndex();
+        System.out.println(indexSelected);
+        Sach s = lstSach.get(indexSelected);
         KhuyenMai km = new KhuyenMai();
-        km.setId(ma);
-        
-        KhuyenMaiChiTiet kmModel = new KhuyenMaiChiTiet(km, s);
+        km.setMa(maKM);
+        km.setId(IdKM);
+        KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet(km,s);
         boolean check = CheckExist(s.getId());
-        if(check == false){
-            JOptionPane.showMessageDialog(this,"Ðã ton tai Sach");
+        if (check == false) {
+            JOptionPane.showMessageDialog(this, "Ðã ton tai Sach");
             return;
         }
-        tblChiTietKhuyenMai.addRow(new Object[]{ma, maSach});
-        listNewAdd.add(kmModel);
+        tblChiTietKhuyenMai.addRow(new Object[]{kmct.getKhuyenMai().getMa(),kmct.getSach().getMa()});
+        listNewAdd.add(kmct);
     }//GEN-LAST:event_comboboxChucVuActionPerformed
 //    private KhuyenMaiChiTiet getDaTa() {
 //        int row = tblKhuyenMai.getSelectedRow();
@@ -486,6 +500,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbIDKhuyenMai;
     private javax.swing.JLabel lbKhuyenMai;
     private View.DesignComponent.Table tblChiTietKhuyenMai;
     private View.DesignComponent.Table tblKhuyenMai;

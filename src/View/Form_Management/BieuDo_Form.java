@@ -522,7 +522,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         lbTopSell.setFont(new java.awt.Font("Segoe UI Semilight", 0, 24)); // NOI18N
         lbTopSell.setForeground(new java.awt.Color(255, 255, 255));
-        lbTopSell.setText("Top sản phẩm bán chạy");
+        lbTopSell.setText("Top 5 sản phẩm bán chạy");
 
         jSeparator1.setBackground(new java.awt.Color(102, 102, 102));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
