@@ -25,7 +25,7 @@ public class Notification_Quest extends javax.swing.JPanel {
     }
 
     public void setContent(String string) {
-//    this.jLabel3.setText(string);
+        content.setText(string);
     }
     
     public JButton getButtonCancel(){
@@ -50,7 +50,7 @@ public class Notification_Quest extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        content = new javax.swing.JTextArea();
         btnYes = new View.ButtonDesign.Button();
         btnCancel = new View.ButtonDesign.Button();
 
@@ -78,15 +78,15 @@ public class Notification_Quest extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Bạn có xác nhận muốn thao tác");
-        jTextArea1.setMargin(new java.awt.Insets(2, 0, 2, 6));
-        jScrollPane1.setViewportView(jTextArea1);
+        content.setEditable(false);
+        content.setBackground(new java.awt.Color(255, 255, 255));
+        content.setColumns(20);
+        content.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        content.setLineWrap(true);
+        content.setRows(5);
+        content.setText("Bạn có xác nhận muốn thao tác");
+        content.setMargin(new java.awt.Insets(2, 0, 2, 6));
+        jScrollPane1.setViewportView(content);
 
         btnYes.setBackground(new java.awt.Color(49, 134, 234));
         btnYes.setForeground(new java.awt.Color(255, 255, 255));
@@ -154,11 +154,11 @@ public class Notification_Quest extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnCancel;
     private View.ButtonDesign.Button btnYes;
+    private javax.swing.JTextArea content;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

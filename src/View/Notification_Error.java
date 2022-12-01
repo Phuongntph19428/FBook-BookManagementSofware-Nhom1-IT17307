@@ -6,6 +6,7 @@ package View;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -22,8 +23,11 @@ public class Notification_Error extends javax.swing.JPanel {
         jLabel1.setIcon(iconOke);
 
     }
-    public void setContent(String string){
-//    this.jLabel3.setText(string);
+    public void setContent(String string) {
+        txtContent.setText(string);
+    }
+    public JButton getJButton(){
+        return this.btnContinue;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,8 +43,8 @@ public class Notification_Error extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        button1 = new View.ButtonDesign.Button();
+        txtContent = new javax.swing.JTextArea();
+        btnContinue = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -66,21 +70,21 @@ public class Notification_Error extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Thêm Thất Bại");
-        jTextArea1.setMargin(new java.awt.Insets(2, 0, 2, 6));
-        jScrollPane1.setViewportView(jTextArea1);
+        txtContent.setEditable(false);
+        txtContent.setColumns(20);
+        txtContent.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtContent.setLineWrap(true);
+        txtContent.setRows(5);
+        txtContent.setText("Thêm Thất Bại");
+        txtContent.setMargin(new java.awt.Insets(2, 0, 2, 6));
+        jScrollPane1.setViewportView(txtContent);
 
-        button1.setBackground(new java.awt.Color(204, 0, 0));
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setText("Try again");
-        button1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        button1.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        button1.setRound(3);
+        btnContinue.setBackground(new java.awt.Color(204, 0, 0));
+        btnContinue.setForeground(new java.awt.Color(255, 255, 255));
+        btnContinue.setText("Try again");
+        btnContinue.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnContinue.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnContinue.setRound(3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -92,7 +96,7 @@ public class Notification_Error extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -120,7 +124,7 @@ public class Notification_Error extends javax.swing.JPanel {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(6, 6, 6)
-                .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addComponent(btnContinue, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -128,13 +132,13 @@ public class Notification_Error extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button button1;
+    private View.ButtonDesign.Button btnContinue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txtContent;
     // End of variables declaration//GEN-END:variables
 }

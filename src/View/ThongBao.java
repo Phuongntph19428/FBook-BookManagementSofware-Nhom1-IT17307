@@ -41,6 +41,7 @@ public class ThongBao {
                 
             }
         });
+        notifi.setContent(s);
 
         j.add(notifi, BorderLayout.CENTER);
         j.setModal(true);
@@ -48,7 +49,7 @@ public class ThongBao {
     }
     
     public static void showNoti_Error(Component frame, String s) {
-        Notification_Success notifi = new Notification_Success();
+        Notification_Error notifi = new Notification_Error();
         JDialog j = new JDialog();
         j.setResizable(false);
         j.setSize(531, 186);
@@ -62,7 +63,7 @@ public class ThongBao {
                 
             }
         });
-
+        notifi.setContent(s);
         j.add(notifi, BorderLayout.CENTER);
         j.setModal(true);
         j.setVisible(true);
@@ -83,7 +84,7 @@ public class ThongBao {
                 
             }
         });
-        
+        notifi.setContent(s);
         notifi.getButtonYes().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
