@@ -74,7 +74,7 @@ public class SachRepositoryImpl implements SachRepositoty {
             }
         }
     }
-    
+
     @Override
     public boolean updateSoLuongSach(String id, int soLuong) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -85,7 +85,7 @@ public class SachRepositoryImpl implements SachRepositoty {
                 session.update(sachUpdate);
                 tran.commit();
                 return true;
-                
+
             } catch (Exception e) {
                 tran.rollback();
                 return false;
@@ -197,6 +197,6 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return false;
             }
         }
-    }    
+    }
 
 }
