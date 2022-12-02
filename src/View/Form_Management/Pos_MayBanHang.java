@@ -61,7 +61,6 @@ import model.HinhThucThanhToan;
 import model.HoaDon;
 import model.HoaDonChiTiet;
 import model.KhachHang;
-import model.status.TrangThaiHoaDon;
 import service.CustomSachService;
 import service.HinhThucThanhToanService;
 import service.HoaDonService;
@@ -1900,7 +1899,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                             .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanelBourder4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("Bán");
@@ -1912,7 +1911,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         hoaDon.setMa("HD" + maHoaDon);
         hoaDon.setNhanVien(Auth.getNhanVien());
         hoaDon.setNgayTao(new Date());
-        hoaDon.setTrangThai(TrangThaiHoaDon.CHUATHANHTOAN);
+        hoaDon.setTrangThai(HoaDon.CHUATHANHTOAN);
 
         _hoaDonService.taoHoaDon(hoaDon);
 
@@ -1960,7 +1959,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setNgayThanhToan(ngayThanhToan);
             _hoaDon.setNgayNhan(ngayThanhToan);
             _hoaDon.setSoDiemSuDung(_diemSuDung);
-            _hoaDon.setTrangThai(TrangThaiHoaDon.DATHANHTOAN);
+            _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
             if (_khachHang != null) {
                 _hoaDon.setKhachHang(_khachHang);
                 _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue());
@@ -1999,7 +1998,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setNgayThanhToan(ngayThanhToan);
             _hoaDon.setNgayNhan(ngayThanhToan);
             _hoaDon.setSoDiemSuDung(_diemSuDung);
-            _hoaDon.setTrangThai(TrangThaiHoaDon.DATHANHTOAN);
+            _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
             if (_khachHang != null) {
                 _hoaDon.setKhachHang(_khachHang);
                 _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue());
@@ -2029,7 +2028,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             Date ngayShip = new Date();
             _hoaDon.setKhachHang(_khachHang);
             _hoaDon.setNgayShip(ngayShip);
-            _hoaDon.setTrangThai(TrangThaiHoaDon.DANGVANCHUYEN);
+            _hoaDon.setTrangThai(HoaDon.DANGVANCHUYEN);
             PrintOrder print = new PrintOrder();
             boolean printSuccess = print.print();
             if (!printSuccess) {
