@@ -4,6 +4,34 @@
  */
 package View.Form_Management;
 
+//import java.awt.Image;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+//import java.util.List;
+//import javax.swing.DefaultComboBoxModel;
+//import javax.swing.Icon;
+//import javax.swing.ImageIcon;
+//import javax.swing.JButton;
+//import javax.swing.JOptionPane;
+//import javax.swing.JTable;
+//import model.ChucVu;
+//import model.NhanVien;
+//import service.ChucVuService;
+//import service.NhanVienService;
+//import service.impl.ChucVuServicelmpl;
+//import service.impl.NhanVienServiceImpl;
+//import util.MyMD5;
+import View.soundeffect.MySoundEffect;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +49,32 @@ import service.ChucVuService;
 import service.NhanVienService;
 import service.impl.ChucVuServicelmpl;
 import service.impl.NhanVienServiceImpl;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Action;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import util.MyMD5;
 
 /**
@@ -32,10 +86,18 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     private NhanVienService nhanVienService;
     private ChucVuService chucVuService;
     private List<ChucVu> listChucVu;
-
+    private List<NhanVien> listnv = new ArrayList<>();
     /**
      * Creates new form NhanVien_ChucNang_Form
      */
+    private boolean isToggle = false;
+    private final String DEFAULT_IMAGE = "image/nhanvien.jpg";
+
+    private String currentDirectory;
+    private byte[] _hinh = null;
+
+    private HashMap<String, NhanVien> _lstNhanVien;
+
     public NhanVien_ChucNang_Form() {
         initComponents();
         nhanVienService = new NhanVienServiceImpl();
@@ -51,11 +113,12 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         comboboxTrangThai.addItem(1);
 
         Icon icon = new ImageIcon(new ImageIcon("image/nhanvien.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
-        this.lbAvatar.setIcon(icon);
+        this.lblAvartar.setIcon(icon);
 
         Icon iconBtnNgaySinh = new ImageIcon("image/icons8_schedule_30px.png");
         this.btnNgaySinh.setIcon(iconBtnNgaySinh);
 
+        nhanVienService = new NhanVienServiceImpl();
     }
 
     public void FillComponent(NhanVien nv) {
@@ -72,15 +135,18 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     }
 
     private void setForm(NhanVien nhanVien) {
-        txtMaNhanVien.setText(nhanVien.getMa());
-        txtTen.setText(nhanVien.getTen());
+        _hinh = nhanVien.getHinh();
+        setAvartar();
+        txtID.setText(nhanVien.getId());
         txtTenDem.setText(nhanVien.getTenDem());
-        txtHo.setText(nhanVien.getHo());
-        txtEmail.setText(nhanVien.getEmail());
-        txtSDT.setText(nhanVien.getSdt());
         txtDiaChi.setText(nhanVien.getDiaChi());
-        txtMatKhau.setText(nhanVien.getMatKhau());
+        txtEmail.setText(nhanVien.getEmail());
         txtNgaySinh.setText(nhanVien.getNgaySinh().toString());
+        txtHo.setText(nhanVien.getHo());
+        txtMaNhanVien.setText(nhanVien.getMa());
+//        txtMatKhau.setText(nhanVien.getMatKhau());
+        txtTen.setText(nhanVien.getTen());
+        txtSDT.setText(nhanVien.getSdt());
         comboboxChucVu.setSelectedItem(nhanVien.getChucVu().getMoTa());
         comboboxTrangThai.setSelectedItem(nhanVien.getTrangThai());
         if (nhanVien.getGioiTinh().equals("Nam")) {
@@ -88,6 +154,23 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         } else {
             radioButtonCustom2.setSelected(true);
         }
+    }
+
+    private void clear() {
+        _hinh = null;
+        setAvartar();
+        txtID.setText("");
+        txtDiaChi.setText("");
+        txtEmail.setText("");
+        txtHo.setText("");
+        txtID.setText("");
+        txtMaNhanVien.setText("");
+        txtNgaySinh.setText("");
+        txtSDT.setText("");
+        txtTen.setText("");
+        radioButtonCustom1.setSelected(true);
+        txtTenDem.setText("");
+
     }
 
     private NhanVien getForm() {
@@ -98,7 +181,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         String email = txtEmail.getText();
         String sdt = txtSDT.getText();
         String diaChi = txtDiaChi.getText();
-        String matKhau = txtMatKhau.getText();
+        String matKhau = MyMD5.getMd5("123456");
         String dateStr = txtNgaySinh.getText();
         Date date = null;
         try {
@@ -164,18 +247,17 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         btnCapNhatNhanVien = new View.ButtonDesign.Button();
         btnLamMoi = new View.ButtonDesign.Button();
         txtDiaChi = new View.DesignComponent.TextField();
-        txtMatKhau = new View.DesignComponent.TextField();
         comboboxChucVu = new View.DesignComponent.Combobox();
         radioButtonCustom1 = new View.ComboBoxDesign.RadioButtonCustom();
         radioButtonCustom2 = new View.ComboBoxDesign.RadioButtonCustom();
         comboboxTrangThai = new View.DesignComponent.Combobox();
         btnResetPassword = new View.ButtonDesign.Button();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
-        lbAvatar = new javax.swing.JLabel();
+        lblAvartar = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        btnInBaoCao6 = new View.ButtonDesign.Button();
-        button2 = new View.ButtonDesign.Button();
+        btnChooseImage = new View.ButtonDesign.Button();
+        btnCameraImage = new View.ButtonDesign.Button();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -287,7 +369,6 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
         txtNgaySinh.setBackground(new java.awt.Color(47, 55, 90));
         txtNgaySinh.setForeground(new java.awt.Color(255, 255, 255));
-        txtNgaySinh.setText("");
         txtNgaySinh.setCaretColor(new java.awt.Color(255, 255, 255));
         txtNgaySinh.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtNgaySinh.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -373,19 +454,6 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
             }
         });
 
-        txtMatKhau.setBackground(new java.awt.Color(47, 55, 90));
-        txtMatKhau.setForeground(new java.awt.Color(255, 255, 255));
-        txtMatKhau.setCaretColor(new java.awt.Color(255, 255, 255));
-        txtMatKhau.setDisabledTextColor(new java.awt.Color(255, 255, 255));
-        txtMatKhau.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        txtMatKhau.setLabelText("Mật Khẩu");
-        txtMatKhau.setLineColor(new java.awt.Color(255, 255, 255));
-        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMatKhauActionPerformed(evt);
-            }
-        });
-
         comboboxChucVu.setBackground(new java.awt.Color(47, 55, 90));
         comboboxChucVu.setForeground(new java.awt.Color(255, 255, 255));
         comboboxChucVu.setMaximumRowCount(10);
@@ -465,17 +533,12 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                                 .addGap(26, 26, 26)
                                 .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtMaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtTenDem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
-                                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(txtMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtMaNhanVien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTenDem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSDT, javax.swing.GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+                            .addComponent(txtNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
@@ -530,9 +593,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                                     .addComponent(radioButtonCustom2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(btnNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(21, 21, 21)
-                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(63, 63, 63)
                         .addComponent(comboboxTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
@@ -551,7 +612,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
         jPanelBourder2.setBackground(new java.awt.Color(47, 55, 90));
 
-        lbAvatar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        lblAvartar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -570,23 +631,23 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        btnInBaoCao6.setBackground(new java.awt.Color(35, 35, 93));
-        btnInBaoCao6.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao6.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao6.setText("Choose a picture for the book");
-        btnInBaoCao6.setFocusable(false);
-        btnInBaoCao6.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao6.addActionListener(new java.awt.event.ActionListener() {
+        btnChooseImage.setBackground(new java.awt.Color(35, 35, 93));
+        btnChooseImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnChooseImage.setForeground(new java.awt.Color(255, 255, 255));
+        btnChooseImage.setText("Choose a picture for the book");
+        btnChooseImage.setFocusable(false);
+        btnChooseImage.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnChooseImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao6ActionPerformed(evt);
+                btnChooseImageActionPerformed(evt);
             }
         });
 
-        button2.setBackground(new java.awt.Color(47, 55, 90));
-        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
-        button2.addActionListener(new java.awt.event.ActionListener() {
+        btnCameraImage.setBackground(new java.awt.Color(47, 55, 90));
+        btnCameraImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_camera_30px.png"))); // NOI18N
+        btnCameraImage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
+                btnCameraImageActionPerformed(evt);
             }
         });
 
@@ -599,12 +660,12 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                     .addGroup(jPanelBourder2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbAvatar, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                            .addComponent(lblAvartar, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                             .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                                .addComponent(btnInBaoCao6, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnChooseImage, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(btnCameraImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanelBourder2Layout.createSequentialGroup()
                         .addGap(133, 133, 133)
                         .addComponent(jLabel4)))
@@ -616,13 +677,13 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblAvartar, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(btnInBaoCao6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCameraImage, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(btnChooseImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -666,33 +727,88 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txtNgaySinhActionPerformed
 
     private void btnThemNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanVienActionPerformed
-        NhanVien nhanVien = getForm();
-        String insertStatus = nhanVienService.addNhanVien(nhanVien);
-        JOptionPane.showMessageDialog(this, insertStatus);
+//        NhanVien nhanVien = getForm();
+//        String insertStatus = nhanVienService.addNhanVien(nhanVien);
+//        JOptionPane.showMessageDialog(this, insertStatus);
+
+        NhanVien nv = getForm();
+        if (nv == null) {
+
+            return;
+        }
+        for (NhanVien nv1 : listnv) {
+            if (nv1.getMa().equals(txtMaNhanVien.getText().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Tao moi thanh cong");
+        nhanVienService.addNhanVien(nv);
+        clear();
+
 
     }//GEN-LAST:event_btnThemNhanVienActionPerformed
 
     private void btnCapNhatNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNhanVienActionPerformed
-        NhanVien nhanVien = getForm();
-        String insertStatus = nhanVienService.updateNhanVien(nhanVien);
-        JOptionPane.showMessageDialog(this, insertStatus);
+//        NhanVien nhanVien = getForm();
+//        String insertStatus = nhanVienService.updateNhanVien(nhanVien);
+//        JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+
+        NhanVien nv = getForm();
+        if (nv.getId() == null) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách");
+            return;
+        }
+        nhanVienService.updateNhanVien(nv);
+
+        JOptionPane.showMessageDialog(this, "Update successfully");
+        clear();
     }//GEN-LAST:event_btnCapNhatNhanVienActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
-        // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void txtDiaChiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDiaChiActionPerformed
 
-    private void btnInBaoCao6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao6ActionPerformed
+    private void btnChooseImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseImageActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInBaoCao6ActionPerformed
+        JFileChooser fileChooser = new JFileChooser(currentDirectory);
+        fileChooser.setPreferredSize(new Dimension(800, 600));
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png"));
+        int result = fileChooser.showDialog(this, "Chọn ảnh");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            currentDirectory = file.getAbsolutePath();
+            Path p = Paths.get(currentDirectory);
+            if (currentDirectory.toLowerCase().endsWith(".png") || currentDirectory.toLowerCase().endsWith(".jpg")) {
+                try {
+                    _hinh = Files.readAllBytes(p);
+                    if (_hinh.length > 1024000) {
+                        JOptionPane.showMessageDialog(this, "File không được vượt quá 1M", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        _hinh = null;
+                        return;
+                    }
+                    setAvartar();
+                } catch (NoSuchFileException nofile) {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy file");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return;
+            }
+
+            JOptionPane.showMessageDialog(this, "Chỉ hỗ trợ file .jpg | .png", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnChooseImageActionPerformed
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
@@ -707,32 +823,112 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_comboboxTrangThaiActionPerformed
 
     private void btnResetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetPasswordActionPerformed
-        // TODO add your handling code here:
+        String matKhau = MyMD5.getMd5("123456");
+        NhanVien nv = this.getForm();
+        if (nv.getId().equals("")) {
+            JOptionPane.showMessageDialog(this, "Vui long chon Nhan Vien can Reset Mat Khau");
+            return;
+        }
+        int kq = JOptionPane.showConfirmDialog(this, "Ban co xac nhan muon reset");
+        if (kq == JOptionPane.YES_OPTION) {
+            nhanVienService.updateNhanVien(nv);
+            JOptionPane.showConfirmDialog(this, "Reset thanh cong");
+        }
+
     }//GEN-LAST:event_btnResetPasswordActionPerformed
 
-    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
+    private void btnCameraImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCameraImageActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMatKhauActionPerformed
 
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button2ActionPerformed
+        btnCameraImage.setEnabled(false);
+        CamJFrame cam = new CamJFrame();
+        cam.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                cam.webcam.close();
+                btnCameraImage.setEnabled(true);
+                closedCam(cam);
+            }
+        });
+        cam.setTitle("Take a picture");
+        cam.setVisible(true);
+        cam.btnCapture.addActionListener((java.awt.event.ActionEvent evt1) -> {
+            BufferedImage image = cam.webcam.getImage();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                ImageIO.write(image, "png", baos);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            _hinh = baos.toByteArray();
+            MySoundEffect.play(MySoundEffect.PATH_CAPTURE_PICTURE);
+            if (_hinh != null) {
+                lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
+                this.TruongThongTin.show(true);
+            }
+            btnCameraImage.setEnabled(true);
+            closedCam(cam);
+        });
+
+        Thread th = new Thread(() -> {
+            cam.record();
+        });
+        th.start();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean x = true;
+                while (x) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                    if (!cam.isFocusOwner()) {
+//                        cam.webcam.close();
+//                        cam.dispose();
+                        closedCam(cam);
+                        btnCameraImage.setEnabled(true);
+                        x = false;
+                    }
+
+                }
+            }
+        });
+        thread.start();
+
+    }//GEN-LAST:event_btnCameraImageActionPerformed
 
     private void btnNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNgaySinhActionPerformed
         NgaySinh.showPopup();
+
+
     }//GEN-LAST:event_btnNgaySinhActionPerformed
+    private void setAvartar() {
+        if (_hinh == null) {
+            lblAvartar.setIcon(new ImageIcon(new ImageIcon(DEFAULT_IMAGE).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
+            return;
+        }
+        lblAvartar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(lblAvartar.getWidth(), lblAvartar.getHeight(), Image.SCALE_DEFAULT)));
+    }
+
+    private void closedCam(CamJFrame cam) {
+        cam.webcam.close();
+        cam.dispose();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.DateChooser.DateChooser NgaySinh;
     private javax.swing.JPanel TruongThongTin;
+    private View.ButtonDesign.Button btnCameraImage;
     private View.ButtonDesign.Button btnCapNhatNhanVien;
-    private View.ButtonDesign.Button btnInBaoCao6;
+    private View.ButtonDesign.Button btnChooseImage;
     private View.ButtonDesign.Button btnLamMoi;
     private View.ButtonDesign.Button btnNgaySinh;
     private View.ButtonDesign.Button btnResetPassword;
     private View.ButtonDesign.Button btnThemNhanVien;
-    private View.ButtonDesign.Button button2;
     private javax.swing.ButtonGroup buttonGroup1;
     private View.DesignComponent.Combobox comboboxChucVu;
     private View.DesignComponent.Combobox comboboxTrangThai;
@@ -746,7 +942,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private View.DesignComponent.JPanelBourder jPanelBourder2;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel lbAvatar;
+    private javax.swing.JLabel lblAvartar;
     private View.ComboBoxDesign.RadioButtonCustom radioButtonCustom1;
     private View.ComboBoxDesign.RadioButtonCustom radioButtonCustom2;
     private View.DesignComponent.TextField txtDiaChi;
@@ -754,7 +950,6 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     private View.DesignComponent.TextField txtHo;
     private View.DesignComponent.TextField txtID;
     private View.DesignComponent.TextField txtMaNhanVien;
-    private View.DesignComponent.TextField txtMatKhau;
     private View.DesignComponent.TextField txtNgaySinh;
     private View.DesignComponent.TextField txtSDT;
     private View.DesignComponent.TextField txtTen;

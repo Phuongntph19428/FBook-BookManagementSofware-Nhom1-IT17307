@@ -32,5 +32,9 @@ public class MyMD5 {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+        
+    }
+    public static void main(String[] args) {
+        System.err.println(MyMD5.getMd5("123456"));;
     }
 }
