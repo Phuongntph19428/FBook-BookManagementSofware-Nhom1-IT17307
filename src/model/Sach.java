@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Entity; 
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.swing.ImageIcon;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -76,13 +79,15 @@ public class Sach implements Serializable {
     @OneToMany(mappedBy = "sach", targetEntity = HoaDonChiTiet.class)
     private List<HoaDonChiTiet> lstHoaDonCT;
 
-    @OneToMany(mappedBy = "sach", targetEntity = SachTacGia.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sach", targetEntity = SachTacGia.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<SachTacGia> lstSachTacGia;
 
     @OneToMany(mappedBy = "sach", targetEntity = KhuyenMaiChiTiet.class)
     private List<KhuyenMaiChiTiet> lstKhuyenMaiCT;
 
-    @OneToMany(mappedBy = "sach", targetEntity = TheLoaiChiTiet.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sach", targetEntity = TheLoaiChiTiet.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<TheLoaiChiTiet> lstTheLoaiCT;
 
     @OneToMany(mappedBy = "sach", targetEntity = PhieuNhapChiTiet.class)

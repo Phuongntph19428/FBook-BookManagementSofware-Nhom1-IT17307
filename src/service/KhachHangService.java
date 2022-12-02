@@ -22,4 +22,6 @@ public interface KhachHangService {
     public List<KhachHang> searchKhachHangByKeyWord(List<KhachHang> lstKhachHang, String keyword);
     
     public List<KhachHang> sellectAllBySDT(String sdt);
+    
+    public boolean addDiemKhachHang(KhachHang khachHang, int diem);
 }

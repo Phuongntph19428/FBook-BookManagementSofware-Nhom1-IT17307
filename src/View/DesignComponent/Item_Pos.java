@@ -184,16 +184,17 @@ public class Item_Pos extends javax.swing.JPanel {
 
         lbName.setEditable(false);
         lbName.setBackground(new java.awt.Color(17, 28, 68));
-        lbName.setColumns(2);
+        lbName.setColumns(1);
         lbName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbName.setForeground(new java.awt.Color(255, 255, 255));
         lbName.setLineWrap(true);
-        lbName.setRows(20);
-        lbName.setTabSize(20);
-        lbName.setText("Tủ Sách Tuổi Thần Tiên: Trẻ Con Có Phải Siêu Nhân Đâu (Và Mẹ Chúng Cũng Thế\n");
+        lbName.setRows(1);
+        lbName.setTabSize(1);
+        lbName.setText("Tủ Sách Tuổi Thần Tiên: Trẻ Con Có Phải Siêu Nhân Đâu (Và Mẹ Chúng Cũng Thế ");
         lbName.setWrapStyleWord(true);
         lbName.setBorder(null);
         lbName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lbName.setMaximumSize(new java.awt.Dimension(101, 20));
         lbName.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lbNameMouseEntered(evt);

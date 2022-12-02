@@ -111,7 +111,9 @@ public class CustomSach {
     public Object[] toDataRow() {
         DecimalFormat df = new DecimalFormat("#,###");
         return new Object[]{ma, ten, hinh == null ? null : new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))), 
-        soLuong, giaSale == null? df.format(giaBan) : df.format(giaSale), giaSale==null?giaBan.multiply(BigDecimal.valueOf(soLuong)) : giaSale.multiply(BigDecimal.valueOf(soLuong))};
+        soLuong, giaSale == null? df.format(giaBan) : df.format(giaSale), giaSale==null?
+                "<html>" + giaBan.multiply(BigDecimal.valueOf(soLuong)) + "<sup style=\"Color: Red\">vnđ</sup></html>" : 
+                "<html>" + giaSale.multiply(BigDecimal.valueOf(soLuong)) + "<sup style=\"Color: Red\">vnđ</sup></html>"};
     }
 
 }

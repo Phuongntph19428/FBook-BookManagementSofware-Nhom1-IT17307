@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TheLoaiChiTiet")
 public class TheLoaiChiTiet implements Serializable {
+    
     @Id
     @ManyToOne
     @JoinColumn(name = "IdTheLoai", nullable = false)

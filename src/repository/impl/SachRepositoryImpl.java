@@ -74,7 +74,7 @@ public class SachRepositoryImpl implements SachRepositoty {
             }
         }
     }
-    
+
     @Override
     public boolean updateSoLuongSach(String id, int soLuong) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -85,12 +85,28 @@ public class SachRepositoryImpl implements SachRepositoty {
                 session.update(sachUpdate);
                 tran.commit();
                 return true;
-                
+
             } catch (Exception e) {
                 tran.rollback();
                 return false;
             }
         }
+    }
+
+    @Override
+    public Sach getSachByMa(String ma) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Sach s WHERE s.ma = :ma";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("ma", ma);
+
+            List<Sach> lstsach = query.getResultList();
+         
+           return lstsach.get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -197,6 +213,6 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return false;
             }
         }
-    }    
+    }
 
 }

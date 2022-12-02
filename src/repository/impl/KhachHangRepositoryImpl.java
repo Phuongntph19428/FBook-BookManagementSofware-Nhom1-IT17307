@@ -84,4 +84,21 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
         }
         return lstKhachHang;
     }
+
+    @Override
+    public boolean addDiemKhachHang(KhachHang khachHang, int diem) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                khachHang.setDiemTichLuy(khachHang.getDiemTichLuy() + diem);
+                session.update(khachHang);
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
 }

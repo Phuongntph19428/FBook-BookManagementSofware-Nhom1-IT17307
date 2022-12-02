@@ -227,7 +227,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="44" green="1c" red="11" type="rgb"/>
                 </Property>
-                <Property name="columns" type="int" value="2"/>
+                <Property name="columns" type="int" value="1"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
@@ -235,15 +235,18 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="lineWrap" type="boolean" value="true"/>
-                <Property name="rows" type="int" value="20"/>
-                <Property name="tabSize" type="int" value="20"/>
-                <Property name="text" type="java.lang.String" value="T&#x1ee7; S&#xe1;ch Tu&#x1ed5;i Th&#x1ea7;n Ti&#xea;n: Tr&#x1ebb; Con C&#xf3; Ph&#x1ea3;i Si&#xea;u Nh&#xe2;n &#x110;&#xe2;u (V&#xe0; M&#x1eb9; Ch&#xfa;ng C&#x169;ng Th&#x1ebf;&#xa;"/>
+                <Property name="rows" type="int" value="1"/>
+                <Property name="tabSize" type="int" value="1"/>
+                <Property name="text" type="java.lang.String" value="T&#x1ee7; S&#xe1;ch Tu&#x1ed5;i Th&#x1ea7;n Ti&#xea;n: Tr&#x1ebb; Con C&#xf3; Ph&#x1ea3;i Si&#xea;u Nh&#xe2;n &#x110;&#xe2;u (V&#xe0; M&#x1eb9; Ch&#xfa;ng C&#x169;ng Th&#x1ebf; "/>
                 <Property name="wrapStyleWord" type="boolean" value="true"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="null"/>
                 </Property>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
+                </Property>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[101, 20]"/>
                 </Property>
               </Properties>
               <Events>
