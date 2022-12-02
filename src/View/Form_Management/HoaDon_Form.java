@@ -287,6 +287,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
+        rdoDaThanhToan.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoDaThanhToan);
         rdoDaThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoDaThanhToan.setForeground(new java.awt.Color(255, 255, 255));
@@ -298,6 +299,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoChuaThanhToan.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoChuaThanhToan);
         rdoChuaThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoChuaThanhToan.setForeground(new java.awt.Color(255, 255, 255));
@@ -309,6 +311,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoDangGiao.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoDangGiao);
         rdoDangGiao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoDangGiao.setForeground(new java.awt.Color(255, 255, 255));
@@ -320,6 +323,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoTatCa.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoTatCa);
         rdoTatCa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoTatCa.setForeground(new java.awt.Color(255, 255, 255));
@@ -332,6 +336,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoDaHuy.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoDaHuy);
         rdoDaHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoDaHuy.setForeground(new java.awt.Color(255, 255, 255));
@@ -569,13 +574,12 @@ public class HoaDon_Form extends javax.swing.JPanel {
         jPanelBourder14Layout.setHorizontalGroup(
             jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder14Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblTong, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(48, Short.MAX_VALUE)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPanelBourder14Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelBourder14Layout.setVerticalGroup(
             jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

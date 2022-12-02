@@ -20,7 +20,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     private final HoaDonRepository _hoaDonRepo;
 
     public HoaDonServiceImpl() {
-        _hoaDonRepo = new  HoaDonRepositoryImpl();
+        _hoaDonRepo = new HoaDonRepositoryImpl();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     public boolean insertHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
         return _hoaDonRepo.insertHoaDonChiTiet(hoaDonCT);
     }
-    
+
     @Override
     public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
         return _hoaDonRepo.updateHoaDonChiTiet(hoaDonCT);
@@ -89,6 +89,46 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
         return _hoaDonRepo.getAllByMaHD(maHD);
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien3() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsTongTien3();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong3() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong3();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien2() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsTongTien2();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong2() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong2();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien1() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsTongTien1();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong1() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong1();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien0() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsTongTien0();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong0() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong0();
     }
 
 }

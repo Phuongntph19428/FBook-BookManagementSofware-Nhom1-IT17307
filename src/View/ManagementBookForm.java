@@ -35,7 +35,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -49,6 +51,7 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import model.NhanVien;
 import model.PhieuNhapChiTiet;
+import util.Auth;
 
 /**
  *
@@ -401,7 +404,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem ItemDoanhThu = new MenuItem(iconthuchi, "                 Thu - Chi", null);//18
         ActionListenerJLabel(ItemDoanhThu.getIcon(), 19, ItemDoanhThu, item_);
         ItemDoanhThu.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
-        
+
         MenuItem ItemCuaHang = new MenuItem(null, "                 Cửa Hàng", null);
         MenuItem ItemGiaoCa = new MenuItem(null, "                 Giao Ca", null);
 
@@ -465,8 +468,14 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem menuDangXuat = new MenuItem(iconLO, "                 Đăng Xuất", null);
         menuDangXuat.setBackground(ColorFrame.COLOR_KEY);
         menuDangXuat.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
+        if (Auth.getNhanVien().getChucVu().getMa().equalsIgnoreCase("nv")) {
+            System.out.println("Mã  " + Auth.getNhanVien().getChucVu().getMa());
+            addMenu(menuHoaDon, menuKH_NCC, menuDangXuat);
+        } else {
+            System.out.println("Mã  " + Auth.getNhanVien().getChucVu().getMa());
+            addMenu(menuSach, menuHoaDon, menuNhanVien, menuthongKe, menunhapKho, menuKM, menuKH_NCC, menuDangXuat);
 
-        addMenu(menuSach, menuHoaDon, menuNhanVien, menuthongKe, menunhapKho, menuKM, menuKH_NCC, menuDangXuat);
+        }
 
     } // Giao Diện
 
@@ -483,6 +492,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
             }
         }
         menus.revalidate();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        System.out.println(timeStamp);
     }
 
     public void showJPanel(int index) {

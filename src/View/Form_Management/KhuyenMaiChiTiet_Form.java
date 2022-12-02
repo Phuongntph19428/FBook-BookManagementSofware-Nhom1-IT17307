@@ -8,6 +8,7 @@ import View.ManagementBookForm;
 import View.ThongBao;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private List<KhuyenMaiChiTiet> listKhuyenMaiChiTiets = new ArrayList<>();
     private List<KhuyenMaiChiTiet> listNewAdd = new ArrayList<>();
     private List<Sach> lstSach = new ArrayList<>();
+    HashMap<String, KhuyenMaiChiTiet> hsKMCT = new HashMap<>();
     private IKhuyenMaiChiTietService iKhuyenMaiChiTietService;
     private SachService iSachser;
     private String id = "[]";
@@ -384,6 +386,8 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
                 k.getSach().getTen()
 
             });
+            hsKMCT.put(k.getSach().getId(), k);
+
         }
 
     }
@@ -402,12 +406,10 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     }
 
     private boolean CheckExist(String id) {
-        for (KhuyenMaiChiTiet km : listNewAdd) {
-            if (km.getSach().getId().equalsIgnoreCase(id)) {
-                return false;
-            }
+        if(hsKMCT.get(id) == null){
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void tblKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhuyenMaiMouseClicked
@@ -437,6 +439,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
             iKhuyenMaiChiTietService.insert(km);
         }
         loadTableKMCT();
+        ThongBao.showNoti_Error(this, "Cập Nhật Thành Công");
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void btnTimKiem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem1ActionPerformed
@@ -450,6 +453,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = tblChiTietKhuyenMai.getSelectedRow();
         if (row == -1) {
+            ThongBao.showNoti_Error(this, "Vui lòng chọn dòng cần xóa");
             return;
         } else {
             listNewAdd.remove(row);
@@ -458,7 +462,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTimKiem2ActionPerformed
 
     private void comboboxChucVuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxChucVuActionPerformed
-        String maKM,IdKM;
+        String maKM, IdKM;
         maKM = this.lbKhuyenMai.getText().trim();
         if (maKM.equals("-")) {
             return;
@@ -470,14 +474,15 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         KhuyenMai km = new KhuyenMai();
         km.setMa(maKM);
         km.setId(IdKM);
-        KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet(km,s);
+        KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet(km, s);
         boolean check = CheckExist(s.getId());
         if (check == false) {
-            JOptionPane.showMessageDialog(this, "Ðã ton tai Sach");
+            ThongBao.showNoti_Error(this, "Đã tồn tại mã sách");
             return;
         }
-        tblChiTietKhuyenMai.addRow(new Object[]{kmct.getKhuyenMai().getMa(),kmct.getSach().getMa()});
+        tblChiTietKhuyenMai.addRow(new Object[]{kmct.getKhuyenMai().getMa(), kmct.getSach().getMa()});
         listNewAdd.add(kmct);
+        hsKMCT.put(kmct.getSach().getId(), kmct);
     }//GEN-LAST:event_comboboxChucVuActionPerformed
 //    private KhuyenMaiChiTiet getDaTa() {
 //        int row = tblKhuyenMai.getSelectedRow();

@@ -6,6 +6,7 @@ package View.Form_Management;
 
 import model.SachFake;
 import View.ScrollBarCustom;
+import View.ThongBao;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -414,14 +415,14 @@ public class ChucVu_Form extends javax.swing.JPanel {
         ChucVu cv = getDaTa();
         int row = tbChucVu.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "chon dong can cap nhat");
+            ThongBao.showNoti_Error(this, "Vui lòng chọn bản ghi muốn cập nhật");
             return;
         } else if (cv == null) {
-            JOptionPane.showMessageDialog(this, "khong duoc de trong");
+            ThongBao.showNoti_Error(this, "Không được để trống");
             return;
         } else {
             ChucVuServicer.update(cv);
-            JOptionPane.showMessageDialog(this, "Cap nhat thanh cong");
+            ThongBao.showNoti_Succes(this, "Cập nhật thành công");
             initTableData();
         }
     }//GEN-LAST:event_btnCapNhatActionPerformed
@@ -434,12 +435,12 @@ public class ChucVu_Form extends javax.swing.JPanel {
         }
         for (ChucVu cv1 : listCv) {
             if (cv1.getMa().equals(txtMaCV.getText().trim())) {
-                JOptionPane.showMessageDialog(this, "Trùng mã Chức Vụ", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+               ThongBao.showNoti_Error(this, "Trùng Mã Chức Vụ \n Thêm Thất Bại");
 
                 return;
             }
         }
-        JOptionPane.showMessageDialog(this, "Tao moi thanh cong");
+        ThongBao.showNoti_Succes(this, "Thêm Thành Công");
         ChucVuServicer.insert(cv);
         xoaFrom();
         initTableData();
