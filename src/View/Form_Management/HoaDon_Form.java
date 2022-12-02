@@ -6,19 +6,29 @@ package View.Form_Management;
 
 import View.DesignComponent.ModelProfile;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Image;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.HinhThucThanhToan;
 import model.HoaDon;
+import static model.HoaDon.CHUATHANHTOAN;
+import static model.HoaDon.DAHUY;
+import static model.HoaDon.DANGVANCHUYEN;
 import model.HoaDonChiTiet;
+import model.Sach;
+import service.HinhThucThanhToanService;
 import service.HoaDonService;
+import service.SachService;
+import service.impl.HinhThucThanhToanServiceImpl;
 import service.impl.HoaDonServiceImpl;
+import service.impl.SachServiceImpl;
 
 /**
  *
@@ -26,10 +36,17 @@ import service.impl.HoaDonServiceImpl;
  */
 public class HoaDon_Form extends javax.swing.JPanel {
 
+    private final SachService _sachService;
+
     private final HoaDonService _hoaDonService;
     private List<HoaDon> _lstHoaDon;
     private int _status = -1;
     private HoaDon _hoaDon;
+    private List<HoaDonChiTiet> _lstHoaDonCT;
+
+    private BigDecimal _tongTien;
+
+    private final HinhThucThanhToanService _hinhHinhThucThanhToanService;
 
     /**
      * Creates new form HoaDon_Form
@@ -41,11 +58,16 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         this.tblHoaDonChiTiet.setRowHeight(50);
         this.tblHoaDonChiTiet.setBackground(Color.white);
-        
+
         DialogUpdate.setLocationRelativeTo(null);
 
         _hoaDonService = new HoaDonServiceImpl();
         _lstHoaDon = _hoaDonService.sellectAll();
+
+        _hinhHinhThucThanhToanService = new HinhThucThanhToanServiceImpl();
+
+        _sachService = new SachServiceImpl();
+
         loadTableHoaDon(_lstHoaDon);
     }
 
@@ -247,16 +269,16 @@ public class HoaDon_Form extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DialogUpdateLayout.createSequentialGroup()
                         .addComponent(btnUpdateDialogUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(363, 363, 363))))
+                        .addGap(383, 383, 383))))
         );
         DialogUpdateLayout.setVerticalGroup(
             DialogUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DialogUpdateLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelBourder15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnUpdateDialogUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         DialogUpdate.getAccessibleContext().setAccessibleDescription("");
@@ -678,8 +700,8 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
         tblHoaDonChiTiet.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        tblHoaDonChiTiet.setRowHeight(40);
-        tblHoaDonChiTiet.setRowMargin(10);
+        tblHoaDonChiTiet.setRowHeight(50);
+        tblHoaDonChiTiet.setRowMargin(5);
         tblHoaDonChiTiet.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         tblHoaDonChiTiet.setShowGrid(true);
         jScrollPane4.setViewportView(tblHoaDonChiTiet);
@@ -783,6 +805,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
         lblNhanVien.setForeground(new java.awt.Color(255, 255, 255));
         lblNhanVien.setText("Nguyễn Văn A");
 
+        txtMoTa.setEditable(false);
         txtMoTa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -1048,22 +1071,26 @@ public class HoaDon_Form extends javax.swing.JPanel {
         lblNhanVien.setText(_hoaDon.getNhanVien().getHo() + " " + _hoaDon.getNhanVien().getTenDem() + " " + _hoaDon.getNhanVien().getTen());
         lblKhachHang.setText(_hoaDon.getKhachHang() == null ? "-" : _hoaDon.getKhachHang().getHo() + " " + _hoaDon.getKhachHang().getTenDem() + " " + _hoaDon.getKhachHang().getTen());
         lblDiemSuDung.setText("Điểm sử dụng: " + _hoaDon.getSoDiemSuDung() + "");
+        lblTrangThai.setText(_hoaDon.getTrangThai() == CHUATHANHTOAN
+                ? "<html><p style= 'color:red'>Chưa thanh toán</p></html>" : _hoaDon.getTrangThai() == DAHUY ? "<html><p style= 'color:red'>Đã hủy</p></html>"
+                : _hoaDon.getTrangThai() == DANGVANCHUYEN ? "<html><p style= 'color:blue'>Đang vận chuyển</p></html>" : "<html><p style= 'color:green'>Đã thanh toán</p></html>");
+        txtMoTa.setText(_hoaDon.getMoTa() == null ? "" : _hoaDon.getMoTa());
 
         DefaultTableModel dtmHoaDonCT = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         dtmHoaDonCT.setRowCount(0);
-        BigDecimal tongTien = BigDecimal.ZERO;
+        _tongTien = BigDecimal.ZERO;
         for (HoaDonChiTiet hoaDonChiTiet : _hoaDon.getLstHoaDonCT()) {
             dtmHoaDonCT.addRow(new Object[]{hoaDonChiTiet.getSach().getMa(), hoaDonChiTiet.getSach().getTen(),
                 hoaDonChiTiet.getSach().getHinh() == null ? "" : new ModelProfile(new ImageIcon(new ImageIcon(hoaDonChiTiet.getSach().getHinh()).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))),
                 hoaDonChiTiet.getSoLuong(), "<html>" + df.format(hoaDonChiTiet.getDonGia()) + "<sup style='Color: Red'>vnđ</sup></html>",
                 "<html>" + df.format(hoaDonChiTiet.getDonGia().multiply(BigDecimal.valueOf(hoaDonChiTiet.getSoLuong()))) + "<sup style='Color: Red'>vnđ</sup></html>"});
-            tongTien = tongTien.add(BigDecimal.valueOf(Double.parseDouble(hoaDonChiTiet.getSoLuong() + "")).multiply(hoaDonChiTiet.getDonGia()));
+            _tongTien = _tongTien.add(BigDecimal.valueOf(Double.parseDouble(hoaDonChiTiet.getSoLuong() + "")).multiply(hoaDonChiTiet.getDonGia()));
         }
-        lblTongTien.setText("<html> Tổng tiền: " + df.format(tongTien) + "<sup style='Color: Red'>vnđ</sup></html>");
+        lblTongTien.setText("<html> Tổng tiền: " + df.format(_tongTien) + "<sup style='Color: Red'>vnđ</sup></html>");
 
         DefaultTableModel dtmHinhThucTT = (DefaultTableModel) tblHinhThucThanhToan.getModel();
         dtmHinhThucTT.setRowCount(0);
-        tongTien = BigDecimal.ZERO;
+        BigDecimal tongTien = BigDecimal.ZERO;
         for (HinhThucThanhToan hinhThucThanhToan : _hoaDon.getLstHinhThucThanhToan()) {
             dtmHinhThucTT.addRow(new Object[]{hinhThucThanhToan.getHinhThucThanhToan() == HinhThucThanhToan.THANHTOANBANGTIENMAT ? "Tiền mặt" : "Chuyển khoản",
                 "<html>" + df.format(hinhThucThanhToan.getTienThanhToan() == null ? 0 : hinhThucThanhToan.getTienThanhToan()) + "<sup style='Color: Red'>vnđ</sup></html>"});
@@ -1085,47 +1112,86 @@ public class HoaDon_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void setEnableButton() {
-        if(_hoaDon == null) {
+        if (_hoaDon == null) {
             return;
         }
-        
-        if(_hoaDon.getTrangThai() == HoaDon.CHUATHANHTOAN || _hoaDon.getTrangThai() == HoaDon.DANGVANCHUYEN) {
+
+        if (_hoaDon.getTrangThai() == HoaDon.CHUATHANHTOAN || _hoaDon.getTrangThai() == HoaDon.DANGVANCHUYEN) {
             btnHuyHoaDon.setEnabled(true);
-            btnHuyHoaDon.setBackground(new Color(35,35,132));
-            if(!_hoaDon.getLstHoaDonCT().isEmpty()) {           
+            btnHuyHoaDon.setBackground(new Color(35, 35, 132));
+            if (!_hoaDon.getLstHoaDonCT().isEmpty()) {
                 btnUpdateHoaDon.setEnabled(true);
-                btnUpdateHoaDon.setBackground(new Color(35, 35, 132));                
+                btnUpdateHoaDon.setBackground(new Color(35, 35, 132));
             }
-        }else {
+        } else {
             btnHuyHoaDon.setEnabled(false);
             btnHuyHoaDon.setBackground(new Color(204, 204, 204));
             btnUpdateHoaDon.setEnabled(false);
             btnUpdateHoaDon.setBackground(new Color(204, 204, 204));
         }
-        
-        if(_hoaDon.getTrangThai() == HoaDon.DANGVANCHUYEN) {
+
+        if (_hoaDon.getTrangThai() == HoaDon.DANGVANCHUYEN) {
             btnGiaoHangThanhCong.setEnabled(true);
-            btnGiaoHangThanhCong.setBackground(new Color(35,35,132));
+            btnGiaoHangThanhCong.setBackground(new Color(35, 35, 132));
         } else {
             btnGiaoHangThanhCong.setEnabled(false);
             btnGiaoHangThanhCong.setBackground(new Color(204, 204, 204));
         }
     }
-    
+
     private void btnHuyHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyHoaDonActionPerformed
-        DialogUpdate.setVisible(true);
+        String lyDo = JOptionPane.showInputDialog("Lý do hủy: ");
+        if (lyDo != null) {
+            if (JOptionPane.showConfirmDialog(this, "Xác nhận hủy?") == JOptionPane.YES_OPTION) {
+                _hoaDon.setMoTa(lyDo);
+                _hoaDon.setTrangThai(HoaDon.DAHUY);
+                _hoaDonService.updateHoaDon(_hoaDon);
+
+                List<Sach> lstSach = new ArrayList<>();
+                for (HoaDonChiTiet hoaDonChiTiet : _hoaDon.getLstHoaDonCT()) {
+                    lstSach.add(hoaDonChiTiet.getSach());
+                }
+
+                _sachService.updateSoLuongSach(lstSach);
+            }
+        }
+        JOptionPane.showMessageDialog(this, "Thành công");
+        setFormHoaDonCT();
     }//GEN-LAST:event_btnHuyHoaDonActionPerformed
 
+    private void loadTableHoaDonCTUpdate() {
+        DefaultTableModel dtm = (DefaultTableModel) tblHoaDonCTDialogUpdate.getModel();
+        dtm.setRowCount(0);
+        BigDecimal tongTien = BigDecimal.ZERO;
+        for (HoaDonChiTiet hoaDonChiTiet : _hoaDon.getLstHoaDonCT()) {
+            _lstHoaDonCT.add(hoaDonChiTiet);
+            dtm.addRow(new Object[]{hoaDonChiTiet.getSach().getMa(), hoaDonChiTiet.getSach().getTen(),
+                hoaDonChiTiet.getSach().getHinh() == null ? "" : new ModelProfile(new ImageIcon(new ImageIcon(hoaDonChiTiet.getSach().getHinh()).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))),
+                hoaDonChiTiet.getSoLuong(), "<html>" + df.format(hoaDonChiTiet.getDonGia()) + "<sup style='Color: Red'>vnđ</sup></html>",
+                "<html>" + df.format(hoaDonChiTiet.getDonGia().multiply(BigDecimal.valueOf(hoaDonChiTiet.getSoLuong()))) + "<sup style='Color: Red'>vnđ</sup></html>"});
+            tongTien = tongTien.add(BigDecimal.valueOf(Double.parseDouble(hoaDonChiTiet.getSoLuong() + "")).multiply(hoaDonChiTiet.getDonGia()));
+        }
+    }
+
     private void btnUpdateHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateHoaDonActionPerformed
-        // TODO add your handling code here:
+        loadTableHoaDonCTUpdate();
+        DialogUpdate.setVisible(true);
     }//GEN-LAST:event_btnUpdateHoaDonActionPerformed
 
     private void btnGiaoHangThanhCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaoHangThanhCongActionPerformed
-        // TODO add your handling code here:
+        _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
+        _hoaDon.setNgayNhan(new Date());
+        _hoaDon.setNgayThanhToan(new Date());
+        _hoaDonService.updateHoaDon(_hoaDon);
+        List<HinhThucThanhToan> lstHinhThucTT = new ArrayList<>();
+        lstHinhThucTT.add(new HinhThucThanhToan(null, _hoaDon, HoaDon.DATHANHTOAN, _tongTien));
+        _hinhHinhThucThanhToanService.addHinhThucThanhToan(lstHinhThucTT);
+        JOptionPane.showMessageDialog(this, "Thành công");
+        setFormHoaDonCT();
     }//GEN-LAST:event_btnGiaoHangThanhCongActionPerformed
 
     private void btnUpdateDialogUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDialogUpdateActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnUpdateDialogUpdateActionPerformed
 
 
