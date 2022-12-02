@@ -20,4 +20,6 @@ public interface KhachHangRepository {
     public boolean updateKhachHang(KhachHang khachHang);
 
     public List<KhachHang> sellectAllBySDT(String sdt);
+
+    public boolean addDiemKhachHang(KhachHang khachHang, int diem);
 }

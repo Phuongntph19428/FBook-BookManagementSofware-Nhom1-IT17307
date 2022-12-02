@@ -34,23 +34,12 @@ public class NhaXuatBanServicelmpl implements NhaXuatBanService {
 
     @Override
     public List<NhaXuatBan> selectAll() {
-        listNhaXuatBan = new ArrayList<>();
-        System.out.println(listNhaXuatBan.size());
-        var ems = repository.selectAll();
-        for (NhaXuatBan em : ems) {
-            listNhaXuatBan.add(new NhaXuatBan(em.getId(), em.getMa(), em.getTen(), em.getMoTa()));
-        }
-        return listNhaXuatBan;
+        return repository.selectAll();
     }
 
     @Override
     public List<NhaXuatBan> SelectbyName(String name) {
-        listNhaXuatBan = new ArrayList<>();
-        var ems = repository.SelectbyName(name);
-        for (NhaXuatBan em : ems) {
-            listNhaXuatBan.add(new NhaXuatBan(em.getId(), em.getMa(), em.getTen(), em.getMoTa()));
-        }
-        return listNhaXuatBan;
+        return repository.SelectbyName(name);
     }
 
 }

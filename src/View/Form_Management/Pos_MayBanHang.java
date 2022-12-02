@@ -61,7 +61,6 @@ import model.HinhThucThanhToan;
 import model.HoaDon;
 import model.HoaDonChiTiet;
 import model.KhachHang;
-import model.status.TrangThaiHoaDon;
 import service.CustomSachService;
 import service.HinhThucThanhToanService;
 import service.HoaDonService;
@@ -450,7 +449,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         for (HoaDonChiTiet hoaDonChiTiet : _lstHoaDonChiTiet.values()) {
             dtm.addRow(new Object[]{hoaDonChiTiet.getSach().getMa(), hoaDonChiTiet.getSach().getTen(),
                 hoaDonChiTiet.getSach().getHinh() == null ? "" : new ModelProfile(new ImageIcon(new ImageIcon(hoaDonChiTiet.getSach().getHinh()).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT))),
-                hoaDonChiTiet.getSoLuong(), df.format(hoaDonChiTiet.getDonGia()), df.format(hoaDonChiTiet.getDonGia().multiply(BigDecimal.valueOf(hoaDonChiTiet.getSoLuong())))});
+                hoaDonChiTiet.getSoLuong(), "<html>" + df.format(hoaDonChiTiet.getDonGia()) + "<sup style='Color: Red'>vnđ</sup></html>",
+                "<html>" + df.format(hoaDonChiTiet.getDonGia().multiply(BigDecimal.valueOf(hoaDonChiTiet.getSoLuong()))) + "<sup style='Color: Red'>vnđ</sup></html>"});
             _tongTien = _tongTien.add(BigDecimal.valueOf(Double.parseDouble(hoaDonChiTiet.getSoLuong() + "")).multiply(hoaDonChiTiet.getDonGia()));
         }
         setTienThanhToan(_tongTien);
@@ -1899,7 +1899,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                             .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanelBourder4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("Bán");
@@ -1911,7 +1911,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         hoaDon.setMa("HD" + maHoaDon);
         hoaDon.setNhanVien(Auth.getNhanVien());
         hoaDon.setNgayTao(new Date());
-        hoaDon.setTrangThai(TrangThaiHoaDon.CHUATHANHTOAN);
+        hoaDon.setTrangThai(HoaDon.CHUATHANHTOAN);
 
         _hoaDonService.taoHoaDon(hoaDon);
 
@@ -1959,7 +1959,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setNgayThanhToan(ngayThanhToan);
             _hoaDon.setNgayNhan(ngayThanhToan);
             _hoaDon.setSoDiemSuDung(_diemSuDung);
-            _hoaDon.setTrangThai(TrangThaiHoaDon.DATHANHTOAN);
+            _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
+            if (_khachHang != null) {
+                _hoaDon.setKhachHang(_khachHang);
+                _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue());
+            }
             PrintOrder print = new PrintOrder();
             boolean printSuccess = print.print();
             if (!printSuccess) {
@@ -1994,7 +1998,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setNgayThanhToan(ngayThanhToan);
             _hoaDon.setNgayNhan(ngayThanhToan);
             _hoaDon.setSoDiemSuDung(_diemSuDung);
-            _hoaDon.setTrangThai(TrangThaiHoaDon.DATHANHTOAN);
+            _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
+            if (_khachHang != null) {
+                _hoaDon.setKhachHang(_khachHang);
+                _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue());
+            }
             boolean updateStatus = _hoaDonService.updateHoaDon(_hoaDon);
             addHinhThucThanhToan();
             JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
@@ -2009,9 +2017,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         DefaultTableModel dtm = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         dtm.setRowCount(0);
     }
-    
+
     private void btnDatHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatHangActionPerformed
-        if(_khachHang == null) {
+        if (_khachHang == null) {
             JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng");
             return;
         }
@@ -2020,7 +2028,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             Date ngayShip = new Date();
             _hoaDon.setKhachHang(_khachHang);
             _hoaDon.setNgayShip(ngayShip);
-            _hoaDon.setTrangThai(TrangThaiHoaDon.DANGVANCHUYEN);
+            _hoaDon.setTrangThai(HoaDon.DANGVANCHUYEN);
             PrintOrder print = new PrintOrder();
             boolean printSuccess = print.print();
             if (!printSuccess) {
@@ -2303,7 +2311,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         int hinhThuc = cbHinhThucThanhToan.getSelectedIndex();
         BigDecimal tienPhaiTra = _tongTien.subtract(BigDecimal.valueOf(_diemSuDung).multiply(BigDecimal.valueOf(1000)));
         BigDecimal tienDaTra = BigDecimal.ZERO;
-        lblTongTien.setText(df.format(tienPhaiTra) + " VNĐ");
+        lblTongTien.setText("<html>" + df.format(tienPhaiTra) + "<sup style='Color: Red'>vnđ</sup></html>");
         if (!txtTienMat.getText().isBlank()) {
             tienDaTra = BigDecimal.valueOf(Double.parseDouble(txtTienMat.getText() + ""));
         }
@@ -2337,7 +2345,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         } else {
             lblTienThua.setForeground(Color.GREEN);
         }
-        lblTienThua.setText(df.format(_tienThua) + " VNĐ");
+        lblTienThua.setText("<html>" + df.format(_tienThua) + "<sup>vnđ</sup></html>");
 
     }
 

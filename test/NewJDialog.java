@@ -94,8 +94,8 @@ public class NewJDialog extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      ThongBao.showConfirm(this, "Vui lòng chọn");
-     int kq = ThongBao.getSelected();
-        System.out.println(kq);
+//     int kq = ThongBao.getSelected();
+//        System.out.println(kq);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

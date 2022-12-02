@@ -11,15 +11,16 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repository.NhaXuatBanRepository;
 import util.HibernateUtil;
+
 /**
  *
  * @author ECO
  */
-public class NhaXuatBanRepositorylmpl implements NhaXuatBanRepository{
+public class NhaXuatBanRepositorylmpl implements NhaXuatBanRepository {
 
     @Override
     public boolean insert(NhaXuatBan nxb) {
-            try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
                 session.save(nxb);
@@ -55,7 +56,7 @@ public class NhaXuatBanRepositorylmpl implements NhaXuatBanRepository{
 
     @Override
     public List<NhaXuatBan> selectAll() {
-           List<NhaXuatBan> pos;
+        List<NhaXuatBan> pos;
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<NhaXuatBan> query = session.createQuery("From NhaXuatBan k");
             pos = query.getResultList();
@@ -67,18 +68,18 @@ public class NhaXuatBanRepositorylmpl implements NhaXuatBanRepository{
 
     @Override
     public List<NhaXuatBan> SelectbyName(String name) {
-              List<NhaXuatBan> pos;
-        String nameSelect = "%"+name+"%";
+        List<NhaXuatBan> pos;
+        String nameSelect = "%" + name + "%";
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<NhaXuatBan> query = session.createQuery("From NhaXuatBan  WHERE Ten like :key");
             query.setParameter("key", nameSelect);
             System.out.println(query);
             pos = query.getResultList();
             session.close();
-            
+
         }
 //        System.out.println(pes);
         return pos;
     }
-    
+
 }

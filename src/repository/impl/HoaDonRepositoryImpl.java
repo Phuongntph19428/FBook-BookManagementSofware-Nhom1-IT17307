@@ -156,7 +156,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     public List<HoaDon> sellectAll() {
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h order by h.ma desc";
+            String hql = "SELECT h FROM HoaDon h order by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
 
             try {
@@ -174,7 +174,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     public List<HoaDon> sellectAllHoaDonCho() {
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 3 order by h.ma desc";
+            String hql = "SELECT h FROM HoaDon h where h.trangThai = 3 order by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
 
             try {
@@ -192,7 +192,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     public List<HoaDon> selectAllHoaDonDaThanhToan() {
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 1 order by h.ma desc";
+            String hql = "SELECT h FROM HoaDon h where h.trangThai = 1 order by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
 
             try {
@@ -211,7 +211,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     public List<HoaDon> sellectAllHoaDonDangVanChuyen() {
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 2 order by h.ma desc";
+            String hql = "SELECT h FROM HoaDon h where h.trangThai = 2 order by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
             try {
                 lstHoaDon = query.getResultList();
@@ -228,7 +228,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     public List<HoaDon> sellectAllHoaDonDaHuy() {
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 0 ordery by h.ma desc";
+            String hql = "SELECT h FROM HoaDon h where h.trangThai = 0 ordery by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
 
             try {

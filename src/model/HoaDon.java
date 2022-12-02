@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,7 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import model.status.TrangThaiHoaDon;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -26,6 +28,11 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "HoaDon")
 public class HoaDon implements Serializable {
+
+    public static final int DAHUY = 0;
+    public static final int DATHANHTOAN = 1;
+    public static final int DANGVANCHUYEN = 2;
+    public static final int CHUATHANHTOAN = 3;
 
     @Id
     @Column(name = "Id")
@@ -69,10 +76,12 @@ public class HoaDon implements Serializable {
     @Column(name = "SoDiemSuDung")
     private int soDiemSuDung;
 
-    @OneToMany(mappedBy = "hoaDon", targetEntity = HoaDonChiTiet.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hoaDon", targetEntity = HoaDonChiTiet.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<HoaDonChiTiet> lstHoaDonCT;
 
-    @OneToMany(mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "hoaDon", targetEntity = HinhThucThanhToan.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<HinhThucThanhToan> lstHinhThucThanhToan;
 
     public HoaDon() {
@@ -202,9 +211,10 @@ public class HoaDon implements Serializable {
     }
 
     public Object[] toDataRow() {
-        return new Object[]{ma, nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), khachHang==null?"":(khachHang.getHo() + " " + khachHang.getTenDem() + " " + khachHang.getTen()),
-            ngayTao, ngayShip == null ? "" : ngayShip, ngayNhan == null ? "" : ngayNhan, trangThai == TrangThaiHoaDon.CHUATHANHTOAN ?
-                "Chưa thanh toán" : trangThai == TrangThaiHoaDon.DAHUY ? "Đã hủy" : trangThai == TrangThaiHoaDon.DANGVANCHUYEN ? "Đang vận chuyển" : "Đã thanh toán", soDiemSuDung};
+        return new Object[]{ma, nhanVien.getHo() + " " + nhanVien.getTenDem() + " " + nhanVien.getTen(), khachHang == null ? "" : (khachHang.getHo() + " " + khachHang.getTenDem() + " " + khachHang.getTen()),
+            ngayTao, ngayShip == null ? "" : ngayShip, ngayNhan == null ? "" : ngayNhan, trangThai == CHUATHANHTOAN
+            ? "<html><p style= 'color:red'>Chưa thanh toán</p></html>" : trangThai == DAHUY ? "<html><p style= 'color:red'>Đã hủy</p></html>"
+            : trangThai == DANGVANCHUYEN ? "<html><p style= 'color:blue'>Đang vận chuyển</p></html>" : "<html><p style= 'color:green'>Đã thanh toán</p></html>"};
     }
 
 }
