@@ -93,13 +93,13 @@ public class NewJDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     ThongBao.showConfirm(this, "Vui lòng chọn");
+//     ThongBao.showConfirm(this, "Vui lòng chọn");
      int kq = ThongBao.getSelected();
         System.out.println(kq);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     ThongBao.showConfirm(this, "Vui lòng chọn");
+//     ThongBao.showConfirm(this, "Vui lòng chọn");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
