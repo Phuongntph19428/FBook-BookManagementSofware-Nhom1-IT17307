@@ -6,6 +6,7 @@ package View.Form_Management;
 
 import View.DesignComponent.ModelProfile;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
