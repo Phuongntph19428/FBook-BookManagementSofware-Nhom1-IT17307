@@ -11,6 +11,8 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,73 +25,86 @@ public class ThongBao {
 
     static int YES = 1;
     static int NO = 0;
+    static int CONTINUE = 2;
     static int Selected = -1;
     static int width = 441, height = 215;
+    static Icon iconSuccess = new ImageIcon("image/icons8_ok_65px.png");
+    static Icon iconError = new ImageIcon("image/icons8_box_important_65px.png");
+    static Icon iconConfirm = new ImageIcon("image/icons8_help_65px.png");
+    static Notification_Quest notifi ; 
 
-    public static void showConfirm(Component frame, String s) {
-        Notification_Form notifi = new Notification_Form();
-        notifi.setText(s);
+    public static void showNoti_Succes(Component frame, String s) {
+        notifi = new Notification_Quest();
+        setStyle("Success",iconSuccess,new Color(0,153,0));
+        notifi.getButtonYes().setText("Continue");
         JDialog j = new JDialog();
         j.setResizable(false);
-        j.setLocation(frame.getSize().width + 20 / 2, frame.getSize().height / 2 - 140);
-        j.setSize(width, height);
+        j.setSize(531, 186);
+        j.setLocation(frame.getSize().width / 2 - 30, frame.getSize().height / 2 - 110);
         j.setUndecorated(true);
-        j.add(notifi, BorderLayout.CENTER);
+        notifi.getButtonYes().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Selected = CONTINUE;
+                j.dispose();
 
-        notifi.getButtonNo().addActionListener(new ActionListener() {
+            }
+        });
+        notifi.getButtonCancel().setVisible(false);
+        notifi.setContent(s);
+
+        j.add(notifi, BorderLayout.CENTER);
+        j.setModal(true);
+        j.setVisible(true);
+    }
+
+    public static void showNoti_Error(Component frame, String s) {
+        notifi = new Notification_Quest();
+        setStyle("Error",iconError,new Color(204,0,0));
+        notifi.getButtonYes().setText("Try Again");
+        JDialog j = new JDialog();
+        j.setResizable(false);
+        j.setSize(531, 186);
+        j.setLocation(frame.getSize().width / 2 - 30, frame.getSize().height / 2 - 110);
+        j.setUndecorated(true);
+        notifi.getButtonYes().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Selected = CONTINUE;
+                j.dispose();
+
+            }
+        });
+        notifi.getButtonCancel().setVisible(false);
+        notifi.setContent(s);
+        j.add(notifi, BorderLayout.CENTER);
+        j.setModal(true);
+        j.setVisible(true);
+    }
+
+    public static void showNoti_Confirm(Component frame, String s) {
+        notifi = new Notification_Quest();
+        setStyle("Confirm",iconConfirm,new Color(49,134,234));
+        JDialog j = new JDialog();
+        j.setResizable(false);
+        j.setSize(531, 186);
+        j.setLocation(frame.getSize().width / 2 - 30, frame.getSize().height / 2 - 110);
+        j.setUndecorated(true);
+        notifi.getButtonCancel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Selected = NO;
                 j.dispose();
+
             }
         });
-
+        notifi.setContent(s);
         notifi.getButtonYes().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Selected = YES;
                 j.dispose();
-            }
-        });
-        j.setModal(true);
-        j.setVisible(true);
-    }
 
-    public static void showMessage(Component frame, String s) {
-        Notification_Form notifi = new Notification_Form();
-        notifi.setText(s);
-        JDialog j = new JDialog();
-        j.setResizable(false);
-        j.setLocation(frame.getSize().width / 2 + 150, frame.getSize().height / 2 - 80);
-        j.setSize(width, height);
-        j.setUndecorated(true);
-        //[0,102,34]
-        notifi.getButtonNo().setText("OK");
-        notifi.getButtonYes().show(false);
-        notifi.getButtonNo().setBackground(new Color(0, 153, 51));
-        notifi.getButtonNo().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                j.dispose();
-            }
-        });
-
-        j.add(notifi, BorderLayout.CENTER);
-        j.setModal(true);
-        j.setVisible(true);
-    }
-    
-    public void showNoti_Succes(Component frame, String s) {
-        Notification_Success notifi = new Notification_Success();
-        JDialog j = new JDialog();
-        j.setResizable(false);
-        j.setSize(531, 186);
-        j.setLocation(frame.getSize().width / 2-30 , frame.getSize().height / 2 - 110);
-        j.setUndecorated(true);
-        notifi.getJButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                j.dispose();
             }
         });
 
@@ -98,8 +113,14 @@ public class ThongBao {
         j.setVisible(true);
     }
 
-    //[0,153,51]
-    public int getSelected() {
+    public static void setStyle(String name, Icon icon, Color color ) {
+        notifi.setIcon(icon);
+        notifi.setName(name);
+        notifi.setBarColor(color);
+        notifi.getButtonYes().setBackground(color);
+    }
+
+    public static int getSelected() {
         return Selected;
     }
 

@@ -22,6 +22,7 @@ import View.Form_Management.Sach_ChucNang_Form;
 import View.Form_Management.Sach_Form;
 import View.Form_Management.TacGia_Form;
 import View.Form_Management.TheLoai_Form;
+import View.Form_Management.ThongKe_Form;
 import View.Form_Management.Vitri_Form;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -34,7 +35,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -48,6 +51,7 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import model.NhanVien;
 import model.PhieuNhapChiTiet;
+import util.Auth;
 
 /**
  *
@@ -91,6 +95,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         Pos_MayBanHang pos = new Pos_MayBanHang();
         KhuyenMaiChiTiet_Form kmct = new KhuyenMaiChiTiet_Form();
         PhieuNhapChiTiet_Form pnct = new PhieuNhapChiTiet_Form();
+        ThongKe_Form tk = new ThongKe_Form();
 
         this.Layout_1_Card.add(bieuDoForm);// 0
         this.Layout_1_Card.add(sach);// 1
@@ -110,6 +115,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.Layout_1_Card.add(pos); //15
         this.Layout_1_Card.add(kmct); //16
         this.Layout_1_Card.add(pnct); //17
+        this.Layout_1_Card.add(tk); //18
         this.Layout_1_Card.revalidate();
 
         listForm.add(bieuDoForm);
@@ -130,7 +136,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.add(pos);
         listForm.add(kmct);
         listForm.add(pnct);
-
+        listForm.add(tk);
         excute();
 
         listBtn.add(sach.getListbtn());
@@ -355,6 +361,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         Icon iconPNCT = new ImageIcon("image/icons8_upload_link_document_30px.png");
         Icon iconKMM = new ImageIcon("image/icons8_sale_price_tag_30px.png");
         Icon iconKMCT = new ImageIcon("image/icons8_ledger_30px.png");
+        Icon iconthuchi = new ImageIcon("image/icons8_exchange_30px.png");
 
         lbSearch.setIcon(iconSearch);
         MenuItem ItemSach = new MenuItem(iconsachMini, "                 Sách", null);
@@ -394,7 +401,10 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ActionListenerJLabel(ItemNhaCC.getIcon(), 14, ItemNhaCC, item_);
         ItemNhaCC.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
 
-        MenuItem ItemDoanhThu = new MenuItem(null, "                 Thu - Chi", null);
+        MenuItem ItemDoanhThu = new MenuItem(iconthuchi, "                 Thu - Chi", null);//18
+        ActionListenerJLabel(ItemDoanhThu.getIcon(), 19, ItemDoanhThu, item_);
+        ItemDoanhThu.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
+
         MenuItem ItemCuaHang = new MenuItem(null, "                 Cửa Hàng", null);
         MenuItem ItemGiaoCa = new MenuItem(null, "                 Giao Ca", null);
 
@@ -458,8 +468,14 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem menuDangXuat = new MenuItem(iconLO, "                 Đăng Xuất", null);
         menuDangXuat.setBackground(ColorFrame.COLOR_KEY);
         menuDangXuat.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
+        if (Auth.getNhanVien().getChucVu().getMa().equalsIgnoreCase("nv")) {
+            System.out.println("Mã  " + Auth.getNhanVien().getChucVu().getMa());
+            addMenu(menuHoaDon, menuKH_NCC, menuDangXuat);
+        } else {
+            System.out.println("Mã  " + Auth.getNhanVien().getChucVu().getMa());
+            addMenu(menuSach, menuHoaDon, menuNhanVien, menuthongKe, menunhapKho, menuKM, menuKH_NCC, menuDangXuat);
 
-        addMenu(menuSach, menuHoaDon, menuNhanVien, menuthongKe, menunhapKho, menuKM, menuKH_NCC, menuDangXuat);
+        }
 
     } // Giao Diện
 
@@ -476,6 +492,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
             }
         }
         menus.revalidate();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        System.out.println(timeStamp);
     }
 
     public void showJPanel(int index) {
@@ -1065,7 +1083,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         ThongBao thongbao = new ThongBao();
-        thongbao.showNoti_Succes(this, "");
+        thongbao.showNoti_Succes(this, "fwefwef");
     }//GEN-LAST:event_button2ActionPerformed
 
     /**

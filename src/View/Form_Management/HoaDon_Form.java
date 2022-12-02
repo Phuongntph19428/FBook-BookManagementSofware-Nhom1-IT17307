@@ -6,6 +6,7 @@ package View.Form_Management;
 
 import View.DesignComponent.ModelProfile;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -287,6 +288,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
+        rdoDaThanhToan.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoDaThanhToan);
         rdoDaThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoDaThanhToan.setForeground(new java.awt.Color(255, 255, 255));
@@ -298,6 +300,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoChuaThanhToan.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoChuaThanhToan);
         rdoChuaThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoChuaThanhToan.setForeground(new java.awt.Color(255, 255, 255));
@@ -309,6 +312,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoDangGiao.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoDangGiao);
         rdoDangGiao.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoDangGiao.setForeground(new java.awt.Color(255, 255, 255));
@@ -320,6 +324,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoTatCa.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoTatCa);
         rdoTatCa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoTatCa.setForeground(new java.awt.Color(255, 255, 255));
@@ -332,6 +337,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        rdoDaHuy.setBackground(new java.awt.Color(17, 28, 68));
         buttonGroup1.add(rdoDaHuy);
         rdoDaHuy.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         rdoDaHuy.setForeground(new java.awt.Color(255, 255, 255));
@@ -570,21 +576,19 @@ public class HoaDon_Form extends javax.swing.JPanel {
             jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder14Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblTong, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGroup(jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblTong, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanelBourder14Layout.setVerticalGroup(
             jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblTong)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelBourder13Layout = new javax.swing.GroupLayout(jPanelBourder13);
@@ -594,14 +598,14 @@ public class HoaDon_Form extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder13Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelBourder14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(246, 246, 246))
+                .addGap(439, 439, 439))
         );
         jPanelBourder13Layout.setVerticalGroup(
             jPanelBourder13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder13Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanelBourder14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(17, 17, 17))
         );
 
         jPanelBourder10.setBackground(new java.awt.Color(17, 28, 68));
@@ -675,6 +679,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
         tblHoaDonChiTiet.setRowHeight(40);
         tblHoaDonChiTiet.setRowMargin(10);
         tblHoaDonChiTiet.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblHoaDonChiTiet.setShowGrid(true);
         jScrollPane4.setViewportView(tblHoaDonChiTiet);
 
         lblTongTien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -853,8 +858,8 @@ public class HoaDon_Form extends javax.swing.JPanel {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelBourder13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelBourder13, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

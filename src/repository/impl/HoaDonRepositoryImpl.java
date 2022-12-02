@@ -4,6 +4,7 @@
  */
 package repository.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -79,7 +80,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             }
         }
     }
-    
+
     @Override
     public boolean removeHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -97,6 +98,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             }
         }
     }
+
     @Override
     public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -241,7 +243,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         }
         return lstHoaDon;
     }
-    
+
     @Override
     public List<HoaDonChiTiet> getAllByMaHD(String maHD) {
         List<HoaDonChiTiet> lstHoaDonCT = new ArrayList<>();
@@ -260,4 +262,178 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         return lstHoaDonCT;
     }
 
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien3() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE MONTH(h.ngayThanhToan) = MONTH(GETDATE()) -3";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+//    public static void main(String[] args) {
+//        HoaDonRepositoryImpl donRepositoryImpl = new HoaDonRepositoryImpl();
+//        System.out.println(donRepositoryImpl.sellectAllHoaDonChiTietsCoutSoLuong3());
+//        List<HoaDonChiTiet> chiTiets = new ArrayList<>();
+//        chiTiets = donRepositoryImpl.sellectAllHoaDonChiTietsCoutSoLuong3();
+//
+//        int count = 0;
+//        for (int i = 0; i < chiTiets.size(); i++) {
+//
+//            count++;
+//
+//        }
+//        System.out.println(count);
+//
+//    }
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong3() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT hdct.soLuong FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE MONTH(h.ngayThanhToan) = MONTH(GETDATE()) -3";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien2() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE MONTH(h.ngayThanhToan) = MONTH(GETDATE()) -2";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong2() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT hdct.soLuong FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE MONTH(h.ngayThanhToan) = MONTH(GETDATE()) -2";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien1() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE MONTH(h.ngayThanhToan) = MONTH(GETDATE()) -1";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong1() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT hdct.soLuong FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE MONTH(h.ngayThanhToan) = MONTH(GETDATE()) -1";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien0() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(GETDATE())";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong0() {
+        List<HoaDonChiTiet> lstHoaDon = new ArrayList<>();
+
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT hdct.soLuong FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(GETDATE())";
+            TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
 }

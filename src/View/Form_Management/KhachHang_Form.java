@@ -5,6 +5,7 @@
 package View.Form_Management;
 
 import View.ScrollBarCustom;
+import View.ThongBao;
 import View.soundeffect.MySoundEffect;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
@@ -388,6 +389,11 @@ public class KhachHang_Form extends javax.swing.JPanel {
         txtNgaySinh.setLabelText("Ngày Sinh");
         txtNgaySinh.setLineColor(new java.awt.Color(255, 255, 255));
         txtNgaySinh.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        txtNgaySinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNgaySinhActionPerformed(evt);
+            }
+        });
 
         btnNgaySinh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,6 +423,11 @@ public class KhachHang_Form extends javax.swing.JPanel {
         buttonGroup1.add(rdoNu);
         rdoNu.setForeground(new java.awt.Color(255, 255, 255));
         rdoNu.setText("Nữ");
+        rdoNu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoNuActionPerformed(evt);
+            }
+        });
 
         txtSDT.setBackground(new java.awt.Color(47, 55, 90));
         txtSDT.setForeground(new java.awt.Color(255, 255, 255));
@@ -559,12 +570,12 @@ public class KhachHang_Form extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         KhachHang khachHang = getForm();
         if (khachHang.getId() == null) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng");
+            ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
 
         _khachHangService.updateKhachHang(khachHang);
-        JOptionPane.showMessageDialog(this, "update successfully");
+        ThongBao.showNoti_Succes(this, "Cập Nhật Thành Công");
         _lstAllKhachHang = _khachHangService.selectAll();
         _lstKhachHang = _lstAllKhachHang;
         loadTable(_lstKhachHang);
@@ -574,12 +585,12 @@ public class KhachHang_Form extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         KhachHang khachHang = getForm();
         if (khachHang.getId() != null) {
-            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
+            ThongBao.showNoti_Error(this, "Vui lòng Clear form trước khi thêm");
             return;
         }
 
         _khachHangService.insertKhachHang(khachHang);
-        JOptionPane.showMessageDialog(this, "insert successfully");
+        ThongBao.showNoti_Succes(this, "Thêm Thành Công");
         _lstAllKhachHang = _khachHangService.selectAll();
         _lstKhachHang = _lstAllKhachHang;
         loadTable(_lstKhachHang);
@@ -626,7 +637,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
             try {
                 cam.webcam.open();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Không thể mở camera");
+               ThongBao.showNoti_Error(this, "Không thể mở camera");
                 closedCam(cam);
             }
             while (true) {
@@ -691,6 +702,14 @@ public class KhachHang_Form extends javax.swing.JPanel {
         }
         setForm(_lstKhachHang.get(row));
     }//GEN-LAST:event_tblKhachHangMouseClicked
+
+    private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNgaySinhActionPerformed
+
+    private void rdoNuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoNuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdoNuActionPerformed
 
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
