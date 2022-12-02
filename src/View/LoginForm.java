@@ -6,8 +6,15 @@ package View;
 
 import java.awt.Toolkit;
 import java.awt.geom.RoundRectangle2D;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import model.ChucVu;
+import model.NhanVien;
+import util.Auth;
+import util.MyMD5;
 
 /**
  *
@@ -21,7 +28,7 @@ public class LoginForm extends javax.swing.JFrame {
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 10, 10));
         ImageIcon img = new ImageIcon("image/logo_icon2.png");
         this.setIconImage(img.getImage());
@@ -55,8 +62,8 @@ public class LoginForm extends javax.swing.JFrame {
         btnHide = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtUserName = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jCheckBox1 = new javax.swing.JCheckBox();
@@ -82,6 +89,11 @@ public class LoginForm extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Login");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("MS PGothic", 1, 24)); // NOI18N
         jLabel3.setText("Welcome Back");
@@ -122,12 +134,12 @@ public class LoginForm extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 410, 1));
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField3.setBorder(null);
-        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 411, 40));
+        txtUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtUserName.setBorder(null);
+        jPanel4.add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 411, 40));
 
-        jPasswordField1.setBorder(null);
-        jPanel4.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 370, 40));
+        txtPassword.setBorder(null);
+        jPanel4.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 370, 40));
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -232,8 +244,34 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexitActionPerformed
-      System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnexitActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String userName = this.txtUserName.getText().trim();
+        String password = MyMD5.getMd5(this.txtPassword.getText().trim());
+        //String id, ChucVu chucVu, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai
+//        if (userName.equals("NV1") && password.equals("e10adc3949ba59abbe56e057f20f883e")) {
+//            ChucVu chucVu = new ChucVu("2D687099-FC5F-439D-A93D-019423C45BFF","QuanLy", "Nhân Viên Order", "None");
+//            NhanVien nv = new NhanVien("2D687099-FC5F-439D-A93D-019423C45BFF", chucVu, "NV01", "A", "Nguyễn", "Văn", "Nam", null,
+//                    "A@gmail.com", "0123456", "Hà Nội", "123456", null, 1);
+//            Auth.setNhanVien(nv);
+//            Auth.setChucVu(chucVu);
+//            
+//        }
+        ChucVu chucVu = new ChucVu("2D687099-FC5F-439D-A93D-019423C45BFF", "nv", "Nhân Viên Order", "None");
+        NhanVien nv = new NhanVien("2D687099-FC5F-439D-A93D-019423C45BFF", chucVu, "NV01", "A", "Nguyễn", "Văn", "Nam", null,
+                "A@gmail.com", "0123456", "Hà Nội", "123456", null, 1);
+        Auth.setNhanVien(nv);
+        Auth.setChucVu(chucVu);
+
+        this.setVisible(false);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        System.out.println(timeStamp);
+        ManagementBookForm mng = new ManagementBookForm();
+        mng.setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,8 +326,8 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lbNen;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
