@@ -109,20 +109,12 @@
                                   </Group>
                                   <Component id="txtDiaChi" alignment="0" min="-2" pref="282" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="txtMaNhanVien" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txtTenDem" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="txtSDT" alignment="0" pref="295" max="32767" attributes="0"/>
-                                          <Component id="txtNgaySinh" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                      <Component id="txtMatKhau" max="32767" attributes="0"/>
-                                  </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="txtMaNhanVien" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtTenDem" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtSDT" alignment="0" pref="295" max="32767" attributes="0"/>
+                                  <Component id="txtNgaySinh" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
@@ -197,10 +189,7 @@
                                   <Component id="btnNgaySinh" min="-2" pref="53" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtDiaChi" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtMatKhau" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="txtDiaChi" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                               <Component id="comboboxTrangThai" min="-2" pref="45" max="-2" attributes="0"/>
                           </Group>
@@ -419,7 +408,6 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value=""/>
                 <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
@@ -577,32 +565,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDiaChiActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.DesignComponent.TextField" name="txtMatKhau">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="5a" green="37" red="2f" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI Semibold" size="14" style="0"/>
-                </Property>
-                <Property name="labelText" type="java.lang.String" value="M&#x1ead;t Kh&#x1ea9;u"/>
-                <Property name="lineColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMatKhauActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="View.DesignComponent.Combobox" name="comboboxChucVu">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -733,12 +695,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lbAvatar" alignment="0" pref="316" max="32767" attributes="0"/>
+                                  <Component id="lblAvartar" alignment="0" pref="316" max="32767" attributes="0"/>
                                   <Component id="jPanel5" alignment="0" pref="316" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnInBaoCao6" min="-2" pref="239" max="-2" attributes="0"/>
+                                      <Component id="btnChooseImage" min="-2" pref="239" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button2" max="32767" attributes="0"/>
+                                      <Component id="btnCameraImage" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -757,13 +719,13 @@
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="39" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lbAvatar" min="-2" pref="336" max="-2" attributes="0"/>
+                      <Component id="lblAvartar" min="-2" pref="336" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="button2" alignment="0" pref="60" max="32767" attributes="0"/>
-                          <Component id="btnInBaoCao6" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnCameraImage" alignment="0" pref="60" max="32767" attributes="0"/>
+                          <Component id="btnChooseImage" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
@@ -771,7 +733,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lbAvatar">
+            <Component class="javax.swing.JLabel" name="lblAvartar">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -813,7 +775,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="View.ButtonDesign.Button" name="btnInBaoCao6">
+            <Component class="View.ButtonDesign.Button" name="btnChooseImage">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5d" green="23" red="23" type="rgb"/>
@@ -833,10 +795,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao6ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChooseImageActionPerformed"/>
               </Events>
             </Component>
-            <Component class="View.ButtonDesign.Button" name="button2">
+            <Component class="View.ButtonDesign.Button" name="btnCameraImage">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="5a" green="37" red="2f" type="rgb"/>
@@ -846,7 +808,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCameraImageActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
