@@ -278,8 +278,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 if (e.getClickCount() == 2) {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
-                    String id = target.getValueAt(row, 0).toString();
-                    System.out.println(id);
+                    String ma = target.getValueAt(row, 2).toString();
+                    scn.setFormByMa(ma);
                     showJPanel(3);
 
                 }

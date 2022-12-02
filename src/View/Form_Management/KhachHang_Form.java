@@ -389,6 +389,11 @@ public class KhachHang_Form extends javax.swing.JPanel {
         txtNgaySinh.setLabelText("Ngày Sinh");
         txtNgaySinh.setLineColor(new java.awt.Color(255, 255, 255));
         txtNgaySinh.setMargin(new java.awt.Insets(2, 10, 2, 6));
+        txtNgaySinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNgaySinhActionPerformed(evt);
+            }
+        });
 
         btnNgaySinh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -418,6 +423,11 @@ public class KhachHang_Form extends javax.swing.JPanel {
         buttonGroup1.add(rdoNu);
         rdoNu.setForeground(new java.awt.Color(255, 255, 255));
         rdoNu.setText("Nữ");
+        rdoNu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoNuActionPerformed(evt);
+            }
+        });
 
         txtSDT.setBackground(new java.awt.Color(47, 55, 90));
         txtSDT.setForeground(new java.awt.Color(255, 255, 255));
@@ -692,6 +702,14 @@ public class KhachHang_Form extends javax.swing.JPanel {
         }
         setForm(_lstKhachHang.get(row));
     }//GEN-LAST:event_tblKhachHangMouseClicked
+
+    private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNgaySinhActionPerformed
+
+    private void rdoNuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoNuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdoNuActionPerformed
 
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();

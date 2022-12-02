@@ -743,6 +743,9 @@
           <Insets value="[2, 10, 2, 6]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNgaySinhActionPerformed"/>
+      </Events>
     </Component>
     <Component class="View.ButtonDesign.Button" name="btnNgaySinh">
       <Events>
@@ -811,6 +814,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoNuActionPerformed"/>
+      </Events>
     </Component>
     <Component class="View.DesignComponent.TextField" name="txtSDT">
       <Properties>

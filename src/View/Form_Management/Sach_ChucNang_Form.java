@@ -1,6 +1,5 @@
 package View.Form_Management;
 
-import View.ManagementBookForm;
 import View.PanelTagDesign.EventTags;
 import View.PanelTagDesign.Item;
 import View.ScrollBarCustom;
@@ -12,9 +11,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -28,19 +25,15 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.NhaXuatBan;
@@ -67,7 +60,6 @@ import service.impl.ViTriServiceImpl;
  */
 public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
-    private boolean isToggle = false;
     private final String DEFAULT_IMAGE = "image/dacnhantam.jpg";
 
     private final ViTriService _viTriService;
@@ -116,29 +108,44 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         cboViTri.setModel(new DefaultComboBoxModel(_viTriService.getAllViTri().toArray()));
     }
 
+    public void setFormByMa(String ma) {
+        Sach sach = _sachService.getSachByMa(ma);
+        setForm(sach);
+    }
+
+    private final DecimalFormat df = new DecimalFormat("###");
     private void setForm(Sach sach) {
         _hinh = sach.getHinh();
         setAvartar();
         txtId.setText(sach.getId());
         txtBarCode.setText(sach.getBarCode());
-        txtGiaBan.setText(sach.getGiaBan() + "");
-        txtGiaNhap.setText(sach.getGiaNhap() + "");
+        txtGiaBan.setText(df.format(sach.getGiaBan()) + "");
+        txtGiaNhap.setText(df.format(sach.getGiaNhap()) + "");
         txtMa.setText(sach.getMa());
         txtMoTa.setText(sach.getMoTa());
         txtSoLuong.setText(sach.getSoLuong() + "");
         txtSoTrang.setText(sach.getSoTrang() + "");
         txtTen.setText(sach.getTen());
 
-    }
+        cboNhaXuatBan.setSelectedItem(sach.getNhaXuatBan());
+        cboViTri.setSelectedItem(sach.getViTri());
 
-    private void OpenCamera(String title) {
-        j.setSize(1018, 750);
-        Camera_Form cameraF = new Camera_Form();
-        cameraF.setSize(1018, 750);
-        cameraF.setTitle(title);
-        j.add(cameraF, BorderLayout.CENTER);
-        j.setLocationRelativeTo(this);
-        j.setVisible(true);
+        if (!sach.getLstSachTacGia().isEmpty()) {
+            _lstTacGia = new HashMap<>();
+            for (SachTacGia sachTacGia : sach.getLstSachTacGia()) {
+                _lstTacGia.put(sachTacGia.getTacGia().getMa(), sachTacGia.getTacGia());
+            }
+            loadTacGia();
+        }
+        
+        if (!sach.getLstTheLoaiCT().isEmpty()) {
+            _lstTheLoai = new HashMap<>();
+            for (TheLoaiChiTiet theLoaiCT : sach.getLstTheLoaiCT()) {
+                _lstTheLoai.put(theLoaiCT.getTheLoai().getMa(), theLoaiCT.getTheLoai());
+            }
+            loadTheLoai();
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -485,22 +492,16 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                            .addComponent(txtTacGia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                                .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(67, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 788, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,7 +511,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
                         .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(220, Short.MAX_VALUE))
                     .addGroup(jPanelBourder1Layout.createSequentialGroup()
                         .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
@@ -537,7 +538,10 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                                 .addGap(32, 32, 32)
                                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCamBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -579,20 +583,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                         .addComponent(txtBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 51, Short.MAX_VALUE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE))
                     .addComponent(cboNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(32, 32, 32)
+                .addGap(27, 27, 27)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         TruongThongTin.add(jPanelBourder1);
@@ -698,6 +703,11 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         TruongThongTin.setBounds(0, 0, 1370, 800);
 
         Form_Chon_TacGia.setBackground(new java.awt.Color(47, 55, 90));
+        Form_Chon_TacGia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Form_Chon_TacGiaMouseClicked(evt);
+            }
+        });
 
         cbSelect.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         cbSelect.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
@@ -724,10 +734,20 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         btnInBaoCao.setBackground(new java.awt.Color(62, 77, 144));
         btnInBaoCao.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnInBaoCao.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao.setText("Thêm Mới");
+        btnInBaoCao.setText("Đóng");
         btnInBaoCao.setFocusable(false);
         btnInBaoCao.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         btnInBaoCao.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        btnInBaoCao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnInBaoCaoMouseClicked(evt);
+            }
+        });
+        btnInBaoCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCaoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -742,28 +762,32 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
-                        .addComponent(cbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TacGiaLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbNameForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TacGiaLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(52, Short.MAX_VALUE))
+                    .addGroup(Form_Chon_TacGiaLayout.createSequentialGroup()
+                        .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cbSelect, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbNameForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))))
         );
         Form_Chon_TacGiaLayout.setVerticalGroup(
             Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Form_Chon_TacGiaLayout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(lbNameForm, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbNameForm, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInBaoCao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addGroup(Form_Chon_TacGiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -905,6 +929,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             jPanel4.add(item);
         }
         revalidate();
+        getTacGiaString();
     }
 
     private String getTacGiaString() {
@@ -989,7 +1014,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
         return lstSachTacGia;
     }
-    
+
     private List<TheLoaiChiTiet> getListTheLoaiCT(Sach sach) {
         List<TheLoaiChiTiet> lstTheLoaiCT = new ArrayList<>();
         for (TheLoai theLoai : _lstTheLoai.values()) {
@@ -998,12 +1023,12 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
         return lstTheLoaiCT;
     }
-    
+
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         String id = txtId.getText();
         if (!id.isBlank()) {
             String slStr = txtSoLuong.getText().trim();
-            if(!slStr.matches("\\d+") || slStr.equals("0") || slStr.isBlank()) {
+            if (!slStr.matches("\\d+") || slStr.equals("0") || slStr.isBlank()) {
                 JOptionPane.showMessageDialog(this, "Só lượng không đúng định dạng");
                 return;
             }
@@ -1240,6 +1265,21 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             loadTheLoai();
         }
     }//GEN-LAST:event_cbSelectPopupMenuWillBecomeInvisible
+
+    private void Form_Chon_TacGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Form_Chon_TacGiaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Form_Chon_TacGiaMouseClicked
+
+    private void btnInBaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInBaoCaoMouseClicked
+        
+    }//GEN-LAST:event_btnInBaoCaoMouseClicked
+
+    private void btnInBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCaoActionPerformed
+        this.background.show(false);
+        this.btnSelectTheLoai.show(true);
+        this.Form_Chon_TacGia.show(false);
+        this.TruongThongTin.show(true);
+    }//GEN-LAST:event_btnInBaoCaoActionPerformed
 
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();

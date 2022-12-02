@@ -54,4 +54,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     public List<KhachHang> sellectAllBySDT(String sdt) {
         return _khachHangRepo.sellectAllBySDT(sdt);
     }
+
+    @Override
+    public boolean addDiemKhachHang(KhachHang khachHang, int diem) {
+        return _khachHangRepo.addDiemKhachHang(khachHang, diem);
+    }
 }

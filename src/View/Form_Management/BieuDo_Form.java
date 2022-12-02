@@ -8,9 +8,22 @@ import View.ColorFrame;
 import View.DesignComponent.DC_ModelBieuDo;
 import View.DesignComponent.ModelPieChart;
 import View.ManagementBookForm;
+import com.fasterxml.jackson.datatype.jsr310.deser.MonthDayDeserializer;
 import java.awt.Color;
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.MonthDay;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import model.HoaDonChiTiet;
+
+import service.HoaDonService;
+import service.impl.HoaDonServiceImpl;
 
 /**
  *
@@ -18,9 +31,17 @@ import javax.swing.ImageIcon;
  */
 public class BieuDo_Form extends javax.swing.JPanel {
 
+    private HoaDonService donService;
+    private List<HoaDonChiTiet> list3;
+    private List<HoaDonChiTiet> list2;
+    private List<HoaDonChiTiet> list1;
+
     public BieuDo_Form() {
         initComponents();
-        
+        donService = new HoaDonServiceImpl();
+        list3 = new ArrayList<>();
+        list2 = new ArrayList<>();
+        list1 = new ArrayList<>();
         Icon iconDS = new ImageIcon("image/icons8_total_sales_30px_1.png");
         Icon iconTopSell = new ImageIcon("image/icons8_best_seller_30px_1.png");
         Icon iconHDDays = new ImageIcon("image/icons8_purchase_order_40px.png");
@@ -31,14 +52,13 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Icon iconPhantram2 = new ImageIcon("image/icons8_down_30px.png");
         Icon iconTopSeller = new ImageIcon("image/icons8_best_seller_26px_1.png");
         Icon iconThuChi = new ImageIcon("image/icons8_receive_dollar_26px.png");
-        this.phantram1.setIcon(iconPhantram1);
-        this.phantram2.setIcon(iconPhantram1);
-        this.phantram3.setIcon(iconPhantram2);
-        this.phantram4.setIcon(iconPhantram1);
+        this.lblPhanTram3.setIcon(iconPhantram1);
+        this.lblPhanTram2.setIcon(iconPhantram1);
+        this.lblPhanTram1.setIcon(iconPhantram2);
+        this.lblPhanTram0.setIcon(iconPhantram1);
         this.lbTopSell.setIcon(iconTopSeller);
         this.lbThuChi.setIcon(iconThuChi);
 
-        
 //        this.doanhsobanhang.setIcon(iconDS);
 //        this.topbanchay.setIcon(iconTopSell);
 //        this.HoaDon.setIcon(iconHDDays);
@@ -46,32 +66,145 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //        this.tongtien.setIcon(iconDoanhThu);
 //        this.tienchi.setIcon(iconDoanhThu);
         this.btnInBaoCao.setIcon(iconIn);
-        
-        
+
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
 
-        chart.addData(new DC_ModelBieuDo("T1", new double[]{999, 200,200}));
-        chart.addData(new DC_ModelBieuDo("T2", new double[]{233, 34,300}));
-        chart.addData(new DC_ModelBieuDo("T3", new double[]{500, 200,400}));
-        chart.addData(new DC_ModelBieuDo("T4", new double[]{500, 200,600}));
-        chart.addData(new DC_ModelBieuDo("T5", new double[]{500, 200,700}));
+        chart.addData(new DC_ModelBieuDo("T1", new double[]{999, 200, 200}));
+        chart.addData(new DC_ModelBieuDo("T2", new double[]{233, 34, 300}));
+        chart.addData(new DC_ModelBieuDo("T3", new double[]{500, 200, 400}));
+        chart.addData(new DC_ModelBieuDo("T4", new double[]{500, 200, 600}));
+        chart.addData(new DC_ModelBieuDo("T5", new double[]{500, 200, 700}));
         // 
-        
-        
+
         pieChart1.addData(new ModelPieChart("Nam1", 33.3, new Color(255, 188, 0)));
         pieChart1.addData(new ModelPieChart("Nam2", 44, new Color(250, 92, 124)));
         pieChart1.addData(new ModelPieChart("Nam5", 22, new Color(10, 207, 151)));
         pieChart1.addData(new ModelPieChart("Nam4", 102, new Color(114, 124, 245)));
         pieChart1.addData(new ModelPieChart("Nam1", 33.3, new Color(255, 188, 44)));
-        
-        
+        tongSoLuong0();
+        tongSoLuong1();
+        tongSoLuong2();
+        tongSoLuong3();
+        thang3();
+
+        tongTien3Thang();
+        phanTramDoanhThuTheoThang3();
+        phanTramDoanhThuTheoThang2();
+
+    }
+
+    private void thang3() {
+        LocalDateTime localDate = LocalDateTime.now();
+        int month3 = localDate.getMonthValue() - 3;
+        lblThang3.setText(String.valueOf("Tháng " + month3));
+        int month2 = localDate.getMonthValue() - 2;
+        lblThang2.setText(String.valueOf("Tháng " + month2));
+        int month1 = localDate.getMonthValue() - 1;
+        lblThang1.setText(String.valueOf("Tháng " + month1));
+
+    }
+
+    private void tongSoLuong3() {
+        list3 = donService.sellectAllHoaDonChiTietsCoutSoLuong3();
+        int count = 0;
+        for (int i = 0; i < list3.size(); i++) {
+
+            count++;
+
+        }
+        lblHoaDon3.setText(String.valueOf(count));
+
+    }
+
+    private void tongSoLuong2() {
+        list3 = donService.sellectAllHoaDonChiTietsCoutSoLuong2();
+        int count = 0;
+        for (int i = 0; i < list3.size(); i++) {
+
+            count++;
+
+        }
+        lblHoaDon2.setText(String.valueOf(count));
+
+    }
+
+    private void tongSoLuong1() {
+        list3 = donService.sellectAllHoaDonChiTietsCoutSoLuong1();
+        int count = 0;
+        for (int i = 0; i < list3.size(); i++) {
+
+            count++;
+
+        }
+        lblHoaDon1.setText(String.valueOf(count));
+
+    }
+
+    private void tongSoLuong0() {
+        list3 = donService.sellectAllHoaDonChiTietsCoutSoLuong0();
+        int count = 0;
+        for (int i = 0; i < list3.size(); i++) {
+
+            count++;
+
+        }
+        lblHoaDon0.setText(String.valueOf(count));
+
+    }
+
+    private void phanTramDoanhThuTheoThang3() {
+        DecimalFormat df = new DecimalFormat("####");
+        double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien2().get(0)));
+        double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien3().get(0)));
+        double c = ((a - b) / b) * 100;
+        lblPhanTram2.setText(df.format(c) + "%");
+
+    }
+
+    private void phanTramDoanhThuTheoThang2() {
+        DecimalFormat df = new DecimalFormat("####");
+        double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien1().get(0)));
+        double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien2().get(0)));
+        double c = ((a - b) / b) * 100;
+        lblPhanTram1.setText(df.format(c) + "%");
+
+    }
+
+//    public static void main(String[] args) {
+//        BieuDo_Form bdf = new BieuDo_Form();
+//        bdf.phanTramDoanhThuTheoThang3();
+//
+//    }
+    private void tongTien3Thang() {
+        DecimalFormat df = new DecimalFormat("#,###");
+        if (donService.sellectAllHoaDonChiTietsTongTien3().get(0) == null) {
+            lblDoanhThu3.setText("0.0");
+        } else {
+            lblDoanhThu3.setText(String.valueOf(df.format(donService.sellectAllHoaDonChiTietsTongTien3().get(0))));
+        }
+        if (donService.sellectAllHoaDonChiTietsTongTien1().get(0) == null) {
+            lblDoanhThu1.setText("0.0");
+        } else {
+            lblDoanhThu1.setText(String.valueOf(df.format(donService.sellectAllHoaDonChiTietsTongTien1().get(0))));
+        }
+        if (donService.sellectAllHoaDonChiTietsTongTien2().get(0) == null) {
+            lblDoanhThu2.setText("0.0");
+        } else {
+            lblDoanhThu2.setText(String.valueOf(df.format(donService.sellectAllHoaDonChiTietsTongTien2().get(0))));
+        }
+        if (donService.sellectAllHoaDonChiTietsTongTien0().get(0) == null) {
+            lblDoanhThu0.setText("0.0");
+        } else {
+            lblDoanhThu0.setText(String.valueOf(df.format(donService.sellectAllHoaDonChiTietsTongTien0().get(0))));
+        }
 
     }
 
     public void startTrungGian() {
         chart.start();
     }
+
     // chart.start();
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,39 +217,39 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         jPanel4 = new javax.swing.JPanel();
         panelHoaDon = new View.DesignComponent.JPanelBourder();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lblThang3 = new javax.swing.JLabel();
+        lbHoaDon = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        lblHoaDon3 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        phantram1 = new javax.swing.JLabel();
+        lblDoanhThu3 = new javax.swing.JLabel();
+        lblPhanTram3 = new javax.swing.JLabel();
         panelHoaDon1 = new View.DesignComponent.JPanelBourder();
-        jLabel5 = new javax.swing.JLabel();
+        lblThang2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        phantram2 = new javax.swing.JLabel();
+        lblPhanTram2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        lblHoaDon2 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        lblDoanhThu2 = new javax.swing.JLabel();
         panelHoaDon4 = new View.DesignComponent.JPanelBourder();
-        jLabel15 = new javax.swing.JLabel();
+        lblThang1 = new javax.swing.JLabel();
         HoaDon4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        phantram3 = new javax.swing.JLabel();
+        lblPhanTram1 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        lblHoaDon1 = new javax.swing.JLabel();
+        lblDoanhThu1 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         panelHoaDon5 = new View.DesignComponent.JPanelBourder();
-        jLabel24 = new javax.swing.JLabel();
+        lblThang0 = new javax.swing.JLabel();
         HoaDon5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        lblHoaDon0 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        phantram4 = new javax.swing.JLabel();
+        lblDoanhThu0 = new javax.swing.JLabel();
+        lblPhanTram0 = new javax.swing.JLabel();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         pieChart1 = new View.DesignComponent.PieChart();
         lbTopSell = new javax.swing.JLabel();
@@ -138,13 +271,13 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         panelHoaDon.setBackground(new java.awt.Color(17, 28, 68));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Tháng 9");
+        lblThang3.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblThang3.setForeground(new java.awt.Color(255, 255, 255));
+        lblThang3.setText("Tháng 9");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Hóa Đơn    -");
+        lbHoaDon.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
+        lbHoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        lbHoaDon.setText("Hóa Đơn    -");
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 51));
 
@@ -159,21 +292,21 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("320");
+        lblHoaDon3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblHoaDon3.setForeground(new java.awt.Color(255, 255, 255));
+        lblHoaDon3.setText("320");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Doanh Thu -");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("4.500.000");
+        lblDoanhThu3.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblDoanhThu3.setForeground(new java.awt.Color(255, 255, 255));
+        lblDoanhThu3.setText("4.500.000");
 
-        phantram1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        phantram1.setForeground(new java.awt.Color(0, 204, 51));
-        phantram1.setText("5,5%");
+        lblPhanTram3.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        lblPhanTram3.setForeground(new java.awt.Color(0, 204, 51));
+        lblPhanTram3.setText("5,5%");
 
         javax.swing.GroupLayout panelHoaDonLayout = new javax.swing.GroupLayout(panelHoaDon);
         panelHoaDon.setLayout(panelHoaDonLayout);
@@ -182,24 +315,24 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGroup(panelHoaDonLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(panelHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(panelHoaDonLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelHoaDonLayout.createSequentialGroup()
+                        .addComponent(lblThang3, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(phantram1))
+                        .addComponent(lblPhanTram3))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHoaDonLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelHoaDonLayout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblHoaDon3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(17, 17, 17))
                     .addGroup(panelHoaDonLayout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDoanhThu3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelHoaDonLayout.setVerticalGroup(
@@ -207,18 +340,18 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGroup(panelHoaDonLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(panelHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(phantram1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblThang3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPhanTram3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHoaDon3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDoanhThu3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33))
         );
 
@@ -226,9 +359,9 @@ public class BieuDo_Form extends javax.swing.JPanel {
         panelHoaDon1.setForeground(new java.awt.Color(0, 204, 51));
         panelHoaDon1.setPreferredSize(new java.awt.Dimension(310, 166));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Tháng 10");
+        lblThang2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblThang2.setForeground(new java.awt.Color(255, 255, 255));
+        lblThang2.setText("Tháng 10");
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 51));
 
@@ -243,25 +376,25 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        phantram2.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        phantram2.setForeground(new java.awt.Color(0, 204, 51));
-        phantram2.setText("5,5%");
+        lblPhanTram2.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        lblPhanTram2.setForeground(new java.awt.Color(0, 204, 51));
+        lblPhanTram2.setText("5,5%");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Hóa Đơn    -");
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("320");
+        lblHoaDon2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblHoaDon2.setForeground(new java.awt.Color(255, 255, 255));
+        lblHoaDon2.setText("320");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Doanh Thu -");
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("4.500.000");
+        lblDoanhThu2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblDoanhThu2.setForeground(new java.awt.Color(255, 255, 255));
+        lblDoanhThu2.setText("4.500.000");
 
         javax.swing.GroupLayout panelHoaDon1Layout = new javax.swing.GroupLayout(panelHoaDon1);
         panelHoaDon1.setLayout(panelHoaDon1Layout);
@@ -276,16 +409,16 @@ public class BieuDo_Form extends javax.swing.JPanel {
                             .addComponent(jLabel16))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblHoaDon2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(panelHoaDon1Layout.createSequentialGroup()
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblDoanhThu2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(2, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panelHoaDon1Layout.createSequentialGroup()
                         .addGroup(panelHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(panelHoaDon1Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblThang2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(phantram2))
+                                .addComponent(lblPhanTram2))
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 13, Short.MAX_VALUE))))
         );
@@ -294,27 +427,27 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGroup(panelHoaDon1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(panelHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(phantram2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblThang2)
+                    .addComponent(lblPhanTram2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblHoaDon2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelHoaDon1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDoanhThu2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
         panelHoaDon4.setBackground(new java.awt.Color(17, 28, 68));
         panelHoaDon4.setPreferredSize(new java.awt.Dimension(310, 166));
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Tháng 11");
+        lblThang1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblThang1.setForeground(new java.awt.Color(255, 255, 255));
+        lblThang1.setText("Tháng 11");
 
         HoaDon4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         HoaDon4.setForeground(new java.awt.Color(255, 255, 255));
@@ -332,21 +465,21 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGap(0, 1, Short.MAX_VALUE)
         );
 
-        phantram3.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        phantram3.setForeground(new java.awt.Color(204, 0, 0));
-        phantram3.setText("5,5%");
+        lblPhanTram1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        lblPhanTram1.setForeground(new java.awt.Color(204, 0, 0));
+        lblPhanTram1.setText("5,5%");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Hóa Đơn    -");
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("320");
+        lblHoaDon1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblHoaDon1.setForeground(new java.awt.Color(255, 255, 255));
+        lblHoaDon1.setText("320");
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("4.500.000");
+        lblDoanhThu1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblDoanhThu1.setForeground(new java.awt.Color(255, 255, 255));
+        lblDoanhThu1.setText("4.500.000");
 
         jLabel23.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,17 +498,17 @@ public class BieuDo_Form extends javax.swing.JPanel {
                             .addComponent(jLabel23))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelHoaDon4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblHoaDon1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDoanhThu1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panelHoaDon4Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(panelHoaDon4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(panelHoaDon4Layout.createSequentialGroup()
-                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblThang1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)
                                 .addComponent(HoaDon4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(phantram3))
+                                .addComponent(lblPhanTram1))
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 13, Short.MAX_VALUE))
         );
@@ -384,27 +517,27 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGroup(panelHoaDon4Layout.createSequentialGroup()
                 .addGroup(panelHoaDon4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(HoaDon4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(phantram3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblThang1)
+                    .addComponent(lblPhanTram1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelHoaDon4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblHoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelHoaDon4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDoanhThu1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
 
         panelHoaDon5.setBackground(new java.awt.Color(17, 28, 68));
         panelHoaDon5.setPreferredSize(new java.awt.Dimension(310, 166));
 
-        jLabel24.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("Hôm Nay");
+        lblThang0.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        lblThang0.setForeground(new java.awt.Color(255, 255, 255));
+        lblThang0.setText("Hôm Nay");
 
         HoaDon5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         HoaDon5.setForeground(new java.awt.Color(255, 255, 255));
@@ -427,21 +560,21 @@ public class BieuDo_Form extends javax.swing.JPanel {
         jLabel28.setForeground(new java.awt.Color(255, 255, 255));
         jLabel28.setText("Hóa Đơn    -");
 
-        jLabel29.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setText("320");
+        lblHoaDon0.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblHoaDon0.setForeground(new java.awt.Color(255, 255, 255));
+        lblHoaDon0.setText("320");
 
         jLabel30.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(255, 255, 255));
         jLabel30.setText("Doanh Thu -");
 
-        jLabel31.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel31.setText("4.500.000");
+        lblDoanhThu0.setFont(new java.awt.Font("Segoe UI Semibold", 1, 20)); // NOI18N
+        lblDoanhThu0.setForeground(new java.awt.Color(255, 255, 255));
+        lblDoanhThu0.setText("4.500.000");
 
-        phantram4.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        phantram4.setForeground(new java.awt.Color(0, 204, 51));
-        phantram4.setText("5,5%");
+        lblPhanTram0.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        lblPhanTram0.setForeground(new java.awt.Color(0, 204, 51));
+        lblPhanTram0.setText("5,5%");
 
         javax.swing.GroupLayout panelHoaDon5Layout = new javax.swing.GroupLayout(panelHoaDon5);
         panelHoaDon5.setLayout(panelHoaDon5Layout);
@@ -451,11 +584,11 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 .addGroup(panelHoaDon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelHoaDon5Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblThang0, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(HoaDon5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(phantram4))
+                        .addComponent(lblPhanTram0))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelHoaDon5Layout.createSequentialGroup()
                         .addContainerGap(21, Short.MAX_VALUE)
                         .addGroup(panelHoaDon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -466,8 +599,8 @@ public class BieuDo_Form extends javax.swing.JPanel {
                                     .addComponent(jLabel30))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelHoaDon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(lblHoaDon0, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblDoanhThu0, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap())
         );
         panelHoaDon5Layout.setVerticalGroup(
@@ -475,18 +608,18 @@ public class BieuDo_Form extends javax.swing.JPanel {
             .addGroup(panelHoaDon5Layout.createSequentialGroup()
                 .addGroup(panelHoaDon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(HoaDon5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24)
-                    .addComponent(phantram4))
+                    .addComponent(lblThang0)
+                    .addComponent(lblPhanTram0))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelHoaDon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblHoaDon0, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelHoaDon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDoanhThu0, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37))
         );
 
@@ -686,26 +819,13 @@ public class BieuDo_Form extends javax.swing.JPanel {
     private View.DesignComponent.Combobox combobox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -715,16 +835,29 @@ public class BieuDo_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lbHoaDon;
     private javax.swing.JLabel lbThuChi;
     private javax.swing.JLabel lbTopSell;
+    private javax.swing.JLabel lblDoanhThu0;
+    private javax.swing.JLabel lblDoanhThu1;
+    private javax.swing.JLabel lblDoanhThu2;
+    private javax.swing.JLabel lblDoanhThu3;
+    private javax.swing.JLabel lblHoaDon0;
+    private javax.swing.JLabel lblHoaDon1;
+    private javax.swing.JLabel lblHoaDon2;
+    private javax.swing.JLabel lblHoaDon3;
+    private javax.swing.JLabel lblPhanTram0;
+    private javax.swing.JLabel lblPhanTram1;
+    private javax.swing.JLabel lblPhanTram2;
+    private javax.swing.JLabel lblPhanTram3;
+    private javax.swing.JLabel lblThang0;
+    private javax.swing.JLabel lblThang1;
+    private javax.swing.JLabel lblThang2;
+    private javax.swing.JLabel lblThang3;
     private View.DesignComponent.JPanelBourder panelHoaDon;
     private View.DesignComponent.JPanelBourder panelHoaDon1;
     private View.DesignComponent.JPanelBourder panelHoaDon4;
     private View.DesignComponent.JPanelBourder panelHoaDon5;
-    private javax.swing.JLabel phantram1;
-    private javax.swing.JLabel phantram2;
-    private javax.swing.JLabel phantram3;
-    private javax.swing.JLabel phantram4;
     private View.DesignComponent.PieChart pieChart1;
     // End of variables declaration//GEN-END:variables
 }
