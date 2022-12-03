@@ -28,6 +28,8 @@ public interface HoaDonRepository {
 
     public String getLastHoaDon();
 
+    public HoaDon getByMaHD(String maHD);
+    
     public List<HoaDon> sellectAll();
 
     public List<HoaDon> sellectAllHoaDonCho();

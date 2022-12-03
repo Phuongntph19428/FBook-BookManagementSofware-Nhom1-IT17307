@@ -120,6 +120,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
         txtSearch = new View.DesignComponent.TextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        btnRefresh = new View.ButtonDesign.Button();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -184,6 +185,12 @@ public class KhachHang_Form extends javax.swing.JPanel {
             .addGap(0, 30, Short.MAX_VALUE)
         );
 
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
         jPanelBourder1Layout.setHorizontalGroup(
@@ -193,7 +200,9 @@ public class KhachHang_Form extends javax.swing.JPanel {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 539, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 482, Short.MAX_VALUE)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -211,6 +220,9 @@ public class KhachHang_Form extends javax.swing.JPanel {
                         .addGap(20, 20, 20)
                         .addComponent(jLabel2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanelBourder3.setBackground(new java.awt.Color(47, 55, 90));
@@ -711,6 +723,13 @@ public class KhachHang_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_rdoNuActionPerformed
 
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        clear();
+        _lstAllKhachHang = _khachHangService.selectAll();
+        _lstKhachHang = _lstAllKhachHang;
+        loadTable(_lstKhachHang);
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
         cam.dispose();
@@ -764,6 +783,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnClear;
     private View.ButtonDesign.Button btnNgaySinh;
     private View.ButtonDesign.Button btnQRCode;
+    private View.ButtonDesign.Button btnRefresh;
     private View.ButtonDesign.Button btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
