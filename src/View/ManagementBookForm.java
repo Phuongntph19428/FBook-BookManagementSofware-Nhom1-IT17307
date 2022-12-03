@@ -9,7 +9,7 @@ import View.DesignComponent.Notification;
 import View.Form_Management.Pos_MayBanHang;
 import View.Form_Management.ChucVu_Form;
 import View.Form_Management.HoaDon_Form;
-import View.Form_Management.KhachHang_Form;
+import View.Form_Management.KhachHang_Form;  
 import View.Form_Management.KhuyenMaiChiTiet_Form;
 import View.Form_Management.KhuyenMai_Form;
 import View.Form_Management.NXB_Form;

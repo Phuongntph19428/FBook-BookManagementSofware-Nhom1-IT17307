@@ -70,4 +70,14 @@ public class SachServiceImpl implements SachService {
     public boolean updateSoLuongSach(String id, int soLuong) {
         return _sachRepo.updateSoLuongSach(id, soLuong);
     }
+
+    @Override
+    public boolean updateSoLuongSach(List<Sach> lstSachUpdate) {
+        return _sachRepo.updateSoLuongSach(lstSachUpdate);
+    }
+
+    @Override
+    public List<Sach> selectAllLowerThan(int soLuong) {
+        return _sachRepo.selectAllLowerThan(soLuong);
+    }
 }

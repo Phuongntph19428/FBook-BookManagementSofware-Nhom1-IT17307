@@ -94,6 +94,34 @@ public class SachRepositoryImpl implements SachRepositoty {
     }
 
     @Override
+    public boolean updateSoLuongSach(List<Sach> lstSachUpdate) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                int size = lstSachUpdate.size();
+                final int batchSize = 20;
+                for (int i = 0; i < size; i++) {
+                    Sach sachUpdate = session.get(Sach.class, lstSachUpdate.get(i).getId());
+                    if (sachUpdate != null) {
+                        sachUpdate.setSoLuong(sachUpdate.getSoLuong() + lstSachUpdate.get(i).getSoLuong());
+                    }
+                    session.saveOrUpdate(sachUpdate);
+                    if (i % batchSize == 0 && i != size && i != 0) {
+                        session.flush();
+                        session.clear();
+                    }
+                }
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+
+    @Override
     public Sach getSachByMa(String ma) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM Sach s WHERE s.ma = :ma";
@@ -101,8 +129,8 @@ public class SachRepositoryImpl implements SachRepositoty {
             query.setParameter("ma", ma);
 
             List<Sach> lstsach = query.getResultList();
-         
-           return lstsach.get(0);
+
+            return lstsach.get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -213,6 +241,21 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return false;
             }
         }
+    }
+
+    @Override
+    public List<Sach> selectAllLowerThan(int soLuong) {
+        List<Sach> lstSach = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT s FROM Sach WHERE s.soLuong < :soLuong";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("soLuong", soLuong);
+            
+            lstSach = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstSach;
     }
 
 }
