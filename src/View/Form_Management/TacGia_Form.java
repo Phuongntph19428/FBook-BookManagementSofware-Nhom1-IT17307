@@ -431,6 +431,21 @@ public class TacGia_Form extends javax.swing.JPanel {
         String ten = txtTenTacGia.getText().trim();
         String mota = txtMoTa.getText().trim();
 
+        if (ma.isBlank() || ten.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+
+        if (ma.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Mã không được quá dài");
+            return null;
+        }
+
+        if (ten.length() > 50) {
+            JOptionPane.showMessageDialog(this, "Tên không được quá dài");
+            return null;
+        }
+
         return new TacGia(id.isBlank() ? null : id, ma, ten, _hinh, mota.isBlank() ? null : mota);
 
     }
@@ -449,6 +464,10 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         TacGia tacGia = getFrom();
+        if(tacGia == null) {
+            return;
+        }
+        
         if (tacGia.getId() == null) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn tác giả");
             return;
@@ -461,6 +480,9 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         TacGia tacGia = getFrom();
+        if(tacGia == null) {
+            return;
+        }
         if (tacGia.getId() != null) {
             JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
             return;

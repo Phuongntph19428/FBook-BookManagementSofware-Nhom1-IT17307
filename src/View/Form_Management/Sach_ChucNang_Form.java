@@ -114,6 +114,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }
 
     private final DecimalFormat df = new DecimalFormat("###");
+
     private void setForm(Sach sach) {
         _hinh = sach.getHinh();
         setAvartar();
@@ -137,7 +138,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             }
             loadTacGia();
         }
-        
+
         if (!sach.getLstTheLoaiCT().isEmpty()) {
             _lstTheLoai = new HashMap<>();
             for (TheLoaiChiTiet theLoaiCT : sach.getLstTheLoaiCT()) {
@@ -997,6 +998,46 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         String ten = txtTen.getText().trim();
         int trangThai = rdoDangKinhDoanh.isSelected() ? TrangThaiSach.DANGKINHDOANH : TrangThaiSach.NGUNGKINHDOANH;
 
+        if (ma.isBlank() || barCode.isBlank() || giaBanStr.isBlank() || giaNhapStr.isBlank() || soLuongStr.isBlank() || soTrangStr.isBlank() || ten.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+        
+        if(ma.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Mã sách không được quá 30 ký tự");
+            return null;
+        }
+        
+        if(!barCode.matches("\\d+") || barCode.length() < 7) {
+            JOptionPane.showMessageDialog(this, "BarCode không đúng định dạng");
+            return null;
+        }
+        
+        if(!giaBanStr.matches("\\d+(.\\d+)?") || giaBanStr.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Giá bán không đúng định dạng");
+            return null;
+        }
+        
+        if(!giaNhapStr.matches("\\d+(.\\d+)?") || giaNhapStr.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Giá nhập không đúng định dạng");
+            return null;
+        }
+        
+        if(!soLuongStr.matches("\\d+") || soLuongStr.length() > 9) {
+            JOptionPane.showMessageDialog(this, "Số lượng không đúng định dạng");
+            return null;
+        }
+        
+        if(!soTrangStr.matches("\\d+") || soTrangStr.length() > 9) {
+            JOptionPane.showMessageDialog(this, "Số trang không đúng định dạng");
+            return null;
+        }
+        
+        if(ten.length() > 70) {
+            JOptionPane.showMessageDialog(this, "Tên sách không được quá dài");
+            return null;
+        }
+
         int soLuong = Integer.parseInt(soLuongStr);
         int soTrang = Integer.parseInt(soTrangStr);
         BigDecimal giaNhap = BigDecimal.valueOf(Double.parseDouble(giaNhapStr));
@@ -1037,11 +1078,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             return;
         }
         Sach sach = getForm();
-        _sachService.insertSach(sach);
-        _sachService.updateSachTacGia(getListSachTacGia(sach));
-        _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-        JOptionPane.showMessageDialog(this, "Insert successfully");
-        clear();
+        if (sach != null) {
+            _sachService.insertSach(sach);
+            _sachService.updateSachTacGia(getListSachTacGia(sach));
+            _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+            JOptionPane.showMessageDialog(this, "Insert successfully");
+            clear();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -1050,11 +1093,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách");
             return;
         }
-        _sachService.updateSach(sach);
-        _sachService.updateSachTacGia(getListSachTacGia(sach));
-        _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-        JOptionPane.showMessageDialog(this, "Update successfully");
-        clear();
+        if (sach != null) {
+            _sachService.updateSach(sach);
+            _sachService.updateSachTacGia(getListSachTacGia(sach));
+            _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+            JOptionPane.showMessageDialog(this, "Update successfully");
+            clear();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -1271,7 +1316,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_Form_Chon_TacGiaMouseClicked
 
     private void btnInBaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInBaoCaoMouseClicked
-        
+
     }//GEN-LAST:event_btnInBaoCaoMouseClicked
 
     private void btnInBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCaoActionPerformed

@@ -34,5 +34,7 @@ public interface SachService {
     public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia);
 
     public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet);
+    
+    public List<Sach> selectAllLowerThan(int soLuong); 
 
 }

@@ -200,7 +200,7 @@ public class Sach_Form extends javax.swing.JPanel {
         txtSearch.setCaretColor(new java.awt.Color(255, 255, 255));
         txtSearch.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtSearch.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
-        txtSearch.setLabelText("Tìm kiếm theo mã, tên, tác giả, thể loại, barcode,...");
+        txtSearch.setLabelText("Tìm kiếm theo mã, tên, ...");
         txtSearch.setLineColor(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N

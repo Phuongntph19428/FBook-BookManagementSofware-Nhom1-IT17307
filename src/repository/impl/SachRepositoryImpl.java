@@ -102,7 +102,9 @@ public class SachRepositoryImpl implements SachRepositoty {
                 final int batchSize = 20;
                 for (int i = 0; i < size; i++) {
                     Sach sachUpdate = session.get(Sach.class, lstSachUpdate.get(i).getId());
-                    sachUpdate.setSoLuong(sachUpdate.getSoLuong() + lstSachUpdate.get(i).getSoLuong());
+                    if (sachUpdate != null) {
+                        sachUpdate.setSoLuong(sachUpdate.getSoLuong() + lstSachUpdate.get(i).getSoLuong());
+                    }
                     session.saveOrUpdate(sachUpdate);
                     if (i % batchSize == 0 && i != size && i != 0) {
                         session.flush();
@@ -239,6 +241,21 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return false;
             }
         }
+    }
+
+    @Override
+    public List<Sach> selectAllLowerThan(int soLuong) {
+        List<Sach> lstSach = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT s FROM Sach WHERE s.soLuong < :soLuong";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("soLuong", soLuong);
+            
+            lstSach = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstSach;
     }
 
 }
