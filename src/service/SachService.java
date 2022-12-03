@@ -21,6 +21,8 @@ public interface SachService {
     
     public boolean updateSoLuongSach(String id, int soLuong);
     
+    public boolean updateSoLuongSach(List<Sach> lstSachUpdate);
+    
     public Sach getSachByMa(String ma);
 
     public List<Sach> getList(int position, int pageSize);
@@ -32,5 +34,7 @@ public interface SachService {
     public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia);
 
     public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet);
+    
+    public List<Sach> selectAllLowerThan(int soLuong); 
 
 }
