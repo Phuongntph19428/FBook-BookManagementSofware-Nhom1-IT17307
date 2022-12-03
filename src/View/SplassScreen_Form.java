@@ -12,7 +12,7 @@ import javax.swing.JDialog;
  */
 public class SplassScreen_Form extends java.awt.Dialog {
 
-    ManagementBookForm mng = new ManagementBookForm();
+    ManagementBookForm mng = null;
     public SplassScreen_Form(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -125,6 +125,7 @@ public class SplassScreen_Form extends java.awt.Dialog {
             @Override
             public void run() {
                 try {
+                    mng = new ManagementBookForm();
                     doTask("Connect To Database ...", 10);
                     doTask("loading form/management_book ...", 20);
                     doTask("loading ser./iser/implser ...", 22);
