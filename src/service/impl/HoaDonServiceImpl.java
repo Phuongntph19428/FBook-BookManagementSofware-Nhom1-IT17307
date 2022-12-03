@@ -27,7 +27,12 @@ public class HoaDonServiceImpl implements HoaDonService {
     public boolean taoHoaDon(HoaDon hoaDon) {
         return _hoaDonRepo.taoHoaDon(hoaDon);
     }
-
+    
+    @Override
+    public HoaDon getByMaHD(String maHD) {
+        return _hoaDonRepo.getByMaHD(maHD);
+    }
+    
     @Override
     public boolean removeAllHoaDonCT(HoaDon hoaDon) {
         return _hoaDonRepo.deleteHoaDonChiTiet(hoaDon);

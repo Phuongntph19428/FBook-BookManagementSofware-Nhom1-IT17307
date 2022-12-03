@@ -4,7 +4,6 @@
  */
 package repository.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -435,5 +434,21 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             e.printStackTrace();
         }
         return lstHoaDon;
+    }
+
+    @Override
+    public HoaDon getByMaHD(String maHD) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT h FROM HoaDon h where h.ma = :ma";
+            TypedQuery<HoaDon> query = session.createQuery(hql);
+            query.setParameter("ma", maHD);
+
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
