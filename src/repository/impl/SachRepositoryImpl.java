@@ -159,9 +159,12 @@ public class SachRepositoryImpl implements SachRepositoty {
             TypedQuery<Sach> query = session.createQuery(hql);
             query.setParameter("ma", ma);
 
-            List<Sach> lstsach = query.getResultList();
-
-            return lstsach.get(0);
+            try {
+                List<Sach> lstsach = query.getResultList();
+                return lstsach.get(0);
+            } catch (Exception e) {
+                
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

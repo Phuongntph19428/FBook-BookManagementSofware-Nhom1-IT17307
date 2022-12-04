@@ -50,8 +50,12 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
                     chietKhau = Integer.valueOf(chietKhauStr);
                 }
                 byte[] hinh = (byte[]) CsArr[7];
+                String viTri = CsArr[8] + "";
+                String tacGia = CsArr[9] + "";
+                String theLoai = CsArr[10] + "";
+                String nhaXuatBan = CsArr[11] + "";
                 
-                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh);
+                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh, viTri, tacGia, theLoai, nhaXuatBan);
                 lstCustomSach.add(customSach);
             }
 
@@ -88,8 +92,12 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
                     chietKhau = Integer.valueOf(chietKhauStr);
                 }
                 byte[] hinh = (byte[]) CsArr[7];
+                String viTri = CsArr[8] + "";
+                String tacGia = CsArr[9] + "";
+                String theLoai = CsArr[10] + "";
+                String nhaXuatBan = CsArr[11] + "";
                 
-                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh);
+                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh, viTri, tacGia, theLoai, nhaXuatBan);
                 lstCustomSach.add(customSach);
             }
 
@@ -136,8 +144,12 @@ public class CustomSachRepositoryImpl implements CustomSachRepository {
                     chietKhau = Integer.valueOf(chietKhauStr);
                 }
                 byte[] hinh = (byte[]) CsArr[7];
+                String viTri = CsArr[8] + "";
+                String tacGia = CsArr[9] + "";
+                String theLoai = CsArr[10] + "";
+                String nhaXuatBan = CsArr[11] + "";
                 
-                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh);
+                CustomSach customSach = new CustomSach(id, ma, ten, soLuong, giaBan, giaSale, chietKhau, hinh, viTri, tacGia, theLoai, nhaXuatBan);
                 return customSach;
             }
 

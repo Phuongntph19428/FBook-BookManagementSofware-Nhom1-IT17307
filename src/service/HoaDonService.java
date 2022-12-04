@@ -23,6 +23,8 @@ public interface HoaDonService {
     public boolean insertHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
 
     public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
+    
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon);
 
     public boolean updateHoaDon(HoaDon hoaDon);
 
