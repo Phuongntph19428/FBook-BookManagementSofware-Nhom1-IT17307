@@ -12,11 +12,17 @@ import model.TacGia;
  * @author ppolo
  */
 public interface TacGiaService {
+
     public List<TacGia> selectAll();
-    
+
     public boolean insertTacGia(TacGia tacGia);
-    
+
     public boolean updateTacGia(TacGia tacGia);
-    
+
     public List<TacGia> searchTacGiaByKeyWord(List<TacGia> lstTacGia, String keyword);
+
+    public TacGia sellectByMa(String ma);
+    
+    public TacGia selectUpdateByMa(TacGia tacGia);
+    
 }

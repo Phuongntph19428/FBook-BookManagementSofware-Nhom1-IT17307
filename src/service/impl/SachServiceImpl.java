@@ -80,4 +80,14 @@ public class SachServiceImpl implements SachService {
     public List<Sach> selectAllLowerThan(int soLuong) {
         return _sachRepo.selectAllLowerThan(soLuong);
     }
+
+    @Override
+    public Sach selectUpdateByMa(Sach sach) {
+        return _sachRepo.selectUpdateSach(sach);
+    }
+
+    @Override
+    public boolean insertSach(List<Sach> lstSach) {
+        return _sachRepo.insertSach(lstSach);
+    }
 }
