@@ -136,4 +136,9 @@ public class HoaDonServiceImpl implements HoaDonService {
         return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong0();
     }
 
+    @Override
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon) {
+        return _hoaDonRepo.updateHoaDonChiTiet(lstHoaDonCT, hoaDon);
+    }
+
 }

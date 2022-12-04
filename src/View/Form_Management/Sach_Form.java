@@ -17,8 +17,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.NoSuchElementException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
@@ -528,7 +527,12 @@ public class Sach_Form extends javax.swing.JPanel {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         List<Sach> lst = importExcel();
-        _sachService.insertSach(lst);
+        boolean insertStatus = _sachService.insertSach(lst);
+        if(insertStatus) {
+            ThongBao.showNoti_Succes(this, "Import file thành công");
+        } else {
+            ThongBao.showNoti_Error(this, "Import file thất bại. Lỗi bất định");
+        }
     }//GEN-LAST:event_btnImportActionPerformed
 
     private List<Sach> importExcel() {
@@ -572,7 +576,13 @@ public class Sach_Form extends javax.swing.JPanel {
                     sach.setTen(cell.getStringCellValue());
 
                     cell = cellItr.next();
-                    sach.setSoLuong(Integer.parseInt(cell.getStringCellValue()));
+                    switch (cell.getCellType()) {
+                        case Cell.CELL_TYPE_STRING:
+                            sach.setSoLuong(Integer.parseInt(cell.getStringCellValue()));
+                            break;
+                        default:
+                            sach.setSoLuong((int) cell.getNumericCellValue());
+                    }
 
                     cell = cellItr.next();
                     sach.setSoTrang(Integer.parseInt(cell.getStringCellValue()));
@@ -589,8 +599,12 @@ public class Sach_Form extends javax.swing.JPanel {
                     cell = cellItr.next();
                     sach.setBarCode(cell.getStringCellValue());
 
-                    cell = cellItr.next();
-                    sach.setMoTa(cell.getStringCellValue());
+                    try {
+                        cell = cellItr.next();
+                        sach.setMoTa(cell.getStringCellValue());
+                    } catch (NoSuchElementException e) {
+
+                    }
 
                     lst.add(sach);
 
@@ -598,7 +612,7 @@ public class Sach_Form extends javax.swing.JPanel {
 
                 fis.close();
             } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+                ThongBao.showNoti_Error(this, "Lỗi. Không tìm thấy file");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
