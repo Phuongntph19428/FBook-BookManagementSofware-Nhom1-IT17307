@@ -103,6 +103,7 @@ public class Sach_Form extends javax.swing.JPanel {
 
     public void loadTable(int position, int pageSize) {
         _lstSach = _sachService.getList(position, pageSize);
+        System.out.println("Position:" + position + ", PageSize: " + pageSize );
         DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
         dtm.setRowCount(0);
         for (Sach sach : _lstSach) {
@@ -641,12 +642,12 @@ public class Sach_Form extends javax.swing.JPanel {
             return;
         }
         if (!searcher) {
-            _currentPage = _currentPage--;
+            _currentPage = _currentPage - 1;
             loadTable(_currentPage - 1, _pageSize);
             setLabelPage();
         } else {
             loadTableSearch(_lstSach, _currentPage - 1, _pageSize);
-            _currentPage = _currentPage--;
+            _currentPage = _currentPage - 1;
             setLabelPage();
         }
     }//GEN-LAST:event_btnPreviousMouseClicked
@@ -656,11 +657,11 @@ public class Sach_Form extends javax.swing.JPanel {
             return;
         }
         if (!searcher) {
-            _currentPage = _currentPage++;
+            _currentPage = _currentPage + 1;
             loadTable(_currentPage - 1, _pageSize);
             setLabelPage();
         } else {
-            _currentPage = _currentPage++;
+            _currentPage = _currentPage + 1;
             loadTableSearch(_lstSach, _currentPage - 1, _pageSize);
             setLabelPage();
         }

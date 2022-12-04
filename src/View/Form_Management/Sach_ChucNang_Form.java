@@ -1093,12 +1093,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Confirm(this, "Xác nhận thêm?");
             if (ThongBao.getSelected() == ThongBao.YES) {
                 _sachService.insertSach(sach);
-                _sachService.updateSachTacGia(getListSachTacGia(sach));
+                Sach sach2 = _sachService.getSachByMa(sach.getMa());
+                _sachService.updateSachTacGia(getListSachTacGia(sach2));
                 boolean insertStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
                 if (insertStatus) {
-                    ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+                    ThongBao.showNoti_Succes(this, "Thêm sách thành công");
                 } else {
-                    ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+                    ThongBao.showNoti_Error(this, "Thêm sách thất bại");
                 }
                 clear();
             }

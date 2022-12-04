@@ -200,12 +200,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         for (int i = start; i < size && i < _lstCustomSach.size(); i++) {
             // tạo Sản Phẩm từ list
             CustomSach customSach = _lstCustomSach.get(i);
-            Item_Pos item = new Item_Pos();
-            item.setIcon(customSach.getHinh());
-            item.setName(customSach.getTen());
-            item.setGia(customSach.getGiaBan(), customSach.getChietKhau());
-            item.setGiaSale(customSach.getGiaSale());
-            item.setSoluongTon(customSach.getSoLuong());
+            Item_Pos item = new Item_Pos(customSach);
             item.setSTT(i);
             item.setToolTipText(customSach.getTen());
 
