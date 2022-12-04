@@ -184,7 +184,9 @@
                   <Component id="jLabel2" min="-2" pref="381" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="539" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnRefresh" min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace pref="482" max="32767" attributes="0"/>
                   <Component id="txtSearch" min="-2" pref="376" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -208,6 +210,10 @@
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="btnRefresh" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -273,6 +279,11 @@
             </DimensionLayout>
           </Layout>
         </Container>
+        <Component class="View.ButtonDesign.Button" name="btnRefresh">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRefreshActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="View.DesignComponent.JPanelBourder" name="jPanelBourder3">

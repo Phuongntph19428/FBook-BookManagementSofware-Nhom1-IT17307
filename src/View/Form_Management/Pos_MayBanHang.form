@@ -54,11 +54,14 @@
                               <Group type="102" attributes="0">
                                   <Component id="lbNameForm" min="-2" pref="223" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="467" max="-2" attributes="0"/>
-                                  <Component id="lblTuKhoa" min="-2" pref="338" max="-2" attributes="0"/>
+                                  <Component id="lblTuKhoa" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jPanelBourder13" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jPanelBourder13" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -235,14 +238,7 @@
                                           </Group>
                                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="rdoNam" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="rdoNu" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="1" attributes="0">
                                                       <Component id="txtSDT" alignment="1" min="-2" pref="333" max="-2" attributes="0"/>
                                                       <Component id="txtTenDem" min="-2" pref="333" max="-2" attributes="0"/>
@@ -251,6 +247,22 @@
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                                       <Component id="txtHo" pref="333" max="32767" attributes="0"/>
                                                       <Component id="txtDiaChi" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" attributes="0">
+                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                          <Component id="rdoNam" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                          <Component id="rdoNu" min="-2" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="1" attributes="0">
+                                                          <EmptySpace max="32767" attributes="0"/>
+                                                          <Component id="btnQRCode" min="-2" pref="48" max="-2" attributes="0"/>
+                                                      </Group>
                                                   </Group>
                                               </Group>
                                           </Group>
@@ -265,19 +277,27 @@
                                   <Component id="btnClear" min="-2" pref="162" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="95" max="32767" attributes="0"/>
+                          <EmptySpace pref="68" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtMa" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rdoNam" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="rdoNu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtMa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdoNam" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="rdoNu" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btnQRCode" min="-2" pref="50" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace pref="44" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -561,6 +581,11 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="View.ButtonDesign.Button" name="btnQRCode">
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQRCodeActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -631,27 +656,22 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                      <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane1" min="-2" pref="763" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanelBourder2" max="32767" attributes="0"/>
-                          <Component id="jPanelBourder1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jPanelBourder4" min="-2" max="-2" attributes="0"/>
-                  </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+              <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane1" min="-2" pref="763" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanelBourder2" max="32767" attributes="0"/>
+                  <Component id="jPanelBourder1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jPanelBourder4" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

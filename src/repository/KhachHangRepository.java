@@ -22,4 +22,8 @@ public interface KhachHangRepository {
     public List<KhachHang> sellectAllBySDT(String sdt);
 
     public boolean addDiemKhachHang(KhachHang khachHang, int diem);
+    
+    public KhachHang sellectByMa(String ma);
+    
+    public KhachHang selectUpdateByMa(KhachHang khachHang);
 }
