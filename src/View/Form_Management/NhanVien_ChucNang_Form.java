@@ -75,6 +75,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import model.status.TrangThaiNhanVien;
 import util.MyMD5;
 
 /**
@@ -174,15 +175,20 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     }
 
     private NhanVien getForm() {
-        String maNhanVien = txtMaNhanVien.getText();
-        String ten = txtTen.getText();
-        String tenDem = txtTenDem.getText();
-        String ho = txtHo.getText();
-        String email = txtEmail.getText();
-        String sdt = txtSDT.getText();
-        String diaChi = txtDiaChi.getText();
+        String id =txtID.getText();
+        String maNhanVien = txtMaNhanVien.getText().trim();
+        String ten = txtTen.getText().trim().trim();
+        String tenDem = txtTenDem.getText().trim();
+        String ho = txtHo.getText().trim();
+        String email = txtEmail.getText().trim();
+        String sdt = txtSDT.getText().trim();
+        String diaChi = txtDiaChi.getText().trim();
         String matKhau = MyMD5.getMd5("123456");
         String dateStr = txtNgaySinh.getText();
+        int trangThai = radioButtonCustom1.isSelected() ? TrangThaiNhanVien.DANGHI : TrangThaiNhanVien.DANGLAM;
+        
+        
+        
         Date date = null;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
@@ -191,7 +197,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         }
 
         String moTaChucVu = comboboxChucVu.getSelectedItem().toString();
-        Integer trangThai = (Integer) comboboxTrangThai.getSelectedItem();
+//        Integer trangThai = (Integer) comboboxTrangThai.getSelectedItem();
         NhanVien nhanvien = new NhanVien();
 
         if (txtID.getText() != null) {
@@ -218,7 +224,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
                 nhanvien.setChucVu(chucVu);
             }
         }
-
+        nhanvien.setHinh(_hinh);
         return nhanvien;
     }
 
@@ -751,9 +757,11 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         nhanVienService.addNhanVien(nv);
         clear();
 
-
+        NhanVien_Form form = new NhanVien_Form();
+        form.initTableData();
     }//GEN-LAST:event_btnThemNhanVienActionPerformed
-
+     
+    
     private void btnCapNhatNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNhanVienActionPerformed
 //        NhanVien nhanVien = getForm();
 //        String insertStatus = nhanVienService.updateNhanVien(nhanVien);
@@ -761,17 +769,25 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
         NhanVien nv = getForm();
         if (nv.getId() == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách");
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn nhan vien");
             return;
         }
+        System.out.println(nv.toString());
         nhanVienService.updateNhanVien(nv);
 
         JOptionPane.showMessageDialog(this, "Update successfully");
         clear();
+        FillComponent(nv);
+
+        NhanVien_Form form = new NhanVien_Form();
+        form.initTableData();
     }//GEN-LAST:event_btnCapNhatNhanVienActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
         clear();
+
+        NhanVien_Form form = new NhanVien_Form();
+        form.initTableData();
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void txtDiaChiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiaChiActionPerformed
