@@ -75,6 +75,7 @@ import service.impl.CustomSachServiceImpl;
 import service.impl.HinhThucThanhToanServiceImpl;
 import service.impl.HoaDonServiceImpl;
 import service.impl.KhachHangServiceImpl;
+import service.impl.SystemServiceImpl;
 import util.Auth;
 
 public class Pos_MayBanHang extends javax.swing.JPanel {
@@ -1981,6 +1982,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         _hinhThucThanhToanService.addHinhThucThanhToan(lstHinhThucTT);
     }
 
+    private void send() {
+        SystemServiceImpl ss = new SystemServiceImpl();
+        ss.SendSMStoManager(3);
+    }
+
     private void btnThanhToanVaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanVaInActionPerformed
         int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán?");
         if (confirm == JOptionPane.YES_OPTION) {
@@ -2006,6 +2012,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon = null;
             setEnableButton();
             clearFormBanHang();
+            send();
         }
     }//GEN-LAST:event_btnThanhToanVaInActionPerformed
 
@@ -2057,6 +2064,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon = null;
             setEnableButton();
             clearFormBanHang();
+            send();
         }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
@@ -2085,6 +2093,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon = null;
             setEnableButton();
             clearFormBanHang();
+            send();
         }
     }//GEN-LAST:event_btnDatHangActionPerformed
 
