@@ -39,16 +39,25 @@ public class SystemServiceImpl implements ISystemService {
     private final SachServiceImpl sachSer = new SachServiceImpl();
     private List<Sach> list;
 
-    public void SendSMStoManager() {
+    public void SendSMStoManager(int hinhThuc) {
         list = sachSer.selectAllLowerThan(20);
         String content = "";
+        if(list.isEmpty()) {
+            return;
+        }
         if (list != null) {
             for (Sach sach : list) {
-                content += "Tên Sách: " + sach.getTen() +", Số lượng: " +sach.getSoLuong();
+                content += "Tên Sách: " + sach.getTen() + ", Số lượng: " + sach.getSoLuong();
             }
             System.out.println("bat dau gui");
-            SendSMS("396189965", content);
-            sendEmail("quanchun11022@gmail.com",content);
+            if (hinhThuc == 1) {
+                SendSMS("396189965", content);
+            } else if(hinhThuc == 2){
+                sendEmail("quanchun11022@gmail.com", content);
+            } else {
+                SendSMS("396189965", content);
+                sendEmail("quanchun11022@gmail.com", content);
+            }
         }
     }
 
@@ -107,8 +116,8 @@ public class SystemServiceImpl implements ISystemService {
     }
 
     public static void main(String[] args) {
-    SystemServiceImpl s = new SystemServiceImpl();
-    s.SendSMStoManager();
+        SystemServiceImpl s = new SystemServiceImpl();
+        s.SendSMStoManager(1);
     }
 
 }
