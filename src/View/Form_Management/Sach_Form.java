@@ -9,10 +9,13 @@ import View.ThongBao;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +24,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import model.NhaXuatBan;
 import model.Sach;
+import model.ViTri;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -473,10 +478,10 @@ public class Sach_Form extends javax.swing.JPanel {
         JFileChooser fileChooser = new JFileChooser(_currentDirectory);
         fileChooser.setPreferredSize(new Dimension(800, 600));
         fileChooser.setMultiSelectionEnabled(false);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel", ".xlsx"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel", "xlsx"));
         fileChooser.showSaveDialog(this);
         File file = fileChooser.getSelectedFile();
-        if(file == null) {
+        if (file == null) {
             return;
         }
         if (!file.exists()) {
@@ -522,8 +527,85 @@ public class Sach_Form extends javax.swing.JPanel {
     }
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        
+        List<Sach> lst = importExcel();
+        _sachService.insertSach(lst);
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private List<Sach> importExcel() {
+        List<Sach> lst = new ArrayList<>();
+        JFileChooser fileChooser = new JFileChooser(_currentDirectory);
+        fileChooser.setPreferredSize(new Dimension(800, 600));
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel", "xlsx"));
+        int result = fileChooser.showDialog(this, "Chọn excel");
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+
+                XSSFWorkbook wb = new XSSFWorkbook(fis);
+                XSSFSheet sheet = wb.getSheetAt(0);
+                Iterator<Row> itr = sheet.iterator();
+
+                itr.next();
+                while (itr.hasNext()) {
+                    Sach sach = new Sach();
+                    Row row = itr.next();
+                    Iterator<Cell> cellItr = row.iterator();
+
+                    Cell cell = cellItr.next();
+                    sach.setId(cell.getStringCellValue());
+
+                    cell = cellItr.next();
+                    NhaXuatBan nxb = new NhaXuatBan(cell.getStringCellValue(), null, null, null);
+                    sach.setNhaXuatBan(nxb);
+
+                    cell = cellItr.next();
+                    ViTri vitri = new ViTri(cell.getStringCellValue(), null, null);
+                    sach.setViTri(vitri);
+
+                    cell = cellItr.next();
+                    sach.setMa(cell.getStringCellValue());
+
+                    cell = cellItr.next();
+                    sach.setTen(cell.getStringCellValue());
+
+                    cell = cellItr.next();
+                    sach.setSoLuong(Integer.parseInt(cell.getStringCellValue()));
+
+                    cell = cellItr.next();
+                    sach.setSoTrang(Integer.parseInt(cell.getStringCellValue()));
+
+                    cell = cellItr.next();
+                    sach.setGiaNhap(BigDecimal.valueOf(Double.parseDouble(cell.getStringCellValue().replaceAll(",", ""))));
+
+                    cell = cellItr.next();
+                    sach.setGiaBan(BigDecimal.valueOf(Double.parseDouble(cell.getStringCellValue().replaceAll(",", ""))));
+
+                    cell = cellItr.next();
+                    sach.setTrangThai(Integer.parseInt(cell.getStringCellValue()));
+
+                    cell = cellItr.next();
+                    sach.setBarCode(cell.getStringCellValue());
+
+                    cell = cellItr.next();
+                    sach.setMoTa(cell.getStringCellValue());
+
+                    lst.add(sach);
+
+                }
+
+                fis.close();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+        return lst;
+    }
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String keyword = txtSearch.getText();

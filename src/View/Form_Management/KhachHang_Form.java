@@ -612,6 +612,11 @@ public class KhachHang_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
+        
+        if(_khachHangService.selectUpdateByMa(khachHang) != null) {
+            ThongBao.showNoti_Error(this, "Mã này đã tồn tại. Vui lòng chọn mã khác");
+            return;
+        }
 
         ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
         if (ThongBao.getSelected() == ThongBao.YES) {

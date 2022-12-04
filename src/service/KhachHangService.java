@@ -26,4 +26,6 @@ public interface KhachHangService {
     public boolean addDiemKhachHang(KhachHang khachHang, int diem);
 
     public KhachHang sellectByMa(String ma);
+    
+    public KhachHang selectUpdateByMa(KhachHang khachHang);
 }

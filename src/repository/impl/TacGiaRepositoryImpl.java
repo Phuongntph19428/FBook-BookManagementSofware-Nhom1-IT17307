@@ -108,4 +108,24 @@ public class TacGiaRepositoryImpl implements TacGiaRepository {
         return null;
     }
 
+    @Override
+    public TacGia selectUpdateByMa(TacGia tacGia) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT t FROM TacGia t WHERE t.ma = :ma and t.id != id";
+            TypedQuery<TacGia> query = session.createQuery(hql);
+            query.setParameter("ma", tacGia.getMa());
+            query.setParameter("id", tacGia.getId());
+
+            try {
+                TacGia tacGiaUpdate = query.getSingleResult();
+                return tacGiaUpdate;
+            } catch (NoResultException e) {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

@@ -121,4 +121,24 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
         }
         return null;
     }
+    
+    @Override
+    public KhachHang selectUpdateByMa(KhachHang khachHang) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT k FROM KhachHang k WHERE k.ma = :ma and k.id != :id";
+            TypedQuery<KhachHang> query = session.createQuery(hql);
+            query.setParameter("ma", khachHang.getMa());
+            query.setParameter("id", khachHang.getId());
+
+            try {
+                KhachHang khachHangUpdate = query.getSingleResult();
+                return khachHangUpdate;
+            } catch (NoResultException e) {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

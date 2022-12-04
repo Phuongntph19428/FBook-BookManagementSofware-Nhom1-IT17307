@@ -54,4 +54,9 @@ public class TacGiaServiceImpl implements TacGiaService {
         return _tacGiaRepo.sellectByMa(ma);
     }
 
+    @Override
+    public TacGia selectUpdateByMa(TacGia tacGia) {
+        return _tacGiaRepo.selectUpdateByMa(tacGia);
+    }
+
 }

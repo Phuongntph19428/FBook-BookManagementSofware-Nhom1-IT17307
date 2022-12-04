@@ -23,4 +23,6 @@ public interface TacGiaService {
 
     public TacGia sellectByMa(String ma);
     
+    public TacGia selectUpdateByMa(TacGia tacGia);
+    
 }
