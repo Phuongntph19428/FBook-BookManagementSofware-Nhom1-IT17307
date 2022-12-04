@@ -6,6 +6,8 @@ package service.impl;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
@@ -44,11 +46,11 @@ public class SystemServiceImpl implements ISystemService {
         String content = "";
         if (list != null) {
             for (Sach sach : list) {
-                content += "Tên Sách: " + sach.getTen() +", Số lượng: " +sach.getSoLuong();
+                content += "Tên Sách: " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
             }
             System.out.println("bat dau gui");
             SendSMS("396189965", content);
-            sendEmail("quanchun11022@gmail.com",content);
+            sendEmail("quanchun11022@gmail.com", content);
         }
     }
 
@@ -109,6 +111,6 @@ public class SystemServiceImpl implements ISystemService {
     public static void main(String[] args) {
     SystemServiceImpl s = new SystemServiceImpl();
     s.SendSMStoManager();
-    }
+            }
 
 }
