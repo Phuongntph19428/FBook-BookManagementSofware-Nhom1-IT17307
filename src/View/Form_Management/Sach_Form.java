@@ -515,7 +515,7 @@ public class Sach_Form extends javax.swing.JPanel {
             workbook.write(outputStream);
             ThongBao.showNoti_Succes(this, "Ghi file thành công");
         } catch (FileNotFoundException ex) {
-            ThongBao.showNoti_Error(this, "File đang được mở ở một nơi khác không thể sửa");
+            ThongBao.showNoti_Error(this, "File đang được mở ở một nơi khác không thể ghi đè");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -643,9 +643,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lbNameForm, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(467, 467, 467)
-                        .addComponent(lblTuKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanelBourder13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblTuKhoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanelBourder13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2401,7 +2403,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private void setKhachHangDialog() {
         _khachHangDialog.setSize(1200, 560);
-        _khachHangDialog.setModal(true);
+        _khachHangDialog.setModal(false);
         _khachHangDialog.add(this.jpanelChonKhachHang);
         _khachHangDialog.setLocationRelativeTo(null);
     }
@@ -2481,6 +2483,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         String sdt = txtSoDienThoaiDatHang.getText().trim();
+        lblTuKhoa.setText(sdt);
         getKhachHang(sdt);
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
@@ -2636,8 +2639,23 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
 
-        _khachHangService.insertKhachHang(khachHang);
-        JOptionPane.showMessageDialog(this, "insert successfully");
+        if (_khachHangService.sellectByMa(khachHang.getMa()) != null) {
+            ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");
+            return;
+        }
+
+        boolean insertStatus = _khachHangService.insertKhachHang(khachHang);
+        if (insertStatus) {
+            ThongBao.showNoti_Succes(this, "Thêm khách hàng thành công");
+        } else {
+            ThongBao.showNoti_Error(this, "Thêm khách hàng thất bại. Lỗi bất định");
+            return;
+        }
+
+        _lstKhachHang = new ArrayList<>();
+        _lstKhachHang.add(khachHang);
+        loadTableKhachHang();
+        jTabbedPane2.setSelectedIndex(1);
 
     }//GEN-LAST:event_btnAddKhachHangActionPerformed
 

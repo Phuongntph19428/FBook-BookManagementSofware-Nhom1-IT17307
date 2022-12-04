@@ -22,4 +22,6 @@ public interface TacGiaRepository {
     
     public List<TacGia> searchTacGiaByKeyWord(String keyword);
     
+    public TacGia sellectByMa(String ma);
+    
 }

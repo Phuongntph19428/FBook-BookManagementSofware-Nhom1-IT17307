@@ -49,4 +49,9 @@ public class TacGiaServiceImpl implements TacGiaService {
         return lst;
     }
 
+    @Override
+    public TacGia sellectByMa(String ma) {
+        return _tacGiaRepo.sellectByMa(ma);
+    }
+
 }

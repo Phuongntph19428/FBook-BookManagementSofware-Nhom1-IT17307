@@ -6,6 +6,7 @@ package repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import model.KhachHang;
 import org.hibernate.Session;
@@ -100,5 +101,24 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
                 return false;
             }
         }
+    }
+
+    @Override
+    public KhachHang sellectByMa(String ma) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT k FROM KhachHang k WHERE k.ma = :ma";
+            TypedQuery<KhachHang> query = session.createQuery(hql);
+            query.setParameter("ma", ma);
+
+            try {
+                KhachHang khachHang = query.getSingleResult();
+                return khachHang;
+            } catch (NoResultException e) {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

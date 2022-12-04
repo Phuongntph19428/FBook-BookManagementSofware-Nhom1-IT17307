@@ -6,6 +6,7 @@ package View.Form_Management;
 
 import View.ButtonDesign.Button;
 import View.ScrollBarCustom;
+import View.ThongBao;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.TacGia;
@@ -432,17 +432,17 @@ public class TacGia_Form extends javax.swing.JPanel {
         String mota = txtMoTa.getText().trim();
 
         if (ma.isBlank() || ten.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
+            ThongBao.showNoti_Error(this, "Không được để trống");
             return null;
         }
 
         if (ma.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Mã không được quá dài");
+            ThongBao.showNoti_Error(this, "Mã không được quá dài");
             return null;
         }
 
         if (ten.length() > 50) {
-            JOptionPane.showMessageDialog(this, "Tên không được quá dài");
+            ThongBao.showNoti_Error(this, "Tên không được quá dài");
             return null;
         }
 
@@ -464,15 +464,24 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         TacGia tacGia = getFrom();
-        if(tacGia == null) {
+        if (tacGia == null) {
             return;
         }
-        
+
         if (tacGia.getId() == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn tác giả");
+            ThongBao.showNoti_Error(this, "Bạn chưa chọn tác giả");
             return;
         }
-        _tacGiaService.updateTacGia(tacGia);
+        ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
+            boolean udpateStatus = _tacGiaService.updateTacGia(tacGia);
+            if (udpateStatus) {
+                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+                return;
+            }
+        }
         _lstAllTacGia = _tacGiaService.selectAll();
         clear();
         loadTable(_lstAllTacGia);
@@ -480,14 +489,29 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         TacGia tacGia = getFrom();
-        if(tacGia == null) {
+        if (tacGia == null) {
             return;
         }
         if (tacGia.getId() != null) {
-            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
+            ThongBao.showNoti_Error(this, "Clear form trước khi thêm");
             return;
         }
-        _tacGiaService.insertTacGia(tacGia);
+
+        if (_tacGiaService.sellectByMa(tacGia.getMa()) != null) {
+            ThongBao.showNoti_Error(this, "Mã tác giả đã tồn tại. Mời bạn nhập mã khác");
+            return;
+        }
+
+        ThongBao.showNoti_Confirm(this, "Xác nhận thêm?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
+            boolean insertStatus = _tacGiaService.insertTacGia(tacGia);
+            if (insertStatus) {
+                ThongBao.showNoti_Succes(this, "Thêm thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Thêm thất bại");
+                return;
+            }
+        }
         _lstAllTacGia = _tacGiaService.selectAll();
         clear();
         loadTable(_lstAllTacGia);
@@ -525,20 +549,20 @@ public class TacGia_Form extends javax.swing.JPanel {
                 try {
                     _hinh = Files.readAllBytes(p);
                     if (_hinh.length > 1024000) {
-                        JOptionPane.showMessageDialog(this, "File không được vượt quá 1M", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        ThongBao.showNoti_Error(this, "File không được vượt quá 1M");
                         _hinh = null;
                         return;
                     }
                     lblAvatar.setIcon(new ImageIcon(new ImageIcon(_hinh).getImage().getScaledInstance(174, 210, Image.SCALE_DEFAULT)));
                 } catch (NoSuchFileException nofile) {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy file");
+                    ThongBao.showNoti_Error(this, "Không tìm thấy file");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 return;
             }
 
-            JOptionPane.showMessageDialog(this, "Chỉ hỗ trợ file .jpg | .png", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            ThongBao.showNoti_Error(this, "Chỉ hỗ trợ file .jpg | .png");
         }
 
     }//GEN-LAST:event_btnChooseImageActionPerformed

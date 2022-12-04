@@ -6,6 +6,7 @@ package repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import model.TacGia;
 import org.hibernate.Session;
@@ -86,6 +87,25 @@ public class TacGiaRepositoryImpl implements TacGiaRepository {
             e.printStackTrace();
         }
         return lstTacGia;
+    }
+
+    @Override
+    public TacGia sellectByMa(String ma) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT t FROM TacGia t WHERE t.ma = :ma";
+            TypedQuery<TacGia> query = session.createQuery(hql);
+            query.setParameter("ma", ma);
+
+            try {
+                TacGia tacGia = query.getSingleResult();
+                return tacGia;
+            } catch (NoResultException e) {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

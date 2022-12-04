@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 import service.KhachHangService;
@@ -73,29 +72,29 @@ public class KhachHang_Form extends javax.swing.JPanel {
         String gioiTinh = rdoNam.isSelected() ? "Nam" : "Nữ";
 
         if (ma.isBlank() || ten.isBlank() || tenDem.isBlank() || ho.isBlank() || ngaySinhStr.isBlank() || SDT.isBlank() || diaChi.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
+            ThongBao.showNoti_Error(this, "Không được để trống");
             return null;
         }
 
         if (ma.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Mã không được quá dài");
+            ThongBao.showNoti_Error(this, "Mã không được quá dài");
             return null;
         }
 
         if (ten.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Tên không được quá dài");
+            ThongBao.showNoti_Error(this, "Tên không được quá dài");
             return null;
         }
         if (ho.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Họ không được quá dài");
+            ThongBao.showNoti_Error(this, "Họ không được quá dài");
             return null;
         }
         if (tenDem.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Tên đệm không được quá dài");
+            ThongBao.showNoti_Error(this, "Tên đệm không được quá dài");
             return null;
         }
         if (!SDT.matches("0\\d{9}")) {
-            JOptionPane.showMessageDialog(this, "SĐT không đúng định dạng");
+            ThongBao.showNoti_Error(this, "SĐT không đúng định dạng");
             return null;
         }
 
@@ -606,17 +605,28 @@ public class KhachHang_Form extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         KhachHang khachHang = getForm();
+        if (khachHang == null) {
+            return;
+        }
         if (khachHang.getId() == null) {
             ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
 
-        _khachHangService.updateKhachHang(khachHang);
-        ThongBao.showNoti_Succes(this, "Cập Nhật Thành Công");
-        _lstAllKhachHang = _khachHangService.selectAll();
-        _lstKhachHang = _lstAllKhachHang;
-        loadTable(_lstKhachHang);
-        clear();
+        ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
+            boolean udpateStatus = _khachHangService.updateKhachHang(khachHang);
+            if (udpateStatus) {
+                ThongBao.showNoti_Succes(this, "Cập Nhật Thành Công");
+            } else {
+                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+                return;
+            }
+            _lstAllKhachHang = _khachHangService.selectAll();
+            _lstKhachHang = _lstAllKhachHang;
+            loadTable(_lstKhachHang);
+            clear();
+        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -626,12 +636,25 @@ public class KhachHang_Form extends javax.swing.JPanel {
             return;
         }
 
-        _khachHangService.insertKhachHang(khachHang);
-        ThongBao.showNoti_Succes(this, "Thêm Thành Công");
-        _lstAllKhachHang = _khachHangService.selectAll();
-        _lstKhachHang = _lstAllKhachHang;
-        loadTable(_lstKhachHang);
-        clear();
+        if (_khachHangService.sellectByMa(khachHang.getMa()) != null) {
+            ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");
+            return;
+        }
+
+        ThongBao.showNoti_Confirm(this, "Xác nhận thêm?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
+            boolean insertStatus = _khachHangService.insertKhachHang(khachHang);
+            if (insertStatus) {
+                ThongBao.showNoti_Succes(this, "Thêm Thành Công");
+            } else {
+                ThongBao.showNoti_Error(txtMa, "Thêm thất bại");
+                return;
+            }
+            _lstAllKhachHang = _khachHangService.selectAll();
+            _lstKhachHang = _lstAllKhachHang;
+            loadTable(_lstKhachHang);
+            clear();
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void clear() {

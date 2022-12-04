@@ -59,4 +59,9 @@ public class KhachHangServiceImpl implements KhachHangService {
     public boolean addDiemKhachHang(KhachHang khachHang, int diem) {
         return _khachHangRepo.addDiemKhachHang(khachHang, diem);
     }
+
+    @Override
+    public KhachHang sellectByMa(String ma) {
+        return _khachHangRepo.sellectByMa(ma);
+    }
 }

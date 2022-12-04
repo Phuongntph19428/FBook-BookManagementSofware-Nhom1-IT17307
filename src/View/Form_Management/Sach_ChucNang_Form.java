@@ -878,8 +878,6 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.btnSelectTheLoai.show(false);
         this.Form_Chon_TacGia.show(true);
         this.TruongThongTin.show(false);
-        //        this.background.doClick();
-        //        this.jScrollPane1.show(true);
 
     }//GEN-LAST:event_btnSelectTheLoaiActionPerformed
 
@@ -1073,25 +1071,37 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 ThongBao.showNoti_Error(this, "Só lượng không đúng định dạng");
                 return;
             }
-            boolean updateStatus = _sachService.updateSoLuongSach(id, Integer.parseInt(slStr));
-            if (updateStatus) {
-                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
-            } else {
-                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+            ThongBao.showNoti_Confirm(this, "Sách đã tồn tại. Xác nhận thêm số lượng sách?");
+            if (ThongBao.getSelected() == ThongBao.YES) {
+                boolean updateStatus = _sachService.updateSoLuongSach(id, Integer.parseInt(slStr));
+                if (updateStatus) {
+                    ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+                } else {
+                    ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+                }
+                return;
             }
-            return;
         }
         Sach sach = getForm();
         if (sach != null) {
-            _sachService.insertSach(sach);
-            _sachService.updateSachTacGia(getListSachTacGia(sach));
-            boolean insertStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-            if (insertStatus) {
-                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
-            } else {
-                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+
+            if (_sachService.getSachByMa(sach.getMa()) != null) {
+                ThongBao.showNoti_Error(this, "Mã sách đã tồn tại. Mời bạn nhập mã khác");
+                return;
             }
-            clear();
+
+            ThongBao.showNoti_Confirm(this, "Xác nhận thêm?");
+            if (ThongBao.getSelected() == ThongBao.YES) {
+                _sachService.insertSach(sach);
+                _sachService.updateSachTacGia(getListSachTacGia(sach));
+                boolean insertStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+                if (insertStatus) {
+                    ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+                } else {
+                    ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+                }
+                clear();
+            }
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -1102,15 +1112,18 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             return;
         }
         if (sach != null) {
-            _sachService.updateSach(sach);
-            _sachService.updateSachTacGia(getListSachTacGia(sach));
-            boolean updateStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-            if (updateStatus) {
-                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
-            } else {
-                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+            ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
+            if (ThongBao.getSelected() == ThongBao.YES) {
+                _sachService.updateSach(sach);
+                _sachService.updateSachTacGia(getListSachTacGia(sach));
+                boolean updateStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+                if (updateStatus) {
+                    ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+                } else {
+                    ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+                }
+                clear();
             }
-            clear();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -1240,16 +1253,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCamBarCodeActionPerformed
 
-    private void openedCam() {
-        this.background.show(true);
-        this.btnSelectTheLoai.show(false);
-        this.TruongThongTin.show(false);
-    }
-
     private void btnCameraImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCameraImageActionPerformed
-//        this.background.show(true);
-//        this.btnSelectTheLoai.show(false);
-//        this.TruongThongTin.show(false);
 
         btnCameraImage.setEnabled(false);
         CamJFrame cam = new CamJFrame();
