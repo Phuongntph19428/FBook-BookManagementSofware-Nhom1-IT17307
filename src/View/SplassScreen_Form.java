@@ -13,13 +13,14 @@ import javax.swing.JDialog;
 public class SplassScreen_Form extends java.awt.Dialog {
 
     ManagementBookForm mng = null;
+
     public SplassScreen_Form(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
 //        getContentPane().setBackground(new Color(221, 221, 221));
 //        //  To disable key Alt+F4 to close dialog
-        
+
     }
 
     /**
@@ -125,7 +126,7 @@ public class SplassScreen_Form extends java.awt.Dialog {
             @Override
             public void run() {
                 try {
-                    mng = new ManagementBookForm();
+
                     doTask("Connect To Database ...", 10);
                     doTask("loading form/management_book ...", 20);
                     doTask("loading ser./iser/implser ...", 22);
@@ -144,10 +145,17 @@ public class SplassScreen_Form extends java.awt.Dialog {
                 }
             }
         }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mng = new ManagementBookForm();
+
+            }
+        }).start();
     }//GEN-LAST:event_formWindowOpened
     private void doTask(String taskName, int progress) throws Exception {
         jLabel1.setText(taskName);
-        Thread.sleep(300); //  For Test
+        Thread.sleep(550); //  For Test
         pro.setValue(progress);
     }
 
