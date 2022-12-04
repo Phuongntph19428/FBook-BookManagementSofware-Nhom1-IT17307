@@ -3,6 +3,7 @@ package View.Form_Management;
 import View.PanelTagDesign.EventTags;
 import View.PanelTagDesign.Item;
 import View.ScrollBarCustom;
+import View.ThongBao;
 import View.soundeffect.MySoundEffect;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.LuminanceSource;
@@ -34,7 +35,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.NhaXuatBan;
 import model.Sach;
@@ -999,42 +999,42 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         int trangThai = rdoDangKinhDoanh.isSelected() ? TrangThaiSach.DANGKINHDOANH : TrangThaiSach.NGUNGKINHDOANH;
 
         if (ma.isBlank() || barCode.isBlank() || giaBanStr.isBlank() || giaNhapStr.isBlank() || soLuongStr.isBlank() || soTrangStr.isBlank() || ten.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
+            ThongBao.showNoti_Error(this, "Không được để trống");
             return null;
         }
-        
-        if(ma.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Mã sách không được quá 30 ký tự");
+
+        if (ma.length() > 30) {
+            ThongBao.showNoti_Error(this, "Mã sách không được quá 30 ký tự");
             return null;
         }
-        
-        if(!barCode.matches("\\d+") || barCode.length() < 7) {
-            JOptionPane.showMessageDialog(this, "BarCode không đúng định dạng");
+
+        if (!barCode.matches("\\d+") || barCode.length() < 7) {
+            ThongBao.showNoti_Error(this, "BarCode không đúng định dạng");
             return null;
         }
-        
-        if(!giaBanStr.matches("\\d+(.\\d+)?") || giaBanStr.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Giá bán không đúng định dạng");
+
+        if (!giaBanStr.matches("\\d+(.\\d+)?") || giaBanStr.length() > 30) {
+            ThongBao.showNoti_Error(this, "Giá bán không đúng định dạng");
             return null;
         }
-        
-        if(!giaNhapStr.matches("\\d+(.\\d+)?") || giaNhapStr.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Giá nhập không đúng định dạng");
+
+        if (!giaNhapStr.matches("\\d+(.\\d+)?") || giaNhapStr.length() > 30) {
+            ThongBao.showNoti_Error(this, "Giá nhập không đúng định dạng");
             return null;
         }
-        
-        if(!soLuongStr.matches("\\d+") || soLuongStr.length() > 9) {
-            JOptionPane.showMessageDialog(this, "Số lượng không đúng định dạng");
+
+        if (!soLuongStr.matches("\\d+") || soLuongStr.length() > 9) {
+            ThongBao.showNoti_Error(this, "Số lượng không đúng định dạng");
             return null;
         }
-        
-        if(!soTrangStr.matches("\\d+") || soTrangStr.length() > 9) {
-            JOptionPane.showMessageDialog(this, "Số trang không đúng định dạng");
+
+        if (!soTrangStr.matches("\\d+") || soTrangStr.length() > 9) {
+            ThongBao.showNoti_Error(this, "Số trang không đúng định dạng");
             return null;
         }
-        
-        if(ten.length() > 70) {
-            JOptionPane.showMessageDialog(this, "Tên sách không được quá dài");
+
+        if (ten.length() > 70) {
+            ThongBao.showNoti_Error(this, "Tên sách không được quá dài");
             return null;
         }
 
@@ -1070,19 +1070,27 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         if (!id.isBlank()) {
             String slStr = txtSoLuong.getText().trim();
             if (!slStr.matches("\\d+") || slStr.equals("0") || slStr.isBlank()) {
-                JOptionPane.showMessageDialog(this, "Só lượng không đúng định dạng");
+                ThongBao.showNoti_Error(this, "Só lượng không đúng định dạng");
                 return;
             }
             boolean updateStatus = _sachService.updateSoLuongSach(id, Integer.parseInt(slStr));
-            JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
+            if (updateStatus) {
+                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+            }
             return;
         }
         Sach sach = getForm();
         if (sach != null) {
             _sachService.insertSach(sach);
             _sachService.updateSachTacGia(getListSachTacGia(sach));
-            _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-            JOptionPane.showMessageDialog(this, "Insert successfully");
+            boolean insertStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+            if (insertStatus) {
+                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+            }
             clear();
         }
     }//GEN-LAST:event_btnAddActionPerformed
@@ -1090,14 +1098,18 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         Sach sach = getForm();
         if (sach.getId() == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách");
+            ThongBao.showNoti_Error(this, "Bạn chưa chọn sách");
             return;
         }
         if (sach != null) {
             _sachService.updateSach(sach);
             _sachService.updateSachTacGia(getListSachTacGia(sach));
-            _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-            JOptionPane.showMessageDialog(this, "Update successfully");
+            boolean updateStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+            if (updateStatus) {
+                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+            }
             clear();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -1128,20 +1140,20 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 try {
                     _hinh = Files.readAllBytes(p);
                     if (_hinh.length > 1024000) {
-                        JOptionPane.showMessageDialog(this, "File không được vượt quá 1M", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                        ThongBao.showNoti_Error(this, "File không được vượt quá 1M");
                         _hinh = null;
                         return;
                     }
                     setAvartar();
                 } catch (NoSuchFileException nofile) {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy file");
+                    ThongBao.showNoti_Error(this, "Không tìm thấy file");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
                 return;
             }
 
-            JOptionPane.showMessageDialog(this, "Chỉ hỗ trợ file .jpg | .png", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            ThongBao.showNoti_Error(this, "Chỉ hỗ trợ file .jpg | .png");
         }
     }//GEN-LAST:event_btnChooseImageActionPerformed
 
@@ -1172,7 +1184,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             try {
                 cam.webcam.open();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Không thể mở camera");
+                ThongBao.showNoti_Error(this, "Không thể mở camera");
                 closedCam(cam);
             }
             while (true) {
@@ -1194,7 +1206,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 if (result != null) {
                     MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
                     if (!(result + "").matches("\\d+")) {
-                        JOptionPane.showMessageDialog(this, "BarCode không hợp lệ");
+                        ThongBao.showNoti_Error(this, "BarCode không hợp lệ");
                         return;
                     }
                     txtBarCode.setText(result + "");

@@ -21,8 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -40,7 +38,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
     private final KhachHangService _khachHangService;
     private List<KhachHang> _lstAllKhachHang;
     private List<KhachHang> _lstKhachHang;
-   
+
     public KhachHang_Form() {
         initComponents();
         this.tblKhachHang.setRowHeight(59);
@@ -48,13 +46,13 @@ public class KhachHang_Form extends javax.swing.JPanel {
         this.jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
         Icon iconbtnNgayBatDau = new ImageIcon("image/icons8_schedule_30px.png");
         this.btnNgaySinh.setIcon(iconbtnNgayBatDau);
-        
+
         _khachHangService = new KhachHangServiceImpl();
         _lstAllKhachHang = _khachHangService.selectAll();
         _lstKhachHang = _lstAllKhachHang;
         loadTable(_lstKhachHang);
     }
-    
+
     private void loadTable(List<KhachHang> lstKhachHang) {
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHang.getModel();
         dtm.setRowCount(0);
@@ -62,7 +60,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
             dtm.addRow(khachHang.toDataRow());
         }
     }
-    
+
     private KhachHang getForm() {
         String id = txtId.getText();
         String ma = txtMa.getText().trim();
@@ -74,13 +72,40 @@ public class KhachHang_Form extends javax.swing.JPanel {
         String diaChi = txtDiaChi.getText().trim();
         String gioiTinh = rdoNam.isSelected() ? "Nam" : "Nữ";
 
+        if (ma.isBlank() || ten.isBlank() || tenDem.isBlank() || ho.isBlank() || ngaySinhStr.isBlank() || SDT.isBlank() || diaChi.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+
+        if (ma.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Mã không được quá dài");
+            return null;
+        }
+
+        if (ten.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Tên không được quá dài");
+            return null;
+        }
+        if (ho.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Họ không được quá dài");
+            return null;
+        }
+        if (tenDem.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Tên đệm không được quá dài");
+            return null;
+        }
+        if (!SDT.matches("0\\d{9}")) {
+            JOptionPane.showMessageDialog(this, "SĐT không đúng định dạng");
+            return null;
+        }
+
         Date ngaySinh = null;
         if (!ngaySinhStr.isBlank()) {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
             try {
                 ngaySinh = format.parse(ngaySinhStr);
             } catch (ParseException ex) {
-                Logger.getLogger(KhachHang_Form.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
 
@@ -622,7 +647,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
         rdoNam.setSelected(true);
         lblDiem.setText("0");
     }
-    
+
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         clear();
     }//GEN-LAST:event_btnClearActionPerformed
@@ -649,7 +674,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
             try {
                 cam.webcam.open();
             } catch (Exception e) {
-               ThongBao.showNoti_Error(this, "Không thể mở camera");
+                ThongBao.showNoti_Error(this, "Không thể mở camera");
                 closedCam(cam);
             }
             while (true) {
@@ -745,7 +770,8 @@ public class KhachHang_Form extends javax.swing.JPanel {
         String ten = "";
         String tenDem = "";
         switch (hoTenStr.length) {
-            case 1 -> ten = hoTenStr[0];
+            case 1 ->
+                ten = hoTenStr[0];
             case 2 -> {
                 ho = hoTenStr[0];
                 ten = hoTenStr[1];

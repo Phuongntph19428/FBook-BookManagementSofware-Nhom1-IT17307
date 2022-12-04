@@ -45,8 +45,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.text.ParseException;
@@ -808,7 +806,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                                                 .addComponent(rdoNu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnQRCode, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                                .addComponent(btnQRCode, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(328, 328, 328)
@@ -2077,7 +2075,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setNgayShip(ngayShip);
             _hoaDon.setTrangThai(HoaDon.DANGVANCHUYEN);
             PrintOrder print = new PrintOrder();
-            print.printDelivery();            
+            print.printDelivery();
             boolean updateStatus = _hoaDonService.updateHoaDon(_hoaDon);
             JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
             loadTableHoaDon();
@@ -2591,6 +2589,33 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         String diaChi = txtDiaChi.getText().trim();
         String gioiTinh = rdoNam.isSelected() ? "Nam" : "Nữ";
 
+        if (ma.isBlank() || ten.isBlank() || tenDem.isBlank() || ho.isBlank() || ngaySinhStr.isBlank() || SDT.isBlank() || diaChi.isBlank()) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+
+        if (ma.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Mã không được quá dài");
+            return null;
+        }
+
+        if (ten.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Tên không được quá dài");
+            return null;
+        }
+        if (ho.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Họ không được quá dài");
+            return null;
+        }
+        if (tenDem.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Tên đệm không được quá dài");
+            return null;
+        }
+        if (!SDT.matches("0\\d{9}")) {
+            JOptionPane.showMessageDialog(this, "SĐT không đúng định dạng");
+            return null;
+        }
+
         Date ngaySinh = null;
         if (!ngaySinhStr.isBlank()) {
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -3066,9 +3091,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 }
                 Paragraph para = new Paragraph(sanPham);
                 Paragraph para2 = new Paragraph("Tien thu nguoi nhan: " + df.format(_tongTien) + " VNĐ");
-                
+
                 Paragraph emtyPara = new Paragraph(" ");
-                
+
                 document.add(table);
                 document.add(separator);
                 document.add(emtyPara);

@@ -5,17 +5,21 @@
 package View.Form_Management;
 
 import View.ButtonDesign.Button;
-import View.soundeffect.MySoundEffect;
+import View.ThongBao;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import model.Sach;
 import org.apache.poi.ss.usermodel.Cell;
@@ -39,12 +43,9 @@ public class Sach_Form extends javax.swing.JPanel {
     private int _totalPage;
     private boolean searcher = false;
 
-    private int indexSelected = 1;
-    private int indexRow = 1;
-    private int countJbtn = 0;
-
     private List<Sach> _lstSach;
     private List<Button> listBtn = new ArrayList<>();
+    private String _currentDirectory = "";
 
     public Sach_Form() {
         initComponents();
@@ -92,28 +93,6 @@ public class Sach_Form extends javax.swing.JPanel {
         return this.btnTaoSP1;
     }
 
-//    public void initTableData(int position, int pageSize) {
-//       
-//        _lstSach = _sachService.getList(position, pageSize);
-//
-////        for (int i = 0; i < countJbtn; i++) {
-////            Button btn = new Button();
-////            listBtn.add(btn);
-////            btn.setText("" + (i + 1));
-////            btn.setSize(30, 30);
-////            btn.addActionListener(new ActionListener() {
-////                @Override
-////                public void actionPerformed(ActionEvent e) {
-////                    showTarget(Integer.parseInt(btn.getText()));
-////                    setColorButtonSelected(Integer.parseInt(btn.getText()) - 1);
-////
-////                }
-////            });
-////
-////            pagePanel.add(btn);
-////        }
-//
-//    }
     public JTable getJTable() {
         return this.table1;
     }
@@ -139,16 +118,6 @@ public class Sach_Form extends javax.swing.JPanel {
         }
     }
 
-//    public void showTarget(int index) {
-//        DefaultTableModel model = (DefaultTableModel) table1.getModel();
-//        model.setRowCount(0);
-//        int sizeIndex = RecordOneTable * index;
-//        int indexStart = sizeIndex - RecordOneTable;
-//        for (Sach sach : _lstSach) {
-//            this.table1.addRow(sach.toDataRow());
-//        }
-//
-//    }
     public void setColorButtonSelected(int index) {
         for (Button btn : listBtn) {
             btn.setBackground(Color.WHITE);
@@ -496,15 +465,30 @@ public class Sach_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTaoSP1ActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
-        int confirmExport = JOptionPane.showConfirmDialog(this, "Xác nhận?");
-        if (confirmExport == JOptionPane.YES_OPTION) {
-            String fileName = JOptionPane.showInputDialog("Tên file muốn lưu?");
-            boolean exportStatus = exportExcel(fileName);
-            JOptionPane.showMessageDialog(this, exportStatus ? "Thành công" : "Thất bại");
-        }
+        exportExcel();
     }//GEN-LAST:event_btnExportActionPerformed
 
-    private boolean exportExcel(String fileName) {
+    private void exportExcel() {
+
+        JFileChooser fileChooser = new JFileChooser(_currentDirectory);
+        fileChooser.setPreferredSize(new Dimension(800, 600));
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Excel", ".xlsx"));
+        fileChooser.showSaveDialog(this);
+        File file = fileChooser.getSelectedFile();
+        if(file == null) {
+            return;
+        }
+        if (!file.exists()) {
+            try {
+                file.mkdirs();
+                file = new File(file.getAbsolutePath() + ".xlsx");
+                file.createNewFile();
+                _currentDirectory = file.getParent();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("book");
         String[] header = new String[]{"Id", "IdNXB", "IdViTri", "Mã sách", "Tên sách", "Số lượng", "Số trang", "Giá nhập", "Giá bán", "Trạng thái", "BarCode", "Mô tả"};
@@ -527,37 +511,18 @@ public class Sach_Form extends javax.swing.JPanel {
 
         }
 
-        File directory = new File("Excel");
-        File file = new File("Excel//DanhSachSach" + fileName + ".xlsx");
-        if (!file.exists()) {
-            directory.mkdirs();
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            int confirm = JOptionPane.showConfirmDialog(this, "File đã tồn tại. Bạn muốn ghi đè không?");
-            if (confirm != JOptionPane.YES_OPTION) {
-                return false;
-            }
-        }
-
         try ( FileOutputStream outputStream = new FileOutputStream(file)) {
             workbook.write(outputStream);
-            System.out.println("Ghi thành công");
+            ThongBao.showNoti_Succes(this, "Ghi file thành công");
         } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(this, "File đang được mở ở một nơi khác không thể sửa");
-            return false;
+            ThongBao.showNoti_Error(this, "File đang được mở ở một nơi khác không thể sửa");
         } catch (IOException ex) {
             ex.printStackTrace();
-            return false;
         }
-        return true;
     }
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
+        
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed

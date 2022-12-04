@@ -4,18 +4,14 @@
  */
 package View;
 
-import View.Form_Management.BieuDo_Form;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,9 +19,9 @@ import javax.swing.JOptionPane;
  */
 public class ThongBao {
 
-    static int YES = 1;
-    static int NO = 0;
-    static int CONTINUE = 2;
+    public static int YES = 1;
+    public static int NO = 0;
+    public static int CONTINUE = 2;
     static int Selected = -1;
     static int width = 441, height = 215;
     static Icon iconSuccess = new ImageIcon("image/icons8_ok_65px.png");
