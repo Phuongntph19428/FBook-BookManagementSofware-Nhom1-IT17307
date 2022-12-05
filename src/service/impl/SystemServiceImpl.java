@@ -23,6 +23,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -73,17 +74,16 @@ public class SystemServiceImpl implements ISystemService {
                 + "            color: white;\n"
                 + "            font-family: sans-serif;\">\n"
                 + "                <th style=\"width: 250px; height: 53px;\"><span>Tên Sách</span></th>\n"
-                + "                <th style=\"width: 250px;\"><span>Hình Ảnh</span></th>\n"
-                + "                <th style=\"width: 250px;\"><span>Số Lượng</span></th>\n"
+                + "                <th style=\"width: 250px;\"><span>Số Lượng Hiện Có</span></th>\n"
                 + "                <th style=\"width: 250px;\"><span>Giá Nhập</span></th>\n"
                 + "            </tr>\n";
         for (Sach sach : list) {
-            content += "Tên Sách: " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
+            content += "Tên " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
             // Item HTML
-            
+            Base64.Encoder encoder = Base64.getEncoder();
+            String encoding =encoder.encodeToString(sach.getHinh());
             String itemSach = "<tr style=\"font-family: sans-serif;border: none; height: 48px;\">\n"
                     + "                <td class=\"lalign\">" + sach.getTen() + "</td>\n"
-                    + "                <td>"+new ImageIcon(new ImageIcon(sach.getHinh()).getImage().getScaledInstance(44, 44, Image.SCALE_DEFAULT))+"</td>\n"
                     + "                <td>" + sach.getSoLuong() + "</td>\n"
                     + "                <td>6,000</td>\n"
                     + "            </tr>\n";
@@ -97,12 +97,12 @@ public class SystemServiceImpl implements ISystemService {
 
         System.out.println("bat dau gui");
         if (hinhThuc == 1) {
-            SendSMS("396189965", content);
+            SendSMS(sdt, content);
         } else if (hinhThuc == 2) {
-            sendEmail("quanchun11022@gmail.com", htmlSendSMS);
+            sendEmail(email, htmlSendSMS);
         } else {
-            SendSMS("396189965", content);
-            sendEmail("quanchun11022@gmail.com", htmlSendSMS);
+            SendSMS(sdt, content);
+            sendEmail(email, htmlSendSMS);
         }
     }
 
@@ -112,8 +112,8 @@ public class SystemServiceImpl implements ISystemService {
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
-                new com.twilio.type.PhoneNumber("+84396189965"),
-                "MG460bfa62917ce55950114f6444d25e08", "Những Sách sắp hết hàng \n" + content)
+                new com.twilio.type.PhoneNumber("+84"+PhoneNumber),
+                "MG460bfa62917ce55950114f6444d25e08", "Những Sách sắp hết hàng \n" + ct)
                 .create();
 
         System.out.println(message.getSid());

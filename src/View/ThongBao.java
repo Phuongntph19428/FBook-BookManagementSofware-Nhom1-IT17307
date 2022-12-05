@@ -61,7 +61,8 @@ public class ThongBao {
         JDialog j = new JDialog();
         j.setResizable(false);
         j.setSize(531, 186);
-        j.setLocation(frame.getSize().width / 2 - 30, frame.getSize().height / 2 - 110);
+        j.setLocation(frame.getSize().width / 2, frame.getSize().height / 2);
+        j.setLocationRelativeTo(null);
         j.setUndecorated(true);
         notifi.getButtonYes().addActionListener(new ActionListener() {
             @Override
