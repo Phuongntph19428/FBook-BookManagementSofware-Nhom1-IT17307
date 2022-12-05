@@ -46,8 +46,8 @@ public class HibernateUtil {
         prop.put(Environment.DIALECT, "org.hibernate.dialect.SQLServer2008Dialect");
         prop.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
         prop.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=PROP1041_QuanLySach;encrypt=true;trustServerCertificate=true;");
-        prop.put(Environment.USER, "ducanh123");
-        prop.put(Environment.PASS, "12345678900");
+        prop.put(Environment.USER, "sa");
+        prop.put(Environment.PASS, "123456");
         prop.put(Environment.SHOW_SQL, "true");
         
 //        prop.put(Environment.HBM2DDL_AUTO, "create");
