@@ -38,7 +38,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnInBaoCao" min="-2" pref="159" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="combobox1" min="-2" pref="156" max="-2" attributes="0"/>
+                      <Component id="cbNgayHienTai" min="-2" pref="156" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel4" alignment="0" pref="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
@@ -61,7 +61,7 @@
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="combobox1" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbNgayHienTai" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
                       <Component id="btnInBaoCao" min="-2" pref="53" max="-2" attributes="0"/>
@@ -92,33 +92,33 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                  <Component id="panelHoaDon" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelHoaDon3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="panelHoaDon2" min="-2" pref="330" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="panelHoaDon1" min="-2" pref="330" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="panelHoaDon4" min="-2" pref="330" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="panelHoaDon5" min="-2" pref="317" max="-2" attributes="0"/>
+                  <Component id="panelHoaDon0" min="-2" pref="317" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="panelHoaDon" alignment="1" max="32767" attributes="0"/>
+              <Component id="panelHoaDon3" alignment="1" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="panelHoaDon5" alignment="1" pref="208" max="32767" attributes="0"/>
-                      <Component id="panelHoaDon4" alignment="1" pref="208" max="32767" attributes="0"/>
-                      <Component id="panelHoaDon1" pref="208" max="32767" attributes="0"/>
+                      <Component id="panelHoaDon0" alignment="1" pref="208" max="32767" attributes="0"/>
+                      <Component id="panelHoaDon1" alignment="1" pref="208" max="32767" attributes="0"/>
+                      <Component id="panelHoaDon2" pref="208" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon">
+        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon3">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="44" green="1c" red="11" type="rgb"/>
@@ -136,7 +136,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="lblPhanTram3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblgach3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="19" max="32767" attributes="0"/>
                   </Group>
@@ -169,7 +169,7 @@
                           <Component id="lblPhanTram3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblgach3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbHoaDon" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
@@ -208,7 +208,7 @@
                 <Property name="text" type="java.lang.String" value="H&#xf3;a &#x110;&#x1a1;n    -"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JPanel" name="lblgach3">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="cc" red="0" type="rgb"/>
@@ -274,7 +274,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon1">
+        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon2">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="44" green="1c" red="11" type="rgb"/>
@@ -314,7 +314,7 @@
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="lblPhanTram2" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblgach2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
                           </Group>
@@ -331,7 +331,7 @@
                           <Component id="lblPhanTram2" min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblgach2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
@@ -359,7 +359,7 @@
                 <Property name="text" type="java.lang.String" value="Th&#xe1;ng 10"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel3">
+            <Container class="javax.swing.JPanel" name="lblgach2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="cc" red="0" type="rgb"/>
@@ -436,7 +436,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon4">
+        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="44" green="1c" red="11" type="rgb"/>
@@ -473,7 +473,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="lblPhanTram1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblgach1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -490,7 +490,7 @@
                           <Component id="lblPhanTram1" min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                      <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblgach1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel11" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
@@ -528,7 +528,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel5">
+            <Container class="javax.swing.JPanel" name="lblgach1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -605,7 +605,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon5">
+        <Container class="View.DesignComponent.JPanelBourder" name="panelHoaDon0">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="44" green="1c" red="11" type="rgb"/>
@@ -631,7 +631,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="21" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jPanel6" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblgach0" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jLabel28" alignment="0" max="32767" attributes="0"/>
@@ -659,7 +659,7 @@
                           <Component id="lblPhanTram0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblgach0" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel28" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
@@ -697,7 +697,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel6">
+            <Container class="javax.swing.JPanel" name="lblgach0">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="cc" red="0" type="rgb"/>
@@ -772,7 +772,6 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="cc" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="5,5%"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -936,7 +935,7 @@
         <Property name="text" type="java.lang.String" value="Dashboard"/>
       </Properties>
     </Component>
-    <Component class="View.DesignComponent.Combobox" name="combobox1">
+    <Component class="View.DesignComponent.Combobox" name="cbNgayHienTai">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="37" green="14" red="b" type="rgb"/>
@@ -945,9 +944,7 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="18/11/2022"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI Light" size="18" style="0"/>
@@ -955,7 +952,7 @@
         <Property name="labeText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="combobox1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbNgayHienTaiActionPerformed"/>
       </Events>
     </Component>
     <Component class="View.ButtonDesign.Button" name="btnInBaoCao">
