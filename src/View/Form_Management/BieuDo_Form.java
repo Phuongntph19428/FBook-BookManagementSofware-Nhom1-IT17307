@@ -154,20 +154,29 @@ public class BieuDo_Form extends javax.swing.JPanel {
     }
 
     private void phanTramDoanhThuTheoThang3() {
-        DecimalFormat df = new DecimalFormat("####");
-        double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien2().get(0)));
-        double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien3().get(0)));
-        double c = ((a - b) / b) * 100;
-        lblPhanTram2.setText(df.format(c) + "%");
+        try {
+            DecimalFormat df = new DecimalFormat("####");
+            double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien2().get(0)));
+            double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien3().get(0)));
+            double c = ((a - b) / b) * 100;
+            lblPhanTram2.setText(df.format(c) + "%");
+        } catch (Exception e) {
+            lblPhanTram2.setText("0" + "%");
+
+        }
 
     }
 
     private void phanTramDoanhThuTheoThang2() {
-        DecimalFormat df = new DecimalFormat("####");
-        double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien1().get(0)));
-        double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien2().get(0)));
-        double c = ((a - b) / b) * 100;
-        lblPhanTram1.setText(df.format(c) + "%");
+        try {
+            DecimalFormat df = new DecimalFormat("####");
+            double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien1().get(0)));
+            double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien2().get(0)));
+            double c = ((a - b) / b) * 100;
+            lblPhanTram1.setText(df.format(c) + "%");
+        } catch (Exception e) {
+            lblPhanTram1.setText("0" + "%");
+        }
 
     }
 
