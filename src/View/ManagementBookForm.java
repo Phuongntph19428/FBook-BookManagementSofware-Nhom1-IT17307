@@ -6,10 +6,11 @@ package View;
 
 import View.Form_Management.BieuDo_Form;
 import View.DesignComponent.Notification;
+import View.Form_Management.CaiDat_Form;
 import View.Form_Management.Pos_MayBanHang;
 import View.Form_Management.ChucVu_Form;
 import View.Form_Management.HoaDon_Form;
-import View.Form_Management.KhachHang_Form;  
+import View.Form_Management.KhachHang_Form;
 import View.Form_Management.KhuyenMaiChiTiet_Form;
 import View.Form_Management.KhuyenMai_Form;
 import View.Form_Management.NXB_Form;
@@ -42,6 +43,7 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -295,6 +297,12 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 }
             }
         });
+        if (Auth.getNhanVien() != null) {
+            lbUser.setText(Auth.getNhanVien().getTen());
+
+        } else {
+            lbUser.setText("Mazk Kuno");
+        }
     }
     private List<MenuItem> listItemCha = new ArrayList<>();
 
@@ -465,7 +473,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem menuDangXuat = new MenuItem(iconLO, "                 Đăng Xuất", null);
         menuDangXuat.setBackground(ColorFrame.COLOR_KEY);
         menuDangXuat.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
-        if (Auth.getNhanVien().getChucVu().getMa().equalsIgnoreCase("nv")) {
+        if (Auth.getNhanVien().getChucVu().getMa().equalsIgnoreCase(Auth.NHAN_VIEN_BAN_HANG)) {
             System.out.println("Mã  " + Auth.getNhanVien().getChucVu().getMa());
             addMenu(menuHoaDon, menuKH_NCC, menuDangXuat);
         } else {
@@ -882,6 +890,11 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         button1.setBackground(new java.awt.Color(29, 32, 57));
         button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_settings_25px.png"))); // NOI18N
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         button2.setBackground(new java.awt.Color(29, 32, 57));
         button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/View/Image_Hub/icons8_doorbell_25px.png"))); // NOI18N
@@ -1085,6 +1098,16 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ThongBao thongbao = new ThongBao();
         thongbao.showNoti_Succes(this, "fwefwef");
     }//GEN-LAST:event_button2ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        JDialog j = new JDialog(this);
+        CaiDat_Form c = new CaiDat_Form();
+        c.getDatainFile();
+        j.setSize(620, 570);
+        j.add(c);
+        j.setLocationRelativeTo(null);
+        j.show(true);
+    }//GEN-LAST:event_button1ActionPerformed
 
     /**
      * @param args the command line arguments

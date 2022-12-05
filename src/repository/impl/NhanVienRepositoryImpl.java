@@ -113,6 +113,7 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
         }
     }
 
+    @Override
     public NhanVien getNhanVien(String ma, String password) {
         NhanVien nhanVien = null;
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {

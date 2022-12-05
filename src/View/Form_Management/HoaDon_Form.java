@@ -208,6 +208,11 @@ public class HoaDon_Form extends javax.swing.JPanel {
         btnRefresh = new View.ButtonDesign.Button();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        jPanelBourder13 = new View.DesignComponent.JPanelBourder();
+        jPanelBourder14 = new View.DesignComponent.JPanelBourder();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tblHinhThucThanhToan = new View.DesignComponent.Table();
+        lblTong = new javax.swing.JLabel();
         jPanelBourder10 = new View.DesignComponent.JPanelBourder();
         jLabel5 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -232,11 +237,11 @@ public class HoaDon_Form extends javax.swing.JPanel {
         lblTrangThai = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         btnQRGiaoHangThanhCong = new View.ButtonDesign.Button();
-        jPanelBourder13 = new View.DesignComponent.JPanelBourder();
-        jPanelBourder14 = new View.DesignComponent.JPanelBourder();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tblHinhThucThanhToan = new View.DesignComponent.Table();
-        lblTong = new javax.swing.JLabel();
+        jPanelBourder19 = new View.DesignComponent.JPanelBourder();
+        jPanelBourder20 = new View.DesignComponent.JPanelBourder();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tblHinhThucThanhToan2 = new View.DesignComponent.Table();
+        lblTong2 = new javax.swing.JLabel();
         btnHuyHoaDon = new View.ButtonDesign.Button();
         btnUpdateHoaDon = new View.ButtonDesign.Button();
         btnGiaoHangThanhCong = new View.ButtonDesign.Button();
@@ -922,17 +927,17 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
-        jPanelBourder13.setBackground(new java.awt.Color(47, 55, 90));
+        jPanelBourder19.setBackground(new java.awt.Color(47, 55, 90));
 
-        jPanelBourder14.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelBourder20.setBackground(new java.awt.Color(255, 255, 255));
 
-        jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane5.setBorder(null);
-        jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane5.setPreferredSize(new java.awt.Dimension(452, 395));
+        jScrollPane8.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane8.setBorder(null);
+        jScrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane8.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane8.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        tblHinhThucThanhToan.setModel(new javax.swing.table.DefaultTableModel(
+        tblHinhThucThanhToan2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -948,54 +953,34 @@ public class HoaDon_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblHinhThucThanhToan.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        tblHinhThucThanhToan.setRowHeight(40);
-        tblHinhThucThanhToan.setRowMargin(10);
-        tblHinhThucThanhToan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        tblHinhThucThanhToan.setShowGrid(true);
-        jScrollPane5.setViewportView(tblHinhThucThanhToan);
+        tblHinhThucThanhToan2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tblHinhThucThanhToan2.setRowHeight(40);
+        tblHinhThucThanhToan2.setRowMargin(10);
+        tblHinhThucThanhToan2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblHinhThucThanhToan2.setShowGrid(true);
+        jScrollPane8.setViewportView(tblHinhThucThanhToan2);
 
-        lblTong.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTong.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTong.setText("Tổng:");
+        jPanelBourder20.add(jScrollPane8);
 
-        javax.swing.GroupLayout jPanelBourder14Layout = new javax.swing.GroupLayout(jPanelBourder14);
-        jPanelBourder14.setLayout(jPanelBourder14Layout);
-        jPanelBourder14Layout.setHorizontalGroup(
-            jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBourder14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder14Layout.createSequentialGroup()
-                        .addGap(0, 35, Short.MAX_VALUE)
-                        .addComponent(lblTong, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanelBourder14Layout.setVerticalGroup(
-            jPanelBourder14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBourder14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblTong)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        lblTong2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTong2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTong2.setText("Tổng:");
+        jPanelBourder20.add(lblTong2);
 
-        javax.swing.GroupLayout jPanelBourder13Layout = new javax.swing.GroupLayout(jPanelBourder13);
-        jPanelBourder13.setLayout(jPanelBourder13Layout);
-        jPanelBourder13Layout.setHorizontalGroup(
-            jPanelBourder13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder13Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelBourder19Layout = new javax.swing.GroupLayout(jPanelBourder19);
+        jPanelBourder19.setLayout(jPanelBourder19Layout);
+        jPanelBourder19Layout.setHorizontalGroup(
+            jPanelBourder19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder19Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelBourder14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBourder20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(446, 446, 446))
         );
-        jPanelBourder13Layout.setVerticalGroup(
-            jPanelBourder13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder13Layout.createSequentialGroup()
+        jPanelBourder19Layout.setVerticalGroup(
+            jPanelBourder19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder19Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelBourder14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBourder20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
         );
 
@@ -1158,7 +1143,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
                     .addComponent(btnHuyHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdateHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGiaoHangThanhCong, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 24, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         tabPaneHoaDon.addTab("Hóa Đơn Chi Tiết", jPanel5);
@@ -1169,7 +1154,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabPaneHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 1365, Short.MAX_VALUE))
+                .addComponent(tabPaneHoaDon))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1533,18 +1518,22 @@ public class HoaDon_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder14;
     private View.DesignComponent.JPanelBourder jPanelBourder15;
     private View.DesignComponent.JPanelBourder jPanelBourder16;
+    private View.DesignComponent.JPanelBourder jPanelBourder19;
+    private View.DesignComponent.JPanelBourder jPanelBourder20;
     private View.DesignComponent.JPanelBourder jPanelBourder7;
     private View.DesignComponent.JPanelBourder jPanelBourder9;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JLabel lblDiemSuDung;
     private javax.swing.JLabel lblKhachHang;
     private javax.swing.JLabel lblMaHD;
     private javax.swing.JLabel lblNgayTao;
     private javax.swing.JLabel lblNhanVien;
     private javax.swing.JLabel lblTong;
+    private javax.swing.JLabel lblTong2;
     private javax.swing.JLabel lblTongTien;
     private javax.swing.JLabel lblTongTienDialogUpdate;
     private javax.swing.JLabel lblTrangThai;
@@ -1556,6 +1545,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdoTatCa;
     private javax.swing.JTabbedPane tabPaneHoaDon;
     private View.DesignComponent.Table tblHinhThucThanhToan;
+    private View.DesignComponent.Table tblHinhThucThanhToan2;
     private View.DesignComponent.Table tblHoaDon;
     private View.DesignComponent.Table tblHoaDonCTDialogUpdate;
     private View.DesignComponent.Table tblHoaDonChiTiet;

@@ -6,6 +6,8 @@ package util;
 
 import model.ChucVu;
 import model.NhanVien;
+import repository.NhanVienRepository;
+import repository.impl.NhanVienRepositoryImpl;
 
 /**
  *
@@ -16,10 +18,12 @@ public class Auth {
     private static NhanVien nhanVien = new NhanVien("2D687099-FC5F-439D-A93D-019423C45BFF", chucVu, "NV01", "A", "Nguyễn", "Văn", "Nam", null,
             "A@gmail.com", "0123456", "Hà Nội", "123456", null, 1);
     public static final String QUAN_LY = "QuanLy";
-    public static final String NHAN_VIEN_BAN_HANG = "nv";
+    public static final String NHAN_VIEN_BAN_HANG = "NhanVien";
     
     private static NhanVien nVien;
     private static ChucVu cVu;
+    
+    NhanVienRepository nvRepo = new NhanVienRepositoryImpl();
     
     public static NhanVien getNhanVien() {
         return nhanVien;
@@ -32,7 +36,13 @@ public class Auth {
     public static void setChucVu(ChucVu cv){
         cVu = cv;
     }
-    public static NhanVien getNhanVieninDatabase(String userName , String passWord){
-        return null;
+    public boolean getNhanVieninDatabase(String userName , String passWord){
+        NhanVien nhanVien1 = nvRepo.getNhanVien(userName, passWord);
+        if(nhanVien1 == null){
+            return false;
+        }
+        setNhanVien(nhanVien1);
+        setChucVu(nhanVien1.getChucVu());
+        return true;
     }
 }

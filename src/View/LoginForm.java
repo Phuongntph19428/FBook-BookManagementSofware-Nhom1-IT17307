@@ -22,13 +22,11 @@ import util.MyMD5;
  */
 public class LoginForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form LoginForm
-     */
+     Auth auth = new Auth();
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-
+       
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 10, 10));
         ImageIcon img = new ImageIcon("image/logo_icon2.png");
         this.setIconImage(img.getImage());
@@ -250,27 +248,19 @@ public class LoginForm extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String userName = this.txtUserName.getText().trim();
         String password = MyMD5.getMd5(this.txtPassword.getText().trim());
-        //String id, ChucVu chucVu, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai
-//        if (userName.equals("NV1") && password.equals("e10adc3949ba59abbe56e057f20f883e")) {
-//            ChucVu chucVu = new ChucVu("2D687099-FC5F-439D-A93D-019423C45BFF","QuanLy", "Nhân Viên Order", "None");
-//            NhanVien nv = new NhanVien("2D687099-FC5F-439D-A93D-019423C45BFF", chucVu, "NV01", "A", "Nguyễn", "Văn", "Nam", null,
-//                    "A@gmail.com", "0123456", "Hà Nội", "123456", null, 1);
-//            Auth.setNhanVien(nv);
-//            Auth.setChucVu(chucVu);
-//            
-//        }
-        ChucVu chucVu = new ChucVu("2D687099-FC5F-439D-A93D-019423C45BFF", "nv", "Nhân Viên Order", "None");
-        NhanVien nv = new NhanVien("2D687099-FC5F-439D-A93D-019423C45BFF", chucVu, "NV01", "A", "Nguyễn", "Văn", "Nam", null,
-                "A@gmail.com", "0123456", "Hà Nội", "123456", null, 1);
-        Auth.setNhanVien(nv);
-        Auth.setChucVu(chucVu);
 
-        this.setVisible(false);
+        
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         System.out.println(timeStamp);
-        
-       SplassScreen_Form spl = new SplassScreen_Form(null, true);
-       spl.setVisible(true);
+        boolean loginCheck = false;
+        loginCheck = auth.getNhanVieninDatabase(userName, password);
+        if(loginCheck == false){
+            ThongBao.showNoti_Error(this, "Sai tài khoản hoặc mật khẩu");
+            return ;
+        }
+        this.setVisible(false);
+        SplassScreen_Form spl = new SplassScreen_Form(null, true);
+        spl.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
