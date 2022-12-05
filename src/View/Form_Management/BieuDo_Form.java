@@ -122,6 +122,11 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
         dateFormat.format(c1.getTime());
 
+//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(0))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(0))), 0, 1}));
+//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(1))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(1))), 0, 300}));
+//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(2))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(2))), 0, 400}));
+//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(3))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(3))), 0, 600}));
+//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(4))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(4))), 0, 700}));
 
         try {
             if (donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1().get(0) == null) {
@@ -203,7 +208,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
     }
 
     private void daTaBieuDoTron() {
-        
 
         try {
             pieChart1.addData(new ModelPieChart(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(0)), Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0))), new Color(255, 188, 0)));
@@ -1042,8 +1046,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 // mở file để thực hiện viết
                 document.open();
                 // thêm nội dung sử dụng add function
-//            document.add(new Paragraph(hd1));
-//            document.add(new Paragraph(hd));
+
 
                 PdfPTable table = new PdfPTable(3);
                 PdfPTable table1 = new PdfPTable(5);
@@ -1084,20 +1087,14 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 Paragraph paragraph17 = new Paragraph("3. Top 5 San Pham Ban Chay Tai Cua Hang.");
                 Paragraph paragraph23 = new Paragraph("4. Thu Chi 5 Ngay Gan Nhat .");
                 Paragraph paragraph18 = new Paragraph("- Top 1 San Pham: ");
-                Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(0)));
-                Paragraph paragraph34 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0)));
+
                 Paragraph paragraph19 = new Paragraph("- Top 2 San Pham: ");
-                Paragraph paragraph35 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(1)));
-                Paragraph paragraph36 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(1)));
+
                 Paragraph paragraph20 = new Paragraph("- Top 3 San Pham: ");
-                Paragraph paragraph37 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(2)));
-                Paragraph paragraph38 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(2)));
+
                 Paragraph paragraph21 = new Paragraph("- Top 4 San Pham: ");
-                Paragraph paragraph39 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(3)));
-                Paragraph paragraph40 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(3)));
+
                 Paragraph paragraph22 = new Paragraph("- Top 5 San Pham: ");
-                Paragraph paragraph41 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(4)));
-                Paragraph paragraph42 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(4)));
 
                 Paragraph paragraph5 = new Paragraph("");
                 PdfPCell header1 = new PdfPCell(new Paragraph("- Doanh Thu " + lblThang2.getText().trim() + "    "));
@@ -1208,8 +1205,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                     PdfPCell header34 = new PdfPCell(new Paragraph("Chi: 0" + " VND"));
                     table1.addCell(header34);
                 }
-//       
-                //Định dạng đoạn văn bản thứ nhất
+
                 paragraph1.setIndentationLeft(80);
 
                 paragraph1.setAlignment(Element.ALIGN_CENTER);
@@ -1217,8 +1213,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 paragraph3.setIndentationLeft(80);
 
                 paragraph3.setAlignment(Element.ALIGN_CENTER);
-//                paragraph3.setSpacingAfter(15);
-                //Đinh dạng đoạn văn bản thứ 2
+
                 paragraph2.setSpacingBefore(15);
                 paragraph2.setAlignment(Element.ALIGN_LEFT);
                 paragraph5.setSpacingBefore(15);
@@ -1230,38 +1225,8 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 paragraph25.setAlignment(Element.ALIGN_LEFT);
                 paragraph26.setIndentationLeft(52);
                 paragraph26.setAlignment(Element.ALIGN_LEFT);
-                paragraph33.setIndentationLeft(80);
-                paragraph33.setIndentationRight(230);
-                paragraph33.setAlignment(Element.ALIGN_LEFT);
-                paragraph34.setIndentationLeft(80);
-                paragraph34.setIndentationRight(230);
-                paragraph34.setAlignment(Element.ALIGN_LEFT);
-                paragraph35.setIndentationLeft(80);
-                paragraph35.setIndentationRight(230);
-                paragraph35.setAlignment(Element.ALIGN_LEFT);
-                paragraph36.setIndentationLeft(80);
-                paragraph36.setIndentationRight(230);
-                paragraph36.setAlignment(Element.ALIGN_LEFT);
-                paragraph37.setIndentationLeft(80);
-                paragraph37.setIndentationRight(230);
-                paragraph37.setAlignment(Element.ALIGN_LEFT);
-                paragraph38.setIndentationLeft(80);
-                paragraph38.setIndentationRight(230);
-                paragraph38.setAlignment(Element.ALIGN_LEFT);
-                paragraph39.setIndentationLeft(80);
-                paragraph39.setIndentationRight(230);
-                paragraph39.setAlignment(Element.ALIGN_LEFT);
-                paragraph40.setIndentationLeft(80);
-                paragraph40.setIndentationRight(230);
-                paragraph40.setAlignment(Element.ALIGN_LEFT);
-                paragraph41.setIndentationLeft(80);
-                paragraph41.setIndentationRight(230);
-                paragraph41.setAlignment(Element.ALIGN_LEFT);
-                paragraph42.setIndentationLeft(80);
-                paragraph42.setIndentationRight(230);
-                paragraph42.setAlignment(Element.ALIGN_LEFT);
 
-                //Thêm 2 đoạn văn bản vào document
+     
                 document.add(paragraph16);
                 document.add(paragraph3);
                 document.add(paragraph1);
@@ -1271,7 +1236,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph2);
                 document.add(paragraph5);
 
-             
                 paragraph18.setIndentationLeft(52);
                 paragraph18.setAlignment(Element.ALIGN_LEFT);
                 paragraph19.setIndentationLeft(52);
@@ -1287,20 +1251,133 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(table);
                 document.add(paragraph17);
                 document.add(paragraph18);
-                document.add(paragraph33);
-                document.add(paragraph34);
+                try {
+                    Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(99999)));
+                    Paragraph paragraph34 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0)));
+                    paragraph33.setIndentationLeft(80);
+                    paragraph33.setIndentationRight(230);
+                    paragraph33.setAlignment(Element.ALIGN_LEFT);
+                    paragraph34.setIndentationLeft(80);
+                    paragraph34.setIndentationRight(230);
+                    paragraph34.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph33);
+                    document.add(paragraph34);
+                } catch (Exception e) {
+                    Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " + "khong co");
+                    Paragraph paragraph34 = new Paragraph("+ So Luong: 0");
+                    paragraph33.setIndentationLeft(80);
+                    paragraph33.setIndentationRight(230);
+                    paragraph33.setAlignment(Element.ALIGN_LEFT);
+                    paragraph34.setIndentationLeft(80);
+                    paragraph34.setIndentationRight(230);
+                    paragraph34.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph33);
+                    document.add(paragraph34);
+                }
+
                 document.add(paragraph19);
-                document.add(paragraph35);
-                document.add(paragraph36);
+                try {
+                    Paragraph paragraph35 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(1)));
+                    Paragraph paragraph36 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(1)));
+                    paragraph35.setIndentationLeft(80);
+                    paragraph35.setIndentationRight(230);
+                    paragraph35.setAlignment(Element.ALIGN_LEFT);
+                    paragraph36.setIndentationLeft(80);
+                    paragraph36.setIndentationRight(230);
+                    paragraph36.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph35);
+                    document.add(paragraph36);
+                } catch (Exception e) {
+                    Paragraph paragraph35 = new Paragraph("+ Ten San Pham: " + "khong co");
+                    Paragraph paragraph36 = new Paragraph("+ So Luong: 0");
+                    paragraph35.setIndentationLeft(80);
+                    paragraph35.setIndentationRight(230);
+                    paragraph35.setAlignment(Element.ALIGN_LEFT);
+                    paragraph36.setIndentationLeft(80);
+                    paragraph36.setIndentationRight(230);
+                    paragraph36.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph35);
+                    document.add(paragraph36);
+                }
                 document.add(paragraph20);
-                document.add(paragraph37);
-                document.add(paragraph38);
+
+                try {
+
+                    Paragraph paragraph37 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(2)));
+                    Paragraph paragraph38 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(2)));
+                    paragraph37.setIndentationLeft(80);
+                    paragraph37.setIndentationRight(230);
+                    paragraph37.setAlignment(Element.ALIGN_LEFT);
+                    paragraph38.setIndentationLeft(80);
+                    paragraph38.setIndentationRight(230);
+                    paragraph38.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph37);
+                    document.add(paragraph38);
+                } catch (Exception e) {
+
+                    Paragraph paragraph37 = new Paragraph("+ Ten San Pham: " + "khong co");
+                    Paragraph paragraph38 = new Paragraph("+ So Luong: 0");
+                    paragraph37.setIndentationLeft(80);
+                    paragraph37.setIndentationRight(230);
+                    paragraph37.setAlignment(Element.ALIGN_LEFT);
+                    paragraph38.setIndentationLeft(80);
+                    paragraph38.setIndentationRight(230);
+                    paragraph38.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph37);
+                    document.add(paragraph38);
+                }
                 document.add(paragraph21);
-                document.add(paragraph39);
-                document.add(paragraph40);
+
+                try {
+                    Paragraph paragraph39 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(3)));
+                    Paragraph paragraph40 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(3)));
+                    paragraph39.setIndentationLeft(80);
+                    paragraph39.setIndentationRight(230);
+                    paragraph39.setAlignment(Element.ALIGN_LEFT);
+                    paragraph40.setIndentationLeft(80);
+                    paragraph40.setIndentationRight(230);
+                    paragraph40.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph39);
+                    document.add(paragraph40);
+                } catch (Exception e) {
+                    Paragraph paragraph39 = new Paragraph("+ Ten San Pham: " + "khong co");
+                    Paragraph paragraph40 = new Paragraph("+ So Luong: 0");
+                    paragraph39.setIndentationLeft(80);
+                    paragraph39.setIndentationRight(230);
+                    paragraph39.setAlignment(Element.ALIGN_LEFT);
+                    paragraph40.setIndentationLeft(80);
+                    paragraph40.setIndentationRight(230);
+                    paragraph40.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph39);
+                    document.add(paragraph40);
+                }
                 document.add(paragraph22);
-                document.add(paragraph41);
-                document.add(paragraph42);
+                try {
+
+                    Paragraph paragraph41 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(4)));
+                    Paragraph paragraph42 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(4)));
+                    paragraph41.setIndentationLeft(80);
+                    paragraph41.setIndentationRight(230);
+                    paragraph41.setAlignment(Element.ALIGN_LEFT);
+                    paragraph42.setIndentationLeft(80);
+                    paragraph42.setIndentationRight(230);
+                    paragraph42.setAlignment(Element.ALIGN_LEFT);
+
+                    document.add(paragraph41);
+                    document.add(paragraph42);
+                } catch (Exception e) {
+
+                    Paragraph paragraph41 = new Paragraph("+ Ten San Pham: " + "khong co");
+                    Paragraph paragraph42 = new Paragraph("+ So Luong: 0");
+                    paragraph41.setIndentationLeft(80);
+                    paragraph41.setIndentationRight(230);
+                    paragraph41.setAlignment(Element.ALIGN_LEFT);
+                    paragraph42.setIndentationLeft(80);
+                    paragraph42.setIndentationRight(230);
+                    paragraph42.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paragraph41);
+                    document.add(paragraph42);
+                }
                 document.add(paragraph23);
                 document.add(paragraph5);
                 document.add(table1);
