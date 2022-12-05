@@ -9,7 +9,7 @@ import View.DesignComponent.Notification;
 import View.Form_Management.Pos_MayBanHang;
 import View.Form_Management.ChucVu_Form;
 import View.Form_Management.HoaDon_Form;
-import View.Form_Management.KhachHang_Form;
+import View.Form_Management.KhachHang_Form;  
 import View.Form_Management.KhuyenMaiChiTiet_Form;
 import View.Form_Management.KhuyenMai_Form;
 import View.Form_Management.NXB_Form;
@@ -42,15 +42,12 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import javax.swing.border.LineBorder;
 import model.NhanVien;
-import model.PhieuNhapChiTiet;
 import util.Auth;
 
 /**
@@ -511,6 +508,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 if (index == 2) {
                     sach.loadAll();
                 }
+                System.out.println("index: " + index);
                 showJPanel(index);
 
             }
@@ -641,6 +639,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setMaximumSize(new java.awt.Dimension(1635, 966));
+        setMinimumSize(new java.awt.Dimension(1635, 966));
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

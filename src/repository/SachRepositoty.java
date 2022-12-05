@@ -17,9 +17,13 @@ public interface SachRepositoty {
 
     public boolean insertSach(Sach sach);
     
+    public boolean insertSach(List<Sach> lstSach);
+    
     public boolean updateSach(Sach sach);
     
     public boolean updateSoLuongSach(String id, int soLuong);
+    
+    public boolean updateSoLuongSach(List<Sach> lstSachUpdate);
     
     public Sach getSachByMa(String ma);
     
@@ -32,5 +36,9 @@ public interface SachRepositoty {
     public boolean updateSachTacGia(List<SachTacGia> lstSachTacGia);
     
     public boolean updateTheLoaiChiTiet(List<TheLoaiChiTiet> lstTheLoaiChiTiet);
+    
+    public List<Sach> selectAllLowerThan(int soLuong); 
+    
+    public Sach selectUpdateSach(Sach sach);
     
 }

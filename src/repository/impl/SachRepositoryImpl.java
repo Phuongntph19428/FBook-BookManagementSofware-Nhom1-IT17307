@@ -6,6 +6,7 @@ package repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import model.Sach;
 import model.SachTacGia;
@@ -58,6 +59,36 @@ public class SachRepositoryImpl implements SachRepositoty {
     }
 
     @Override
+    public boolean insertSach(List<Sach> lstSach) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                int size = lstSach.size();
+                final int batchSize = 20;
+                for (int i = 0; i < size; i++) {
+                    Sach sachUpdate = session.get(Sach.class, lstSach.get(i).getId());
+                    if (sachUpdate != null) {
+                        sachUpdate.setSoLuong(sachUpdate.getSoLuong() + lstSach.get(i).getSoLuong());
+                        session.update(sachUpdate);
+                    } else {
+                        session.saveOrUpdate(lstSach.get(i));
+                    }
+                    if (i % batchSize == 0 && i != size && i != 0) {
+                        session.flush();
+                        session.clear();
+                    }
+                }
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+
+    @Override
     public boolean updateSach(Sach sach) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
@@ -94,15 +125,46 @@ public class SachRepositoryImpl implements SachRepositoty {
     }
 
     @Override
+    public boolean updateSoLuongSach(List<Sach> lstSachUpdate) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                int size = lstSachUpdate.size();
+                final int batchSize = 20;
+                for (int i = 0; i < size; i++) {
+                    Sach sachUpdate = session.get(Sach.class, lstSachUpdate.get(i).getId());
+                    if (sachUpdate != null) {
+                        sachUpdate.setSoLuong(sachUpdate.getSoLuong() + lstSachUpdate.get(i).getSoLuong());
+                    }
+                    session.saveOrUpdate(sachUpdate);
+                    if (i % batchSize == 0 && i != size && i != 0) {
+                        session.flush();
+                        session.clear();
+                    }
+                }
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+
+    @Override
     public Sach getSachByMa(String ma) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM Sach s WHERE s.ma = :ma";
             TypedQuery<Sach> query = session.createQuery(hql);
             query.setParameter("ma", ma);
 
-            List<Sach> lstsach = query.getResultList();
-         
-           return lstsach.get(0);
+            try {
+                List<Sach> lstsach = query.getResultList();
+                return lstsach.get(0);
+            } catch (Exception e) {
+                
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -213,6 +275,42 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return false;
             }
         }
+    }
+
+    @Override
+    public List<Sach> selectAllLowerThan(int soLuong) {
+        List<Sach> lstSach = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT s FROM Sach s WHERE s.soLuong < :soLuong";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("soLuong", soLuong);
+
+            lstSach = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstSach;
+    }
+
+    @Override
+    public Sach selectUpdateSach(Sach sach) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Sach s WHERE s.ma = :ma and s.id != :id";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("ma", sach.getMa());
+            query.setParameter("id", sach.getId());
+
+            try {
+                Sach sachUpdate = query.getSingleResult();
+                return sachUpdate;
+            } catch (NoResultException e) {
+                return null;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

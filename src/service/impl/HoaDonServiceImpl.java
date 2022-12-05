@@ -27,7 +27,12 @@ public class HoaDonServiceImpl implements HoaDonService {
     public boolean taoHoaDon(HoaDon hoaDon) {
         return _hoaDonRepo.taoHoaDon(hoaDon);
     }
-
+    
+    @Override
+    public HoaDon getByMaHD(String maHD) {
+        return _hoaDonRepo.getByMaHD(maHD);
+    }
+    
     @Override
     public boolean removeAllHoaDonCT(HoaDon hoaDon) {
         return _hoaDonRepo.deleteHoaDonChiTiet(hoaDon);
@@ -129,6 +134,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong0() {
         return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong0();
+    }
+
+    @Override
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon) {
+        return _hoaDonRepo.updateHoaDonChiTiet(lstHoaDonCT, hoaDon);
     }
 
 }

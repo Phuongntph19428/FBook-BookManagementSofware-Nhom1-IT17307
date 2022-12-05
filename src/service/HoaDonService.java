@@ -23,6 +23,8 @@ public interface HoaDonService {
     public boolean insertHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
 
     public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
+    
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon);
 
     public boolean updateHoaDon(HoaDon hoaDon);
 
@@ -38,21 +40,23 @@ public interface HoaDonService {
 
     public List<HoaDon> selectAllHoaDonDaThanhToan();
 
+    public HoaDon getByMaHD(String maHD);
+    
     public List<HoaDonChiTiet> getAllByMaHD(String maHD);
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien3();
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong3();
 
-       public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien2();
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien2();
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong2();
 
-       public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien1();
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien1();
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong1();
 
-     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien0();
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien0();
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong0();
 }

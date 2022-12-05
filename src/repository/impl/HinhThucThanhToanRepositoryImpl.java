@@ -44,10 +44,10 @@ public class HinhThucThanhToanRepositoryImpl implements HinhThucThanhToanReposit
             try {
                 final int batchSize = 20;
                 int size = lstHinhThucTT.size();
-                for (int i = 1; i < size; i++) {
-                    session.persist(lstHinhThucTT.get(i-1));
+                for (int i = 0; i < size; i++) {
+                    session.persist(lstHinhThucTT.get(i));
 
-                    if (i % batchSize == 0 && i != size) {
+                    if (i % batchSize == 0 && i != size && i != 0) {
                         session.flush();
                         session.clear();
                     }

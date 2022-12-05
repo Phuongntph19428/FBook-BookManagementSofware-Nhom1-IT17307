@@ -268,8 +268,9 @@ public class LoginForm extends javax.swing.JFrame {
         this.setVisible(false);
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         System.out.println(timeStamp);
-        ManagementBookForm mng = new ManagementBookForm();
-        mng.setVisible(true);
+        
+       SplassScreen_Form spl = new SplassScreen_Form(null, true);
+       spl.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -4,7 +4,6 @@
  */
 package repository.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -117,6 +116,32 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         }
     }
 
+    @Override
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon) {
+        deleteHoaDonChiTiet(hoaDon);
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                int size = lstHoaDonCT.size();
+                final int batchSize = 20;
+                for (int i = 0; i < size; i++) {
+                    HoaDonChiTiet hoaDonChiTiet = lstHoaDonCT.get(i);
+                    session.save(hoaDonChiTiet);
+                    if (i % batchSize == 0 && i != size && i != 0) {
+                        session.flush();
+                        session.clear();
+                    }
+                }
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+    
     @Override
     public boolean updateHoaDon(HoaDon hoaDon) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -435,5 +460,21 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             e.printStackTrace();
         }
         return lstHoaDon;
+    }
+
+    @Override
+    public HoaDon getByMaHD(String maHD) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT h FROM HoaDon h where h.ma = :ma";
+            TypedQuery<HoaDon> query = session.createQuery(hql);
+            query.setParameter("ma", maHD);
+
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

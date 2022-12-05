@@ -41,8 +41,6 @@ public class SachServiceImpl implements SachService {
 
     @Override
     public Sach getSachByMa(String ma) {
-        Sach sach = _sachRepo.getSachByMa(ma);
-        System.out.println(sach.getLstSachTacGia());
         return _sachRepo.getSachByMa(ma);
     }
 
@@ -69,5 +67,25 @@ public class SachServiceImpl implements SachService {
     @Override
     public boolean updateSoLuongSach(String id, int soLuong) {
         return _sachRepo.updateSoLuongSach(id, soLuong);
+    }
+
+    @Override
+    public boolean updateSoLuongSach(List<Sach> lstSachUpdate) {
+        return _sachRepo.updateSoLuongSach(lstSachUpdate);
+    }
+
+    @Override
+    public List<Sach> selectAllLowerThan(int soLuong) {
+        return _sachRepo.selectAllLowerThan(soLuong);
+    }
+
+    @Override
+    public Sach selectUpdateByMa(Sach sach) {
+        return _sachRepo.selectUpdateSach(sach);
+    }
+
+    @Override
+    public boolean insertSach(List<Sach> lstSach) {
+        return _sachRepo.insertSach(lstSach);
     }
 }
