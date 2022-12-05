@@ -1261,10 +1261,10 @@ public class HoaDon_Form extends javax.swing.JPanel {
                 }
 
                 _sachService.updateSoLuongSach(lstSach);
+                ThongBao.showNoti_Succes(this, "Thành công");
+                setFormHoaDonCT();
             }
         }
-        JOptionPane.showMessageDialog(this, "Thành công");
-        setFormHoaDonCT();
     }//GEN-LAST:event_btnHuyHoaDonActionPerformed
 
     private void loadTableHoaDonCTUpdate(List<HoaDonChiTiet> lstHoaDonCT) {
@@ -1291,15 +1291,19 @@ public class HoaDon_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnUpdateHoaDonActionPerformed
 
     private void btnGiaoHangThanhCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaoHangThanhCongActionPerformed
-        _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
-        _hoaDon.setNgayNhan(new Date());
-        _hoaDon.setNgayThanhToan(new Date());
-        _hoaDonService.updateHoaDon(_hoaDon);
-        List<HinhThucThanhToan> lstHinhThucTT = new ArrayList<>();
-        lstHinhThucTT.add(new HinhThucThanhToan(null, _hoaDon, HoaDon.DATHANHTOAN, _tongTien));
-        _hinhHinhThucThanhToanService.addHinhThucThanhToan(lstHinhThucTT);
-        JOptionPane.showMessageDialog(this, "Thành công");
-        setFormHoaDonCT();
+        ThongBao.showNoti_Confirm(this, "Xác nhận giao hàng thành công?");
+        if(ThongBao.getSelected() == ThongBao.YES) {
+            _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
+            _hoaDon.setNgayNhan(new Date());
+            _hoaDon.setNgayThanhToan(new Date());
+            _hoaDonService.updateHoaDon(_hoaDon);
+            List<HinhThucThanhToan> lstHinhThucTT = new ArrayList<>();
+            lstHinhThucTT.add(new HinhThucThanhToan(null, _hoaDon, HoaDon.DATHANHTOAN, _tongTien));
+            _hinhHinhThucThanhToanService.addHinhThucThanhToan(lstHinhThucTT);
+            ThongBao.showNoti_Succes(this, "Thành công");
+            setFormHoaDonCT();
+            
+        }
     }//GEN-LAST:event_btnGiaoHangThanhCongActionPerformed
 
     private void btnUpdateDialogUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDialogUpdateActionPerformed
@@ -1331,7 +1335,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             try {
                 cam.webcam.open();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Không thể mở camera");
+                ThongBao.showNoti_Error(this, "Không thể mở camera");
                 closedCam(cam);
             }
             while (true) {
@@ -1354,16 +1358,17 @@ public class HoaDon_Form extends javax.swing.JPanel {
                     closedCam(cam);
                     HoaDon hoaDon = _hoaDonService.getByMaHD(result + "");
                     if (hoaDon == null) {
-                        JOptionPane.showMessageDialog(this, "Không tìm thấy hóa đơn");
+                        ThongBao.showNoti_Error(this, "Không tìm thấy hóa đơn");
                         return;
                     }
 
                     if (hoaDon.getTrangThai() != HoaDon.DANGVANCHUYEN) {
-                        JOptionPane.showMessageDialog(this, "Hóa đơn hiện không đang trạng thái vận chuyển");
+                        ThongBao.showNoti_Error(this, "Hóa đơn hiện không đang trạng thái vận chuyển");
                         return;
                     }
 
-                    if (JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán?") == JOptionPane.YES_OPTION) {
+                    ThongBao.showNoti_Confirm(this, "Xác nhận thanh toán?");
+                    if (ThongBao.getSelected() == ThongBao.YES) {
                         hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
                         hoaDon.setNgayNhan(new Date());
                         hoaDon.setNgayThanhToan(new Date());
@@ -1372,6 +1377,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
                         setFormHoaDonCT();
                         KhachHang khachHang = _hoaDon.getKhachHang();
                         khachHang.setDiemTichLuy(khachHang.getDiemTichLuy() + _tongTien.divide(BigDecimal.valueOf(100000)).intValue());
+                        ThongBao.showNoti_Succes(this, "Thanh toán thành công");
                     }
                 }
 

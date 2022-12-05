@@ -347,7 +347,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
         int row = tblHoaDonChiTiet.getSelectedRow();
-        if(row == -1) {
+        if (row == -1) {
             return;
         }
         HoaDonChiTiet hoaDonCT = (HoaDonChiTiet) _lstHoaDonChiTiet.values().toArray()[row];
@@ -357,7 +357,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         int amountChanged = Integer.parseInt(tblHoaDonChiTiet.getValueAt(e.getFirstRow(), 3) + "");
 
         if (amountChanged <= 0) {
-            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0");
+            ThongBao.showNoti_Error(this, "Số lượng phải lớn hơn 0");
             tblHoaDonChiTiet.setValueAt(hoaDonCT.getSoLuong(), e.getFirstRow(), 3);
             return;
         }
@@ -386,7 +386,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private CustomSach getCustomSach(CustomSach customSach) {
 
         if (_hoaDon == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
+            ThongBao.showNoti_Error(this, "Bạn chưa chọn hóa đơn");
             return null;
         }
         String input = JOptionPane.showInputDialog(this, "Mời bạn nhập số lượng: ");
@@ -394,12 +394,12 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return null;
         }
         if (!input.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Không đúng định dạng");
+            ThongBao.showNoti_Error(this, "Không đúng định dạng");
             return null;
         }
 
         if (customSach.getSoLuong() < Integer.parseInt(input)) {
-            JOptionPane.showMessageDialog(this, "Số lượng không đủ.");
+            ThongBao.showNoti_Error(this, "Số lượng không đủ.");
             return null;
         }
         customSach.setSoLuong(Integer.parseInt(input));
@@ -409,7 +409,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void addHoaDonCT(CustomSach customSach) {
 
         if (_hoaDon == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
+            ThongBao.showNoti_Error(this, "Bạn chưa chọn hóa đơn");
             return;
         }
 
@@ -1998,8 +1998,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }
 
     private void btnThanhToanVaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanVaInActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán?");
-        if (confirm == JOptionPane.YES_OPTION) {
+        ThongBao.showNoti_Confirm(this, "Xác nhận thanh toán?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
             Date ngayThanhToan = new Date();
             _hoaDon.setNgayThanhToan(ngayThanhToan);
             _hoaDon.setNgayNhan(ngayThanhToan);
@@ -2016,7 +2016,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
             boolean updateStatus = _hoaDonService.updateHoaDon(_hoaDon);
             addHinhThucThanhToan();
-            JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
+            if (updateStatus) {
+                ThongBao.showNoti_Succes(this, "Thanh toán thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Thanh toán thất bại");
+            }
             loadTableHoaDon();
             clearTableHDCT();
             _hoaDon = null;
@@ -2055,8 +2059,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTienChuyenKhoanCaretUpdate
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận thanh toán?");
-        if (confirm == JOptionPane.YES_OPTION) {
+        ThongBao.showNoti_Confirm(this, "Xác nhận thanh toán?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
             Date ngayThanhToan = new Date();
             _hoaDon.setNgayThanhToan(ngayThanhToan);
             _hoaDon.setNgayNhan(ngayThanhToan);
@@ -2068,7 +2072,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
             boolean updateStatus = _hoaDonService.updateHoaDon(_hoaDon);
             addHinhThucThanhToan();
-            JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
+            if (updateStatus) {
+                ThongBao.showNoti_Succes(this, "Thanh toán thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Thanh toán thất bại");
+            }
             loadTableHoaDon();
             clearTableHDCT();
             _hoaDon = null;
@@ -2085,11 +2093,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private void btnDatHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatHangActionPerformed
         if (_khachHang == null) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng");
+            ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
-        int confirm = JOptionPane.showConfirmDialog(this, "Xác nhận đặt hàng?");
-        if (confirm == JOptionPane.YES_OPTION) {
+        ThongBao.showNoti_Confirm(this, "Xác nhận giao hàng?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
             Date ngayShip = new Date();
             _hoaDon.setKhachHang(_khachHang);
             _hoaDon.setNgayShip(ngayShip);
@@ -2097,7 +2105,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             PrintOrder print = new PrintOrder();
             print.printDelivery();
             boolean updateStatus = _hoaDonService.updateHoaDon(_hoaDon);
-            JOptionPane.showMessageDialog(this, updateStatus ? "Thành công" : "Thất bại");
+            if (updateStatus) {
+                ThongBao.showNoti_Succes(this, "Thanh toán thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Thanh toán thất bại");
+            }
             loadTableHoaDon();
             clearTableHDCT();
             _hoaDon = null;
@@ -2157,19 +2169,19 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void btnDeleteAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAllActionPerformed
 
         if (_hoaDon == null) {
-            JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn");
+            ThongBao.showNoti_Error(this, "Bạn chưa chọn hóa đơn");
             return;
         }
         if (_lstHoaDonChiTiet.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không có gì để xóa");
+            ThongBao.showNoti_Error(this, "Không có gì để xóa");
             return;
         }
-        int confirm = JOptionPane.showConfirmDialog(this, "Xóa toàn bộ?");
-        if (confirm == JOptionPane.YES_OPTION) {
+        ThongBao.showNoti_Confirm(this, "Xác nhận thanh toán?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
             _hoaDonService.removeAllHoaDonCT(_hoaDon);
             btnDeleteAll.setBackground(new Color(204, 204, 204));
             btnDeleteAll.setEnabled(false);
-            JOptionPane.showMessageDialog(this, "Đã xóa");
+            ThongBao.showNoti_Succes(this, "Đã xóa");
         }
     }//GEN-LAST:event_btnDeleteAllActionPerformed
 
@@ -2184,18 +2196,18 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         int row = tblHoaDonChiTiet.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn sản phẩm");
+            ThongBao.showNoti_Error(this, "Chưa chọn sản phẩm");
             return;
         }
 
         if (_hoaDon == null) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn hóa đơn");
+            ThongBao.showNoti_Error(this, "Chưa chọn hóa đơn");
             return;
         }
         for (HoaDonChiTiet hoaDonCT : _lstHoaDonChiTiet.values()) {
             if (hoaDonCT.getSach().getMa().equalsIgnoreCase(tblHoaDonChiTiet.getValueAt(row, 0) + "")) {
-                int confirm = JOptionPane.showConfirmDialog(this, "Xóa?");
-                if (confirm == JOptionPane.YES_OPTION) {
+                ThongBao.showNoti_Confirm(this, "Xác nhận xóa?");
+                if (ThongBao.getSelected() == ThongBao.YES) {
                     _hoaDonService.removeHoaDonChiTiet(hoaDonCT);
                 }
             }
@@ -2227,7 +2239,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             try {
                 cam.webcam.open();
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Không thể mở camera");
+                ThongBao.showNoti_Error(this, "Không thể mở camera");
                 closedCam(cam);
             }
             while (true) {
@@ -2249,16 +2261,16 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 if (result != null) {
                     MySoundEffect.play(MySoundEffect.PATH_SCAN_SUCCESS);
                     if (!(result + "").matches("\\d+")) {
-                        JOptionPane.showMessageDialog(this, "Barcode không hợp lệ");
+                        ThongBao.showNoti_Error(this, "Barcode không hợp lệ");
                         return;
                     }
                     CustomSach sach = _customSachService.getSachByBarCode(result + "");
                     if (sach == null) {
-                        JOptionPane.showMessageDialog(this, "Không tìm thấy");
+                        ThongBao.showNoti_Error(this, "Không tìm thấy");
                         return;
                     }
                     if (sach.getSoLuong() <= 0) {
-                        JOptionPane.showMessageDialog(this, "Số lượng không đủ");
+                        ThongBao.showNoti_Error(this, "Số lượng không đủ");
                         return;
                     }
                     closedCam(cam);
@@ -2300,10 +2312,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }
 
     private void continuteScanner() {
-        int continute = JOptionPane.showConfirmDialog(this, "Bạn muốn quét nữa không?");
-        if (continute == JOptionPane.YES_OPTION) {
+        ThongBao.showNoti_Confirm(this, "Quét thành công, bạn muốn quét nữa không?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
             btnScan.doClick();
-            System.out.println("continute scan");
         }
     }
 
@@ -2348,24 +2359,24 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         String diemStr = txtDiemSuDung.getText().trim();
 
         if (_khachHang == null) {
-            JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng");
+            ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
         if (!diemStr.matches("\\d+") || diemStr.equals("0")) {
-            JOptionPane.showMessageDialog(this, "Không đúng định dạng");
+            ThongBao.showNoti_Error(this, "Không đúng định dạng");
             return;
         }
         if (diemStr.length() > 8) {
-            JOptionPane.showMessageDialog(this, "Số điểm quá lớn. Không thể dùng");
+            ThongBao.showNoti_Error(this, "Số điểm quá lớn. Không thể dùng");
             return;
         }
 
         int diem = Integer.parseInt(diemStr);
         if (_khachHang.getDiemTichLuy() < diem) {
-            JOptionPane.showMessageDialog(this, "Điểm không đủ. Bạn đang có: " + _khachHang.getDiemTichLuy());
+            ThongBao.showNoti_Error(this, "Điểm không đủ. Bạn đang có: " + _khachHang.getDiemTichLuy());
             return;
         }
-        JOptionPane.showMessageDialog(this, "Thành công");
+        ThongBao.showNoti_Succes(this, "Thành công");
         _diemSuDung = diem;
         lblDiemDangDung.setText("-" + diemStr + ",000 VNĐ");
         setTienThanhToan(_tongTien);
@@ -2478,7 +2489,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private void getKhachHang(String sdt) {
         if (!sdt.matches("(\\+)?\\d+") && !sdt.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Không đúng định dạng");
+            ThongBao.showNoti_Error(this, "Không đúng định dạng");
             return;
         }
         if (sdt.isBlank()) {
@@ -2488,8 +2499,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         } else {
             _lstKhachHang = _khachHangService.sellectAllBySDT(sdt);
             if (_lstKhachHang.isEmpty()) {
-                int confirm = JOptionPane.showConfirmDialog(this, "Không tìm thấy. Bạn muốn thêm khách hàng mới không?");
-                if (confirm == JOptionPane.YES_OPTION) {
+                ThongBao.showNoti_Confirm(this, "Không tìm thấy. Bạn muốn thêm khách hàng mới không?");
+                if (ThongBao.getSelected() == ThongBao.YES) {
                     jTabbedPane2.setSelectedIndex(1);
                     _khachHangDialog.setVisible(true);
                 }
@@ -2574,7 +2585,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
         if (!tienMat.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Không đúng định dạng");
+            ThongBao.showNoti_Error(this, "Không đúng định dạng");
             txtTienMat.setText("");
             return;
         }
@@ -2614,29 +2625,29 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         String gioiTinh = rdoNam.isSelected() ? "Nam" : "Nữ";
 
         if (ma.isBlank() || ten.isBlank() || tenDem.isBlank() || ho.isBlank() || ngaySinhStr.isBlank() || SDT.isBlank() || diaChi.isBlank()) {
-            JOptionPane.showMessageDialog(this, "Không được để trống");
+            ThongBao.showNoti_Error(this, "Không được để trống");
             return null;
         }
 
         if (ma.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Mã không được quá dài");
+            ThongBao.showNoti_Error(this, "Mã không được quá dài");
             return null;
         }
 
         if (ten.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Tên không được quá dài");
+            ThongBao.showNoti_Error(this, "Tên không được quá dài");
             return null;
         }
         if (ho.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Họ không được quá dài");
+            ThongBao.showNoti_Error(this, "Họ không được quá dài");
             return null;
         }
         if (tenDem.length() > 30) {
-            JOptionPane.showMessageDialog(this, "Tên đệm không được quá dài");
+            ThongBao.showNoti_Error(this, "Tên đệm không được quá dài");
             return null;
         }
         if (!SDT.matches("0\\d{9}")) {
-            JOptionPane.showMessageDialog(this, "SĐT không đúng định dạng");
+            ThongBao.showNoti_Error(this, "SĐT không đúng định dạng");
             return null;
         }
 
@@ -2656,7 +2667,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void btnAddKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKhachHangActionPerformed
         KhachHang khachHang = getForm();
         if (khachHang.getId() != null) {
-            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm");
+            ThongBao.showNoti_Error(this, "Clear form trước khi thêm");
             return;
         }
 
