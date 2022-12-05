@@ -40,6 +40,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
 
     public KhachHang_Form() {
         initComponents();
+        this.btnQRCode.setIcon(new ImageIcon(new ImageIcon("image//genQR.png").getImage().getScaledInstance(45, 50, Image.SCALE_DEFAULT)));
         this.tblKhachHang.setRowHeight(59);
         this.tblKhachHang.setBackground(Color.white);
         this.jScrollPane1.setVerticalScrollBar(new ScrollBarCustom());
