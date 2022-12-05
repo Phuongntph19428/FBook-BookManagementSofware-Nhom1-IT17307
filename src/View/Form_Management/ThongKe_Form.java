@@ -122,7 +122,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Ngu?i giao d?ch", "Ngay giao dich", "Tien thu", "Tien chi"
+                "Người giao dich", "Ngày giao dịch", "Tiền thu", "Tiền chi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
