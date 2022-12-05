@@ -48,7 +48,6 @@ import javax.swing.JTable;
 
 import javax.swing.border.LineBorder;
 import model.NhanVien;
-import model.PhieuNhapChiTiet;
 import util.Auth;
 
 /**
@@ -509,6 +508,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 if (index == 2) {
                     sach.loadAll();
                 }
+                System.out.println("index: " + index);
                 showJPanel(index);
 
             }
@@ -639,6 +639,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
+        setMaximumSize(new java.awt.Dimension(1635, 966));
+        setMinimumSize(new java.awt.Dimension(1635, 966));
         setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
