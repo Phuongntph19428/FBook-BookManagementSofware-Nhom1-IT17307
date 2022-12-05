@@ -30,6 +30,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
+    public HoaDon getByMaHD(String maHD) {
+        return _hoaDonRepo.getByMaHD(maHD);
+    }
+    
+    @Override
     public boolean removeAllHoaDonCT(HoaDon hoaDon) {
         return _hoaDonRepo.deleteHoaDonChiTiet(hoaDon);
     }
@@ -133,9 +138,8 @@ public class HoaDonServiceImpl implements HoaDonService {
     }
 
     @Override
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeBieuDoTron() {
-        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeBieuDoTron();
-
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon) {
+        return _hoaDonRepo.updateHoaDonChiTiet(lstHoaDonCT, hoaDon);
     }
 
     @Override
@@ -206,6 +210,11 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu5() {
         return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu5();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeBieuDoTron() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
