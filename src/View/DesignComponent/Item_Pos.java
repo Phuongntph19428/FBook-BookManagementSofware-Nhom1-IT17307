@@ -32,18 +32,30 @@ public class Item_Pos extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (javax.swing.SwingUtilities.isRightMouseButton(e)) {
-
-                    JPopupMenu popup = new JPopupMenu();
-                    JMenuItem item = new JMenuItem("Thông tin chi tiết");
-                    popup.add(item);
-                    popup.show(e.getComponent(), e.getX(), e.getY());
-                    item.addActionListener((java.awt.event.ActionEvent evt) -> {
-                        loadDialogProductDetail();
-                    });
-
+                    showDetailDialog(e);
                 }
             }
 
+        });
+
+        lbName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (javax.swing.SwingUtilities.isRightMouseButton(e)) {
+                    showDetailDialog(e);
+                }
+            }
+
+        });
+    }
+
+    private void showDetailDialog(MouseEvent e) {
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem item = new JMenuItem("Thông tin chi tiết");
+        popup.add(item);
+        popup.show(e.getComponent(), e.getX(), e.getY());
+        item.addActionListener((java.awt.event.ActionEvent evt) -> {
+            loadDialogProductDetail();
         });
     }
 
@@ -52,7 +64,7 @@ public class Item_Pos extends javax.swing.JPanel {
             if (_custom.getHinh() == null) {
                 return;
             }
-            
+
             this.imageIcon = new ImageIcon(_custom.getHinh());
             this.lblHinhDetail.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(320, 320, Image.SCALE_DEFAULT)));
             this.lblTenSachDetail.setText(_custom.getTen());
@@ -61,7 +73,7 @@ public class Item_Pos extends javax.swing.JPanel {
             this.lblTheLoai.setText(_custom.getTheLoai());
             this.lblViTri.setText(_custom.getViTri());
             this.lblSoLuong.setText("<html> <span style='background-color: #34568b; color: white'>Số lượng: " + _custom.getSoLuong() + "</span></html>");
-            this.lblGia.setText("<html> " + _custom.getGiaSale() + " đ <s style='color: white; font-size: 16px'> " + _custom.getGiaBan() + " đ</s> <span style='background-color: FF0000; color: white'> -" + _custom.getChietKhau() + " %</span></html>");
+            this.lblGia.setText("<html> " + df.format(_custom.getGiaSale()) + " đ <s style='color: white; font-size: 16px'> " + df.format(_custom.getGiaBan()) + " đ</s> <span style='background-color: FF0000; color: white'> -" + _custom.getChietKhau() + " %</span></html>");
             DialogChiTietSP.setModal(true);
             DialogChiTietSP.setSize(1050, 536);
             DialogChiTietSP.setLocationRelativeTo(null);

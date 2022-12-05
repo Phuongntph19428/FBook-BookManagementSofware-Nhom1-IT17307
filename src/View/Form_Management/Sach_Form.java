@@ -8,6 +8,7 @@ import View.ButtonDesign.Button;
 import View.ThongBao;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
@@ -53,7 +55,7 @@ public class Sach_Form extends javax.swing.JPanel {
 
     public Sach_Form() {
         initComponents();
-//        String columns[] = {"Nhà xuất bản", "Vị trí", "Mã", "Tên", "Số lượng", "Số trang", "Giá nhập", "Giá bán", "Trạng thái", "Hình"};
+        btnSearch.setIcon(new ImageIcon(new ImageIcon("image//icons8_search_25px.png").getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
 
         table1.setBackground(Color.WHITE);
         this.table1.setRowHeight(59);

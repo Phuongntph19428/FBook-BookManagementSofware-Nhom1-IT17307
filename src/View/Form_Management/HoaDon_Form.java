@@ -69,6 +69,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
      */
     public HoaDon_Form() {
         initComponents();
+        setIcon();
         this.tblHoaDon.setRowHeight(50);
         this.tblHoaDon.setBackground(Color.white);
 
@@ -88,6 +89,10 @@ public class HoaDon_Form extends javax.swing.JPanel {
         setEventTable();
     }
 
+    private void setIcon() {
+        btnQRGiaoHangThanhCong.setIcon(new ImageIcon(new ImageIcon("image//genQR.png").getImage().getScaledInstance(46, 44, Image.SCALE_DEFAULT)));
+    }
+    
     public JTable getJTable() {
         return this.tblHoaDon;
     }
@@ -371,6 +376,11 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         tabPaneHoaDon.setBackground(new java.awt.Color(11, 20, 55));
         tabPaneHoaDon.setForeground(new java.awt.Color(204, 204, 204));
+        tabPaneHoaDon.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabPaneHoaDonStateChanged(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(11, 20, 55));
 
@@ -1390,6 +1400,23 @@ public class HoaDon_Form extends javax.swing.JPanel {
         });
         thread.start();
     }//GEN-LAST:event_btnQRGiaoHangThanhCongActionPerformed
+
+    private void tabPaneHoaDonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPaneHoaDonStateChanged
+        if(_hoaDonService == null) {
+            return;
+        }
+        if (tabPaneHoaDon.getSelectedIndex() == 0) {
+            _lstHoaDon = switch (_status) {
+                case -1 -> _hoaDonService.sellectAll();
+                case HoaDon.CHUATHANHTOAN -> _hoaDonService.sellectAllHoaDonCho();
+                case HoaDon.DAHUY -> _hoaDonService.sellectAllHoaDonDaHuy();
+                case HoaDon.DANGVANCHUYEN -> _hoaDonService.sellectAllHoaDonDangVanChuyen();
+                default -> _hoaDonService.selectAllHoaDonDaThanhToan();
+            };
+            loadTableHoaDon(_lstHoaDon);
+        }
+        System.out.println("change: " + tabPaneHoaDon.getSelectedIndex());
+    }//GEN-LAST:event_tabPaneHoaDonStateChanged
 
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();

@@ -169,6 +169,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         btnLast.setBackground(color);
         btnSearchKhachHang.setIcon(kh);
         btnTimKiem.setIcon(kh);
+        btnScan.setIcon(new ImageIcon(new ImageIcon("image//icons8_barcode_reader_50px.png").getImage().getScaledInstance(48, 42, Image.SCALE_DEFAULT)));
 
         tblHoaDonChiTiet.getModel().addTableModelListener((TableModelEvent e) -> {
             changeAmountProduct(e);
@@ -522,6 +523,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         lblPage = new javax.swing.JLabel();
         btnAll = new View.ButtonDesign.Button();
         btnSearch = new View.ButtonDesign.Button();
+        txtFakeForcus = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder7 = new View.DesignComponent.JPanelBourder();
@@ -1082,6 +1084,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         btnScan.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
         btnScan.setForeground(new java.awt.Color(255, 255, 255));
         btnScan.setText("Scan");
+        btnScan.setToolTipText("Scan barcode of product");
         btnScan.setEnabled(false);
         btnScan.setFocusable(false);
         btnScan.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
@@ -1104,14 +1107,15 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addGap(0, 323, Short.MAX_VALUE))
                     .addGroup(jPanelBourder2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanelBourder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelBourder2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(btnScan, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDeleteAll, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanelBourder5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanelBourder2Layout.setVerticalGroup(
@@ -1227,6 +1231,10 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
         });
 
+        txtFakeForcus.setBackground(new java.awt.Color(16, 31, 86));
+        txtFakeForcus.setForeground(new java.awt.Color(255, 255, 255));
+        txtFakeForcus.setText("txt");
+
         javax.swing.GroupLayout jPanelBourder4Layout = new javax.swing.GroupLayout(jPanelBourder4);
         jPanelBourder4.setLayout(jPanelBourder4Layout);
         jPanelBourder4Layout.setHorizontalGroup(
@@ -1251,7 +1259,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
-                        .addComponent(btnAll, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAll, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtFakeForcus, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanelBourder4Layout.setVerticalGroup(
@@ -1261,7 +1271,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 .addGroup(jPanelBourder4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAll, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFakeForcus, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -2127,7 +2138,6 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
         _currentPage = _currentPage + 1;
-        System.out.println("Current: " + _currentPage);
         refreshSP();
     }//GEN-LAST:event_btnNextActionPerformed
 
@@ -2166,7 +2176,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void refreshSP() {
         setPageLabel(searcher);
         if (searcher) {
-            loadSachSearch(_lstCustomSach, _currentPage, _totalPage);
+            loadSachSearch(_lstCustomSach, _currentPage, _pageSize);
         } else {
             loadSach(_currentPage, _pageSize);
         }
@@ -2317,7 +2327,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         _currentPage = 1;
         loadSach(_currentPage, _pageSize);
         txtTimKiem.setText("");
-        setPageLabel(true);
+        txtFakeForcus.requestFocus();
+        setPageLabel(false);
     }//GEN-LAST:event_btnAllActionPerformed
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
@@ -2904,6 +2915,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private View.DesignComponent.Table tblKhachHang;
     private View.DesignComponent.TextField txtDiaChi;
     private javax.swing.JTextField txtDiemSuDung;
+    private javax.swing.JTextField txtFakeForcus;
     private View.DesignComponent.TextField txtHo;
     private View.DesignComponent.TextField txtMa;
     private View.DesignComponent.TextField txtNgaySinh;
