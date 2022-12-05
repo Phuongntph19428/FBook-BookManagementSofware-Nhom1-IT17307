@@ -175,6 +175,8 @@ public class KhachHang_Form extends javax.swing.JPanel {
         ngaysinh.setTextRefernce(txtNgaySinh);
 
         setBackground(new java.awt.Color(11, 20, 55));
+        setMaximumSize(new java.awt.Dimension(1362, 857));
+        setMinimumSize(new java.awt.Dimension(1362, 857));
 
         jPanelBourder1.setBackground(new java.awt.Color(17, 28, 68));
 
@@ -305,12 +307,12 @@ public class KhachHang_Form extends javax.swing.JPanel {
         );
         jPanelBourder2Layout.setVerticalGroup(
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 314, Short.MAX_VALUE)
+            .addGap(0, 320, Short.MAX_VALUE)
             .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelBourder2Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-                    .addContainerGap()))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanelBourder3Layout = new javax.swing.GroupLayout(jPanelBourder3);
@@ -326,8 +328,8 @@ public class KhachHang_Form extends javax.swing.JPanel {
             jPanelBourder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelBourder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanelBourder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
