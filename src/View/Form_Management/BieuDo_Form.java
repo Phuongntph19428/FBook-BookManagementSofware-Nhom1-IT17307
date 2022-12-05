@@ -1092,8 +1092,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 // mở file để thực hiện viết
                 document.open();
                 // thêm nội dung sử dụng add function
-//            document.add(new Paragraph(hd1));
-//            document.add(new Paragraph(hd));
+
 
                 PdfPTable table = new PdfPTable(3);
                 PdfPTable table1 = new PdfPTable(5);
@@ -1252,9 +1251,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                     PdfPCell header34 = new PdfPCell(new Paragraph("Chi: 0" + " VND"));
                     table1.addCell(header34);
                 }
-//            table.addCell("D:\\FPTPOLYTECH\\duan3\\image");
-//            table.addCell(header4);
-                //Định dạng đoạn văn bản thứ nhất
                 paragraph1.setIndentationLeft(80);
 
                 paragraph1.setAlignment(Element.ALIGN_CENTER);
@@ -1262,8 +1258,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 paragraph3.setIndentationLeft(80);
 
                 paragraph3.setAlignment(Element.ALIGN_CENTER);
-//                paragraph3.setSpacingAfter(15);
-                //Đinh dạng đoạn văn bản thứ 2
+
                 paragraph2.setSpacingBefore(15);
                 paragraph2.setAlignment(Element.ALIGN_LEFT);
                 paragraph5.setSpacingBefore(15);
@@ -1276,7 +1271,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 paragraph26.setIndentationLeft(52);
                 paragraph26.setAlignment(Element.ALIGN_LEFT);
 
-                //Thêm 2 đoạn văn bản vào document
+     
                 document.add(paragraph16);
                 document.add(paragraph3);
                 document.add(paragraph1);
