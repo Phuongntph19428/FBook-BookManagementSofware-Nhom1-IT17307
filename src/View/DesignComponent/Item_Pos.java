@@ -4,39 +4,83 @@
  */
 package View.DesignComponent;
 
+import custommodel.CustomSach;
 import java.awt.Color;
 import java.awt.Image;
-import java.math.BigDecimal;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 public class Item_Pos extends javax.swing.JPanel {
 
     private ImageIcon imageIcon = null;
 
-    public Item_Pos() {
+    private CustomSach _custom = null;
+
+    public Item_Pos(CustomSach custom) {
+        _custom = custom;
         initComponents();
-
+        setGraphic(custom);
+        addEvent();
     }
 
-    @Override
-    public void setName(String name) {
-        this.lbName.setText(name);
-        System.out.println(lbName.getText().length());
+    private void addEvent() {
+        lbIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (javax.swing.SwingUtilities.isRightMouseButton(e)) {
+
+                    JPopupMenu popup = new JPopupMenu();
+                    JMenuItem item = new JMenuItem("Thông tin chi tiết");
+                    popup.add(item);
+                    popup.show(e.getComponent(), e.getX(), e.getY());
+                    item.addActionListener((java.awt.event.ActionEvent evt) -> {
+                        loadDialogProductDetail();
+                    });
+
+                }
+            }
+
+        });
     }
 
-    public void setGia(BigDecimal Gia, int chietKhau) {
-        DecimalFormat df = new DecimalFormat("#,###");
-        this.lbGia.setText("<html><s>" + df.format(Gia) + " VNĐ" + "</s><sup style=\"color: 5DEB1B\"> - " + chietKhau + "%</sup></html>");
+    private void loadDialogProductDetail() {
+        if (_custom != null) {
+            if (_custom.getHinh() == null) {
+                return;
+            }
+            
+            this.imageIcon = new ImageIcon(_custom.getHinh());
+            this.lblHinhDetail.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(320, 320, Image.SCALE_DEFAULT)));
+            this.lblTenSachDetail.setText(_custom.getTen());
+            this.lblNhaXuatBan.setText(_custom.getNhaXB());
+            this.lblTacGia.setText(_custom.getTacGia());
+            this.lblTheLoai.setText(_custom.getTheLoai());
+            this.lblViTri.setText(_custom.getViTri());
+            this.lblSoLuong.setText("<html> <span style='background-color: #34568b; color: white'>Số lượng: " + _custom.getSoLuong() + "</span></html>");
+            this.lblGia.setText("<html> " + _custom.getGiaSale() + " đ <s style='color: white; font-size: 16px'> " + _custom.getGiaBan() + " đ</s> <span style='background-color: FF0000; color: white'> -" + _custom.getChietKhau() + " %</span></html>");
+            DialogChiTietSP.setModal(true);
+            DialogChiTietSP.setSize(1050, 536);
+            DialogChiTietSP.setLocationRelativeTo(null);
+            DialogChiTietSP.setVisible(true);
+        }
     }
 
-    public void setSoluongTon(int soLuong) {
-        this.lblSoLuongTon.setText("Số lượng tồn: " + soLuong);
-    }
+    private final DecimalFormat df = new DecimalFormat("#,###");
 
-    public void setGiaSale(BigDecimal gia) {
-        DecimalFormat df = new DecimalFormat("#,###");
-        this.lbGiaSale.setText("<html>" + df.format(gia) + "<sup> vnđ<sup></hmtl>");
+    private void setGraphic(CustomSach custom) {
+        this.lbName.setText(custom.getTen());
+        this.lbGia.setText("<html><s>" + df.format(custom.getGiaBan()) + " VNĐ" + "</s><sup style=\"color: 5DEB1B\"> - " + custom.getChietKhau() + "%</sup></html>");
+        this.lblSoLuongTon.setText("Số lượng tồn: " + custom.getSoLuong());
+        this.lbGiaSale.setText("<html>" + df.format(custom.getGiaSale()) + "<sup> vnđ<sup></hmtl>");
+        if (custom.getHinh() == null) {
+            return;
+        }
+        this.imageIcon = new ImageIcon(custom.getHinh());
+        this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
     }
 
     public void setSTT(int index) {
@@ -45,14 +89,6 @@ public class Item_Pos extends javax.swing.JPanel {
 
     public int getSTT() {
         return Integer.parseInt(lbSTT.getText());
-    }
-
-    public void setIcon(byte[] hinh) {
-        if (hinh == null) {
-            return;
-        }
-        this.imageIcon = new ImageIcon(hinh);
-        this.lbIcon.setIcon(new ImageIcon(imageIcon.getImage().getScaledInstance(lbIcon.getWidth(), lbIcon.getHeight(), Image.SCALE_DEFAULT)));
     }
 
     public void hovering() {
@@ -75,6 +111,22 @@ public class Item_Pos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        DialogChiTietSP = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        lblHinhDetail = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lblTenSachDetail = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
+        lblNhaXuatBan = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblTacGia = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblTheLoai = new javax.swing.JLabel();
+        lblViTri = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblGia = new javax.swing.JLabel();
+        lblSoLuong = new javax.swing.JLabel();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
         lbGia = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -85,6 +137,170 @@ public class Item_Pos extends javax.swing.JPanel {
         lbName = new javax.swing.JTextArea();
         lblSoLuongTon = new javax.swing.JLabel();
         lbSTT = new javax.swing.JLabel();
+
+        jPanel3.setBackground(new java.awt.Color(11, 20, 55));
+
+        lblHinhDetail.setMaximumSize(new java.awt.Dimension(320, 320));
+        lblHinhDetail.setMinimumSize(new java.awt.Dimension(320, 320));
+        lblHinhDetail.setPreferredSize(new java.awt.Dimension(320, 320));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 0, 28)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(51, 255, 204));
+        jLabel13.setText("Chi tiết sách");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jScrollPane3.setBorder(null);
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        lblTenSachDetail.setEditable(false);
+        lblTenSachDetail.setBackground(new java.awt.Color(11, 20, 55));
+        lblTenSachDetail.setColumns(1);
+        lblTenSachDetail.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTenSachDetail.setForeground(new java.awt.Color(255, 255, 255));
+        lblTenSachDetail.setLineWrap(true);
+        lblTenSachDetail.setRows(1);
+        lblTenSachDetail.setTabSize(1);
+        lblTenSachDetail.setText("Tủ Sách Tuổi Thần Tiên: Trẻ Con Có Phải Siêu Nhân Đâu (Và Mẹ Chúng Cũng Thế ");
+        lblTenSachDetail.setWrapStyleWord(true);
+        lblTenSachDetail.setBorder(null);
+        lblTenSachDetail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblTenSachDetail.setMaximumSize(new java.awt.Dimension(101, 20));
+        lblTenSachDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblTenSachDetailMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblTenSachDetailMouseExited(evt);
+            }
+        });
+        jScrollPane3.setViewportView(lblTenSachDetail);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nhà xuất bản:");
+
+        lblNhaXuatBan.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblNhaXuatBan.setForeground(new java.awt.Color(0, 255, 255));
+        lblNhaXuatBan.setText("Nhà xuất bản");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Tác giả:");
+
+        lblTacGia.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblTacGia.setForeground(new java.awt.Color(0, 255, 255));
+        lblTacGia.setText("Tác giả");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Thể loại:");
+
+        lblTheLoai.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblTheLoai.setForeground(new java.awt.Color(0, 255, 255));
+        lblTheLoai.setText("Tác giả");
+
+        lblViTri.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lblViTri.setForeground(new java.awt.Color(0, 255, 255));
+        lblViTri.setText("Tác giả");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Vị trí:");
+
+        lblGia.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblGia.setForeground(new java.awt.Color(255, 0, 0));
+        lblGia.setText("20000000000 đ");
+
+        lblSoLuong.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblSoLuong.setForeground(new java.awt.Color(255, 255, 255));
+        lblSoLuong.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSoLuong.setText("Số lượng:");
+        lblSoLuong.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblSoLuong, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblHinhDetail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 615, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblNhaXuatBan, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblViTri, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblGia, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jLabel13)
+                .addGap(47, 47, 47)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblHinhDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(lblNhaXuatBan))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(lblTacGia))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblTheLoai))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(lblViTri))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblGia)))
+                .addGap(18, 18, 18)
+                .addComponent(lblSoLuong)
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout DialogChiTietSPLayout = new javax.swing.GroupLayout(DialogChiTietSP.getContentPane());
+        DialogChiTietSP.getContentPane().setLayout(DialogChiTietSPLayout);
+        DialogChiTietSPLayout.setHorizontalGroup(
+            DialogChiTietSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1050, Short.MAX_VALUE)
+            .addGroup(DialogChiTietSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        DialogChiTietSPLayout.setVerticalGroup(
+            DialogChiTietSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 536, Short.MAX_VALUE)
+            .addGroup(DialogChiTietSPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DialogChiTietSPLayout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         setBackground(new java.awt.Color(17, 28, 68));
         setMaximumSize(new java.awt.Dimension(165, 256));
@@ -310,17 +526,41 @@ public class Item_Pos extends javax.swing.JPanel {
         exited();
     }//GEN-LAST:event_lbIconMouseExited
 
+    private void lblTenSachDetailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTenSachDetailMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTenSachDetailMouseEntered
+
+    private void lblTenSachDetailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTenSachDetailMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblTenSachDetailMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DialogChiTietSP;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     public View.DesignComponent.JPanelBourder jPanelBourder1;
     public javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JLabel lbGia;
     public javax.swing.JLabel lbGiaSale;
     public javax.swing.JLabel lbIcon;
     public javax.swing.JTextArea lbName;
     private javax.swing.JLabel lbSTT;
+    private javax.swing.JLabel lblGia;
+    private javax.swing.JLabel lblHinhDetail;
+    private javax.swing.JLabel lblNhaXuatBan;
+    private javax.swing.JLabel lblSoLuong;
     public javax.swing.JLabel lblSoLuongTon;
+    private javax.swing.JLabel lblTacGia;
+    public javax.swing.JTextArea lblTenSachDetail;
+    private javax.swing.JLabel lblTheLoai;
+    private javax.swing.JLabel lblViTri;
     // End of variables declaration//GEN-END:variables
 }

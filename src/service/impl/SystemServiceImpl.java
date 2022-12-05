@@ -125,7 +125,8 @@ public class SystemServiceImpl implements ISystemService {
 
             // dia chi email nguoi nhan
             final String toEmail = "quanchun11022@gmail.com";
-            final String subject = "Thông Báo Những Sách Sắp Hết Hàng";
+            final String subject = "Báo Cáo Quản Lý Bán Sách";
+
             final String body = content;
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host

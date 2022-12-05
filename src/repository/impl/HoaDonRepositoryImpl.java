@@ -117,6 +117,32 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     }
 
     @Override
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon) {
+        deleteHoaDonChiTiet(hoaDon);
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                int size = lstHoaDonCT.size();
+                final int batchSize = 20;
+                for (int i = 0; i < size; i++) {
+                    HoaDonChiTiet hoaDonChiTiet = lstHoaDonCT.get(i);
+                    session.save(hoaDonChiTiet);
+                    if (i % batchSize == 0 && i != size && i != 0) {
+                        session.flush();
+                        session.clear();
+                    }
+                }
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+    
+    @Override
     public boolean updateHoaDon(HoaDon hoaDon) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();

@@ -200,12 +200,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         for (int i = start; i < size && i < _lstCustomSach.size(); i++) {
             // tạo Sản Phẩm từ list
             CustomSach customSach = _lstCustomSach.get(i);
-            Item_Pos item = new Item_Pos();
-            item.setIcon(customSach.getHinh());
-            item.setName(customSach.getTen());
-            item.setGia(customSach.getGiaBan(), customSach.getChietKhau());
-            item.setGiaSale(customSach.getGiaSale());
-            item.setSoluongTon(customSach.getSoLuong());
+            Item_Pos item = new Item_Pos(customSach);
             item.setSTT(i);
             item.setToolTipText(customSach.getTen());
 
@@ -350,7 +345,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         if (_lstHoaDonChiTiet.isEmpty()) {
             return;
         }
-        HoaDonChiTiet hoaDonCT = (HoaDonChiTiet) _lstHoaDonChiTiet.values().toArray()[0];
+        int row = tblHoaDonChiTiet.getSelectedRow();
+        if(row == -1) {
+            return;
+        }
+        HoaDonChiTiet hoaDonCT = (HoaDonChiTiet) _lstHoaDonChiTiet.values().toArray()[row];
         if (e.getColumn() != 3) {
             return;
         }
@@ -1985,6 +1984,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void send() {
         SystemServiceImpl ss = new SystemServiceImpl();
         ss.SendSMStoManager();
+
     }
 
     private void btnThanhToanVaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanVaInActionPerformed
@@ -2447,8 +2447,10 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void clearKhachHang() {
         if (rdoClearKhachHang.isSelected()) {
             rdoClearKhachHang.setEnabled(true);
+            rdoClearKHDatHang.setEnabled(true);
         } else {
             rdoClearKhachHang.setEnabled(false);
+            rdoClearKHDatHang.setEnabled(false);
             _khachHang = null;
             _diemSuDung = 0;
             lblDiemDangDung.setText("");

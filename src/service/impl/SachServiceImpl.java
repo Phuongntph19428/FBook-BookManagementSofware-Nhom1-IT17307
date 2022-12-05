@@ -41,8 +41,6 @@ public class SachServiceImpl implements SachService {
 
     @Override
     public Sach getSachByMa(String ma) {
-        Sach sach = _sachRepo.getSachByMa(ma);
-        System.out.println(sach.getLstSachTacGia());
         return _sachRepo.getSachByMa(ma);
     }
 
