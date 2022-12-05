@@ -608,6 +608,9 @@
                   <Image iconType="3" name="/View/Image_Hub/icons8_settings_25px.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="View.ButtonDesign.Button" name="button2">
               <Properties>

@@ -21,4 +21,6 @@ public interface NhanVienRepository {
     NhanVien getNhanVienById(String Id);
     
     boolean updateNhanVien(NhanVien nhanVien);
+    
+    NhanVien getNhanVien(String ma, String password);
 }

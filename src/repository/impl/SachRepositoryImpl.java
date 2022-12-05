@@ -281,7 +281,7 @@ public class SachRepositoryImpl implements SachRepositoty {
     public List<Sach> selectAllLowerThan(int soLuong) {
         List<Sach> lstSach = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT s FROM Sach s WHERE s.soLuong < :soLuong";
+            String hql = "SELECT s FROM Sach s WHERE s.soLuong < :soLuong AND s.trangThai = 1";
             TypedQuery<Sach> query = session.createQuery(hql);
             query.setParameter("soLuong", soLuong);
 

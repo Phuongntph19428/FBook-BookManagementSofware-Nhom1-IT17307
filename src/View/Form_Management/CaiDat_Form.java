@@ -4,7 +4,17 @@
  */
 package View.Form_Management;
 
+import View.ThongBao;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import service.impl.SystemServiceImpl;
 
 /**
  *
@@ -12,10 +22,8 @@ import java.io.File;
  */
 public class CaiDat_Form extends javax.swing.JPanel {
 
-    
     public CaiDat_Form() {
         initComponents();
-        File f = new File("");
     }
 
     /**
@@ -27,20 +35,26 @@ public class CaiDat_Form extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
         txtSoLuongLowerThan = new View.DesignComponent.TextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        btnInBaoCao = new View.ButtonDesign.Button();
+        txtEmail = new View.DesignComponent.TextField();
+        txtSDT = new View.DesignComponent.TextField();
+        btnInBaoCao1 = new View.ButtonDesign.Button();
+        cbTrangThai = new View.DesignComponent.Combobox();
+        cbTrangThai1 = new View.DesignComponent.Combobox();
+        rdoDangKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
+        rdoNgungKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Management Book - Cài Đặt Hệ Thống");
+        jLabel1.setText("Management Book - Cài Đặt Báo Cáo");
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(153, 153, 153));
@@ -55,14 +69,83 @@ public class CaiDat_Form extends javax.swing.JPanel {
         txtSoLuongLowerThan.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
         txtSoLuongLowerThan.setLabelText("Thông Báo khi số lượng nhỏ hơn");
         txtSoLuongLowerThan.setLineColor(new java.awt.Color(255, 255, 255));
+        txtSoLuongLowerThan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSoLuongLowerThanActionPerformed(evt);
+            }
+        });
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("Gửi SMS");
+        txtEmail.setBackground(new java.awt.Color(17, 28, 68));
+        txtEmail.setForeground(new java.awt.Color(255, 255, 255));
+        txtEmail.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtEmail.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtEmail.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtEmail.setLabelText("Email");
+        txtEmail.setLineColor(new java.awt.Color(255, 255, 255));
 
-        jCheckBox2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jCheckBox2.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox2.setText("Gửi Email");
+        txtSDT.setBackground(new java.awt.Color(17, 28, 68));
+        txtSDT.setForeground(new java.awt.Color(255, 255, 255));
+        txtSDT.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtSDT.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtSDT.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
+        txtSDT.setLabelText("Số Điện Thoại");
+        txtSDT.setLineColor(new java.awt.Color(255, 255, 255));
+
+        btnInBaoCao1.setBackground(new java.awt.Color(19, 29, 243));
+        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao1.setText("Lưu Thiết Lập");
+        btnInBaoCao1.setFocusable(false);
+        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCao1ActionPerformed(evt);
+            }
+        });
+
+        cbTrangThai.setBackground(new java.awt.Color(17, 28, 68));
+        cbTrangThai.setForeground(new java.awt.Color(255, 255, 255));
+        cbTrangThai.setMaximumRowCount(10);
+        cbTrangThai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bật", "Tắt" }));
+        cbTrangThai.setSelectedIndex(1);
+        cbTrangThai.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        cbTrangThai.setLabeText("Trạng Thái");
+        cbTrangThai.setLineColor(new java.awt.Color(255, 255, 255));
+        cbTrangThai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTrangThaiActionPerformed(evt);
+            }
+        });
+
+        cbTrangThai1.setBackground(new java.awt.Color(17, 28, 68));
+        cbTrangThai1.setForeground(new java.awt.Color(255, 255, 255));
+        cbTrangThai1.setMaximumRowCount(10);
+        cbTrangThai1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gửi SMS", "Gửi Email", "Kết Hợp Cả 2" }));
+        cbTrangThai1.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        cbTrangThai1.setLabeText("Hình Thức");
+        cbTrangThai1.setLineColor(new java.awt.Color(255, 255, 255));
+        cbTrangThai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTrangThai1ActionPerformed(evt);
+            }
+        });
+
+        rdoDangKinhDoanh.setBackground(new java.awt.Color(17, 28, 68));
+        buttonGroup1.add(rdoDangKinhDoanh);
+        rdoDangKinhDoanh.setForeground(new java.awt.Color(255, 255, 255));
+        rdoDangKinhDoanh.setSelected(true);
+        rdoDangKinhDoanh.setText("Thông báo ngay lập tức");
+        rdoDangKinhDoanh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        rdoNgungKinhDoanh.setBackground(new java.awt.Color(17, 28, 68));
+        buttonGroup1.add(rdoNgungKinhDoanh);
+        rdoNgungKinhDoanh.setForeground(new java.awt.Color(255, 255, 255));
+        rdoNgungKinhDoanh.setText("Vào 12h mỗi ngày");
+        rdoNgungKinhDoanh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setText("Thông Báo");
 
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
@@ -70,34 +153,50 @@ public class CaiDat_Form extends javax.swing.JPanel {
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(txtSDT, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbTrangThai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbTrangThai1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(rdoDangKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rdoNgungKinhDoanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rdoDangKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdoNgungKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(cbTrangThai1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8))
         );
-
-        btnInBaoCao.setBackground(new java.awt.Color(19, 29, 243));
-        btnInBaoCao.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao.setText("Tắt");
-        btnInBaoCao.setFocusable(false);
-        btnInBaoCao.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCaoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -106,15 +205,13 @@ public class CaiDat_Form extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel21)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel1)
-                        .addComponent(jPanelBourder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1)
+                    .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,27 +225,127 @@ public class CaiDat_Form extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelBourder1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCaoActionPerformed
-        
-    }//GEN-LAST:event_btnInBaoCaoActionPerformed
+    public void getDatainFile() {
+        FileInputStream fileInputStream = null;
+        boolean TurnOnorOff = false;
+        int QuantityLowerThan = 9999;
+        int hinhThuc = -1;
+        String sdt = "-";
+        String email = "-";
+
+        try {
+            String url = "settingsSend.txt";
+            // Đọc dữ liệu từ File với Scanner
+            fileInputStream = new FileInputStream(url);
+            Scanner scanner = new Scanner(fileInputStream);
+            int i = 0;
+            List<String> list = new ArrayList<>();
+            try {
+                while (scanner.hasNextLine()) {
+                    list.add(scanner.nextLine());
+                }
+            } finally {
+                try {
+                    scanner.close();
+                    fileInputStream.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (list.get(0).equals("true")) {
+                TurnOnorOff = true;
+            }
+            QuantityLowerThan = Integer.parseInt(list.get(1));
+            hinhThuc = Integer.parseInt(list.get(2));
+            sdt = list.get(3);
+            email = list.get(4);
+            setData(TurnOnorOff, QuantityLowerThan, email, "0"+sdt, hinhThuc);
+            System.out.println(TurnOnorOff + " - " + QuantityLowerThan + " - " + hinhThuc + " - " + sdt + " - " + email);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fileInputStream.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void setData(boolean toogle, int quantity, String email, String sdt, int hinhThuc) {
+        if (toogle == true) {
+            cbTrangThai.setSelectedIndex(0);
+        } else {
+            cbTrangThai.setSelectedIndex(1);
+        }
+        txtSoLuongLowerThan.setText("" + quantity);
+        txtEmail.setText(email);
+        txtSDT.setText(sdt);
+        if (hinhThuc == 1) {
+            cbTrangThai1.setSelectedIndex(0);
+        } else if (hinhThuc == 2) {
+            cbTrangThai1.setSelectedIndex(1);
+        } else {
+            cbTrangThai1.setSelectedIndex(2);
+        }
+    }
+    private void btnInBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao1ActionPerformed
+        String Quatity, Email, SDT;
+        boolean Toogle = false;
+        int hinhThuc = -1;
+        Quatity = txtSoLuongLowerThan.getText().trim();
+        Email = txtEmail.getText().trim();
+        SDT = txtSDT.getText().trim();
+        String sdtRegex = "";
+        sdtRegex = SDT.substring(1, SDT.length());
+        hinhThuc = cbTrangThai1.getSelectedIndex() + 1;
+        if (cbTrangThai.getSelectedItem().toString().equals("Bật")) {
+            Toogle = true;
+        }
+        int quanti = 9999;
+        try {
+            quanti = Integer.parseInt(Quatity);
+        } catch (Exception e) {
+            ThongBao.showNoti_Error(this, "Vui lòng nhập số lượng là chữ và >0");
+            return;
+        }
+        SystemServiceImpl.setDataSettings(Toogle, quanti, hinhThuc, sdtRegex, Email);
+        ThongBao.showNoti_Succes(this, "Lưu Thành Công");
+    }//GEN-LAST:event_btnInBaoCao1ActionPerformed
+
+    private void cbTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTrangThaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTrangThaiActionPerformed
+
+    private void txtSoLuongLowerThanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongLowerThanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSoLuongLowerThanActionPerformed
+
+    private void cbTrangThai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTrangThai1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTrangThai1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private View.ButtonDesign.Button btnInBaoCao;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private View.ButtonDesign.Button btnInBaoCao1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private View.DesignComponent.Combobox cbTrangThai;
+    private View.DesignComponent.Combobox cbTrangThai1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private javax.swing.JSeparator jSeparator1;
+    private View.ComboBoxDesign.RadioButtonCustom rdoDangKinhDoanh;
+    private View.ComboBoxDesign.RadioButtonCustom rdoNgungKinhDoanh;
+    private View.DesignComponent.TextField txtEmail;
+    private View.DesignComponent.TextField txtSDT;
     private View.DesignComponent.TextField txtSoLuongLowerThan;
     // End of variables declaration//GEN-END:variables
 }
