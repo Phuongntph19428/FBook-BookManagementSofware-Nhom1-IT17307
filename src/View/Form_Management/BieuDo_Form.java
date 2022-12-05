@@ -79,7 +79,9 @@ public class BieuDo_Form extends javax.swing.JPanel {
         this.lblPhanTram0.setIcon(iconPhantram1);
         this.lbTopSell.setIcon(iconTopSeller);
         this.lbThuChi.setIcon(iconThuChi);
-
+// pieChart1.addData(new ModelPieChart("", 0, new Color(100, 188, 0)));
+//  pieChart1.addData(new ModelPieChart("", 0, new Color(255, 188, 0)));
+//   pieChart1.addData(new ModelPieChart("", 0, new Color(200, 188, 0)));
 //        this.doanhsobanhang.setIcon(iconDS);
 //        this.topbanchay.setIcon(iconTopSell);
 //        this.HoaDon.setIcon(iconHDDays);
@@ -129,7 +131,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
         dateFormat.format(c1.getTime());
 
-//
+
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(0))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(0))), 0, 1}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(1))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(1))), 0, 300}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(2))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(2))), 0, 400}));
@@ -215,6 +217,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
     }
 
     private void daTaBieuDoTron() {
+        
 
         try {
             pieChart1.addData(new ModelPieChart(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(0)), Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0))), new Color(255, 188, 0)));
@@ -1026,7 +1029,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                         .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbNgayHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanelBourder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -1100,25 +1103,25 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //                -- tao anh  
                 document.add(new Paragraph("FBook"));
                 try {
-                    Image image4 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\ssqqqsqsqsqs.png");
+                    Image image4 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\ssqqqsqsqsqs.png");
                     image4.setAbsolutePosition(350, 215);
                     document.add(image4);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image1 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\logo-fpt-fpt-polytechnic-tach-nen_043151201 (5).png");
+                    Image image1 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\logo-fpt-fpt-polytechnic-tach-nen_043151201 (5).png");
                     image1.setAbsolutePosition(250, 10);
                     document.add(image1);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image3 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\11111.png");
+                    Image image3 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\11111.png");
                     image3.setAbsolutePosition(60, 730);
                     document.add(image3);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image2 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\icons8_best_seller_30px_1.png");
+                    Image image2 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\icons8_best_seller_30px_1.png");
                     document.add(image2);
                 } catch (Exception e) {
                 }
