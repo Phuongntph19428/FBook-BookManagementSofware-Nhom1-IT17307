@@ -80,13 +80,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
         this.lbTopSell.setIcon(iconTopSeller);
         this.lbThuChi.setIcon(iconThuChi);
 
-//        this.doanhsobanhang.setIcon(iconDS);
-//        this.topbanchay.setIcon(iconTopSell);
-//        this.HoaDon.setIcon(iconHDDays);
-//        this.books.setIcon(iconBooks);
-//        this.tongtien.setIcon(iconDoanhThu);
-//        this.tienchi.setIcon(iconDoanhThu);
-//        this.btnInBaoCao.setIcon(iconIn);
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
         daTaBieuDoCot();
@@ -129,12 +122,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
         dateFormat.format(c1.getTime());
 
-//
-//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(0))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(0))), 0, 1}));
-//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(1))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(1))), 0, 300}));
-//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(2))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(2))), 0, 400}));
-//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(3))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(3))), 0, 600}));
-//            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(4))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(4))), 0, 700}));
+
         try {
             if (donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1().get(0) == null) {
                 chart.addData(new DC_ModelBieuDo(dateFormat.format(c1.getTime()), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1().get(0))), 0, 1}));
@@ -215,6 +203,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
     }
 
     private void daTaBieuDoTron() {
+        
 
         try {
             pieChart1.addData(new ModelPieChart(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(0)), Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0))), new Color(255, 188, 0)));
@@ -250,15 +239,12 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Calendar c2 = Calendar.getInstance();
         Calendar c3 = Calendar.getInstance();
 
-        // Định nghĩa mốc thời gian ban đầu là ngày 31-07-2011
-//        System.out.println("Ngày ban đầu : " + dateFormat.format(c1.getTime()));
-        // Tăng ngày thêm 8 ngày -- Sử dụng phương thức roll()
+ 
         c1.roll(Calendar.MONTH, -1);
         c2.roll(Calendar.MONTH, -2);
         c3.roll(Calendar.MONTH, -3);
 
-//        // c1.roll(Calendar.DATE, -8); // Giảm ngày 8 ngày ==> 23-07-2011
-//        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
+
         dateFormat.format(c1.getTime());
 
         LocalDateTime localDate = LocalDateTime.now();
@@ -403,36 +389,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
     }
 
-//    private void phanTramDoanhThuTheoThang1() {
-//        try {
-//            DecimalFormat df = new DecimalFormat("####");
-//            double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien0().get(0)));
-//            double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien01().get(0)));
-//            double c = ((a - b) / (a < b ? a : b)) * 100;
-//            lblPhanTram0.setText(df.format(c) + "%");
-//            if (c < 0) {
-//                lblPhanTram0.setForeground(Color.RED);
-//                lblPhanTram0.setText(df.format(c) + "%");
-//                lblgach0.setBackground(Color.RED);
-//            } else if (c >= 0) {
-//                lblPhanTram0.setForeground(Color.GREEN);
-//                lblPhanTram0.setText(df.format(c) + "%");
-//                lblgach0.setBackground(Color.GREEN);
-//
-//            }
-//        } catch (Exception e) {
-//            lblPhanTram0.setForeground(Color.red);
-//            lblPhanTram0.setText("-100" + "%");
-//            lblgach0.setBackground(Color.RED);
-//
-//        }
-//
-//    }
-//    public static void main(String[] args) {
-//        BieuDo_Form bdf = new BieuDo_Form();
-//        bdf.phanTramDoanhThuTheoThang3();
-//
-//    }
     private void tongTien3Thang() {
         DecimalFormat df = new DecimalFormat("#,###");
         if (donService.sellectAllHoaDonChiTietsTongTien3().get(0) == null) {
@@ -1026,7 +982,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                         .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbNgayHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanelBourder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -1065,17 +1021,12 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Calendar c4 = Calendar.getInstance();
         Calendar c5 = Calendar.getInstance();
 
-        // Định nghĩa mốc thời gian ban đầu là ngày 31-07-2011
-//        System.out.println("Ngày ban đầu : " + dateFormat.format(c1.getTime()));
-        // Tăng ngày thêm 8 ngày -- Sử dụng phương thức roll()
         c1.roll(Calendar.DAY_OF_YEAR, -1);
         c2.roll(Calendar.DAY_OF_YEAR, -2);
         c3.roll(Calendar.DAY_OF_YEAR, -3);
         c4.roll(Calendar.DAY_OF_YEAR, -4);
         c5.roll(Calendar.DAY_OF_YEAR, -5);
 
-//        // c1.roll(Calendar.DATE, -8); // Giảm ngày 8 ngày ==> 23-07-2011
-//        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
         dateFormat.format(c1.getTime());
 
         DecimalFormat df = new DecimalFormat("#,###");
@@ -1100,25 +1051,25 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //                -- tao anh  
                 document.add(new Paragraph("FBook"));
                 try {
-                    Image image4 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\ssqqqsqsqsqs.png");
+                    Image image4 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\ssqqqsqsqsqs.png");
                     image4.setAbsolutePosition(350, 215);
                     document.add(image4);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image1 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\logo-fpt-fpt-polytechnic-tach-nen_043151201 (5).png");
+                    Image image1 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\logo-fpt-fpt-polytechnic-tach-nen_043151201 (5).png");
                     image1.setAbsolutePosition(250, 10);
                     document.add(image1);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image3 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\11111.png");
+                    Image image3 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\11111.png");
                     image3.setAbsolutePosition(60, 730);
                     document.add(image3);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image2 = Image.getInstance("D:\\FPTPOLYTECH\\duan3\\image\\icons8_best_seller_30px_1.png");
+                    Image image2 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\icons8_best_seller_30px_1.png");
                     document.add(image2);
                 } catch (Exception e) {
                 }
@@ -1257,8 +1208,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                     PdfPCell header34 = new PdfPCell(new Paragraph("Chi: 0" + " VND"));
                     table1.addCell(header34);
                 }
-//            table.addCell("D:\\FPTPOLYTECH\\duan3\\image");
-//            table.addCell(header4);
+//       
                 //Định dạng đoạn văn bản thứ nhất
                 paragraph1.setIndentationLeft(80);
 
@@ -1321,27 +1271,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph2);
                 document.add(paragraph5);
 
-                //Khởi tạo 3 ô data: ô số 1 là string, ô số 2 là ảnh, ô số 3 là table
-//            PdfPCell data1 = new PdfPCell(new Paragraph("Data String"));
-//            PdfPTable nestedTable = new PdfPTable(2);
-//            nestedTable.addCell(new Paragraph("Nested Cell 1"));
-//            nestedTable.addCell(new Paragraph("Nested Cell 2"));
-//            PdfPCell data3 = new PdfPCell(nestedTable);
-                //Thêm data vào bảng.
-//            table.addCell(data1);
-//            table.addCell(data3);
-//Khởi tạo 3 ô data: ô số 1 là string, ô số 2 là ảnh, ô số 3 là table
-//            PdfPCell data1 = new PdfPCell(new Paragraph("Data String"));
-//            PdfPCell data2 = new PdfPCell(Image.getInstance("D:\\FPTPOLYTECH\\duan3\\src\\View\\bookmark_30px.png"), false);
-//
-//            PdfPTable nestedTable = new PdfPTable(2);
-//            nestedTable.addCell(new Paragraph("Nested Cell 1"));
-//            nestedTable.addCell(new Paragraph("Nested Cell 2"));
-//            PdfPCell data3 = new PdfPCell(nestedTable);
-//            //Thêm data vào bảng.
-//            table.addCell(data1);
-//            table.addCell(data2);
-//            table.addCell(data3);
+             
                 paragraph18.setIndentationLeft(52);
                 paragraph18.setAlignment(Element.ALIGN_LEFT);
                 paragraph19.setIndentationLeft(52);

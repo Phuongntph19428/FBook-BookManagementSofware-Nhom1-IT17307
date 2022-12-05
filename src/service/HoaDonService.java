@@ -42,7 +42,7 @@ public interface HoaDonService {
     public List<HoaDon> selectAllHoaDonDaThanhToan();
 
     public HoaDon getByMaHD(String maHD);
-    
+
     public List<HoaDonChiTiet> getAllByMaHD(String maHD);
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien3();
@@ -90,5 +90,4 @@ public interface HoaDonService {
     public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi4();
 
     public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi5();
-
 }
