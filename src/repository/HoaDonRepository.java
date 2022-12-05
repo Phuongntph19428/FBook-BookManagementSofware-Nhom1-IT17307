@@ -7,7 +7,6 @@ package repository;
 import java.util.List;
 import model.HoaDon;
 import model.HoaDonChiTiet;
-import model.PhieuNhapChiTiet;
 
 /**
  *
@@ -41,10 +40,6 @@ public interface HoaDonRepository {
 
     public List<HoaDonChiTiet> getAllByMaHD(String maHD);
 
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien4();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong4();
-
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien3();
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong3();
@@ -60,31 +55,5 @@ public interface HoaDonRepository {
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien0();
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong0();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeBieuDoTron();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoTron();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu2();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu3();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu4();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu5();
-
-    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay();
-
-    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1();
-
-    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi2();
-
-    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi3();
-
-    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi4();
-
-    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi5();
 
 }
