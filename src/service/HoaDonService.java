@@ -25,6 +25,8 @@ public interface HoaDonService {
 
     public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
 
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon);
+
     public boolean updateHoaDon(HoaDon hoaDon);
 
     public int genMaHoaDon();
@@ -39,6 +41,8 @@ public interface HoaDonService {
 
     public List<HoaDon> selectAllHoaDonDaThanhToan();
 
+    public HoaDon getByMaHD(String maHD);
+    
     public List<HoaDonChiTiet> getAllByMaHD(String maHD);
 
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien3();

@@ -25,10 +25,15 @@ public interface HoaDonRepository {
 
     public boolean updateHoaDonChiTiet(HoaDonChiTiet hoaDonCT);
 
+    public boolean updateHoaDonChiTiet(List<HoaDonChiTiet> lstHoaDonCT, HoaDon hoaDon);
+
     public boolean updateHoaDon(HoaDon hoaDon);
+
 
     public String getLastHoaDon();
 
+    public HoaDon getByMaHD(String maHD);
+    
     public List<HoaDon> sellectAll();
 
     public List<HoaDon> sellectAllHoaDonCho();
