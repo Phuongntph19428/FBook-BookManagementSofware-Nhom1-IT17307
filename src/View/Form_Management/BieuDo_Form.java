@@ -1286,27 +1286,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph2);
                 document.add(paragraph5);
 
-                //Khởi tạo 3 ô data: ô số 1 là string, ô số 2 là ảnh, ô số 3 là table
-//            PdfPCell data1 = new PdfPCell(new Paragraph("Data String"));
-//            PdfPTable nestedTable = new PdfPTable(2);
-//            nestedTable.addCell(new Paragraph("Nested Cell 1"));
-//            nestedTable.addCell(new Paragraph("Nested Cell 2"));
-//            PdfPCell data3 = new PdfPCell(nestedTable);
-                //Thêm data vào bảng.
-//            table.addCell(data1);
-//            table.addCell(data3);
-//Khởi tạo 3 ô data: ô số 1 là string, ô số 2 là ảnh, ô số 3 là table
-//            PdfPCell data1 = new PdfPCell(new Paragraph("Data String"));
-//            PdfPCell data2 = new PdfPCell(Image.getInstance("D:\\FPTPOLYTECH\\duan3\\src\\View\\bookmark_30px.png"), false);
-//
-//            PdfPTable nestedTable = new PdfPTable(2);
-//            nestedTable.addCell(new Paragraph("Nested Cell 1"));
-//            nestedTable.addCell(new Paragraph("Nested Cell 2"));
-//            PdfPCell data3 = new PdfPCell(nestedTable);
-//            //Thêm data vào bảng.
-//            table.addCell(data1);
-//            table.addCell(data2);
-//            table.addCell(data3);
                 paragraph18.setIndentationLeft(52);
                 paragraph18.setAlignment(Element.ALIGN_LEFT);
                 paragraph19.setIndentationLeft(52);
