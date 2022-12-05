@@ -23,39 +23,21 @@ package View.Form_Management;
 //import service.impl.NhanVienServiceImpl;
 //import util.MyMD5;
 import View.soundeffect.MySoundEffect;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Result;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.HybridBinarizer;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import model.ChucVu;
 import model.NhanVien;
 import service.ChucVuService;
 import service.NhanVienService;
 import service.impl.ChucVuServicelmpl;
 import service.impl.NhanVienServiceImpl;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -63,16 +45,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import model.status.TrangThaiNhanVien;
@@ -106,7 +84,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         listChucVu = chucVuService.selectAll();
         comboboxChucVu.setModel(new DefaultComboBoxModel());
         for (int i = 0; i < listChucVu.size(); i++) {
-            comboboxChucVu.addItem(listChucVu.get(i).getMoTa());
+            comboboxChucVu.addItem(listChucVu.get(i).getTen());
         }
 
         comboboxTrangThai.setModel(new DefaultComboBoxModel());
@@ -148,7 +126,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 //        txtMatKhau.setText(nhanVien.getMatKhau());
         txtTen.setText(nhanVien.getTen());
         txtSDT.setText(nhanVien.getSdt());
-        comboboxChucVu.setSelectedItem(nhanVien.getChucVu().getMoTa());
+        comboboxChucVu.setSelectedItem(nhanVien.getChucVu().getTen());
         comboboxTrangThai.setSelectedItem(nhanVien.getTrangThai());
         if (nhanVien.getGioiTinh().equals("Nam")) {
             radioButtonCustom1.setSelected(true);
@@ -196,7 +174,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
         }
 
-        String moTaChucVu = comboboxChucVu.getSelectedItem().toString();
+        ChucVu chucVu = listChucVu.get(comboboxChucVu.getSelectedIndex());
 //        Integer trangThai = (Integer) comboboxTrangThai.getSelectedItem();
         NhanVien nhanvien = new NhanVien();
 
@@ -218,12 +196,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         } else {
             nhanvien.setGioiTinh("Nu");
         }
-
-        for (ChucVu chucVu : listChucVu) {
-            if (chucVu.getMoTa().equals(moTaChucVu)) {
-                nhanvien.setChucVu(chucVu);
-            }
-        }
+        nhanvien.setChucVu(chucVu);
         nhanvien.setHinh(_hinh);
         return nhanvien;
     }

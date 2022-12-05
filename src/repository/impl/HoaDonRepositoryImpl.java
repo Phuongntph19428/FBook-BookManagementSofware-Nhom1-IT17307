@@ -533,22 +533,6 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         return lstHoaDon;
     }
 
-    public static void main(String[] args) {
-        HoaDonRepositoryImpl donRepositoryImpl = new HoaDonRepositoryImpl();
-        System.out.println(donRepositoryImpl.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi4());
-        List<PhieuNhapChiTiet> chiTiets = new ArrayList<>();
-        chiTiets = donRepositoryImpl.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi4();
-
-        int count = 0;
-        for (int i = 0; i < chiTiets.size(); i++) {
-
-            count++;
-
-        }
-        System.out.println(count);
-
-    }
-
 //FROM User u LEFT JOIN u.userProfile p WHERE u.id = :id
     @Override
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay() {
