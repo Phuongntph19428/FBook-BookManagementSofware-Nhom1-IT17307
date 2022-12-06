@@ -59,6 +59,10 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
     public BieuDo_Form() {
         initComponents();
+        donService = new HoaDonServiceImpl();
+        list3 = new ArrayList<>();
+        list2 = new ArrayList<>();
+        list1 = new ArrayList<>();
         Icon iconDS = new ImageIcon("image/icons8_total_sales_30px_1.png");
         Icon iconTopSell = new ImageIcon("image/icons8_best_seller_30px_1.png");
         Icon iconHDDays = new ImageIcon("image/icons8_purchase_order_40px.png");
@@ -75,19 +79,18 @@ public class BieuDo_Form extends javax.swing.JPanel {
         this.lblPhanTram0.setIcon(iconPhantram1);
         this.lbTopSell.setIcon(iconTopSeller);
         this.lbThuChi.setIcon(iconThuChi);
-
+// pieChart1.addData(new ModelPieChart("", 0, new Color(100, 188, 0)));
+//  pieChart1.addData(new ModelPieChart("", 0, new Color(255, 188, 0)));
+//   pieChart1.addData(new ModelPieChart("", 0, new Color(200, 188, 0)));
+//        this.doanhsobanhang.setIcon(iconDS);
+//        this.topbanchay.setIcon(iconTopSell);
+//        this.HoaDon.setIcon(iconHDDays);
+//        this.books.setIcon(iconBooks);
+//        this.tongtien.setIcon(iconDoanhThu);
+//        this.tienchi.setIcon(iconDoanhThu);
+//        this.btnInBaoCao.setIcon(iconIn);
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
-        loadData();
-
-    }
-    
-    public void loadData() {
-        donService = new HoaDonServiceImpl();
-        list3 = new ArrayList<>();
-        list2 = new ArrayList<>();
-        list1 = new ArrayList<>();
-        
         daTaBieuDoCot();
         tongSoLuong0();
         tongSoLuong1();
@@ -101,6 +104,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
         phanTramDoanhThuTheoThang4();
 //        lblPhanTram0.setText("-");
         daTaBieuDoTron();
+
     }
 
     private void daTaBieuDoCot() {
@@ -132,7 +136,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(2))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(2))), 0, 400}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(3))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(3))), 0, 600}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(4))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(4))), 0, 700}));
-
         try {
             if (donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1().get(0) == null) {
                 chart.addData(new DC_ModelBieuDo(dateFormat.format(c1.getTime()), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1().get(0))), 0, 1}));
@@ -248,12 +251,15 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Calendar c2 = Calendar.getInstance();
         Calendar c3 = Calendar.getInstance();
 
- 
+        // Định nghĩa mốc thời gian ban đầu là ngày 31-07-2011
+//        System.out.println("Ngày ban đầu : " + dateFormat.format(c1.getTime()));
+        // Tăng ngày thêm 8 ngày -- Sử dụng phương thức roll()
         c1.roll(Calendar.MONTH, -1);
         c2.roll(Calendar.MONTH, -2);
         c3.roll(Calendar.MONTH, -3);
 
-
+//        // c1.roll(Calendar.DATE, -8); // Giảm ngày 8 ngày ==> 23-07-2011
+//        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
         dateFormat.format(c1.getTime());
 
         LocalDateTime localDate = LocalDateTime.now();
@@ -398,6 +404,36 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
     }
 
+//    private void phanTramDoanhThuTheoThang1() {
+//        try {
+//            DecimalFormat df = new DecimalFormat("####");
+//            double a = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien0().get(0)));
+//            double b = Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsTongTien01().get(0)));
+//            double c = ((a - b) / (a < b ? a : b)) * 100;
+//            lblPhanTram0.setText(df.format(c) + "%");
+//            if (c < 0) {
+//                lblPhanTram0.setForeground(Color.RED);
+//                lblPhanTram0.setText(df.format(c) + "%");
+//                lblgach0.setBackground(Color.RED);
+//            } else if (c >= 0) {
+//                lblPhanTram0.setForeground(Color.GREEN);
+//                lblPhanTram0.setText(df.format(c) + "%");
+//                lblgach0.setBackground(Color.GREEN);
+//
+//            }
+//        } catch (Exception e) {
+//            lblPhanTram0.setForeground(Color.red);
+//            lblPhanTram0.setText("-100" + "%");
+//            lblgach0.setBackground(Color.RED);
+//
+//        }
+//
+//    }
+//    public static void main(String[] args) {
+//        BieuDo_Form bdf = new BieuDo_Form();
+//        bdf.phanTramDoanhThuTheoThang3();
+//
+//    }
     private void tongTien3Thang() {
         DecimalFormat df = new DecimalFormat("#,###");
         if (donService.sellectAllHoaDonChiTietsTongTien3().get(0) == null) {
@@ -484,7 +520,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
         cbNgayHienTai = new View.DesignComponent.Combobox();
         btnInBaoCao = new View.ButtonDesign.Button();
         jLabel8 = new javax.swing.JLabel();
-        btnInBaoCao1 = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(11, 20, 55));
         setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -977,18 +1012,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Tổng quan bán hàng ngày hôm nay");
 
-        btnInBaoCao1.setBackground(new java.awt.Color(19, 29, 243));
-        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
-        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
-        btnInBaoCao1.setText("Refresh");
-        btnInBaoCao1.setFocusable(false);
-        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        btnInBaoCao1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInBaoCao1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -1001,12 +1024,10 @@ public class BieuDo_Form extends javax.swing.JPanel {
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbNgayHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanelBourder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -1025,9 +1046,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                     .addComponent(cbNgayHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1047,12 +1066,17 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Calendar c4 = Calendar.getInstance();
         Calendar c5 = Calendar.getInstance();
 
+        // Định nghĩa mốc thời gian ban đầu là ngày 31-07-2011
+//        System.out.println("Ngày ban đầu : " + dateFormat.format(c1.getTime()));
+        // Tăng ngày thêm 8 ngày -- Sử dụng phương thức roll()
         c1.roll(Calendar.DAY_OF_YEAR, -1);
         c2.roll(Calendar.DAY_OF_YEAR, -2);
         c3.roll(Calendar.DAY_OF_YEAR, -3);
         c4.roll(Calendar.DAY_OF_YEAR, -4);
         c5.roll(Calendar.DAY_OF_YEAR, -5);
 
+//        // c1.roll(Calendar.DATE, -8); // Giảm ngày 8 ngày ==> 23-07-2011
+//        System.out.println("Ngày được tăng thêm 8 ngày (Sử dụng Roll) : " + dateFormat.format(c1.getTime()));
         dateFormat.format(c1.getTime());
 
         DecimalFormat df = new DecimalFormat("#,###");
@@ -1227,7 +1251,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                     PdfPCell header34 = new PdfPCell(new Paragraph("Chi: 0" + " VND"));
                     table1.addCell(header34);
                 }
-
                 paragraph1.setIndentationLeft(80);
 
                 paragraph1.setAlignment(Element.ALIGN_CENTER);
@@ -1428,14 +1451,13 @@ public class BieuDo_Form extends javax.swing.JPanel {
         loadData();
         this.repaint();
         this.validate();
-    }//GEN-LAST:event_btnInBaoCao1ActionPerformed
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HoaDon4;
     private javax.swing.JLabel HoaDon5;
     private View.ButtonDesign.Button btnInBaoCao;
-    private View.ButtonDesign.Button btnInBaoCao1;
     private View.DesignComponent.Combobox cbNgayHienTai;
     private View.DesignComponent.BieuDo chart;
     private javax.swing.JLabel jLabel10;
