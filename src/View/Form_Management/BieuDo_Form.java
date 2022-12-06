@@ -59,10 +59,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
     public BieuDo_Form() {
         initComponents();
-        donService = new HoaDonServiceImpl();
-        list3 = new ArrayList<>();
-        list2 = new ArrayList<>();
-        list1 = new ArrayList<>();
         Icon iconDS = new ImageIcon("image/icons8_total_sales_30px_1.png");
         Icon iconTopSell = new ImageIcon("image/icons8_best_seller_30px_1.png");
         Icon iconHDDays = new ImageIcon("image/icons8_purchase_order_40px.png");
@@ -82,6 +78,16 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
+        loadData();
+
+    }
+    
+    public void loadData() {
+        donService = new HoaDonServiceImpl();
+        list3 = new ArrayList<>();
+        list2 = new ArrayList<>();
+        list1 = new ArrayList<>();
+        
         daTaBieuDoCot();
         tongSoLuong0();
         tongSoLuong1();
@@ -95,7 +101,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
         phanTramDoanhThuTheoThang4();
 //        lblPhanTram0.setText("-");
         daTaBieuDoTron();
-
     }
 
     private void daTaBieuDoCot() {
@@ -479,6 +484,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
         cbNgayHienTai = new View.DesignComponent.Combobox();
         btnInBaoCao = new View.ButtonDesign.Button();
         jLabel8 = new javax.swing.JLabel();
+        btnInBaoCao1 = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(11, 20, 55));
         setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -971,6 +977,18 @@ public class BieuDo_Form extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Tổng quan bán hàng ngày hôm nay");
 
+        btnInBaoCao1.setBackground(new java.awt.Color(19, 29, 243));
+        btnInBaoCao1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnInBaoCao1.setForeground(new java.awt.Color(255, 255, 255));
+        btnInBaoCao1.setText("Refresh");
+        btnInBaoCao1.setFocusable(false);
+        btnInBaoCao1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnInBaoCao1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInBaoCao1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -983,10 +1001,12 @@ public class BieuDo_Form extends javax.swing.JPanel {
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbNgayHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanelBourder2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
@@ -1005,7 +1025,9 @@ public class BieuDo_Form extends javax.swing.JPanel {
                     .addComponent(cbNgayHienTai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1402,11 +1424,16 @@ public class BieuDo_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbNgayHienTaiActionPerformed
 
+    private void btnInBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao1ActionPerformed
+        loadData();
+    }//GEN-LAST:event_btnInBaoCao1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel HoaDon4;
     private javax.swing.JLabel HoaDon5;
     private View.ButtonDesign.Button btnInBaoCao;
+    private View.ButtonDesign.Button btnInBaoCao1;
     private View.DesignComponent.Combobox cbNgayHienTai;
     private View.DesignComponent.BieuDo chart;
     private javax.swing.JLabel jLabel10;
