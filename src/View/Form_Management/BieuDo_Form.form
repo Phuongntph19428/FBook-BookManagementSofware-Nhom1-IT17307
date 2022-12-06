@@ -36,6 +36,8 @@
                           <Component id="jLabel8" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnInBaoCao1" min="-2" pref="116" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnInBaoCao" min="-2" pref="159" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cbNgayHienTai" min="-2" pref="156" max="-2" attributes="0"/>
@@ -64,7 +66,10 @@
                   <Component id="cbNgayHienTai" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-                      <Component id="btnInBaoCao" min="-2" pref="53" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnInBaoCao" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnInBaoCao1" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -988,6 +993,29 @@
         </Property>
         <Property name="text" type="java.lang.String" value="T&#x1ed5;ng quan b&#xe1;n h&#xe0;ng ng&#xe0;y h&#xf4;m nay"/>
       </Properties>
+    </Component>
+    <Component class="View.ButtonDesign.Button" name="btnInBaoCao1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="f3" green="1d" red="13" type="rgb"/>
+        </Property>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+            <EmptyBorder bottom="1" left="1" right="1" top="-3"/>
+          </Border>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Refresh"/>
+        <Property name="focusable" type="boolean" value="false"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI Semibold" size="14" style="1"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInBaoCao1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
