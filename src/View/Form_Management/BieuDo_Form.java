@@ -83,6 +83,8 @@ public class BieuDo_Form extends javax.swing.JPanel {
     }
     
     public void loadData() {
+        pieChart1.clearData();
+        chart.clear();
         donService = new HoaDonServiceImpl();
         list3 = new ArrayList<>();
         list2 = new ArrayList<>();
