@@ -45,8 +45,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace pref="47" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -58,14 +58,14 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtTuNgay" max="32767" attributes="0"/>
-                          <Component id="cbSelect2" pref="254" max="32767" attributes="0"/>
+                          <Component id="cbbTheo" pref="254" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jLabel9" min="-2" pref="170" max="-2" attributes="0"/>
+                              <Component id="label" min="-2" pref="170" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cbSelect3" max="32767" attributes="0"/>
+                              <Component id="cbbNVorKH" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="btnNgayBatDau" min="-2" pref="44" max="-2" attributes="0"/>
@@ -84,15 +84,14 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rdoTatCa" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="rdoTatCa1" min="-2" pref="82" max="-2" attributes="0"/>
+                              <Component id="rdoTienVao" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="rdoTatCa2" min="-2" pref="94" max="-2" attributes="0"/>
+                              <Component id="rdoTienRa" min="-2" pref="94" max="-2" attributes="0"/>
                           </Group>
                           <Component id="btnTimKiem" min="-2" pref="201" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
@@ -111,13 +110,13 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbSelect2" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="cbSelect3" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbbTheo" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="cbbNVorKH" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="label" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="rdoTatCa" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="rdoTatCa1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="rdoTatCa2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rdoTienVao" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rdoTienRa" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -199,11 +198,16 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace pref="585" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace pref="754" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblDiemSuDung1" min="-2" pref="342" max="-2" attributes="0"/>
+                          <Component id="lblDiemSuDung" min="-2" pref="137" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblDiemSuDung" alignment="1" min="-2" pref="731" max="-2" attributes="0"/>
-                          <Component id="lblDiemSuDung1" alignment="1" min="-2" pref="731" max="-2" attributes="0"/>
+                          <Component id="lblTongThu" min="-2" pref="214" max="-2" attributes="0"/>
+                          <Component id="lblTongChi" min="-2" pref="212" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -219,10 +223,16 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="430" max="32767" attributes="0"/>
-                      <Component id="lblDiemSuDung" min="-2" pref="39" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblDiemSuDung1" min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace pref="436" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDiemSuDung" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                          <Component id="lblTongThu" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDiemSuDung1" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                          <Component id="lblTongChi" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -255,131 +265,39 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="View.DesignComponent.Table" name="tbTheLoai">
+                <Component class="View.DesignComponent.Table" name="tableDoanhThu">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="10" rowCount="10">
-                        <Column editable="false" title="Nh&#xe0; Xu&#x1ea5;t B&#x1ea3;n" type="java.lang.Object">
-                          <Data value="NXB1"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="V&#x1ecb; Tr&#xed;" type="java.lang.Object">
-                          <Data value="VT1"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="M&#xe3;" type="java.lang.Object">
-                          <Data value="S1"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="T&#xea;n" type="java.lang.Object">
-                          <Data value="&#x110;&#x1eaf;c Nh&#xe2;n T&#xe2;m"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="S&#x1ed1; L&#x1b0;&#x1ee3;ng" type="java.lang.Object">
-                          <Data value="15"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="S&#x1ed1; Trang" type="java.lang.Object">
-                          <Data value="200"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="Gi&#xe1; Nh&#x1ead;p" type="java.lang.Object">
-                          <Data value="20000"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="Gi&#xe1; B&#xe1;n" type="java.lang.Object">
-                          <Data value="30000"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object">
-                          <Data value="&#x110;ang B&#xe1;n"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                        <Column editable="false" title="H&#xec;nh" type="java.lang.Object">
-                          <Data value="None"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
+                      <Table columnCount="4" rowCount="9">
+                        <Column editable="false" title="Ng&#x1b0;&#x1edd;i giao dich" type="java.lang.Object"/>
+                        <Column editable="false" title="Ng&#xe0;y giao d&#x1ecb;ch" type="java.lang.Object"/>
+                        <Column editable="false" title="Ti&#x1ec1;n thu" type="java.lang.Object"/>
+                        <Column editable="false" title="Ti&#x1ec1;n chi" type="java.lang.Object"/>
                       </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI Semibold" size="14" style="1"/>
@@ -390,7 +308,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbTheLoaiMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableDoanhThuMouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -417,6 +335,30 @@
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="text" type="java.lang.String" value="T&#x1ed5;ng chi:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblTongChi">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="99" red="0" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="_ _ _ _ _ _ _ _"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblTongThu">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="99" red="0" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="4"/>
+                <Property name="text" type="java.lang.String" value="_ _ _ _ _ _"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -519,11 +461,11 @@
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
     </Component>
-    <Component class="View.ComboBoxDesign.ComboBoxSuggestion" name="cbSelect2">
+    <Component class="View.ComboBoxDesign.ComboBoxSuggestion" name="cbbTheo">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="3">
-            <StringItem index="0" value="T&#x1ea5;t c&#x1ea3;"/>
+            <StringItem index="0" value="Tat ca"/>
             <StringItem index="1" value="Nh&#xe2;n vi&#xea;n"/>
             <StringItem index="2" value="Kh&#xe1;ch h&#xe0;ng"/>
           </StringArray>
@@ -533,7 +475,8 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="cbSelect2PopupMenuWillBecomeInvisible"/>
+        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="cbbTheoPopupMenuWillBecomeInvisible"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbTheoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -548,7 +491,7 @@
         <Property name="text" type="java.lang.String" value="Th&#x1edd;i gian:"/>
       </Properties>
     </Component>
-    <Component class="View.ComboBoxDesign.ComboBoxSuggestion" name="cbSelect3">
+    <Component class="View.ComboBoxDesign.ComboBoxSuggestion" name="cbbNVorKH">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="3">
@@ -562,10 +505,11 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="cbSelect3PopupMenuWillBecomeInvisible"/>
+        <EventHandler event="popupMenuWillBecomeInvisible" listener="javax.swing.event.PopupMenuListener" parameters="javax.swing.event.PopupMenuEvent" handler="cbbNVorKHPopupMenuWillBecomeInvisible"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbbNVorKHActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
+    <Component class="javax.swing.JLabel" name="label">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
@@ -592,6 +536,9 @@
         <Property name="text" type="java.lang.String" value="T&#x1ea5;t c&#x1ea3;"/>
         <Property name="verticalAlignment" type="int" value="3"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoTatCaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
@@ -605,7 +552,7 @@
         <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i giao d&#x1ecb;ch:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdoTatCa1">
+    <Component class="javax.swing.JRadioButton" name="rdoTienVao">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="buttonGroup1"/>
@@ -620,7 +567,7 @@
         <Property name="verticalAlignment" type="int" value="3"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="rdoTatCa2">
+    <Component class="javax.swing.JRadioButton" name="rdoTienRa">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="buttonGroup1"/>
@@ -654,6 +601,10 @@
           <Font name="Segoe UI Semibold" size="14" style="1"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnTimKiemMouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -1993,9 +1993,14 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }
 
     private void send() {
-        SystemServiceImpl ss = new SystemServiceImpl();
-        ss.SendSMStoManager();
-
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SystemServiceImpl ss = new SystemServiceImpl();
+                ss.SendSMStoManager();
+            }
+        });
+        th.start();
     }
 
     private void btnThanhToanVaInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanVaInActionPerformed

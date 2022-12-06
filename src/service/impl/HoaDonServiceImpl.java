@@ -7,6 +7,7 @@ package service.impl;
 import java.util.List;
 import model.HoaDon;
 import model.HoaDonChiTiet;
+import model.PhieuNhapChiTiet;
 import repository.HoaDonRepository;
 import repository.impl.HoaDonRepositoryImpl;
 import service.HoaDonService;
@@ -27,12 +28,12 @@ public class HoaDonServiceImpl implements HoaDonService {
     public boolean taoHoaDon(HoaDon hoaDon) {
         return _hoaDonRepo.taoHoaDon(hoaDon);
     }
-    
+
     @Override
     public HoaDon getByMaHD(String maHD) {
         return _hoaDonRepo.getByMaHD(maHD);
     }
-    
+
     @Override
     public boolean removeAllHoaDonCT(HoaDon hoaDon) {
         return _hoaDonRepo.deleteHoaDonChiTiet(hoaDon);
@@ -134,6 +135,82 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Override
     public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong0() {
         return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong0();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeBieuDoTron() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeBieuDoTron();
+
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoTron() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoTron();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsTongTien4() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsTongTien4();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsCoutSoLuong4() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsCoutSoLuong4();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay();
+    }
+
+    @Override
+    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1();
+    }
+
+    @Override
+    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi2() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi2();
+    }
+
+    @Override
+    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi3() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi3();
+    }
+
+    @Override
+    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi4() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi4();
+    }
+
+    @Override
+    public List<PhieuNhapChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi5() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi5();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu2() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu2();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu3() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu3();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu4() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu4();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu5() {
+        return _hoaDonRepo.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu5();
     }
 
     @Override
