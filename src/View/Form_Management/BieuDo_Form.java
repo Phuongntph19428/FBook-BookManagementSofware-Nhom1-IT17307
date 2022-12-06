@@ -1426,6 +1426,8 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
     private void btnInBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao1ActionPerformed
         loadData();
+        this.repaint();
+        this.validate();
     }//GEN-LAST:event_btnInBaoCao1ActionPerformed
 
 
