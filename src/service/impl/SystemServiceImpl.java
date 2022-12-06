@@ -9,8 +9,11 @@ import com.twilio.rest.api.v2010.account.Message;
 import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -49,16 +52,30 @@ public class SystemServiceImpl implements ISystemService {
     String sdt = "-";
     String email = "-";
 
+    String htmlSendSMS = "<div style=\"width:78% ; padding-bottom: 26px; background-color: whitesmoke;\n"
+            + "    text-align: center;\">\n"
+            + "        <h1 style=\"padding: 31px;font-family: sans-serif;     margin: 0;\">Thông Tin Những Sản Phẩm Sắp Hết Hàng</h1>\n"
+            + "        <table style=\"margin: auto; background-color: white;border-radius: 10px;border: 1px solid;\">\n"
+            + "            <tr style=\"    background: black;\n"
+            + "            color: white;\n"
+            + "            font-family: sans-serif;\">\n"
+            + "                <th style=\"width: 250px; height: 53px;\"><span>Tên Sách</span></th>\n"
+            + "                <th style=\"width: 250px;\"><span>Số Lượng Hiện Có</span></th>\n"
+            + "                <th style=\"width: 250px;\"><span>Giá Nhập</span></th>\n"
+            + "            </tr>\n";
+
     private final SachServiceImpl sachSer = new SachServiceImpl();
     private List<Sach> list;
 
-    public void SendSMStoManager() {
+    public void SendSMStoManager(){
+        System.out.println("hình thức "+hinhThuc);
         getDataSettings();
         if (TurnOnorOff == false) {
             return;
         }
         list = sachSer.selectAllLowerThan(QuantityLowerThan);
-        String content = "";
+//        WriteFile(list);
+//        System.out.println(readFile().toString());
         if (list.isEmpty()) {
             return;
         }
@@ -66,44 +83,44 @@ public class SystemServiceImpl implements ISystemService {
             return;
         }
         // header HTML
-        String htmlSendSMS = "<div style=\"width:78% ; padding-bottom: 26px; background-color: whitesmoke;\n"
-                + "    text-align: center;\">\n"
-                + "        <h1 style=\"padding: 31px;font-family: sans-serif;     margin: 0;\">Thông Tin Những Sản Phẩm Sắp Hết Hàng</h1>\n"
-                + "        <table style=\"margin: auto; background-color: white;border-radius: 10px;border: 1px solid;\">\n"
-                + "            <tr style=\"    background: black;\n"
-                + "            color: white;\n"
-                + "            font-family: sans-serif;\">\n"
-                + "                <th style=\"width: 250px; height: 53px;\"><span>Tên Sách</span></th>\n"
-                + "                <th style=\"width: 250px;\"><span>Số Lượng Hiện Có</span></th>\n"
-                + "                <th style=\"width: 250px;\"><span>Giá Nhập</span></th>\n"
-                + "            </tr>\n";
-        for (Sach sach : list) {
-            content += "Tên " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
-            // Item HTML
-            Base64.Encoder encoder = Base64.getEncoder();
-            String encoding =encoder.encodeToString(sach.getHinh());
-            String itemSach = "<tr style=\"font-family: sans-serif;border: none; height: 48px;\">\n"
-                    + "                <td class=\"lalign\">" + sach.getTen() + "</td>\n"
-                    + "                <td>" + sach.getSoLuong() + "</td>\n"
-                    + "                <td>6,000</td>\n"
-                    + "            </tr>\n";
-            // Add Item
-            htmlSendSMS += itemSach;
 
-        }
-        // end HTML
-        htmlSendSMS += "</table>\n"
-                + "    </div>";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String content = "";
+                for (Sach sach : list) {
+                    content += "Tên " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
+                }
+                if (hinhThuc == 1 || hinhThuc == 3) {
+                    System.out.println(content);
+                    SendSMS(sdt, content);
+                }
+            }
+        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Sach sach : list) {
+                    // Item HTML
+                    Base64.Encoder encoder = Base64.getEncoder();
+                    String encoding = encoder.encodeToString(sach.getHinh());
+                    String itemSach = "<tr style=\"font-family: sans-serif;border: none; height: 48px;\">\n"
+                            + "                <td class=\"lalign\">" + sach.getTen() + "</td>\n"
+                            + "                <td>" + sach.getSoLuong() + "</td>\n"
+                            + "                <td>6,000</td>\n"
+                            + "            </tr>\n";
+                    // Add Item
+                    htmlSendSMS += itemSach;
 
-        System.out.println("bat dau gui");
-        if (hinhThuc == 1) {
-            SendSMS(sdt, content);
-        } else if (hinhThuc == 2) {
-            sendEmail(email, htmlSendSMS);
-        } else {
-            SendSMS(sdt, content);
-            sendEmail(email, htmlSendSMS);
-        }
+                }
+                htmlSendSMS += "</table>\n"
+                        + "    </div>";
+                if (hinhThuc == 2 || hinhThuc == 3) {
+                    sendEmail(email, htmlSendSMS);
+                }
+            }
+        }).start();
+        
     }
 
     @Override
@@ -112,7 +129,7 @@ public class SystemServiceImpl implements ISystemService {
 
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
-                new com.twilio.type.PhoneNumber("+84"+PhoneNumber),
+                new com.twilio.type.PhoneNumber("+84" + PhoneNumber),
                 "MG460bfa62917ce55950114f6444d25e08", "Những Sách sắp hết hàng \n" + ct)
                 .create();
 
@@ -213,9 +230,35 @@ public class SystemServiceImpl implements ISystemService {
         System.out.println("Success...");
     }
 
+    public void WriteFile(List<Sach> list) {
+        ObjectOutputStream oos = null;
+        try {
+            FileOutputStream fos = new FileOutputStream("hethang.txt");
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(list);
+            oos.flush();
+            oos.close();
+            fos.close();
+        } catch (IOException ex) {
+            Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                oos.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public List<Sach> readFile() throws IOException, ClassNotFoundException {
+        FileInputStream fos = new FileInputStream("hethang.txt");
+
+        ObjectInputStream oos = new ObjectInputStream(fos);
+        return (List<Sach>) oos.readObject();
+    }
+
     public static void main(String[] args) {
         SystemServiceImpl s = new SystemServiceImpl();
-        s.SendSMStoManager();
     }
 
 }

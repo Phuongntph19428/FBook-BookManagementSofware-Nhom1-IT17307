@@ -300,6 +300,12 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 }
             }
         });
+        if (Auth.getNhanVien() != null) {
+            lbUser.setText(Auth.getNhanVien().getTen());
+
+        } else {
+            lbUser.setText("Mazk Kuno");
+        }
     }
     private List<MenuItem> listItemCha = new ArrayList<>();
 
