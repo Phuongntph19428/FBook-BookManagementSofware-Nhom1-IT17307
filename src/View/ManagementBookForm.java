@@ -192,7 +192,10 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lbIcon1.setIcon(iconInves);
         Icon iconLogo = new ImageIcon("image/8888.png");
         logoTeam.setIcon(iconLogo);
-        ImageIcon ImageUser = new ImageIcon(new ImageIcon("image/Max-R_Headshot (1).jpg").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        ImageIcon ImageUser = null;
+        if (Auth.getNhanVien().getHinh() != null) {
+            ImageUser = new ImageIcon(new ImageIcon(Auth.getNhanVien().getHinh()).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        }
         lbUser.setIcon(ImageUser);
 
         listJLabel.add(banHangName);
@@ -475,6 +478,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             addMenu(menuSach, menuHoaDon, menuNhanVien, menuthongKe, menunhapKho, menuKM, menuKH_NCC, menuDangXuat);
 
         }
+        lbUser.setText(Auth.getNhanVien().getHo() + " " + Auth.getNhanVien().getTenDem() + " " + Auth.getNhanVien().getTen());
 
     } // Giao Diện
 
