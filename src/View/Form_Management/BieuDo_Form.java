@@ -78,6 +78,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
+   
         loadData();
 
     }

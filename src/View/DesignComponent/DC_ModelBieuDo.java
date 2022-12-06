@@ -4,11 +4,13 @@
  */
 package View.DesignComponent;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author quanc
  */
-public class DC_ModelBieuDo {
+public class DC_ModelBieuDo{
 
     private String label;
     private double values[];
