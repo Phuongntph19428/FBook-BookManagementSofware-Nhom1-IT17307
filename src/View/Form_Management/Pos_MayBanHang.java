@@ -67,14 +67,17 @@ import model.HinhThucThanhToan;
 import model.HoaDon;
 import model.HoaDonChiTiet;
 import model.KhachHang;
+import model.Sach;
 import service.CustomSachService;
 import service.HinhThucThanhToanService;
 import service.HoaDonService;
 import service.KhachHangService;
+import service.SachService;
 import service.impl.CustomSachServiceImpl;
 import service.impl.HinhThucThanhToanServiceImpl;
 import service.impl.HoaDonServiceImpl;
 import service.impl.KhachHangServiceImpl;
+import service.impl.SachServiceImpl;
 import service.impl.SystemServiceImpl;
 import util.Auth;
 
@@ -82,6 +85,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private final HoaDonService _hoaDonService;
     private List<HoaDon> _lstHoaDon;
+    
+    private final SachService _sachService;
 
     private final CustomSachService _customSachService;
     private List<CustomSach> _lstCustomSach;
@@ -113,6 +118,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         _customSachService = new CustomSachServiceImpl();
         _khachHangService = new KhachHangServiceImpl();
         _hinhThucThanhToanService = new HinhThucThanhToanServiceImpl();
+        _sachService = new SachServiceImpl();
 
         loadCustomSach();
         loadTableHoaDon();
@@ -360,11 +366,21 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Số lượng phải lớn hơn 0");
             tblHoaDonChiTiet.setValueAt(hoaDonCT.getSoLuong(), e.getFirstRow(), 3);
             return;
+        }        
+        
+        String ma = hoaDonCT.getSach().getMa();
+        Sach sach = _sachService.getSachByMa(ma);
+        if(sach.getSoLuong() < amountChanged) {
+            ThongBao.showNoti_Error(this, "Số lượng sách không đủ. Trong kho hiện tại còn: " + sach.getSoLuong() + " cuốn");
+            tblHoaDonChiTiet.setValueAt(hoaDonCT.getSoLuong(), e.getFirstRow(), 3);
+            return;
         }
+        
         hoaDonCT.setSoLuong(amountChanged);
         _hoaDonService.updateHoaDonChiTiet(hoaDonCT);
-        refreshSP();
         _lstHoaDonChiTiet.put(hoaDonCT.getId(), hoaDonCT);
+        loadTableHoaDonCT();
+        refreshSP();
     }
 
     public void loadSachSearch(List<CustomSach> lst, int position, int pageSize) {
@@ -375,7 +391,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }
 
     private void loadTableHoaDon() {
-        _lstHoaDon = _hoaDonService.sellectAllHoaDonCho();
+        _lstHoaDon = _hoaDonService.sellectAllHoaDon(HoaDon.CHUATHANHTOAN);
         DefaultTableModel dtm = (DefaultTableModel) tblHoaDon.getModel();
         dtm.setRowCount(0);
         for (HoaDon hoaDon : _lstHoaDon) {

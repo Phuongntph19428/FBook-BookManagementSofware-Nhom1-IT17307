@@ -4,8 +4,6 @@
  */
 package model;
 
-import View.DesignComponent.ModelProfile;
-import java.awt.Image;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
@@ -14,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.swing.ImageIcon;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -119,10 +116,10 @@ public class NhaCungCap implements Serializable {
 
     @Override
     public String toString() {
-        return "NhaCungCap{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", sdt=" + sdt + ", diaChi=" + diaChi + ", moTa=" + moTa + '}';
+        return ten + " - " + ma;
     }
 
-        public Object[] toDataRow() {
+    public Object[] toDataRow() {
         return new Object[]{id, ma, ten, sdt, diaChi, moTa};
     }
 }

@@ -33,13 +33,7 @@ public interface HoaDonService {
 
     public List<HoaDon> sellectAll();
 
-    public List<HoaDon> sellectAllHoaDonCho();
-
-    public List<HoaDon> sellectAllHoaDonDangVanChuyen();
-
-    public List<HoaDon> sellectAllHoaDonDaHuy();
-
-    public List<HoaDon> selectAllHoaDonDaThanhToan();
+    public List<HoaDon> sellectAllHoaDon(int trangThai);
 
     public HoaDon getByMaHD(String maHD);
 

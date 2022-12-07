@@ -4,24 +4,6 @@
  */
 package View.Form_Management;
 
-//import java.awt.Image;
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//import java.util.List;
-//import javax.swing.DefaultComboBoxModel;
-//import javax.swing.Icon;
-//import javax.swing.ImageIcon;
-//import javax.swing.JButton;
-//import javax.swing.JOptionPane;
-//import javax.swing.JTable;
-//import model.ChucVu;
-//import model.NhanVien;
-//import service.ChucVuService;
-//import service.NhanVienService;
-//import service.impl.ChucVuServicelmpl;
-//import service.impl.NhanVienServiceImpl;
-//import util.MyMD5;
 import View.soundeffect.MySoundEffect;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -53,7 +35,6 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import model.status.TrangThaiNhanVien;
 import util.MyMD5;
 
 /**
@@ -75,8 +56,6 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     private String currentDirectory;
     private byte[] _hinh = null;
 
-    private HashMap<String, NhanVien> _lstNhanVien;
-
     public NhanVien_ChucNang_Form() {
         initComponents();
         nhanVienService = new NhanVienServiceImpl();
@@ -86,10 +65,6 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         for (int i = 0; i < listChucVu.size(); i++) {
             comboboxChucVu.addItem(listChucVu.get(i).getTen());
         }
-
-        comboboxTrangThai.setModel(new DefaultComboBoxModel());
-        comboboxTrangThai.addItem(0);
-        comboboxTrangThai.addItem(1);
 
         Icon icon = new ImageIcon(new ImageIcon("image/nhanvien.jpg").getImage().getScaledInstance(260, 320, Image.SCALE_DEFAULT));
         this.lblAvartar.setIcon(icon);
@@ -161,9 +136,8 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         String email = txtEmail.getText().trim();
         String sdt = txtSDT.getText().trim();
         String diaChi = txtDiaChi.getText().trim();
-        String matKhau = MyMD5.getMd5("123456");
         String dateStr = txtNgaySinh.getText();
-        int trangThai = radioButtonCustom1.isSelected() ? TrangThaiNhanVien.DANGHI : TrangThaiNhanVien.DANGLAM;
+        int trangThai = comboboxTrangThai.getSelectedIndex() == 1 ? NhanVien.DANGHI : NhanVien.DANGLAM;
         
         
         
@@ -461,7 +435,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         comboboxTrangThai.setBackground(new java.awt.Color(47, 55, 90));
         comboboxTrangThai.setForeground(new java.awt.Color(255, 255, 255));
         comboboxTrangThai.setMaximumRowCount(10);
-        comboboxTrangThai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Số lượng", "A-Z" }));
+        comboboxTrangThai.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Đang làm", "Đã nghỉ" }));
         comboboxTrangThai.setSelectedIndex(-1);
         comboboxTrangThai.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         comboboxTrangThai.setLabeText("Trạng Thái");

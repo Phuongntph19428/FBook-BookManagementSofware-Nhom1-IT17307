@@ -6,17 +6,13 @@ package View.Form_Management;
 
 import View.ManagementBookForm;
 import View.ThongBao;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.KhuyenMai;
 import model.KhuyenMaiChiTiet;
 import model.Sach;
-import net.miginfocom.layout.AC;
 import service.IKhuyenMaiChiTietService;
 import service.SachService;
 import service.impl.KhuyenMaiChiTietService;
@@ -208,7 +204,6 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         comboboxChucVu.setBackground(new java.awt.Color(17, 28, 68));
         comboboxChucVu.setForeground(new java.awt.Color(255, 255, 255));
         comboboxChucVu.setMaximumRowCount(10);
-        comboboxChucVu.setSelectedIndex(-1);
         comboboxChucVu.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         comboboxChucVu.setLabeText("Chọn Sách");
         comboboxChucVu.setLineColor(new java.awt.Color(255, 255, 255));

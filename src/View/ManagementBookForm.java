@@ -24,6 +24,7 @@ import View.Form_Management.Sach_Form;
 import View.Form_Management.TacGia_Form;
 import View.Form_Management.TheLoai_Form;
 import View.Form_Management.ThongKe_Form;
+import View.Form_Management.ThongTinCaNhan;
 import View.Form_Management.Vitri_Form;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -95,6 +96,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         KhuyenMaiChiTiet_Form kmct = new KhuyenMaiChiTiet_Form();
         PhieuNhapChiTiet_Form pnct = new PhieuNhapChiTiet_Form();
         ThongKe_Form tk = new ThongKe_Form();
+        ThongTinCaNhan ttcn = new ThongTinCaNhan();
+        
 
         this.Layout_1_Card.add(bieuDoForm);// 0
         this.Layout_1_Card.add(sach);// 1
@@ -115,6 +118,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.Layout_1_Card.add(kmct); //16
         this.Layout_1_Card.add(pnct); //17
         this.Layout_1_Card.add(tk); //18
+        this.Layout_1_Card.add(ttcn);
         this.Layout_1_Card.revalidate();
 
         listForm.add(bieuDoForm);
@@ -136,6 +140,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.add(kmct);
         listForm.add(pnct);
         listForm.add(tk);
+        listForm.add(ttcn);
         excute();
 
         listBtn.add(sach.getListbtn());
@@ -856,7 +861,13 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lbUser.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         lbUser.setForeground(new java.awt.Color(255, 255, 255));
         lbUser.setText("Mazk Kuno");
+        lbUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbUser.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lbUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbUserMouseClicked(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(23, 28, 49));
         jPanel7.setPreferredSize(new java.awt.Dimension(1, 0));
@@ -1094,7 +1105,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         ThongBao thongbao = new ThongBao();
-        thongbao.showNoti_Succes(this, "fwefwef");
+        thongbao.showNoti_Succes(this, "Chức năng đang phát triền");
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
@@ -1106,6 +1117,10 @@ public class ManagementBookForm extends javax.swing.JFrame {
         j.setLocationRelativeTo(null);
         j.show(true);
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void lbUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUserMouseClicked
+        showJPanel(20);
+    }//GEN-LAST:event_lbUserMouseClicked
 
     /**
      * @param args the command line arguments

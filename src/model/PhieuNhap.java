@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -25,6 +28,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "PhieuNhap")
 public class PhieuNhap implements Serializable {
+    
+    public final static int DATHEMVAOKHO = 1;
+    public final static int CHUATHEMVAOKHO = 0;    
 
     @Id
     @Column(name = "Id")
@@ -49,7 +55,8 @@ public class PhieuNhap implements Serializable {
     @Column(name = "MoTa")
     private String moTa;
 
-    @OneToMany(mappedBy = "phieuNhap", targetEntity = PhieuNhapChiTiet.class)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "phieuNhap", targetEntity = PhieuNhapChiTiet.class)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<PhieuNhapChiTiet> lstPhieuNhapCT;
 
     public PhieuNhap() {
@@ -124,12 +131,8 @@ public class PhieuNhap implements Serializable {
     public String toString() {
         return "PhieuNhap{" + "id=" + id + ", nhaCungCap=" + nhaCungCap.getTen() + ", ma=" + ma + ", ngayNhap=" + ngayNhap + ", moTa=" + moTa + ", trangThai" + trangThai + '}';
     }
-
-    public String trangThai() {
-        if (trangThai == 1) {
-            return "Da them vao kho";
-        } else {
-            return "Chua them vao kho";
-        }
+    
+    public Object[] toDataRow() {
+        return new Object[]{ma, nhaCungCap.getTen(), ngayNhap, trangThai==0?"Chưa nhập vào kho" : "Đã nhập vào kho"};
     }
 }

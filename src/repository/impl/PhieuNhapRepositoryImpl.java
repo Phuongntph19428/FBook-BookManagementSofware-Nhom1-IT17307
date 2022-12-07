@@ -5,8 +5,9 @@
 package repository.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import model.PhieuNhap;
 import org.hibernate.Session;
@@ -23,20 +24,29 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
 
     @Override
     public List<PhieuNhap> getAllPhieuNhap() {
-        List<PhieuNhap> listPhieuNhap = new ArrayList<>();
-        Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            transaction = session.beginTransaction();
+        List<PhieuNhap> listPhieuNhap;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
             listPhieuNhap = session.createQuery("from PhieuNhap").list();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            session.flush();
-            session.close();
         }
         return listPhieuNhap;
+    }
 
+    @Override
+    public List<PhieuNhap> getPhieuChuaNhap() {
+        List<PhieuNhap> listPhieuNhap;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+            listPhieuNhap = session.createQuery("from PhieuNhap p where p.trangThai  = 0").list();
+        }
+        return listPhieuNhap;
+    }
+
+    @Override
+    public List<PhieuNhap> getPhieuDaNhap() {
+        List<PhieuNhap> listPhieuNhap;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+            listPhieuNhap = session.createQuery("from PhieuNhap p where p.trangThai = 1").list();
+        }
+        return listPhieuNhap;
     }
 
     @Override
@@ -59,15 +69,19 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
     }
 
     @Override
-    public List<PhieuNhap> search(String ma) {
-        List<PhieuNhap> lists = new ArrayList<PhieuNhap>();
+    public PhieuNhap getByMa(String ma) {
+
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT pn FROM PhieuNhap pn where pn.ma like Concat('%',:ma,'%')";
+            String hql = "SELECT pn FROM PhieuNhap pn where pn.ma = :ma";
             TypedQuery<PhieuNhap> query = session.createQuery(hql, PhieuNhap.class);
             query.setParameter("ma", ma);
-            lists = query.getResultList();
+            try {
+                PhieuNhap phieuNhap = query.getSingleResult();
+                return phieuNhap;
+            } catch (NoResultException e) {
+                return null;
+            }
         }
-        return lists;
     }
 
     @Override
@@ -124,7 +138,7 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();
             try {
-                session.save(phieuNhap);
+                session.update(phieuNhap);
                 tran.commit();
                 return true;
             } catch (Exception e) {
@@ -137,5 +151,30 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
             }
         }
 
+    }
+
+    @Override
+    public PhieuNhap getUpdateMa(PhieuNhap phieuNhap) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT pn FROM PhieuNhap pn where pn.ma = :ma and pn.id != :id";
+            TypedQuery<PhieuNhap> query = session.createQuery(hql, PhieuNhap.class);
+            query.setParameter("ma", phieuNhap.getMa());
+            query.setParameter("id", phieuNhap.getId());
+            try {
+                PhieuNhap pn = query.getSingleResult();
+                return pn;
+            } catch (NoResultException e) {
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public List<PhieuNhap> selectByDay(Date date) {
+        List<PhieuNhap> listPhieuNhap;
+        try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
+            listPhieuNhap = session.createQuery("from PhieuNhap p where p.ngayNhap = :ngayNhap").setParameter("ngayNhap", date).list();
+        }
+        return listPhieuNhap;
     }
 }

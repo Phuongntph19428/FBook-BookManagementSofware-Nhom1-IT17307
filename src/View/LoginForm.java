@@ -22,11 +22,13 @@ import util.MyMD5;
  */
 public class LoginForm extends javax.swing.JFrame {
 
-     Auth auth = new Auth();
+    Auth auth = new Auth();
+    boolean isToggle = true;
+
     public LoginForm() {
         initComponents();
         this.setLocationRelativeTo(null);
-       
+
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 10, 10));
         ImageIcon img = new ImageIcon("image/logo_icon2.png");
         this.setIconImage(img.getImage());
@@ -110,6 +112,11 @@ public class LoginForm extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnHide.setBorder(null);
+        btnHide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHideMouseClicked(evt);
+            }
+        });
         jPanel4.add(btnHide, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 40, 40));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -249,20 +256,29 @@ public class LoginForm extends javax.swing.JFrame {
         String userName = this.txtUserName.getText().trim();
         String password = MyMD5.getMd5(this.txtPassword.getText().trim());
 
-        
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         System.out.println(timeStamp);
         boolean loginCheck = false;
         loginCheck = auth.getNhanVieninDatabase(userName, password);
-        if(loginCheck == false){
+        if (loginCheck == false) {
             ThongBao.showNoti_Error(this, "Sai tài khoản hoặc mật khẩu");
-            return ;
+            return;
         }
         this.setVisible(false);
         SplassScreen_Form spl = new SplassScreen_Form(null, true);
         spl.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnHideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHideMouseClicked
+     if(isToggle){
+         txtPassword.setEchoChar((char)0);
+         isToggle = false;
+     }else{
+         txtPassword.setEchoChar('*');
+         isToggle = true;
+     }
+    }//GEN-LAST:event_btnHideMouseClicked
 
     /**
      * @param args the command line arguments
