@@ -72,24 +72,8 @@ public class HoaDonServiceImpl implements HoaDonService {
         return _hoaDonRepo.sellectAll();
     }
 
-    @Override
-    public List<HoaDon> sellectAllHoaDonCho() {
-        return _hoaDonRepo.sellectAllHoaDonCho();
-    }
-
-    @Override
-    public List<HoaDon> sellectAllHoaDonDangVanChuyen() {
-        return _hoaDonRepo.sellectAllHoaDonDangVanChuyen();
-    }
-
-    @Override
-    public List<HoaDon> sellectAllHoaDonDaHuy() {
-        return _hoaDonRepo.sellectAllHoaDonDaHuy();
-    }
-
-    @Override
-    public List<HoaDon> selectAllHoaDonDaThanhToan() {
-        return _hoaDonRepo.selectAllHoaDonDaThanhToan();
+    public List<HoaDon> sellectAllHoaDon(int trangThai) {
+        return _hoaDonRepo.sellectAllHoaDon(trangThai);
     }
 
     @Override

@@ -29,20 +29,13 @@ public interface HoaDonRepository {
 
     public boolean updateHoaDon(HoaDon hoaDon);
 
-
     public String getLastHoaDon();
 
     public HoaDon getByMaHD(String maHD);
     
     public List<HoaDon> sellectAll();
 
-    public List<HoaDon> sellectAllHoaDonCho();
-
-    public List<HoaDon> sellectAllHoaDonDangVanChuyen();
-
-    public List<HoaDon> sellectAllHoaDonDaHuy();
-
-    public List<HoaDon> selectAllHoaDonDaThanhToan();
+    public List<HoaDon> sellectAllHoaDon(int trangThai);
 
     public List<HoaDonChiTiet> getAllByMaHD(String maHD);
 

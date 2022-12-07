@@ -17,6 +17,8 @@ public interface PhieuNhapChiTietRepository {
     List<PhieuNhapChiTiet> getAllPhieuNhapChiTiet();
 
     boolean themPNCT(PhieuNhapChiTiet phieuNhapChiTiet);
+    
+    boolean themPhieuNhapCT(List<PhieuNhapChiTiet> lstPhieuNhapCT);
 
     boolean suaPNCT(PhieuNhapChiTiet phieuNhapChiTiet);
 

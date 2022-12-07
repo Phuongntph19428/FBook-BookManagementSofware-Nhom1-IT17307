@@ -4,7 +4,6 @@
  */
 package View.Form_Management;
 
-import View.DesignComponent.Notification;
 import View.ManagementBookForm;
 import View.ScrollBarCustom;
 import java.awt.Color;
@@ -23,7 +22,6 @@ import model.KhuyenMai;
 
 import service.IKhuyenMaiServicer;
 import service.impl.KhuyenMaiServicer;
-import View.Form_Management.KhuyenMaiChiTiet_Form;
 
 /**
  *

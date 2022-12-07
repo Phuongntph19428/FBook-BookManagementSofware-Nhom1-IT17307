@@ -26,6 +26,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "NhanVien")
 public class NhanVien implements Serializable {
 
+    public static final int DANGHI = 0;
+    public static final int DANGLAM = 1;
+
     @Id
     @Column(name = "Id")
     @GeneratedValue(generator = "uuid2")
@@ -79,7 +82,7 @@ public class NhanVien implements Serializable {
     public NhanVien() {
     }
 
-    public NhanVien(String id, ChucVu chucVu, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai){
+    public NhanVien(String id, ChucVu chucVu, String ma, String ten, String ho, String tenDem, String gioiTinh, Date ngaySinh, String email, String sdt, String diaChi, String matKhau, byte[] hinh, int trangThai) {
         this.id = id;
         this.chucVu = chucVu;
         this.ma = ma;
@@ -218,6 +221,6 @@ public class NhanVien implements Serializable {
 
     @Override
     public String toString() {
-        return "NhanVien{" + "id=" + id + ", chucVu=" + chucVu + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + ", matKhau=" + matKhau + ", hinh=" + hinh + ", trangThai=" + trangThai + '}';
+        return ma + " - " + ho + " " + tenDem + " " + ten;
     }
 }

@@ -18,7 +18,7 @@ public class Auth {
     private static NhanVien nhanVien = new NhanVien("2D687099-FC5F-439D-A93D-019423C45BFF", chucVu, "NV01", "A", "Nguyễn", "Văn", "Nam", null,
             "A@gmail.com", "0123456", "Hà Nội", "123456", null, 1);
     public static final String QUAN_LY = "CV01";
-    public static final String NHAN_VIEN_BAN_HANG = "CV02S";
+    public static final String NHAN_VIEN_BAN_HANG = "CV02";
     
     private static NhanVien nVien;
     private static ChucVu cVu;

@@ -4,24 +4,26 @@
  */
 package View.Form_Management;
 
-import custommodel.ThuChiModel;
+import View.ThongBao;
+import custommodel.CustomThuChi;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import model.KhachHang;
 import model.NhanVien;
 import service.KhachHangService;
 import service.NhanVienService;
-import service.ThuChiService;
+import service.ThongKeService;
 import service.impl.KhachHangServiceImpl;
 import service.impl.NhanVienServiceImpl;
-import service.impl.ThuChiServiceImpl;
+import service.impl.ThongKeServiceImpl;
 
 /**
  *
@@ -29,26 +31,42 @@ import service.impl.ThuChiServiceImpl;
  */
 public class ThongKe_Form extends javax.swing.JPanel {
 
-    private DefaultComboBoxModel cbbModel = new DefaultComboBoxModel();
-    private List<String> cbb = new ArrayList<>();
-    private ThuChiService thuChiService;
+    private final NhanVienService _nhanVienService;
+    private List<NhanVien> _lstNhanVien;
 
-    private KhachHangService khachHangService;
-    private NhanVienService nhanVienService;
-    private List<KhachHang> lsKhachHang;
-    private List<NhanVien> lsNhanVIen;
-    private DefaultTableModel model = new DefaultTableModel();
+    private final KhachHangService _khachHangService;
+    private List<KhachHang> _lstKhachHang;
+
+    private final ThongKeService _thongKeService;
+    private List<CustomThuChi> _lstThuChi;
 
     public ThongKe_Form() {
         initComponents();
-        thuChiService = new ThuChiServiceImpl();
-        khachHangService = new KhachHangServiceImpl();
-        nhanVienService = new NhanVienServiceImpl();
-        cbb = thuChiService.cbbNhanVien();
-        lsKhachHang = khachHangService.selectAll();
-        lsNhanVIen = nhanVienService.getAllNhanVien();
-        cbbNVorKH.setVisible(false);
-        label.setVisible(false);
+        Icon icon = new ImageIcon("image/icons8_schedule_30px.png");
+        btnNgayBatDau.setIcon(icon);
+        btnNgayKetThuc.setIcon(icon);
+
+        cbbNVorKH.setEnabled(false);
+        _nhanVienService = new NhanVienServiceImpl();
+        _khachHangService = new KhachHangServiceImpl();
+        _thongKeService = new ThongKeServiceImpl();
+
+        _lstNhanVien = _nhanVienService.getAllNhanVien();
+        _lstKhachHang = _khachHangService.selectAll();
+    }
+
+    private void loadCbbNhanVien() {
+        cbbNVorKH.removeAllItems();
+        for (NhanVien nhanVien : _lstNhanVien) {
+            cbbNVorKH.addItem(nhanVien);
+        }
+    }
+
+    private void loadCbbKhachHang() {
+        cbbNVorKH.removeAllItems();
+        for (KhachHang khachHang : _lstKhachHang) {
+            cbbNVorKH.addItem(khachHang);
+        }
     }
 
     /**
@@ -67,11 +85,9 @@ public class ThongKe_Form extends javax.swing.JPanel {
         jPanelBourder3 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableDoanhThu = new View.DesignComponent.Table();
-        lblDiemSuDung = new javax.swing.JLabel();
-        lblDiemSuDung1 = new javax.swing.JLabel();
-        lblTongChi = new javax.swing.JLabel();
+        tblThuChi = new View.DesignComponent.Table();
         lblTongThu = new javax.swing.JLabel();
+        lblTongChi = new javax.swing.JLabel();
         txtTuNgay = new View.DesignComponent.TextField();
         btnNgayBatDau = new View.ButtonDesign.Button();
         jLabel7 = new javax.swing.JLabel();
@@ -87,6 +103,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
         rdoTienVao = new javax.swing.JRadioButton();
         rdoTienRa = new javax.swing.JRadioButton();
         btnTimKiem = new View.ButtonDesign.Button();
+        btnRefresh = new View.ButtonDesign.Button();
 
         ngayBatDau.setForeground(new java.awt.Color(47, 55, 90));
         ngayBatDau.setTextRefernce(txtTuNgay);
@@ -109,7 +126,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
-        tableDoanhThu.setModel(new javax.swing.table.DefaultTableModel(
+        tblThuChi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -122,7 +139,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Người giao dich", "Ngày giao dịch", "Tiền thu", "Tiền chi"
+                "Loại giao dịch", "Mã giao dịch", "Ngày giao dịch", "Tổng tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -133,48 +150,35 @@ public class ThongKe_Form extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tableDoanhThu.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        tableDoanhThu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        tableDoanhThu.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblThuChi.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        tblThuChi.setRowHeight(40);
+        tblThuChi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tblThuChi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableDoanhThuMouseClicked(evt);
+                tblThuChiMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tableDoanhThu);
-
-        lblDiemSuDung.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblDiemSuDung.setForeground(new java.awt.Color(0, 153, 51));
-        lblDiemSuDung.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblDiemSuDung.setText("Tổng thu:");
-
-        lblDiemSuDung1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblDiemSuDung1.setForeground(new java.awt.Color(255, 0, 0));
-        lblDiemSuDung1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblDiemSuDung1.setText("Tổng chi:");
-
-        lblTongChi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTongChi.setForeground(new java.awt.Color(0, 153, 51));
-        lblTongChi.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTongChi.setText("_ _ _ _ _ _ _ _");
+        jScrollPane1.setViewportView(tblThuChi);
 
         lblTongThu.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTongThu.setForeground(new java.awt.Color(0, 153, 51));
         lblTongThu.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTongThu.setText("_ _ _ _ _ _");
+        lblTongThu.setText("Tổng thu:");
+
+        lblTongChi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTongChi.setForeground(new java.awt.Color(255, 0, 0));
+        lblTongChi.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblTongChi.setText("Tổng chi:");
 
         javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
         jPanelBourder2.setLayout(jPanelBourder2Layout);
         jPanelBourder2Layout.setHorizontalGroup(
-            jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder2Layout.createSequentialGroup()
+            jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanelBourder2Layout.createSequentialGroup()
                 .addContainerGap(754, Short.MAX_VALUE)
-                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblDiemSuDung1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDiemSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTongThu, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTongChi, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblTongChi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTongThu, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelBourder2Layout.createSequentialGroup()
@@ -186,13 +190,9 @@ public class ThongKe_Form extends javax.swing.JPanel {
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder2Layout.createSequentialGroup()
                 .addContainerGap(436, Short.MAX_VALUE)
-                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDiemSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTongThu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblTongThu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDiemSuDung1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTongChi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblTongChi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
             .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelBourder2Layout.createSequentialGroup()
@@ -220,6 +220,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
 
         txtTuNgay.setBackground(new java.awt.Color(47, 55, 90));
         txtTuNgay.setForeground(new java.awt.Color(255, 255, 255));
+        txtTuNgay.setText("");
         txtTuNgay.setCaretColor(new java.awt.Color(255, 255, 255));
         txtTuNgay.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtTuNgay.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -252,6 +253,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
 
         txtDenNgay.setBackground(new java.awt.Color(47, 55, 90));
         txtDenNgay.setForeground(new java.awt.Color(255, 255, 255));
+        txtDenNgay.setText("");
         txtDenNgay.setCaretColor(new java.awt.Color(255, 255, 255));
         txtDenNgay.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         txtDenNgay.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
@@ -268,7 +270,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
         jLabel1.setText("-");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        cbbTheo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tat ca", "Nhân viên", "Khách hàng" }));
+        cbbTheo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tất cả", "Nhân viên", "Khách hàng" }));
         cbbTheo.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         cbbTheo.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
             public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
@@ -277,6 +279,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
                 cbbTheoPopupMenuWillBecomeInvisible(evt);
             }
             public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                cbbTheoPopupMenuWillBecomeVisible(evt);
             }
         });
         cbbTheo.addActionListener(new java.awt.event.ActionListener() {
@@ -358,14 +361,30 @@ public class ThongKe_Form extends javax.swing.JPanel {
             }
         });
 
+        btnRefresh.setBackground(new java.awt.Color(31, 31, 111));
+        btnRefresh.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnRefresh.setForeground(new java.awt.Color(255, 255, 255));
+        btnRefresh.setText("Refresh");
+        btnRefresh.setFocusable(false);
+        btnRefresh.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRefreshMouseClicked(evt);
+            }
+        });
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -378,7 +397,8 @@ public class ThongKe_Form extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(label)
                                 .addGap(18, 18, 18)
                                 .addComponent(cbbNVorKH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
@@ -399,7 +419,12 @@ public class ThongKe_Form extends javax.swing.JPanel {
                                 .addComponent(rdoTienVao, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(20, 20, 20)
                                 .addComponent(rdoTienRa, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(25, 25, 25)
@@ -410,7 +435,9 @@ public class ThongKe_Form extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -442,37 +469,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
                     .addContainerGap()))
         );
     }// </editor-fold>//GEN-END:initComponents
-    public void loadCBBKH(List<String> listKH) {
-        cbbModel = (DefaultComboBoxModel) cbbNVorKH.getModel();
-        cbbNVorKH.removeAllItems();
-        for (String string : listKH) {
-            cbbModel.addElement(string);
-        }
-    }
 
-    public void loadCbb(List<String> listKHorNV) {
-        cbbModel = (DefaultComboBoxModel) cbbNVorKH.getModel();
-        cbbNVorKH.removeAllItems();
-
-        if (cbbTheo.equals("Khách hàng")) {
-            label.setText("Khách hàng");
-            loadCBBKH(thuChiService.cbbKhachHang());
-        } else {
-            label.setText("Nhân viên");
-            loadCBBKH(thuChiService.cbbNhanVien());
-        }
-
-    }
-
-    public void loadTable(List<ThuChiModel> listThuChi) {
-//        System.out.println("aaaaaa" + listThuChi.size());
-        model = (DefaultTableModel) tableDoanhThu.getModel();
-        model.setRowCount(0);
-        SimpleDateFormat ngay = new SimpleDateFormat("dd-MM-yyyy");
-        for (ThuChiModel thuChiModel : listThuChi) {
-            model.addRow(new Object[]{thuChiModel.getTen(), ngay.format(thuChiModel.getNgayThanhToan()), thuChiModel.getTienThu(), thuChiModel.getTienChi()});
-        }
-    }
     private void txtTuNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTuNgayActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTuNgayActionPerformed
@@ -482,6 +479,33 @@ public class ThongKe_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_txtDenNgayActionPerformed
 
     private void cbbTheoPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbbTheoPopupMenuWillBecomeInvisible
+        switch (cbbTheo.getSelectedIndex()) {
+            case 0 -> {
+                rdoTatCa.setEnabled(true);
+                cbbNVorKH.setEnabled(false);
+                rdoTienRa.setEnabled(true);
+                rdoTienVao.setEnabled(true);
+                rdoTatCa.setSelected(true);
+            }
+            case 1 -> {
+                loadCbbNhanVien();
+                label.setText("Nhân viên:");
+                cbbNVorKH.setEnabled(true);
+                rdoTatCa.setEnabled(false);
+                rdoTienRa.setEnabled(false);
+                rdoTienVao.setEnabled(false);
+                rdoTatCa.setSelected(true);
+            }
+            default -> {
+                loadCbbKhachHang();
+                label.setText("Khách hàng:");
+                cbbNVorKH.setEnabled(true);
+                rdoTatCa.setEnabled(false);
+                rdoTienRa.setEnabled(false);
+                rdoTienVao.setEnabled(false);
+                rdoTatCa.setSelected(true);
+            }
+        }
 
     }//GEN-LAST:event_cbbTheoPopupMenuWillBecomeInvisible
 
@@ -502,42 +526,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_cbbNVorKHActionPerformed
 
     private void cbbTheoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTheoActionPerformed
-        int index = cbbTheo.getSelectedIndex();
-        cbbModel = (DefaultComboBoxModel) cbbNVorKH.getModel();
-        if (index == 0) {
-            label.setText("Tất cả");
-//            cbb = thuChiService.cbbKhachHang();
-//            loadCBBKH(thuChiService.cbbNhanVien().addAll(cbb));
-            rdoTatCa.setSelected(true);
-            rdoTatCa.setVisible(true);
-            rdoTienVao.setVisible(true);
-            rdoTienRa.setVisible(true);
-            cbbNVorKH.setVisible(false);
-            label.setVisible(false);
 
-        } else if (index == 2) {
-            cbbNVorKH.removeAllItems();
-            cbbModel.addAll(lsNhanVIen);
-            label.setText("Khách hàng");
-            loadCBBKH(thuChiService.cbbKhachHang());
-            cbbNVorKH.setVisible(true);
-            label.setVisible(true);
-            rdoTienVao.setSelected(true);
-            rdoTatCa.setVisible(false);
-            rdoTienVao.setVisible(true);
-            rdoTienRa.setVisible(false);
-        } else {
-            cbbNVorKH.removeAllItems();
-            label.setText("Nhân viên");
-            loadCBBKH(thuChiService.cbbNhanVien());
-            cbbNVorKH.setVisible(true);
-            label.setVisible(true);
-            rdoTatCa.setSelected(false);
-            rdoTienRa.setVisible(false);
-            rdoTienVao.setVisible(true);
-            rdoTatCa.setVisible(false);
-
-        }
     }//GEN-LAST:event_cbbTheoActionPerformed
 
     private void rdoTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoTatCaActionPerformed
@@ -545,85 +534,131 @@ public class ThongKe_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_rdoTatCaActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
-//        SimpleDateFormat ngay = new SimpleDateFormat("dd-mm-yyyy");
-//        Date ngayBatDau = null;
-//        try {
-//            ngayBatDau = ngay.parse(txtTuNgay.getText());
-//        } catch (ParseException ex) {
-//            Logger.getLogger(ThongKe_Form.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        Date ngayKetThuc = null;
-//        try {
-//            ngayKetThuc = ngay.parse(txtDenNgay.getText());
-//        } catch (ParseException ex) {
-//            Logger.getLogger(ThongKe_Form.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        String idNhanVien = thuChiService.findById(cbbNVorKH.getSelectedItem().toString());
-//        loadTable(thuChiService.getThuNhanVien(idNhanVien, ngayBatDau, ngayKetThuc));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String tuNgayStr = txtTuNgay.getText();
+        String denNgayStr = txtDenNgay.getText();
+
+        if (tuNgayStr.isBlank() || denNgayStr.isBlank()) {
+            ThongBao.showNoti_Error(this, "Bạn hãy chọn ngày thống kê");
+            return;
+        }
+
+        Date tuNgay = null;
+        Date denNgay = null;
+        try {
+            tuNgay = sdf.parse(tuNgayStr);
+            denNgay = sdf.parse(denNgayStr);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        if (tuNgay == null || denNgay == null) {
+            ThongBao.showNoti_Error(this, "Tạm thời không thể thống kê. Mời bạn thử lại");
+            return;
+        }
+
+        switch (cbbTheo.getSelectedIndex()) {
+            case 0 -> {
+                if (rdoTatCa.isSelected()) {
+                    selectAll(tuNgay, denNgay);
+                } else if (rdoTienRa.isSelected()) {
+                    selectAllChi(tuNgay, denNgay);
+                } else {
+                    selectAllThu(tuNgay, denNgay);
+                }
+            }
+            case 1 ->
+                selectAllByNhanVien(tuNgay, denNgay);
+            default ->
+                selectAllByKhachHang(tuNgay, denNgay);
+        }
+
+        loadTableThuChi();
+
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
-    private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked
-        // TODO add your handling code here:
-        SimpleDateFormat ngay = new SimpleDateFormat("dd-MM-yyyy");
-        Date ngayBatDau = null;
-        try {
-            ngayBatDau = ngay.parse(txtTuNgay.getText());
+    private final DecimalFormat df = new DecimalFormat("#,###");
 
-        } catch (ParseException ex) {
-            Logger.getLogger(ThongKe_Form.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Date ngayKetThuc = null;
-        try {
-            ngayKetThuc = ngay.parse(txtDenNgay.getText());
-        } catch (ParseException ex) {
-            Logger.getLogger(ThongKe_Form.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        List<ThuChiModel> lsThuCHi = new ArrayList<>();
-        if (cbbTheo.getSelectedIndex() == 0) {
-
-            if (rdoTatCa.isSelected()) {
-                lsThuCHi = thuChiService.getThuNhanVien(null, ngayBatDau, ngayKetThuc);
-                lsThuCHi.addAll(thuChiService.getKhachHang(null, ngayBatDau, ngayKetThuc));
-                lsThuCHi.addAll(thuChiService.tienChi(ngayBatDau, ngayKetThuc));
-            } else if (rdoTienRa.isSelected()) {
-
-                lsThuCHi.addAll(thuChiService.tienChi(ngayBatDau, ngayKetThuc));
+    private void loadTableThuChi() {
+        DefaultTableModel dtm = (DefaultTableModel) tblThuChi.getModel();
+        dtm.setRowCount(0);
+        BigDecimal tienThu = BigDecimal.ZERO;
+        BigDecimal tienChi = BigDecimal.ZERO;
+        for (CustomThuChi customThuChi : _lstThuChi) {
+            dtm.addRow(customThuChi.toDataRow());
+            if (customThuChi.getLoaiGiaoDich().equals("Hoa don")) {
+                tienThu = tienThu.add(customThuChi.getTongTien());
             } else {
-                lsThuCHi = thuChiService.getThuNhanVien(null, ngayBatDau, ngayKetThuc);
-                lsThuCHi.addAll(thuChiService.getKhachHang(null, ngayBatDau, ngayKetThuc));
-
+                tienChi = tienChi.add(customThuChi.getTongTien());
             }
-        } else if (cbbTheo.getSelectedIndex() == 1) {
-            NhanVien nv = lsNhanVIen.get(cbbNVorKH.getSelectedIndex());
-            System.out.println("Nhan vien ,sdfsdfas:" + nv.getId());
-            lsThuCHi = thuChiService.getThuNhanVien(nv.getId(), ngayBatDau, ngayKetThuc);
-        } else if (cbbTheo.getSelectedIndex() == 2) {
-            KhachHang nv = lsKhachHang.get(cbbNVorKH.getSelectedIndex());
-            lsThuCHi = thuChiService.getKhachHang(nv.getId(), ngayBatDau, ngayKetThuc);
         }
+        lblTongThu.setText("<html>Tổng thu: " + df.format(tienThu) + "<sup>vnđ</sup></html>");
+        lblTongChi.setText("<html>Tổng chi: " + df.format(tienChi) + "<sup>vnđ</sup></html>");
+    }
 
-        Double tongThu = 0.0;
-        Double tongChi = 0.0;
-        for (int i = 0; i < lsThuCHi.size(); i++) {
-            tongThu += lsThuCHi.get(i).getTienThu() == null ? 0 : lsThuCHi.get(i).getTienThu();
-            tongChi += lsThuCHi.get(i).getTienChi() == null ? 0 : lsThuCHi.get(i).getTienChi();
+    private void selectAll(Date tuNgay, Date denNgay) {
+        _lstThuChi = _thongKeService.getAll(tuNgay, denNgay);
+    }
+
+    private void selectAllChi(Date tuNgay, Date denNgay) {
+        _lstThuChi = _thongKeService.getAllChi(tuNgay, denNgay);
+    }
+
+    private void selectAllThu(Date tuNgay, Date denNgay) {
+        _lstThuChi = _thongKeService.getAllThu(tuNgay, denNgay);
+    }
+
+    private void selectAllByNhanVien(Date tuNgay, Date denNgay) {
+        int row = cbbNVorKH.getSelectedIndex();
+        if (row == -1) {
+            ThongBao.showNoti_Error(this, "Bạn hãy chọn nhân viên trước");
+            return;
         }
-        lblTongThu.setText(tongThu + "");
-        lblTongChi.setText(tongChi + "");
-        loadTable(lsThuCHi);
+        _lstThuChi = _thongKeService.getAllByNhanVien(_lstNhanVien.get(row), tuNgay, denNgay);
+    }
+
+    private void selectAllByKhachHang(Date tuNgay, Date denNgay) {
+        int row = cbbNVorKH.getSelectedIndex();
+        if (row == -1) {
+            ThongBao.showNoti_Error(this, "Bạn hãy chọn khách hàng trước");
+            return;
+        }
+        _lstThuChi = _thongKeService.getAllByKhachhang(_lstKhachHang.get(row), tuNgay, denNgay);
+    }
+
+    private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked
+
     }//GEN-LAST:event_btnTimKiemMouseClicked
 
-    private void tableDoanhThuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDoanhThuMouseClicked
-        // TODO add your handling code here:
+    private void tblThuChiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuChiMouseClicked
 
-        int row = tableDoanhThu.getSelectedRow();
-        //        fillTableTimkiem(row);
-    }//GEN-LAST:event_tableDoanhThuMouseClicked
+    }//GEN-LAST:event_tblThuChiMouseClicked
+
+    private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRefreshMouseClicked
+
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        cbbTheo.setSelectedIndex(0);
+        rdoTatCa.setEnabled(true);
+        cbbNVorKH.setEnabled(false);
+        rdoTienRa.setEnabled(true);
+        rdoTienVao.setEnabled(true);
+        rdoTatCa.setSelected(true);
+        _lstThuChi = new ArrayList<>();
+        loadTableThuChi();
+        _lstKhachHang = _khachHangService.selectAll();
+        _lstNhanVien = _nhanVienService.getAllNhanVien();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    private void cbbTheoPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cbbTheoPopupMenuWillBecomeVisible
+
+    }//GEN-LAST:event_cbbTheoPopupMenuWillBecomeVisible
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnNgayBatDau;
     private View.ButtonDesign.Button btnNgayKetThuc;
+    private View.ButtonDesign.Button btnRefresh;
     private View.ButtonDesign.Button btnTimKiem;
     private javax.swing.ButtonGroup buttonGroup1;
     private View.ComboBoxDesign.ComboBoxSuggestion cbbNVorKH;
@@ -637,8 +672,6 @@ public class ThongKe_Form extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
-    private javax.swing.JLabel lblDiemSuDung;
-    private javax.swing.JLabel lblDiemSuDung1;
     private javax.swing.JLabel lblTongChi;
     private javax.swing.JLabel lblTongThu;
     private View.DateChooser.DateChooser ngayBatDau;
@@ -646,7 +679,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
     private javax.swing.JRadioButton rdoTatCa;
     private javax.swing.JRadioButton rdoTienRa;
     private javax.swing.JRadioButton rdoTienVao;
-    private View.DesignComponent.Table tableDoanhThu;
+    private View.DesignComponent.Table tblThuChi;
     private View.DesignComponent.TextField txtDenNgay;
     private View.DesignComponent.TextField txtTuNgay;
     // End of variables declaration//GEN-END:variables

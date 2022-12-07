@@ -37,6 +37,31 @@ public class PhieuNhapChiTietRepositoryImpl implements PhieuNhapChiTietRepositor
     }
 
     @Override
+    public boolean themPhieuNhapCT(List<PhieuNhapChiTiet> lstPhieuNhapCT) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction tran = session.beginTransaction();
+            try {
+                int size = lstPhieuNhapCT.size();
+                final int batchSize = 20;
+                for (int i = 0; i < size; i++) {
+                    session.persist(lstPhieuNhapCT.get(i));
+                    
+                    if (i % batchSize == 0 && i != size && i != 0) {
+                        session.flush();
+                        session.clear();
+                    }
+                }
+                tran.commit();
+                return true;
+
+            } catch (Exception e) {
+                tran.rollback();
+                return false;
+            }
+        }
+    }
+    
+    @Override
     public boolean themPNCT(PhieuNhapChiTiet phieuNhapChiTiet) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction tran = session.beginTransaction();

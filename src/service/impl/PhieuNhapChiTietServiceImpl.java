@@ -5,12 +5,10 @@
 package service.impl;
 
 import java.util.List;
-import model.PhieuNhap;
 import model.PhieuNhapChiTiet;
 import repository.PhieuNhapChiTietRepository;
 import repository.impl.PhieuNhapChiTietRepositoryImpl;
 import service.PhieuNhapChiTietService;
-import service.PhieuNhapService;
 
 /**
  *
@@ -38,6 +36,11 @@ public class PhieuNhapChiTietServiceImpl implements PhieuNhapChiTietService {
     @Override
     public String xoaPNCT(String id) {
         return PhieuNhapChiTietRepository.xoaPNCT(id);
+    }
+
+    @Override
+    public boolean themPhieuNhapCT(List<PhieuNhapChiTiet> lstPhieuNhapCT) {
+        return PhieuNhapChiTietRepository.themPhieuNhapCT(lstPhieuNhapCT);
     }
 
 }
