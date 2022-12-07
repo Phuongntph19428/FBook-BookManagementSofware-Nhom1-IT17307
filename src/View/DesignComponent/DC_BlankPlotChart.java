@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import javax.swing.JComponent;
@@ -62,7 +64,7 @@ public class DC_BlankPlotChart extends JComponent {
 
     public DC_BlankPlotChart() {
         setBackground(Color.RED);
-        setOpaque(true);
+        setOpaque(false);
         setForeground(new Color(100, 100, 100));
         setBorder(new EmptyBorder(20, 10, 10, 10));
         init();
@@ -70,6 +72,12 @@ public class DC_BlankPlotChart extends JComponent {
 
     private void init() {
         initValues(0, 10);
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent me) {
+                mouseMove((Graphics2D) getGraphics(), me);
+            }
+        });
     }
 
     public void initValues(double minValues, double maxValues) {
@@ -183,6 +191,25 @@ public class DC_BlankPlotChart extends JComponent {
         return width;
     }
 
+    private void mouseMove(Graphics2D g2, MouseEvent evt) {
+        if (blankPlotChatRender != null) {
+            Insets insets = getInsets();
+            double textWidth = getMaxValuesTextWidth(g2);
+            double textHeight = getLabelTextHeight(g2);
+            double spaceText = 5;
+            double width = getWidth() - insets.left - insets.right - textWidth - spaceText;
+            double height = getHeight() - insets.top - insets.bottom - textHeight;
+            double space = width / labelCount;
+            double locationX = insets.left + textWidth + spaceText;
+            for (int i = 0; i < labelCount; i++) {
+                boolean stop = blankPlotChatRender.mouseMoving(this, evt, g2, getRectangle(i, height, space, locationX, insets.top), i);
+                if (stop) {
+                    break;
+                }
+            }
+        }
+    }
+
     private int getLabelTextHeight(Graphics2D g2) {
         FontMetrics ft = g2.getFontMetrics();
         return ft.getHeight();
@@ -198,7 +225,7 @@ public class DC_BlankPlotChart extends JComponent {
 
     public DC_SeriesSize getRectangle(int index, double height, double space, double startX, double startY) {
         double x = startX + space * index;
-        DC_SeriesSize size = new DC_SeriesSize(x, startY+1, space, height);
+        DC_SeriesSize size = new DC_SeriesSize(x, startY + 1, space, height);
         return size;
     }
 
