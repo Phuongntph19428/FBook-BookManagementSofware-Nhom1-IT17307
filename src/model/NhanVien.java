@@ -221,6 +221,6 @@ public class NhanVien implements Serializable {
 
     @Override
     public String toString() {
-        return "NhanVien{" + "id=" + id + ", chucVu=" + chucVu + ", ma=" + ma + ", ten=" + ten + ", tenDem=" + tenDem + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", email=" + email + ", sdt=" + sdt + ", diaChi=" + diaChi + ", matKhau=" + matKhau + ", hinh=" + hinh + ", trangThai=" + trangThai + '}';
+        return ma + " - " + ho + " " + tenDem + " " + ten;
     }
 }

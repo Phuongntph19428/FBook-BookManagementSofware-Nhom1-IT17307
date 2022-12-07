@@ -248,7 +248,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
 
             try {
                 lstHoaDon = query.getResultList();
-
+  
             } catch (NoResultException e) {
 
             }
