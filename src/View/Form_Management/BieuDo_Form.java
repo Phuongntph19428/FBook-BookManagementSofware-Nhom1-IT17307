@@ -78,21 +78,25 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
-   
+        chart.addData(new DC_ModelBieuDo("February", new double[]{444444, 144444}));
+        chart.addData(new DC_ModelBieuDo("March", new double[]{444444, 444444}));
+        chart.addData(new DC_ModelBieuDo("April", new double[]{144444, 544444}));
+        chart.addData(new DC_ModelBieuDo("May", new double[]{244444, 244444}));
+        chart.addData(new DC_ModelBieuDo("June", new double[]{544444, 444444}));
         loadData();
 
     }
-    
+
     public void loadData() {
         pieChart1.clearData();
-        chart.clear();
-        chart.start();
+//        chart.clear();
+//        chart.start();
         donService = new HoaDonServiceImpl();
         list3 = new ArrayList<>();
         list2 = new ArrayList<>();
         list1 = new ArrayList<>();
-        
-        daTaBieuDoCot();
+
+//        daTaBieuDoCot();
         tongSoLuong0();
         tongSoLuong1();
         tongSoLuong2();
@@ -136,7 +140,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(2))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(2))), 0, 400}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(3))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(3))), 0, 600}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(4))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(4))), 0, 700}));
-
         try {
             if (donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1().get(0) == null) {
                 chart.addData(new DC_ModelBieuDo(dateFormat.format(c1.getTime()), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1().get(0))), 0, 1}));
@@ -252,11 +255,9 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Calendar c2 = Calendar.getInstance();
         Calendar c3 = Calendar.getInstance();
 
- 
         c1.roll(Calendar.MONTH, -1);
         c2.roll(Calendar.MONTH, -2);
         c3.roll(Calendar.MONTH, -3);
-
 
         dateFormat.format(c1.getTime());
 
@@ -876,43 +877,19 @@ public class BieuDo_Form extends javax.swing.JPanel {
         );
 
         jPanelBourder2.setBackground(new java.awt.Color(17, 28, 68));
+        jPanelBourder2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pieChart1.setBackground(new java.awt.Color(242, 243, 247));
+        jPanelBourder2.add(pieChart1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 73, 668, 398));
 
         lbTopSell.setFont(new java.awt.Font("Segoe UI Semilight", 0, 24)); // NOI18N
         lbTopSell.setForeground(new java.awt.Color(255, 255, 255));
         lbTopSell.setText("Top 5 sản phẩm bán chạy");
+        jPanelBourder2.add(lbTopSell, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 12, 321, -1));
 
         jSeparator1.setBackground(new java.awt.Color(102, 102, 102));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
-
-        javax.swing.GroupLayout jPanelBourder2Layout = new javax.swing.GroupLayout(jPanelBourder2);
-        jPanelBourder2.setLayout(jPanelBourder2Layout);
-        jPanelBourder2Layout.setHorizontalGroup(
-            jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                        .addComponent(pieChart1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanelBourder2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbTopSell, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(343, Short.MAX_VALUE))))
-        );
-        jPanelBourder2Layout.setVerticalGroup(
-            jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(lbTopSell)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(pieChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jPanelBourder2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 56, 295, 10));
 
         jPanelBourder3.setBackground(new java.awt.Color(17, 28, 68));
 
@@ -934,7 +911,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelBourder3Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(20, 20, 20)
                         .addGroup(jPanelBourder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbThuChi, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -943,12 +920,12 @@ public class BieuDo_Form extends javax.swing.JPanel {
         jPanelBourder3Layout.setVerticalGroup(
             jPanelBourder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder3Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(lbThuChi)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 0, 28)); // NOI18N
@@ -1035,10 +1012,10 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelBourder2, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelBourder3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelBourder2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelBourder3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1072,7 +1049,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 // mở file để thực hiện viết
                 document.open();
                 // thêm nội dung sử dụng add function
-
 
                 PdfPTable table = new PdfPTable(3);
                 PdfPTable table1 = new PdfPTable(5);
@@ -1252,7 +1228,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 paragraph26.setIndentationLeft(52);
                 paragraph26.setAlignment(Element.ALIGN_LEFT);
 
-     
                 document.add(paragraph16);
                 document.add(paragraph3);
                 document.add(paragraph1);

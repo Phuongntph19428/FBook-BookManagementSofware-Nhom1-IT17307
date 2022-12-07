@@ -7,6 +7,7 @@ package View.DesignComponent;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -73,15 +74,16 @@ public class BieuDo extends javax.swing.JPanel {
                     x += seriSpace + seriesSize;
                 }
                 if (showLabel != null) {
-                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                     Dimension s = getLabelWidth(showLabel, g2);
                     int space = 4;
                     int spaceTop = 7;
-                    g2.setColor(new Color(30, 30, 30));
-                    g2.fillRoundRect(labelLocation.x - s.width / 2 - 8, labelLocation.y - s.height - space * 2 - spaceTop, s.width + space * 2, s.height + space * 2, 10, 10);
-                    g2.setColor(new Color(200, 200, 200));
+                    g2.setColor(Color.BLACK);
+                    g2.fillRoundRect(labelLocation.x - s.width / 2 - 12, labelLocation.y - s.height - space * 2 - spaceTop, s.width + space * 2, s.height + space * 2, 10, 10);
+                    g2.setColor(Color.WHITE);
+                    g2.setFont(new Font("Calibri", Font.BOLD, 16));
                     g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-                    g2.drawString(showLabel, labelLocation.x - s.width / 2-4, labelLocation.y - spaceTop - space * 2);
+                    g2.drawString(showLabel, labelLocation.x - s.width / 2-10, labelLocation.y - spaceTop - space * 2);
                 }
                 g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 //                double totalSeriesWidth = (seriSpace * legends.size()) + (seriSpace * (legends.size() - 1));
@@ -103,7 +105,7 @@ public class BieuDo extends javax.swing.JPanel {
                 double x = (size.getWidth() - totalSeriesWidth) / 2;
                 for (int i = 0; i < legends.size(); i++) {
                     double seriesValues = chart.getSeriesValuesOf(model.get(index).getValues()[i], size.getHeight()) * animate;
-                    int s = seriesSize / 2 + 12;
+                    int s = seriesSize / 2 + 5;
                     int sy = seriesSize / 3;
                     int px[] = {(int) (size.getX() + x), (int) (size.getX() + x + s), (int) (size.getX() + x + seriesSize), (int) (size.getX() + x + seriesSize), (int) (size.getX() + x + s), (int) (size.getX() + x)};
                     int py[] = {(int) (size.getY() + size.getHeight() - seriesValues), (int) (size.getY() + size.getHeight() - seriesValues - sy), (int) (size.getY() + size.getHeight() - seriesValues), (int) (size.getY() + size.getHeight()), (int) (size.getY() + size.getHeight() + sy), (int) (size.getY() + size.getHeight())};
@@ -187,9 +189,9 @@ public class BieuDo extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(blankPlotChart1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addContainerGap()
+                .addComponent(blankPlotChart1, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(PanelLegends, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
