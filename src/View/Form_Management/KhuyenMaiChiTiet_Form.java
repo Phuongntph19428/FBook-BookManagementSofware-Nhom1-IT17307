@@ -439,7 +439,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
             iKhuyenMaiChiTietService.insert(km);
         }
         loadTableKMCT();
-        ThongBao.showNoti_Error(this, "Cập Nhật Thành Công");
+        ThongBao.showNoti_Succes(this, "Cập Nhật Thành Công");
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void btnTimKiem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem1ActionPerformed
