@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.Entity; 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,6 +31,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "Sach")
 public class Sach implements Serializable {
+
+    public static final int NGUNGKINHDOANH = 0;
+    public static final int DANGKINHDOANH = 1;
 
     @Id
     @Column(name = "Id")
@@ -274,7 +277,7 @@ public class Sach implements Serializable {
 
     @Override
     public String toString() {
-        return "Sach{" + "id=" + id + ", nhaXuatBan=" + nhaXuatBan + ", viTri=" + viTri + ", ma=" + ma + ", ten=" + ten + ", soLuong=" + soLuong + ", soTrang=" + soTrang + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", trangThai=" + trangThai + ", hinh=" + hinh + ", barCode=" + barCode + ", moTa=" + moTa + '}';
+        return ma + " - " + ten;
     }
 
     public Object[] toDataRow() {
@@ -282,10 +285,10 @@ public class Sach implements Serializable {
         return new Object[]{nhaXuatBan.getTen(), viTri.getMa(), ma, ten, soLuong, soTrang, df.format(giaNhap), df.format(giaBan), trangThai == 0 ? "Ngừng kinh doanh" : "Đang kinh doanh",
             hinh == null ? null : new ModelProfile(new ImageIcon(new ImageIcon(hinh).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)))};
     }
-    
+
     public String[] getStringArray() {
         DecimalFormat df = new DecimalFormat("#,###");
-        return new String[]{id, nhaXuatBan.getId(), viTri.getId(), ma, ten, soLuong + "", soTrang + "",  df.format(giaNhap), df.format(giaBan), trangThai + "", barCode, moTa};
+        return new String[]{id, nhaXuatBan.getId(), viTri.getId(), ma, ten, soLuong + "", soTrang + "", df.format(giaNhap), df.format(giaBan), trangThai + "", barCode, moTa};
     }
 
 }

@@ -5,6 +5,8 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -64,6 +66,11 @@ public class PhieuNhapChiTiet implements Serializable {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public Object[] toDataRow() {
+        DecimalFormat df = new DecimalFormat("#,###");
+        return new Object[]{phieuNhap.getMa(), sach.getMa(), sach.getTen(), soLuong, df.format(sach.getGiaNhap()) + " vnđ", df.format(sach.getGiaNhap().multiply(BigDecimal.valueOf(soLuong))) + " vnđ"};
     }
 
 }

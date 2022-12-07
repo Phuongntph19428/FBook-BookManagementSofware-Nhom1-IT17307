@@ -201,68 +201,16 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
     }
 
     @Override
-    public List<HoaDon> sellectAllHoaDonCho() {
+    public List<HoaDon> sellectAllHoaDon(int trangThai){
         List<HoaDon> lstHoaDon = new ArrayList<>();
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 3 order by len(h.ma) desc, h.ma desc";
+            String hql = "SELECT h FROM HoaDon h where h.trangThai = :trangThai order by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
-
-            try {
-                lstHoaDon = query.getResultList();
-            } catch (NoResultException e) {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lstHoaDon;
-    }
-
-    @Override
-    public List<HoaDon> selectAllHoaDonDaThanhToan() {
-        List<HoaDon> lstHoaDon = new ArrayList<>();
-        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 1 order by len(h.ma) desc, h.ma desc";
-            TypedQuery<HoaDon> query = session.createQuery(hql);
+            query.setParameter("trangThai", trangThai);
 
             try {
                 lstHoaDon = query.getResultList();
 
-            } catch (NoResultException e) {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lstHoaDon;
-    }
-
-    @Override
-    public List<HoaDon> sellectAllHoaDonDangVanChuyen() {
-        List<HoaDon> lstHoaDon = new ArrayList<>();
-        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 2 order by len(h.ma) desc, h.ma desc";
-            TypedQuery<HoaDon> query = session.createQuery(hql);
-            try {
-                lstHoaDon = query.getResultList();
-            } catch (NoResultException e) {
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lstHoaDon;
-    }
-
-    @Override
-    public List<HoaDon> sellectAllHoaDonDaHuy() {
-        List<HoaDon> lstHoaDon = new ArrayList<>();
-        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT h FROM HoaDon h where h.trangThai = 0 ordery by len(h.ma) desc, h.ma desc";
-            TypedQuery<HoaDon> query = session.createQuery(hql);
-
-            try {
-                lstHoaDon = query.getResultList();
             } catch (NoResultException e) {
 
             }

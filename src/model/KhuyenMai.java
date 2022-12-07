@@ -23,6 +23,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "KhuyenMai")
 public class KhuyenMai implements Serializable {
+    
+    public static final int DANGHOATDONG = 0;
+    public static final int NGUNGHOATDONG = 1;
 
     @Id
     @Column(name = "Id")

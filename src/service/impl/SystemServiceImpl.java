@@ -141,7 +141,7 @@ public class SystemServiceImpl implements ISystemService {
         try {
 
             // dia chi email nguoi nhan
-            final String toEmail = "quanchun11022@gmail.com";
+            final String toEmail = "phuongntph19428@fpt.edu.vn";
             final String subject = "Báo Cáo Quản Lý Bán Sách";
 
             final String body = content;
