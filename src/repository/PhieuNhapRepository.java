@@ -4,8 +4,8 @@
  */
 package repository;
 
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import model.PhieuNhap;
 
 /**
@@ -15,10 +15,14 @@ import model.PhieuNhap;
 public interface PhieuNhapRepository {
 
     List<PhieuNhap> getAllPhieuNhap();
+    
+    List<PhieuNhap> getPhieuChuaNhap();
+    
+    List<PhieuNhap> getPhieuDaNhap();   
 
     boolean addphieuNhap(PhieuNhap phieuNhap);
 
-    List<PhieuNhap> search(String ma);
+    PhieuNhap getByMa(String ma);
 
     List<String> cbbNcc();
 
@@ -27,4 +31,8 @@ public interface PhieuNhapRepository {
     String findById(String ten);
 
     boolean updatePhieuNhap(PhieuNhap phieuNhap);
+    
+    PhieuNhap getUpdateMa(PhieuNhap phieuNhap);
+    
+    List<PhieuNhap> selectByDay(Date date);
 }

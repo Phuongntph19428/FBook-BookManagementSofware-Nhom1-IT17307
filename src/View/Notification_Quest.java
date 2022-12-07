@@ -109,6 +109,7 @@ public class Notification_Quest extends javax.swing.JPanel {
         content.setRows(5);
         content.setTabSize(0);
         content.setText("Bạn có xác nhận muốn thao tác");
+        content.setWrapStyleWord(true);
         content.setMargin(new java.awt.Insets(2, 0, 2, 6));
         jScrollPane1.setViewportView(content);
 

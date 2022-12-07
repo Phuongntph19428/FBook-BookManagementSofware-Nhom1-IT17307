@@ -43,7 +43,6 @@ import model.TacGia;
 import model.TheLoai;
 import model.TheLoaiChiTiet;
 import model.ViTri;
-import model.status.TrangThaiSach;
 import service.NhaXuatBanService;
 import service.SachService;
 import service.TacGiaService;
@@ -994,7 +993,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         String soLuongStr = txtSoLuong.getText().trim();
         String soTrangStr = txtSoTrang.getText().trim();
         String ten = txtTen.getText().trim();
-        int trangThai = rdoDangKinhDoanh.isSelected() ? TrangThaiSach.DANGKINHDOANH : TrangThaiSach.NGUNGKINHDOANH;
+        int trangThai = rdoDangKinhDoanh.isSelected() ? Sach.DANGKINHDOANH : Sach.NGUNGKINHDOANH;
 
         if (ma.isBlank() || barCode.isBlank() || giaBanStr.isBlank() || giaNhapStr.isBlank() || soLuongStr.isBlank() || soTrangStr.isBlank() || ten.isBlank()) {
             ThongBao.showNoti_Error(this, "Không được để trống");
