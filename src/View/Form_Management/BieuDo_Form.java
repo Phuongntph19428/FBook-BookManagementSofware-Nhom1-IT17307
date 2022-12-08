@@ -81,7 +81,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
         loadData();
 
     }
-    
+
     public void loadData() {
         pieChart1.clearData();
         chart.clear();
@@ -90,7 +90,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
         list3 = new ArrayList<>();
         list2 = new ArrayList<>();
         list1 = new ArrayList<>();
-        
+
         daTaBieuDoCot();
         tongSoLuong0();
         tongSoLuong1();
@@ -135,7 +135,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(2))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(2))), 0, 400}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(3))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(3))), 0, 600}));
 //            chart.addData(new DC_ModelBieuDo(String.valueOf(sdf.format(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThuHienThiNgay().get(4))), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu().get(4))), 0, 700}));
-
         try {
             if (donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotChi1().get(0) == null) {
                 chart.addData(new DC_ModelBieuDo(dateFormat.format(c1.getTime()), new double[]{Double.parseDouble(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoCotThu1().get(0))), 0, 1}));
@@ -251,11 +250,9 @@ public class BieuDo_Form extends javax.swing.JPanel {
         Calendar c2 = Calendar.getInstance();
         Calendar c3 = Calendar.getInstance();
 
- 
         c1.roll(Calendar.MONTH, -1);
         c2.roll(Calendar.MONTH, -2);
         c3.roll(Calendar.MONTH, -3);
-
 
         dateFormat.format(c1.getTime());
 
@@ -266,12 +263,22 @@ public class BieuDo_Form extends javax.swing.JPanel {
         lblThang2.setText(String.valueOf("Tháng " + dateFormat.format(c2.getTime())));
 //        int month1 = localDate.getMonthValue() - 1;
         lblThang1.setText(String.valueOf("Tháng " + dateFormat.format(c1.getTime())));
-        int ngay = localDate.getDayOfMonth();
-        int thang = localDate.getMonthValue();
-        int nam = localDate.getYear();
-        int gio = localDate.getHour();
-        int phut = localDate.getMinute();
-        cbNgayHienTai.addItem(ngay + "-" + thang + "-" + nam + "-" + gio + ":" + phut);
+
+        Thread thread = new Thread(() -> {
+            int ngay = localDate.getDayOfMonth();
+            int thang = localDate.getMonthValue();
+            int nam = localDate.getYear();
+            int gio = localDate.getHour();
+            int phut = localDate.getMinute();
+            cbNgayHienTai.removeAllItems();
+            cbNgayHienTai.addItem(ngay + "-" + thang + "-" + nam + "-" + gio + ":" + phut);
+            try {
+                Thread.sleep(60000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
 
     }
 
@@ -1072,7 +1079,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.open();
                 // thêm nội dung sử dụng add function
 
-
                 PdfPTable table = new PdfPTable(3);
                 PdfPTable table1 = new PdfPTable(5);
                 //Khởi tạo 3 ô header
@@ -1251,7 +1257,6 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 paragraph26.setIndentationLeft(52);
                 paragraph26.setAlignment(Element.ALIGN_LEFT);
 
-     
                 document.add(paragraph16);
                 document.add(paragraph3);
                 document.add(paragraph1);

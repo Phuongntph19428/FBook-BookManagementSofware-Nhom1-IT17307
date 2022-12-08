@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
@@ -57,16 +58,12 @@ public class ThongKe_Form extends javax.swing.JPanel {
 
     private void loadCbbNhanVien() {
         cbbNVorKH.removeAllItems();
-        for (NhanVien nhanVien : _lstNhanVien) {
-            cbbNVorKH.addItem(nhanVien);
-        }
+        cbbNVorKH.setModel(new DefaultComboBoxModel(_lstNhanVien.toArray()));
     }
 
     private void loadCbbKhachHang() {
         cbbNVorKH.removeAllItems();
-        for (KhachHang khachHang : _lstKhachHang) {
-            cbbNVorKH.addItem(khachHang);
-        }
+        cbbNVorKH.setModel(new DefaultComboBoxModel(_lstKhachHang.toArray()));
     }
 
     /**
