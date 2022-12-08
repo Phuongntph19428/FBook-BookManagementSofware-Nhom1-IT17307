@@ -4,15 +4,14 @@
  */
 package repository.impl;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import model.HoaDon;
 import model.HoaDonChiTiet;
 import model.PhieuNhapChiTiet;
-import model.Sach;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -207,6 +206,47 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
             String hql = "SELECT h FROM HoaDon h where h.trangThai = :trangThai order by len(h.ma) desc, h.ma desc";
             TypedQuery<HoaDon> query = session.createQuery(hql);
             query.setParameter("trangThai", trangThai);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+    
+        @Override
+    public List<HoaDon> sellectAll(Date ngay) {
+        List<HoaDon> lstHoaDon = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT h FROM HoaDon h where h.ngayTao between :ngay and dateadd(day, 1, :ngay) order by len(h.ma) desc, h.ma desc";
+            TypedQuery<HoaDon> query = session.createQuery(hql);
+            query.setParameter("ngay", ngay);
+
+            try {
+                lstHoaDon = query.getResultList();
+
+            } catch (NoResultException e) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lstHoaDon;
+    }
+
+    @Override
+    public List<HoaDon> sellectAllHoaDon(int trangThai, Date ngay) {
+        List<HoaDon> lstHoaDon = new ArrayList<>();
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "SELECT h FROM HoaDon h where h.trangThai = :trangThai and h.ngayTao between :ngay and dateadd(day, 1, :ngay) order by len(h.ma) desc, h.ma desc";
+            TypedQuery<HoaDon> query = session.createQuery(hql);
+            query.setParameter("trangThai", trangThai);
+            query.setParameter("ngay", ngay);
 
             try {
                 lstHoaDon = query.getResultList();

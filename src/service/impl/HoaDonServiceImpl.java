@@ -4,6 +4,7 @@
  */
 package service.impl;
 
+import java.util.Date;
 import java.util.List;
 import model.HoaDon;
 import model.HoaDonChiTiet;
@@ -72,8 +73,19 @@ public class HoaDonServiceImpl implements HoaDonService {
         return _hoaDonRepo.sellectAll();
     }
 
+    @Override
     public List<HoaDon> sellectAllHoaDon(int trangThai) {
         return _hoaDonRepo.sellectAllHoaDon(trangThai);
+    }
+    
+        @Override
+    public List<HoaDon> sellectAll(Date ngay) {
+        return _hoaDonRepo.sellectAll(ngay);
+    }
+
+    @Override
+    public List<HoaDon> sellectAllHoaDon(int trangThai, Date ngay) {
+        return _hoaDonRepo.sellectAllHoaDon(trangThai, ngay);
     }
 
     @Override
