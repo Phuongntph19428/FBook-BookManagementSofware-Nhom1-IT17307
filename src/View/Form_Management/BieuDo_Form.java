@@ -277,12 +277,22 @@ public class BieuDo_Form extends javax.swing.JPanel {
         lblThang2.setText(String.valueOf("Tháng " + dateFormat.format(c2.getTime())));
 //        int month1 = localDate.getMonthValue() - 1;
         lblThang1.setText(String.valueOf("Tháng " + dateFormat.format(c1.getTime())));
-        int ngay = localDate.getDayOfMonth();
-        int thang = localDate.getMonthValue();
-        int nam = localDate.getYear();
-        int gio = localDate.getHour();
-        int phut = localDate.getMinute();
-        cbNgayHienTai.addItem(ngay + "-" + thang + "-" + nam + "-" + gio + ":" + phut);
+
+        Thread thread = new Thread(() -> {
+            int ngay = localDate.getDayOfMonth();
+            int thang = localDate.getMonthValue();
+            int nam = localDate.getYear();
+            int gio = localDate.getHour();
+            int phut = localDate.getMinute();
+            cbNgayHienTai.removeAllItems();
+            cbNgayHienTai.addItem(ngay + "-" + thang + "-" + nam + "-" + gio + ":" + phut);
+            try {
+                Thread.sleep(60000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        });
+        thread.start();
 
     }
 

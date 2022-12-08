@@ -6,7 +6,6 @@ package service.impl;
 
 import custommodel.CustomThuChi;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import model.KhachHang;
@@ -54,7 +53,7 @@ public class ThongKeServiceImpl implements ThongKeService {
 
 
     private List<CustomThuChi> sortListCustomThuChi(List<CustomThuChi> lstCustom) {
-        Collections.sort(lstCustom, (CustomThuChi o1, CustomThuChi o2) -> o1.getNgay().getTime() - o2.getNgay().getTime() < 0 ? 1 : 0);
+        Collections.sort(lstCustom, (CustomThuChi o1, CustomThuChi o2) -> o1.getNgay().getTime() - o2.getNgay().getTime() < 0 ? 1 : -1);
         return lstCustom;
     }
 }
