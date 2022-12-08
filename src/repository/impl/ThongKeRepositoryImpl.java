@@ -133,9 +133,16 @@ public class ThongKeRepositoryImpl implements repository.ThongKeRepository {
             query.setParameter("tuNgay", tuNgay);
             query.setParameter("denNgay", denNgay);
             List results = query.getResultList();
+            
             for (Object object : results) {
                 Object[] element = (Object[]) object;
-                CustomThuChi custom = new CustomThuChi(element[0] + "", element[1] + "", sdf.parse(element[2] + ""), BigDecimal.valueOf(Double.parseDouble(element[3] + "")));
+                Date ngay = null;
+                if((element[2] + "").matches("\\d{4}-\\d{2}-\\d{2}")) {
+                    ngay = new SimpleDateFormat("yyyy-MM-dd").parse(element[2] + "");
+                } else {
+                    ngay = sdf.parse(element[2] + "");
+                }
+                CustomThuChi custom = new CustomThuChi(element[0] + "", element[1] + "", ngay, BigDecimal.valueOf(Double.parseDouble(element[3] + "")));
                 lstCustomThuChi.add(custom);
             }
 
