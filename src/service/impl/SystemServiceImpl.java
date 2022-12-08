@@ -67,15 +67,13 @@ public class SystemServiceImpl implements ISystemService {
     private final SachServiceImpl sachSer = new SachServiceImpl();
     private List<Sach> list;
 
-    public void SendSMStoManager(){
-        System.out.println("hình thức "+hinhThuc);
+    public void SendSMStoManager() {
+
         getDataSettings();
         if (TurnOnorOff == false) {
             return;
         }
         list = sachSer.selectAllLowerThan(QuantityLowerThan);
-//        WriteFile(list);
-//        System.out.println(readFile().toString());
         if (list.isEmpty()) {
             return;
         }
@@ -120,17 +118,15 @@ public class SystemServiceImpl implements ISystemService {
                 }
             }
         }).start();
-        
+
     }
 
     @Override
     public void SendSMS(String PhoneNumber, String content) {
-        String ct = content;
-
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
                 new com.twilio.type.PhoneNumber("+84" + PhoneNumber),
-                "MG460bfa62917ce55950114f6444d25e08", "Những Sách sắp hết hàng \n" + ct)
+                "MG460bfa62917ce55950114f6444d25e08", "Sách sắp hết hàng \n" + content)
                 .create();
 
         System.out.println(message.getSid());
