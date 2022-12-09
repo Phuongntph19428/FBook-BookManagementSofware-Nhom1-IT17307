@@ -46,9 +46,7 @@ public class CaiDat_Form extends javax.swing.JPanel {
         btnInBaoCao1 = new View.ButtonDesign.Button();
         cbTrangThai = new View.DesignComponent.Combobox();
         cbTrangThai1 = new View.DesignComponent.Combobox();
-        rdoDangKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
-        rdoNgungKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
-        jLabel2 = new javax.swing.JLabel();
+        cbTrangThai2 = new View.DesignComponent.Combobox();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
@@ -130,22 +128,19 @@ public class CaiDat_Form extends javax.swing.JPanel {
             }
         });
 
-        rdoDangKinhDoanh.setBackground(new java.awt.Color(17, 28, 68));
-        buttonGroup1.add(rdoDangKinhDoanh);
-        rdoDangKinhDoanh.setForeground(new java.awt.Color(255, 255, 255));
-        rdoDangKinhDoanh.setSelected(true);
-        rdoDangKinhDoanh.setText("Thông báo ngay lập tức");
-        rdoDangKinhDoanh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        rdoNgungKinhDoanh.setBackground(new java.awt.Color(17, 28, 68));
-        buttonGroup1.add(rdoNgungKinhDoanh);
-        rdoNgungKinhDoanh.setForeground(new java.awt.Color(255, 255, 255));
-        rdoNgungKinhDoanh.setText("Vào 12h mỗi ngày");
-        rdoNgungKinhDoanh.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("Thông Báo");
+        cbTrangThai2.setBackground(new java.awt.Color(17, 28, 68));
+        cbTrangThai2.setForeground(new java.awt.Color(255, 255, 255));
+        cbTrangThai2.setMaximumRowCount(10);
+        cbTrangThai2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Thông báo ngay lập tức", "Thông báo vào 8h tối mỗi ngày", "Kết hợp cả 2" }));
+        cbTrangThai2.setSelectedIndex(1);
+        cbTrangThai2.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        cbTrangThai2.setLabeText("Thông Báo");
+        cbTrangThai2.setLineColor(new java.awt.Color(255, 255, 255));
+        cbTrangThai2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTrangThai2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
@@ -159,12 +154,9 @@ public class CaiDat_Form extends javax.swing.JPanel {
                     .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbTrangThai, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbTrangThai1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(rdoDangKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rdoNgungKinhDoanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29))
+                .addGap(18, 18, 18)
+                .addComponent(cbTrangThai2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnInBaoCao1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -173,21 +165,13 @@ public class CaiDat_Form extends javax.swing.JPanel {
         jPanelBourder1Layout.setVerticalGroup(
             jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBourder1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBourder1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rdoDangKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdoNgungKinhDoanh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                .addGap(17, 17, 17)
+                .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTrangThai2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSoLuongLowerThan, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -238,6 +222,7 @@ public class CaiDat_Form extends javax.swing.JPanel {
         int hinhThuc = -1;
         String sdt = "-";
         String email = "-";
+        int typeSend = -1;
 
         try {
             String url = "settingsSend.txt";
@@ -265,7 +250,8 @@ public class CaiDat_Form extends javax.swing.JPanel {
             hinhThuc = Integer.parseInt(list.get(2));
             sdt = list.get(3);
             email = list.get(4);
-            setData(TurnOnorOff, QuantityLowerThan, email, "0"+sdt, hinhThuc);
+            typeSend = Integer.parseInt(list.get(5));
+            setData(TurnOnorOff, QuantityLowerThan, email, "0" + sdt, hinhThuc, typeSend);
             System.out.println(TurnOnorOff + " - " + QuantityLowerThan + " - " + hinhThuc + " - " + sdt + " - " + email);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,7 +264,7 @@ public class CaiDat_Form extends javax.swing.JPanel {
         }
     }
 
-    public void setData(boolean toogle, int quantity, String email, String sdt, int hinhThuc) {
+    public void setData(boolean toogle, int quantity, String email, String sdt, int hinhThuc, int typeSend) {
         if (toogle == true) {
             cbTrangThai.setSelectedIndex(0);
         } else {
@@ -294,11 +280,20 @@ public class CaiDat_Form extends javax.swing.JPanel {
         } else {
             cbTrangThai1.setSelectedIndex(2);
         }
+        if (typeSend == 1) {
+            cbTrangThai2.setSelectedIndex(0);
+        } else if (typeSend == 2) {
+            cbTrangThai2.setSelectedIndex(1);
+        } else {
+            cbTrangThai2.setSelectedIndex(2);
+        }
+
     }
     private void btnInBaoCao1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInBaoCao1ActionPerformed
         String Quatity, Email, SDT;
         boolean Toogle = false;
         int hinhThuc = -1;
+        int typeSend = -1;
         Quatity = txtSoLuongLowerThan.getText().trim();
         Email = txtEmail.getText().trim();
         SDT = txtSDT.getText().trim();
@@ -315,7 +310,8 @@ public class CaiDat_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Vui lòng nhập số lượng là chữ và >0");
             return;
         }
-        SystemServiceImpl.setDataSettings(Toogle, quanti, hinhThuc, sdtRegex, Email);
+        typeSend = cbTrangThai2.getSelectedIndex() + 1;
+        SystemServiceImpl.setDataSettings(Toogle, quanti, hinhThuc, sdtRegex, Email, typeSend);
         ThongBao.showNoti_Succes(this, "Lưu Thành Công");
     }//GEN-LAST:event_btnInBaoCao1ActionPerformed
 
@@ -331,19 +327,21 @@ public class CaiDat_Form extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTrangThai1ActionPerformed
 
+    private void cbTrangThai2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTrangThai2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTrangThai2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnInBaoCao1;
     private javax.swing.ButtonGroup buttonGroup1;
     private View.DesignComponent.Combobox cbTrangThai;
     private View.DesignComponent.Combobox cbTrangThai1;
+    private View.DesignComponent.Combobox cbTrangThai2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private View.DesignComponent.JPanelBourder jPanelBourder1;
     private javax.swing.JSeparator jSeparator1;
-    private View.ComboBoxDesign.RadioButtonCustom rdoDangKinhDoanh;
-    private View.ComboBoxDesign.RadioButtonCustom rdoNgungKinhDoanh;
     private View.DesignComponent.TextField txtEmail;
     private View.DesignComponent.TextField txtSDT;
     private View.DesignComponent.TextField txtSoLuongLowerThan;

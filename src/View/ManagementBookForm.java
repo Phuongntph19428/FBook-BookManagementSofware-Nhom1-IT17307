@@ -9,6 +9,7 @@ import View.DesignComponent.Notification;
 import View.Form_Management.CaiDat_Form;
 import View.Form_Management.Pos_MayBanHang;
 import View.Form_Management.ChucVu_Form;
+import View.Form_Management.CuaHang_Form;
 import View.Form_Management.HoaDon_Form;
 import View.Form_Management.KhachHang_Form;
 import View.Form_Management.KhuyenMaiChiTiet_Form;
@@ -24,6 +25,7 @@ import View.Form_Management.Sach_Form;
 import View.Form_Management.TacGia_Form;
 import View.Form_Management.TheLoai_Form;
 import View.Form_Management.ThongKe_Form;
+import View.Form_Management.ThongTinCaNhan;
 import View.Form_Management.Vitri_Form;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -95,6 +97,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         KhuyenMaiChiTiet_Form kmct = new KhuyenMaiChiTiet_Form();
         PhieuNhapChiTiet_Form pnct = new PhieuNhapChiTiet_Form();
         ThongKe_Form tk = new ThongKe_Form();
+        ThongTinCaNhan ttcn = new ThongTinCaNhan();
+        CuaHang_Form ch = new CuaHang_Form();
 
         this.Layout_1_Card.add(bieuDoForm);// 0
         this.Layout_1_Card.add(sach);// 1
@@ -115,6 +119,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         this.Layout_1_Card.add(kmct); //16
         this.Layout_1_Card.add(pnct); //17
         this.Layout_1_Card.add(tk); //18
+        this.Layout_1_Card.add(ttcn);
+        this.Layout_1_Card.add(ch);
         this.Layout_1_Card.revalidate();
 
         listForm.add(bieuDoForm);
@@ -136,6 +142,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.add(kmct);
         listForm.add(pnct);
         listForm.add(tk);
+        listForm.add(ttcn);
+        listForm.add(ch);
         excute();
 
         listBtn.add(sach.getListbtn());
@@ -300,6 +308,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 }
             }
         });
+
     }
     private List<MenuItem> listItemCha = new ArrayList<>();
 
@@ -408,6 +417,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ItemDoanhThu.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
 
         MenuItem ItemCuaHang = new MenuItem(null, "                 Cửa Hàng", null);
+        ActionListenerJLabel(ItemCuaHang.getIcon(), 21, ItemCuaHang, item_);
+        ItemCuaHang.setBackgroundJPanel(ColorFrame.COLOR_LABEL_MENUITEM);
+
         MenuItem ItemGiaoCa = new MenuItem(null, "                 Giao Ca", null);
 
         MenuItem itemdskm = new MenuItem(iconKMM, "                 Danh Sách", null);
@@ -470,6 +482,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
         MenuItem menuDangXuat = new MenuItem(iconLO, "                 Đăng Xuất", null);
         menuDangXuat.setBackground(ColorFrame.COLOR_KEY);
         menuDangXuat.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
+        ActionListenerJLabel(menuDangXuat.getIcon(), 99, menuDangXuat, MenuItem_);
+
         if (Auth.getNhanVien().getChucVu().getMa().equalsIgnoreCase(Auth.NHAN_VIEN_BAN_HANG)) {
             System.out.println("Mã  " + Auth.getNhanVien().getChucVu().getMa());
             addMenu(menuHoaDon, menuKH_NCC, menuDangXuat);
@@ -478,6 +492,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
             addMenu(menuSach, menuHoaDon, menuNhanVien, menuthongKe, menunhapKho, menuKM, menuKH_NCC, menuDangXuat);
 
         }
+        btnTest.doClick();
         lbUser.setText(Auth.getNhanVien().getHo() + " " + Auth.getNhanVien().getTenDem() + " " + Auth.getNhanVien().getTen());
 
     } // Giao Diện
@@ -506,6 +521,29 @@ public class ManagementBookForm extends javax.swing.JFrame {
         listForm.get(index - 1).show(true);
     }
 
+    public void LogOut() {
+        this.dispose();
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        LoginForm lg = new LoginForm();
+        lg.setVisible(true);
+
+    }
+
     private void ActionListenerJLabel(JLabel lb, int index, MenuItem item, boolean... menu) {
         lb.addMouseListener(new MouseListener() {
             @Override
@@ -515,6 +553,10 @@ public class ManagementBookForm extends javax.swing.JFrame {
                     sach.loadAll();
                 }
                 System.out.println("index: " + index);
+                if (index == 99) {
+                    LogOut();
+                    return;
+                }
                 showJPanel(index);
 
             }
@@ -580,7 +622,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         }
     }
 
-    private void setJPanel(int index) {
+    public void setJPanel(int index) {
         for (int i = 0; i < listJPanel.size(); i += 2) {
             listJPanel.get(i).setBackground(new Color(13, 7, 48));
             listJPanel.get(i + 1).setBackground(new Color(13, 7, 48));
@@ -606,6 +648,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnTest = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         scroll = new javax.swing.JScrollPane();
@@ -642,6 +685,13 @@ public class ManagementBookForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+
+        btnTest.setText("jButton1");
+        btnTest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTestActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -798,7 +848,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
                 .addComponent(panelBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTongquan, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -856,7 +906,13 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lbUser.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
         lbUser.setForeground(new java.awt.Color(255, 255, 255));
         lbUser.setText("Mazk Kuno");
+        lbUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lbUser.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lbUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbUserMouseClicked(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(23, 28, 49));
         jPanel7.setPreferredSize(new java.awt.Dimension(1, 0));
@@ -1101,11 +1157,19 @@ public class ManagementBookForm extends javax.swing.JFrame {
         JDialog j = new JDialog(this);
         CaiDat_Form c = new CaiDat_Form();
         c.getDatainFile();
-        j.setSize(620, 570);
+        j.setSize(721, 570);
         j.add(c);
         j.setLocationRelativeTo(null);
         j.show(true);
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void lbUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUserMouseClicked
+        showJPanel(20);
+    }//GEN-LAST:event_lbUserMouseClicked
+
+    private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
+        showJPanel(16);
+    }//GEN-LAST:event_btnTestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1145,6 +1209,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Layout_1_Card;
     private javax.swing.JLabel banHangName;
+    public javax.swing.JButton btnTest;
     private View.ButtonDesign.Button button1;
     private View.ButtonDesign.Button button2;
     private javax.swing.JLabel jLabel1;

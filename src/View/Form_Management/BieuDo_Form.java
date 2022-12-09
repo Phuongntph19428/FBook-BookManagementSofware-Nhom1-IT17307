@@ -79,19 +79,19 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
         chart.addLegend("Tiền Thu", Color.GREEN);
         chart.addLegend("Tiền Chi", Color.RED);
-        chart.addData(new DC_ModelBieuDo("February", new double[]{444444, 144444}));
-        chart.addData(new DC_ModelBieuDo("March", new double[]{444444, 444444}));
-        chart.addData(new DC_ModelBieuDo("April", new double[]{144444, 544444}));
-        chart.addData(new DC_ModelBieuDo("May", new double[]{244444, 244444}));
-        chart.addData(new DC_ModelBieuDo("June", new double[]{544444, 444444}));
+//        chart.addData(new DC_ModelBieuDo("February", new double[]{444444, 144444}));
+//        chart.addData(new DC_ModelBieuDo("March", new double[]{444444, 444444}));
+//        chart.addData(new DC_ModelBieuDo("April", new double[]{144444, 544444}));
+//        chart.addData(new DC_ModelBieuDo("May", new double[]{244444, 244444}));
+//        chart.addData(new DC_ModelBieuDo("June", new double[]{544444, 444444}));
         loadData();
 
     }
 
     public void loadData() {
         pieChart1.clearData();
-//        chart.clear();
-//        chart.start();
+        chart.clear();
+        chart.start();
         NamePieChartItem.removeAll();
         NamePieChartItem.revalidate();
         donService = new HoaDonServiceImpl();
@@ -99,7 +99,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
         list2 = new ArrayList<>();
         list1 = new ArrayList<>();
 
-//        daTaBieuDoCot();
+        daTaBieuDoCot();
         tongSoLuong0();
         tongSoLuong1();
         tongSoLuong2();

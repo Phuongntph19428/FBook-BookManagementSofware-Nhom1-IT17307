@@ -27,11 +27,25 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  *
@@ -51,6 +65,7 @@ public class SystemServiceImpl implements ISystemService {
     int hinhThuc = -1;
     String sdt = "-";
     String email = "-";
+    int typeSend = -1;
 
     String htmlSendSMS = "<div style=\"width:78% ; padding-bottom: 26px; background-color: whitesmoke;\n"
             + "    text-align: center;\">\n"
@@ -66,6 +81,7 @@ public class SystemServiceImpl implements ISystemService {
 
     private final SachServiceImpl sachSer = new SachServiceImpl();
     private List<Sach> list;
+    private List<Sach> listProgessedandSend;
 
     public void SendSMStoManager() {
 
@@ -73,20 +89,24 @@ public class SystemServiceImpl implements ISystemService {
         if (TurnOnorOff == false) {
             return;
         }
+
         list = sachSer.selectAllLowerThan(QuantityLowerThan);
-        if (list.isEmpty()) {
-            return;
-        }
-        if (list == null) {
-            return;
+        if (typeSend == 1) {
+            listProgessedandSend = ProcessingList(list);
+            sendMethod(listProgessedandSend);
+        } else if (typeSend == 2) {
+            setTimeSend();
         }
         // header HTML
+        WriteFile(list);
+    }
 
+    public void sendMethod(List<Sach> lst) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 String content = "";
-                for (Sach sach : list) {
+                for (Sach sach : lst) {
                     content += "Tên " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
                 }
                 if (hinhThuc == 1 || hinhThuc == 3) {
@@ -98,10 +118,9 @@ public class SystemServiceImpl implements ISystemService {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (Sach sach : list) {
+                for (Sach sach : lst) {
                     // Item HTML
-                    Base64.Encoder encoder = Base64.getEncoder();
-                    String encoding = encoder.encodeToString(sach.getHinh());
+
                     String itemSach = "<tr style=\"font-family: sans-serif;border: none; height: 48px;\">\n"
                             + "                <td class=\"lalign\">" + sach.getTen() + "</td>\n"
                             + "                <td>" + sach.getSoLuong() + "</td>\n"
@@ -118,7 +137,29 @@ public class SystemServiceImpl implements ISystemService {
                 }
             }
         }).start();
+    }
 
+    private List<Sach> ProcessingList(List<Sach> listGetInDB) {
+        List<Sach> lstProcessed = new ArrayList<>();
+        List<Sach> listGetFile = null;
+        try {
+            listGetFile = readFile();
+
+        } catch (Exception e) {
+        }
+        Map<String, Sach> mapListGetInFile = listGetFile.stream().collect(Collectors.toMap(Sach::getId, Sach -> Sach));
+        Map<String, Sach> mapListGetInDB = listGetInDB.stream().collect(Collectors.toMap(Sach::getId, Sach -> Sach));
+
+        listGetInDB.forEach((t) -> {
+            if (mapListGetInFile.get(t.getId()) == null) {
+                lstProcessed.add(t);
+            } else {
+                if (mapListGetInFile.get(t.getId()).getSoLuong() != t.getSoLuong()) {
+                    lstProcessed.add(t);
+                }
+            }
+        });
+        return lstProcessed;
     }
 
     @Override
@@ -137,7 +178,7 @@ public class SystemServiceImpl implements ISystemService {
         try {
 
             // dia chi email nguoi nhan
-            final String toEmail = "phuongntph19428@fpt.edu.vn";
+            final String toEmail = "quanchun11022@gmail.vn";
             final String subject = "Báo Cáo Quản Lý Bán Sách";
 
             final String body = content;
@@ -166,7 +207,7 @@ public class SystemServiceImpl implements ISystemService {
             msg.setSubject(subject, "UTF-8");
             msg.setText(body, "utf-8", "html");
             msg.setSentDate(new Date());
-            msg.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            msg.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(email, false));
             Transport.send(msg);
             System.out.println("Gui mail thanh cong");
         } catch (MessagingException ex) {
@@ -202,7 +243,8 @@ public class SystemServiceImpl implements ISystemService {
             hinhThuc = Integer.parseInt(list.get(2));
             sdt = list.get(3);
             email = list.get(4);
-            System.out.println(TurnOnorOff + " - " + QuantityLowerThan + " - " + hinhThuc + " - " + sdt + " - " + email);
+            typeSend = Integer.parseInt(list.get(5));
+            System.out.println(TurnOnorOff + " - " + QuantityLowerThan + " - " + hinhThuc + " - " + sdt + " - " + email + " - " + typeSend);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -214,10 +256,10 @@ public class SystemServiceImpl implements ISystemService {
         }
     }
 
-    public static void setDataSettings(boolean toggleSends, int quantityLowerThan, int hinhThuc, String sdt, String email) {
+    public static void setDataSettings(boolean toggleSends, int quantityLowerThan, int hinhThuc, String sdt, String email, int typeSend) {
         try {
             FileWriter fw = new FileWriter("settingsSend.txt");
-            String writeFile = "" + toggleSends + "\n" + quantityLowerThan + "\n" + hinhThuc + "\n" + sdt + "\n" + email + "\n";
+            String writeFile = "" + toggleSends + "\n" + quantityLowerThan + "\n" + hinhThuc + "\n" + sdt + "\n" + email + "\n" + typeSend + "\n";
             fw.write(writeFile);
             fw.close();
         } catch (Exception e) {
@@ -235,6 +277,7 @@ public class SystemServiceImpl implements ISystemService {
             oos.flush();
             oos.close();
             fos.close();
+            System.out.println("ghi file thanh cong");
         } catch (IOException ex) {
             Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -253,8 +296,28 @@ public class SystemServiceImpl implements ISystemService {
         return (List<Sach>) oos.readObject();
     }
 
+    public void setTimeSend() {
+        try {
+
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity("triggerName", "group1")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("00 22 12 * * ?")).build();
+            JobDetail job = JobBuilder.newJob(DoTaskSend.class)
+                    .withIdentity("jobName", "group1").build();
+            Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+            scheduler.start();
+            scheduler.scheduleJob(job, trigger);
+        } catch (SchedulerException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public List<Sach> getListAll() {
+        return sachSer.selectAllLowerThan(QuantityLowerThan);
+    }
+
     public static void main(String[] args) {
         SystemServiceImpl s = new SystemServiceImpl();
+        s.setTimeSend();
     }
 
 }

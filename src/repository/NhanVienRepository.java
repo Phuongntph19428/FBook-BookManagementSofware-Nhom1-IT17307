@@ -23,4 +23,6 @@ public interface NhanVienRepository {
     boolean updateNhanVien(NhanVien nhanVien);
     
     NhanVien getNhanVien(String ma, String password);
+    
+    NhanVien getNhanVienByEmail(String Email);
 }
