@@ -27,10 +27,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.ImageIcon;
 
 /**
@@ -74,6 +78,7 @@ public class SystemServiceImpl implements ISystemService {
             return;
         }
         list = sachSer.selectAllLowerThan(QuantityLowerThan);
+        List<Sach> listProgessedandSend = ProcessingList(list);
         if (list.isEmpty()) {
             return;
         }
@@ -86,7 +91,7 @@ public class SystemServiceImpl implements ISystemService {
             @Override
             public void run() {
                 String content = "";
-                for (Sach sach : list) {
+                for (Sach sach : listProgessedandSend) {
                     content += "Tên " + sach.getTen() + ", Số lượng: " + sach.getSoLuong() + "\n";
                 }
                 if (hinhThuc == 1 || hinhThuc == 3) {
@@ -98,10 +103,9 @@ public class SystemServiceImpl implements ISystemService {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (Sach sach : list) {
+                for (Sach sach : listProgessedandSend) {
                     // Item HTML
-                    Base64.Encoder encoder = Base64.getEncoder();
-                    String encoding = encoder.encodeToString(sach.getHinh());
+
                     String itemSach = "<tr style=\"font-family: sans-serif;border: none; height: 48px;\">\n"
                             + "                <td class=\"lalign\">" + sach.getTen() + "</td>\n"
                             + "                <td>" + sach.getSoLuong() + "</td>\n"
@@ -118,7 +122,27 @@ public class SystemServiceImpl implements ISystemService {
                 }
             }
         }).start();
+        WriteFile(list);
+    }
 
+    private List<Sach> ProcessingList(List<Sach> listGetInDB ) {
+        List<Sach> lstProcessed = null;
+        List<Sach> listGetFile = null;
+        try {
+            listGetFile = readFile();
+
+        } catch (Exception e) {
+        }
+        Map<String, Sach> mapListGetInFile = listGetFile.stream().collect(Collectors.toMap(Sach::getId, Sach -> Sach));
+        Map<String, Sach> mapListGetInDB = listGetInDB.stream().collect(Collectors.toMap(Sach::getId, Sach -> Sach));
+        mapListGetInFile.forEach((t, u) -> {
+            if (mapListGetInDB.get(t) != null) {
+                if(u.getSoLuong() != mapListGetInDB.get(t).getSoLuong() && u.getSoLuong() < QuantityLowerThan){
+                    lstProcessed.add(u);
+                }
+            }
+        });
+        return lstProcessed;
     }
 
     @Override
@@ -166,7 +190,7 @@ public class SystemServiceImpl implements ISystemService {
             msg.setSubject(subject, "UTF-8");
             msg.setText(body, "utf-8", "html");
             msg.setSentDate(new Date());
-            msg.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            msg.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(email, false));
             Transport.send(msg);
             System.out.println("Gui mail thanh cong");
         } catch (MessagingException ex) {
@@ -235,6 +259,7 @@ public class SystemServiceImpl implements ISystemService {
             oos.flush();
             oos.close();
             fos.close();
+            System.out.println("ghi file thanh cong");
         } catch (IOException ex) {
             Logger.getLogger(SystemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -255,6 +280,8 @@ public class SystemServiceImpl implements ISystemService {
 
     public static void main(String[] args) {
         SystemServiceImpl s = new SystemServiceImpl();
+        s.SendSMStoManager();
+
     }
 
 }
