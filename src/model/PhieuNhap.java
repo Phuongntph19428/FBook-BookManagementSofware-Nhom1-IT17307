@@ -46,7 +46,7 @@ public class PhieuNhap implements Serializable {
     private String ma;
 
     @Column(name = "NgayNhap")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ngayNhap;
 
     @Column(name = "TrangThai")
