@@ -48,7 +48,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
 
     private final ThongKeService _thongKeService;
     private List<CustomThuChi> _lstThuChi;
-    
+
     private final HoaDonService _hoaDonService;
     private final PhieuNhapService _phieuNhapService;
 
@@ -65,7 +65,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
 
         _lstNhanVien = _nhanVienService.getAllNhanVien();
         _lstKhachHang = _khachHangService.selectAll();
-        
+
         _hoaDonService = new HoaDonServiceImpl();
         _phieuNhapService = new PhieuNhapServiceImpl();
     }
@@ -1133,7 +1133,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
 
     private void tblThuChiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThuChiMouseClicked
         int row = tblThuChi.getSelectedRow();
-        if(row == -1) {
+        if (row == -1) {
             return;
         }
         DiaLogChiTiet.setSize(1123, 700);
@@ -1141,7 +1141,7 @@ public class ThongKe_Form extends javax.swing.JPanel {
         panelPhieuNhapCT.setVisible(false);
         DiaLogChiTiet.setLocationRelativeTo(null);
         CustomThuChi custom = _lstThuChi.get(row);
-        if(custom.getLoaiGiaoDich().equals("Hoa don")) {
+        if (custom.getLoaiGiaoDich().equals("Hoa don")) {
             panelHoaDonCT.setVisible(true);
             loadPanelHoaDonCT(_hoaDonService.getByMaHD(custom.getMa()));
             DiaLogChiTiet.setVisible(true);
@@ -1150,23 +1150,25 @@ public class ThongKe_Form extends javax.swing.JPanel {
             loadPanelPhieuNhapCT(_phieuNhapService.getByMa(custom.getMa()));
             DiaLogChiTiet.setVisible(true);
         }
-            
+
     }//GEN-LAST:event_tblThuChiMouseClicked
 
-  
-    
     private void loadPanelHoaDonCT(HoaDon hoaDon) {
-        if(hoaDon == null) {
+        if (hoaDon == null) {
             ThongBao.showNoti_Error(this, "Lỗi không thể xem chi tiết. Mời bạn thử lại");
             return;
         }
         lblIdHD.setText(hoaDon.getId());
         lblMaHD.setText(hoaDon.getMa());
-        lblNhanVien.setText(hoaDon.getNhanVien().getHo() + " " + hoaDon.getNhanVien().getTenDem()+ " " + hoaDon.getNhanVien().getTen());
-        lblKhachHang.setText(hoaDon.getKhachHang().getHo() + " " + hoaDon.getKhachHang().getTenDem()+ " " + hoaDon.getKhachHang().getTen());
+        lblNhanVien.setText(hoaDon.getNhanVien().getHo() + " " + hoaDon.getNhanVien().getTenDem() + " " + hoaDon.getNhanVien().getTen());
+        if (hoaDon.getKhachHang() != null) {
+            lblKhachHang.setText(hoaDon.getKhachHang().getHo() + " " + hoaDon.getKhachHang().getTenDem() + " " + hoaDon.getKhachHang().getTen());
+        }else {
+            lblKhachHang.setText("");
+        }
         lblNgayTao.setText(hoaDon.getNgayTao() + "");
         lblNgayThanhToan.setText(hoaDon.getNgayThanhToan() + "");
-        lblTrangThai.setText(hoaDon.getTrangThai() == 1? "Đã thanh toán" : "Chưa thanh toán");
+        lblTrangThai.setText(hoaDon.getTrangThai() == 1 ? "Đã thanh toán" : "Chưa thanh toán");
         DefaultTableModel dtm = (DefaultTableModel) tblHoaDonCT.getModel();
         dtm.setRowCount(0);
         BigDecimal tong = BigDecimal.ZERO;
@@ -1175,23 +1177,23 @@ public class ThongKe_Form extends javax.swing.JPanel {
             int soLuong = hoaDonChiTiet.getSoLuong();
             BigDecimal donGia = hoaDonChiTiet.getDonGia();
             BigDecimal tongTien = donGia.multiply(BigDecimal.valueOf(soLuong));
-            dtm.addRow(new Object[] {tenSach, soLuong, "<html>" + df.format(donGia) + "<sup> vnđ</sup></html>", "<html>" + df.format(tongTien) + "<sup> vnđ</sup></html>"});
+            dtm.addRow(new Object[]{tenSach, soLuong, "<html>" + df.format(donGia) + "<sup> vnđ</sup></html>", "<html>" + df.format(tongTien) + "<sup> vnđ</sup></html>"});
             tong = tong.add(tongTien);
         }
         lblTongTienHD.setText("<html> Tổng: " + df.format(tong) + "<sup> vnđ</sup></html>");
-        
+
     }
-    
+
     private void loadPanelPhieuNhapCT(PhieuNhap phieuNhap) {
-        if(phieuNhap == null) {
+        if (phieuNhap == null) {
             ThongBao.showNoti_Error(this, "Lỗi không thể xem chi tiết. Mời bạn thử lại");
             return;
         }
         lblIdPN.setText(phieuNhap.getId());
         lblMaPN.setText(phieuNhap.getMa());
-        lblNhaCungCap.setText(phieuNhap.getNhaCungCap().getTen() + " - " + phieuNhap.getNhaCungCap().getMa());        
-        lblNgayNhap.setText(phieuNhap.getNgayNhap()+ "");
-        lblTrangThai.setText(phieuNhap.getTrangThai() == 1? "Đã thanh toán" : "Chưa thanh toán");
+        lblNhaCungCap.setText(phieuNhap.getNhaCungCap().getTen() + " - " + phieuNhap.getNhaCungCap().getMa());
+        lblNgayNhap.setText(phieuNhap.getNgayNhap() + "");
+        lblTrangThai.setText(phieuNhap.getTrangThai() == 1 ? "Đã thanh toán" : "Chưa thanh toán");
         DefaultTableModel dtm = (DefaultTableModel) tblPhieuNhapCT.getModel();
         dtm.setRowCount(0);
         BigDecimal tong = BigDecimal.ZERO;
@@ -1200,12 +1202,12 @@ public class ThongKe_Form extends javax.swing.JPanel {
             int soLuong = pnct.getSoLuong();
             BigDecimal donGia = pnct.getSach().getGiaNhap();
             BigDecimal tongTien = donGia.multiply(BigDecimal.valueOf(soLuong));
-            dtm.addRow(new Object[] {tenSach, soLuong, "<html>" + df.format(donGia) + "<sup> vnđ</sup></html>", "<html>" + df.format(tongTien) + "<sup> vnđ</sup></html>"});
+            dtm.addRow(new Object[]{tenSach, soLuong, "<html>" + df.format(donGia) + "<sup> vnđ</sup></html>", "<html>" + df.format(tongTien) + "<sup> vnđ</sup></html>"});
             tong = tong.add(tongTien);
         }
         lblTongTienNhap.setText("<html> Tổng: " + df.format(tong) + "<sup> vnđ</sup></html>");
     }
-    
+
     private void btnRefreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRefreshMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRefreshMouseClicked
