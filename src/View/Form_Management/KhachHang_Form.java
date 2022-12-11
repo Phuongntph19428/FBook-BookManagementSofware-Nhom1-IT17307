@@ -615,9 +615,14 @@ public class KhachHang_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
-        
-        if(_khachHangService.selectUpdateByMa(khachHang) != null) {
-            ThongBao.showNoti_Error(this, "Mã này đã tồn tại. Vui lòng chọn mã khác");
+
+        KhachHang checkKH = _khachHangService.selectUpdateByMa(khachHang);
+        if (checkKH != null) {
+            if (checkKH.getMa().equals(khachHang.getMa())) {
+                ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");
+            } else {
+                ThongBao.showNoti_Error(this, "Số điện thoại này đã tồn tại trong hệ thống");
+            }
             return;
         }
 
@@ -644,8 +649,13 @@ public class KhachHang_Form extends javax.swing.JPanel {
             return;
         }
 
-        if (_khachHangService.sellectByMa(khachHang.getMa()) != null) {
-            ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");
+        KhachHang checkKH = _khachHangService.sellectByMa(khachHang.getMa());
+        if (checkKH != null) {
+            if (checkKH.getMa().equals(khachHang.getMa())) {
+                ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");
+            } else {
+                ThongBao.showNoti_Error(this, "Số điện thoại này đã tồn tại trong hệ thống");
+            }
             return;
         }
 

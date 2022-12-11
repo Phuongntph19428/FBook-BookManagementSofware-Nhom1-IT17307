@@ -1083,9 +1083,13 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
         Sach sach = getForm();
         if (sach != null) {
-
-            if (_sachService.getSachByMa(sach.getMa()) != null) {
-                ThongBao.showNoti_Error(this, "Mã sách đã tồn tại. Mời bạn nhập mã khác");
+            Sach sachCheck = _sachService.getSachByMa(sach.getMa());
+            if (sachCheck != null) {
+                if (sachCheck.getMa().equals(sach.getMa())) {
+                    ThongBao.showNoti_Error(this, "Mã sách đã tồn tại. Mời bạn nhập mã khác");
+                } else {
+                    ThongBao.showNoti_Error(this, "Mã barCode sách đã tồn tại. Mời bạn nhập mã khác");
+                }
                 return;
             }
 
@@ -1112,24 +1116,33 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             return;
         }
 
-        if (_sachService.selectUpdateByMa(sach) != null) {
-            ThongBao.showNoti_Error(this, "Mã sách đã tồn tại. Vui lòng chọn mã khác");
+        if (sach == null) {
             return;
         }
-        if (sach != null) {
-            ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
-            if (ThongBao.getSelected() == ThongBao.YES) {
-                _sachService.updateSach(sach);
-                _sachService.updateSachTacGia(getListSachTacGia(sach));
-                boolean updateStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
-                if (updateStatus) {
-                    ThongBao.showNoti_Succes(this, "Cập nhật thành công");
-                } else {
-                    ThongBao.showNoti_Error(this, "Cập nhật thất bại");
-                }
-                clear();
+
+        Sach sachCheck = _sachService.selectUpdateByMa(sach);
+        if (sachCheck != null) {
+            if (sachCheck.getMa().equals(sach.getMa())) {
+                ThongBao.showNoti_Error(this, "Mã sách đã tồn tại. Mời bạn nhập mã khác");
+            } else {
+                ThongBao.showNoti_Error(this, "Mã barCode sách đã tồn tại. Mời bạn nhập mã khác");
             }
+            return;
         }
+
+        ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
+        if (ThongBao.getSelected() == ThongBao.YES) {
+            _sachService.updateSach(sach);
+            _sachService.updateSachTacGia(getListSachTacGia(sach));
+            boolean updateStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+            if (updateStatus) {
+                ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+            } else {
+                ThongBao.showNoti_Error(this, "Cập nhật thất bại");
+            }
+            clear();
+        }
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
