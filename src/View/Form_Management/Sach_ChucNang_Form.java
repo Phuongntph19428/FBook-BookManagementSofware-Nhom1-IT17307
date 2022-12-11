@@ -1083,7 +1083,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         }
         Sach sach = getForm();
         if (sach != null) {
-            Sach sachCheck = _sachService.getSachByMa(sach.getMa());
+            Sach sachCheck = _sachService.getSachCheck(sach);
             if (sachCheck != null) {
                 if (sachCheck.getMa().equals(sach.getMa())) {
                     ThongBao.showNoti_Error(this, "Mã sách đã tồn tại. Mời bạn nhập mã khác");
@@ -1096,8 +1096,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Confirm(this, "Xác nhận thêm?");
             if (ThongBao.getSelected() == ThongBao.YES) {
                 _sachService.insertSach(sach);
-                Sach sach2 = _sachService.getSachByMa(sach.getMa());
-                _sachService.updateSachTacGia(getListSachTacGia(sach2));
+                _sachService.updateSachTacGia(getListSachTacGia(sach));
                 boolean insertStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
                 if (insertStatus) {
                     ThongBao.showNoti_Succes(this, "Thêm sách thành công");
@@ -1132,9 +1131,9 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
 
         ThongBao.showNoti_Confirm(this, "Xác nhận cập nhật?");
         if (ThongBao.getSelected() == ThongBao.YES) {
-            _sachService.updateSach(sach);
+            boolean updateStatus = _sachService.updateSach(sach);
             _sachService.updateSachTacGia(getListSachTacGia(sach));
-            boolean updateStatus = _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
+            _sachService.updateTheLoaiChiTiet(getListTheLoaiCT(sach));
             if (updateStatus) {
                 ThongBao.showNoti_Succes(this, "Cập nhật thành công");
             } else {

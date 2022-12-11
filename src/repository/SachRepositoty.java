@@ -27,6 +27,8 @@ public interface SachRepositoty {
     
     public Sach getSachByMa(String ma);
     
+    public Sach getSachCheck(Sach sach);
+    
     public List<Sach> getList(int position, int pageSize);
     
     public int countAllSach();

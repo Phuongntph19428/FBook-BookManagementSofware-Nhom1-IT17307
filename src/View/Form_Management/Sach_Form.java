@@ -66,8 +66,7 @@ public class Sach_Form extends javax.swing.JPanel {
     }
 
     public void loadAll() {
-        loadTable(0, _pageSize);
-        setPageLabel(false);
+        loadTable(_currentPage - 1, _pageSize);
     }
 
     private void setPageLabel(boolean searching) {

@@ -2693,8 +2693,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
 
-        if (_khachHangService.sellectByMa(khachHang.getMa()) != null) {
-            ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");
+        if (_khachHangService.sellectByMa(khachHang) != null) {
+            ThongBao.showNoti_Error(this, "Mã/ SĐT khách hàng đã tồn tại. Vui lòng nhập mã khác");
             return;
         }
 

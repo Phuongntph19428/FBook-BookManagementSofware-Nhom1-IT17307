@@ -104,15 +104,16 @@ public class KhachHangRepositoryImpl implements KhachHangRepository {
     }
 
     @Override
-    public KhachHang sellectByMa(String ma) {
+    public KhachHang sellectByMa(KhachHang khachHang) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT k FROM KhachHang k WHERE k.ma = :ma or k.sdt = :ma";
+            String hql = "SELECT k FROM KhachHang k WHERE k.ma = :ma or k.sdt = :sdt";
             TypedQuery<KhachHang> query = session.createQuery(hql);
-            query.setParameter("ma", ma);
+            query.setParameter("ma", khachHang.getMa());
+            query.setParameter("sdt", khachHang.getSdt());
 
             try {
-                KhachHang khachHang = query.getSingleResult();
-                return khachHang;
+                KhachHang khachHang2 = query.getSingleResult();
+                return khachHang2;
             } catch (NoResultException e) {
                 return null;
             }

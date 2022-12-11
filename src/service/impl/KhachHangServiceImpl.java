@@ -61,8 +61,8 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public KhachHang sellectByMa(String ma) {
-        return _khachHangRepo.sellectByMa(ma);
+    public KhachHang sellectByMa(KhachHang khachHang) {
+        return _khachHangRepo.sellectByMa(khachHang);
     }
 
     @Override

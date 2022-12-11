@@ -591,8 +591,26 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_comboboxChucVuActionPerformed
 
     private void btnTimKiem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem3ActionPerformed
-        // TODO add your handling code here:
+    insert();
     }//GEN-LAST:event_btnTimKiem3ActionPerformed
+    private void insert() {
+        String maKM, IdKM;
+        maKM = this.lbKhuyenMai.getText().trim();
+        if (maKM.equals("-")) {
+            return;
+        }
+        IdKM = this.lbIDKhuyenMai.getText().trim();
+        KhuyenMai km = new KhuyenMai();
+        km.setMa(maKM);
+        km.setId(IdKM);
+        List<Sach> lstProcess = removeElemetExitst(listNewAdd, lstSach);
+        for (Sach s : lstProcess) {
+            KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet(km, s);
+            listNewAdd.add(kmct);
+        }
+        loadListNew();
+
+    }
 
     private List<Sach> removeElemetExitst(List<KhuyenMaiChiTiet> lstKMCT, List<Sach> lstSach) {
         HashMap<String, KhuyenMaiChiTiet> hmKMCT = new HashMap<>();

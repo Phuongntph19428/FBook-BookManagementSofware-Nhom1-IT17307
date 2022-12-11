@@ -88,4 +88,9 @@ public class SachServiceImpl implements SachService {
     public boolean insertSach(List<Sach> lstSach) {
         return _sachRepo.insertSach(lstSach);
     }
+
+    @Override
+    public Sach getSachCheck(Sach sach) {
+        return _sachRepo.getSachCheck(sach);
+    }
 }
