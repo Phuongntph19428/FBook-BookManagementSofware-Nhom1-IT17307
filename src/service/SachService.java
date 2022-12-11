@@ -26,6 +26,8 @@ public interface SachService {
     public boolean updateSoLuongSach(List<Sach> lstSachUpdate);
 
     public Sach getSachByMa(String ma);
+    
+    public Sach getSachCheck(Sach sach);
 
     public List<Sach> getList(int position, int pageSize);
 

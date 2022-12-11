@@ -127,7 +127,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     }
 
     private NhanVien getForm() {
-        String id =txtID.getText();
+        String id = txtID.getText();
         String maNhanVien = txtMaNhanVien.getText().trim();
         String ten = txtTen.getText().trim().trim();
         String tenDem = txtTenDem.getText().trim();
@@ -137,9 +137,7 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         String diaChi = txtDiaChi.getText().trim();
         String dateStr = txtNgaySinh.getText();
         int trangThai = comboboxTrangThai.getSelectedIndex() == 1 ? NhanVien.DANGHI : NhanVien.DANGLAM;
-        
-        
-        
+
         Date date = null;
         try {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
@@ -151,8 +149,8 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 //        Integer trangThai = (Integer) comboboxTrangThai.getSelectedItem();
         NhanVien nhanvien = new NhanVien();
 
-        if (txtID.getText() != null) {
-            nhanvien.setId(txtID.getText());
+        if (!txtID.getText().isBlank()) {
+            nhanvien.setId(id);
         }
         nhanvien.setMa(maNhanVien);
         nhanvien.setTen(ten);
@@ -686,21 +684,26 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
 
         NhanVien nv = getForm();
         if (nv == null) {
-
+            return;
+        }
+        
+        if(nv.getId() != null) {
+            JOptionPane.showMessageDialog(this, "Clear form trước khi thêm", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
         for (NhanVien nv1 : listnv) {
-            if (nv1.getMa().equals(txtMaNhanVien.getText().trim())) {
+            System.out.println(nv1.getMa() + " - " + nv.getMa());
+            if (nv1.getMa().equals(nv.getMa())) {
                 JOptionPane.showMessageDialog(this, "Trùng mã Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
-            if (nv1.getEmail().equals(nv.getEmail().trim())) {
+            if (nv1.getEmail().equals(nv.getEmail())) {
                 JOptionPane.showMessageDialog(this, "Trùng email Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
-            if (nv1.getSdt().equals(nv.getSdt().trim())) {
+            if (nv1.getSdt().equals(nv.getSdt())) {
                 JOptionPane.showMessageDialog(this, "Trùng sdt Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
@@ -713,8 +716,8 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         NhanVien_Form form = new NhanVien_Form();
         form.initTableData();
     }//GEN-LAST:event_btnThemNhanVienActionPerformed
-     
-    
+
+
     private void btnCapNhatNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatNhanVienActionPerformed
 //        NhanVien nhanVien = getForm();
 //        String insertStatus = nhanVienService.updateNhanVien(nhanVien);
@@ -725,25 +728,26 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn nhan vien");
             return;
         }
-        
+
+        listnv = nhanVienService.getAllNhanVien();
         for (NhanVien nv1 : listnv) {
             if (nv1.getMa().equals(txtMaNhanVien.getText().trim()) && !nv1.getId().equals(nv.getId())) {
                 JOptionPane.showMessageDialog(this, "Trùng mã Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
-            if (nv1.getEmail().equals(nv.getEmail().trim()) && !nv1.getId().equals(nv.getId()) ) {
+            if (nv1.getEmail().equals(nv.getEmail().trim()) && !nv1.getId().equals(nv.getId())) {
                 JOptionPane.showMessageDialog(this, "Trùng email Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
-            if (nv1.getSdt().equals(nv.getSdt().trim()) && !nv1.getId().equals(nv.getId()) ) {
+            if (nv1.getSdt().equals(nv.getSdt().trim()) && !nv1.getId().equals(nv.getId())) {
                 JOptionPane.showMessageDialog(this, "Trùng sdt Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
         }
-        
+
         System.out.println(nv.toString());
         nhanVienService.updateNhanVien(nv);
 
