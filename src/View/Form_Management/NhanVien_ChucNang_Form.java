@@ -25,7 +25,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
@@ -684,9 +683,6 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_txtNgaySinhActionPerformed
 
     private void btnThemNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanVienActionPerformed
-//        NhanVien nhanVien = getForm();
-//        String insertStatus = nhanVienService.addNhanVien(nhanVien);
-//        JOptionPane.showMessageDialog(this, insertStatus);
 
         NhanVien nv = getForm();
         if (nv == null) {
@@ -696,6 +692,16 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
         for (NhanVien nv1 : listnv) {
             if (nv1.getMa().equals(txtMaNhanVien.getText().trim())) {
                 JOptionPane.showMessageDialog(this, "Trùng mã Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+            if (nv1.getEmail().equals(nv.getEmail().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng email Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+            if (nv1.getSdt().equals(nv.getSdt().trim())) {
+                JOptionPane.showMessageDialog(this, "Trùng sdt Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
 
                 return;
             }
@@ -719,6 +725,25 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn nhan vien");
             return;
         }
+        
+        for (NhanVien nv1 : listnv) {
+            if (nv1.getMa().equals(txtMaNhanVien.getText().trim()) && !nv1.getId().equals(nv.getId())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+            if (nv1.getEmail().equals(nv.getEmail().trim()) && !nv1.getId().equals(nv.getId()) ) {
+                JOptionPane.showMessageDialog(this, "Trùng email Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+            if (nv1.getSdt().equals(nv.getSdt().trim()) && !nv1.getId().equals(nv.getId()) ) {
+                JOptionPane.showMessageDialog(this, "Trùng sdt Nhân Viên", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+
+                return;
+            }
+        }
+        
         System.out.println(nv.toString());
         nhanVienService.updateNhanVien(nv);
 

@@ -1105,7 +1105,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         ThongBao thongbao = new ThongBao();
-        thongbao.showNoti_Succes(this, "Chức năng đang phát triền");
+        thongbao.showNoti_Succes(this, "Chức năng đang phát triển");
     }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
