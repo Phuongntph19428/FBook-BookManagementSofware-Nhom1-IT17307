@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +53,8 @@ import service.impl.SachServiceImpl;
  * @author quanc
  */
 public class HoaDon_Form extends javax.swing.JPanel {
+
+    private boolean _searching = false;
 
     private final SachService _sachService;
 
@@ -87,12 +91,14 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         loadTableHoaDon(_lstHoaDon);
         setEventTable();
+        chkSearchByDay.doClick();
     }
 
     private void setIcon() {
         btnQRGiaoHangThanhCong.setIcon(new ImageIcon(new ImageIcon("image//genQR.png").getImage().getScaledInstance(46, 44, Image.SCALE_DEFAULT)));
+        btnChonNgay.setIcon(new ImageIcon("image/icons8_schedule_30px.png"));
     }
-    
+
     public JTable getJTable() {
         return this.tblHoaDon;
     }
@@ -190,6 +196,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
         tblHoaDonCTDialogUpdate = new View.DesignComponent.Table();
         lblTongTienDialogUpdate = new javax.swing.JLabel();
         btnUpdateDialogUpdate = new View.ButtonDesign.Button();
+        ngayBatDau = new View.DateChooser.DateChooser();
         tabPaneHoaDon = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jPanelBourder7 = new View.DesignComponent.JPanelBourder();
@@ -206,6 +213,10 @@ public class HoaDon_Form extends javax.swing.JPanel {
         tblHoaDon = new View.DesignComponent.Table();
         jLabel1 = new javax.swing.JLabel();
         btnRefresh = new View.ButtonDesign.Button();
+        txtNgay = new View.DesignComponent.TextField();
+        btnChonNgay = new View.ButtonDesign.Button();
+        btnSearch = new View.ButtonDesign.Button();
+        chkSearchByDay = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanelBourder10 = new View.DesignComponent.JPanelBourder();
@@ -372,6 +383,9 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         DialogUpdate.getAccessibleContext().setAccessibleDescription("");
 
+        ngayBatDau.setForeground(new java.awt.Color(47, 55, 90));
+        ngayBatDau.setTextRefernce(txtNgay);
+
         setBackground(new java.awt.Color(11, 20, 55));
 
         tabPaneHoaDon.setBackground(new java.awt.Color(11, 20, 55));
@@ -410,9 +424,9 @@ public class HoaDon_Form extends javax.swing.JPanel {
         rdoDaThanhToan.setForeground(new java.awt.Color(255, 255, 255));
         rdoDaThanhToan.setText("Đã thanh toán");
         rdoDaThanhToan.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        rdoDaThanhToan.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rdoDaThanhToanStateChanged(evt);
+        rdoDaThanhToan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoDaThanhToanItemStateChanged(evt);
             }
         });
 
@@ -422,9 +436,9 @@ public class HoaDon_Form extends javax.swing.JPanel {
         rdoChuaThanhToan.setForeground(new java.awt.Color(255, 255, 255));
         rdoChuaThanhToan.setText("Chưa thanh toán");
         rdoChuaThanhToan.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        rdoChuaThanhToan.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rdoChuaThanhToanStateChanged(evt);
+        rdoChuaThanhToan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoChuaThanhToanItemStateChanged(evt);
             }
         });
 
@@ -434,9 +448,9 @@ public class HoaDon_Form extends javax.swing.JPanel {
         rdoDangGiao.setForeground(new java.awt.Color(255, 255, 255));
         rdoDangGiao.setText("Đang giao");
         rdoDangGiao.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        rdoDangGiao.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rdoDangGiaoStateChanged(evt);
+        rdoDangGiao.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoDangGiaoItemStateChanged(evt);
             }
         });
 
@@ -447,9 +461,9 @@ public class HoaDon_Form extends javax.swing.JPanel {
         rdoTatCa.setSelected(true);
         rdoTatCa.setText("Tất cả");
         rdoTatCa.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        rdoTatCa.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rdoTatCaStateChanged(evt);
+        rdoTatCa.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoTatCaItemStateChanged(evt);
             }
         });
 
@@ -459,9 +473,9 @@ public class HoaDon_Form extends javax.swing.JPanel {
         rdoDaHuy.setForeground(new java.awt.Color(255, 255, 255));
         rdoDaHuy.setText("Đã hủy");
         rdoDaHuy.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        rdoDaHuy.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                rdoDaHuyStateChanged(evt);
+        rdoDaHuy.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoDaHuyItemStateChanged(evt);
             }
         });
 
@@ -608,14 +622,65 @@ public class HoaDon_Form extends javax.swing.JPanel {
             }
         });
 
+        txtNgay.setBackground(new java.awt.Color(47, 55, 90));
+        txtNgay.setForeground(new java.awt.Color(255, 255, 255));
+        txtNgay.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtNgay.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        txtNgay.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        txtNgay.setLabelText("Chọn ngày");
+        txtNgay.setLineColor(new java.awt.Color(255, 255, 255));
+        txtNgay.setMinimumSize(new java.awt.Dimension(50, 40));
+        txtNgay.setRequestFocusEnabled(false);
+        txtNgay.setVerifyInputWhenFocusTarget(false);
+        txtNgay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNgayActionPerformed(evt);
+            }
+        });
+
+        btnChonNgay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChonNgayActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setBackground(new java.awt.Color(35, 35, 132));
+        btnSearch.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.setFocusable(false);
+        btnSearch.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        chkSearchByDay.setSelected(true);
+        chkSearchByDay.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chkSearchByDayItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelBourder9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanelBourder9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(385, 385, 385)
+                        .addComponent(chkSearchByDay)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnChonNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 51, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -630,8 +695,16 @@ public class HoaDon_Form extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnChonNgay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(chkSearchByDay)
+                        .addGap(8, 8, 8)))
+                .addGap(87, 87, 87)
                 .addComponent(jPanelBourder9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1097,7 +1170,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabPaneHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 1365, Short.MAX_VALUE))
+                .addComponent(tabPaneHoaDon))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1108,66 +1181,12 @@ public class HoaDon_Form extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        chkSearchByDay.setSelected(false);
         rdoTatCa.setSelected(true);
         _lstHoaDon = _hoaDonService.sellectAll();
         loadTableHoaDon(_lstHoaDon);
         _status = -1;
     }//GEN-LAST:event_btnRefreshActionPerformed
-
-    private void rdoDaThanhToanStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoDaThanhToanStateChanged
-        if (rdoDaThanhToan.isSelected()) {
-            if (_status == HoaDon.DATHANHTOAN) {
-                return;
-            }
-            _lstHoaDon = _hoaDonService.sellectAllHoaDon(HoaDon.DATHANHTOAN);
-            loadTableHoaDon(_lstHoaDon);
-            _status = HoaDon.DATHANHTOAN;
-        }
-    }//GEN-LAST:event_rdoDaThanhToanStateChanged
-
-    private void rdoTatCaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoTatCaStateChanged
-        if (rdoTatCa.isSelected()) {
-            if (_status == -1) {
-                return;
-            }
-            _lstHoaDon = _hoaDonService.sellectAll();
-            loadTableHoaDon(_lstHoaDon);
-            _status = -1;
-        }
-    }//GEN-LAST:event_rdoTatCaStateChanged
-
-    private void rdoChuaThanhToanStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoChuaThanhToanStateChanged
-        if (rdoChuaThanhToan.isSelected()) {
-            if (_status == HoaDon.CHUATHANHTOAN) {
-                return;
-            }
-            _lstHoaDon = _hoaDonService.sellectAllHoaDon(HoaDon.CHUATHANHTOAN);
-            loadTableHoaDon(_lstHoaDon);
-            _status = HoaDon.CHUATHANHTOAN;
-        }
-    }//GEN-LAST:event_rdoChuaThanhToanStateChanged
-
-    private void rdoDangGiaoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoDangGiaoStateChanged
-        if (rdoDangGiao.isSelected()) {
-            if (_status == HoaDon.DANGVANCHUYEN) {
-                return;
-            }
-            _lstHoaDon = _hoaDonService.sellectAllHoaDon(HoaDon.DANGVANCHUYEN);
-            loadTableHoaDon(_lstHoaDon);
-            _status = HoaDon.DANGVANCHUYEN;
-        }
-    }//GEN-LAST:event_rdoDangGiaoStateChanged
-
-    private void rdoDaHuyStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoDaHuyStateChanged
-        if (rdoDaHuy.isSelected()) {
-            if (_status == HoaDon.DAHUY) {
-                return;
-            }
-            _lstHoaDon = _hoaDonService.sellectAllHoaDon(HoaDon.DAHUY);
-            loadTableHoaDon(_lstHoaDon);
-            _status = HoaDon.DAHUY;
-        }
-    }//GEN-LAST:event_rdoDaHuyStateChanged
 
     private final DecimalFormat df = new DecimalFormat("#,###");
 
@@ -1252,6 +1271,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
         if (lyDo != null) {
             if (JOptionPane.showConfirmDialog(this, "Xác nhận hủy?") == JOptionPane.YES_OPTION) {
                 _hoaDon.setMoTa(lyDo);
+                _hoaDon.setNgayThanhToan(new Date());
                 _hoaDon.setTrangThai(HoaDon.DAHUY);
                 _hoaDonService.updateHoaDon(_hoaDon);
 
@@ -1292,7 +1312,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
     private void btnGiaoHangThanhCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaoHangThanhCongActionPerformed
         ThongBao.showNoti_Confirm(this, "Xác nhận giao hàng thành công?");
-        if(ThongBao.getSelected() == ThongBao.YES) {
+        if (ThongBao.getSelected() == ThongBao.YES) {
             _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
             _hoaDon.setNgayNhan(new Date());
             _hoaDon.setNgayThanhToan(new Date());
@@ -1302,7 +1322,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             _hinhHinhThucThanhToanService.addHinhThucThanhToan(lstHinhThucTT);
             ThongBao.showNoti_Succes(this, "Thành công");
             setFormHoaDonCT();
-            
+
         }
     }//GEN-LAST:event_btnGiaoHangThanhCongActionPerformed
 
@@ -1408,21 +1428,173 @@ public class HoaDon_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnQRGiaoHangThanhCongActionPerformed
 
     private void tabPaneHoaDonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPaneHoaDonStateChanged
-        if(_hoaDonService == null) {
+        if (_hoaDonService == null) {
             return;
         }
         if (tabPaneHoaDon.getSelectedIndex() == 0) {
             _lstHoaDon = switch (_status) {
-                case -1 -> _hoaDonService.sellectAll();
-                case HoaDon.CHUATHANHTOAN -> _hoaDonService.sellectAllHoaDon(HoaDon.CHUATHANHTOAN);
-                case HoaDon.DAHUY -> _hoaDonService.sellectAllHoaDon(HoaDon.DAHUY);
-                case HoaDon.DANGVANCHUYEN -> _hoaDonService.sellectAllHoaDon(HoaDon.DANGVANCHUYEN);
-                default -> _hoaDonService.sellectAllHoaDon(HoaDon.DATHANHTOAN);
+                case -1 ->
+                    _hoaDonService.sellectAll();
+                case HoaDon.CHUATHANHTOAN ->
+                    _hoaDonService.sellectAllHoaDon(HoaDon.CHUATHANHTOAN);
+                case HoaDon.DAHUY ->
+                    _hoaDonService.sellectAllHoaDon(HoaDon.DAHUY);
+                case HoaDon.DANGVANCHUYEN ->
+                    _hoaDonService.sellectAllHoaDon(HoaDon.DANGVANCHUYEN);
+                default ->
+                    _hoaDonService.sellectAllHoaDon(HoaDon.DATHANHTOAN);
             };
             loadTableHoaDon(_lstHoaDon);
         }
         System.out.println("change: " + tabPaneHoaDon.getSelectedIndex());
     }//GEN-LAST:event_tabPaneHoaDonStateChanged
+
+    private void txtNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgayActionPerformed
+        ngayBatDau.showPopup();
+    }//GEN-LAST:event_txtNgayActionPerformed
+
+    private void btnChonNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonNgayActionPerformed
+        ngayBatDau.showPopup();
+    }//GEN-LAST:event_btnChonNgayActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        String ngayStr = txtNgay.getText();
+        if (ngayStr.isBlank()) {
+            ThongBao.showNoti_Error(this, "Bạn phải chọn ngày trước");
+            return;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date ngay = null;
+        try {
+            ngay = sdf.parse(ngayStr);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        _searching = true;
+
+        _lstHoaDon = _hoaDonService.sellectAll(ngay);
+        loadTableSearcher();
+
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void loadTableSearcher() {
+        List<HoaDon> lstHoaDon = new ArrayList<>();
+        switch (_status) {
+            case HoaDon.DATHANHTOAN -> {
+                for (HoaDon hoaDon : _lstHoaDon) {
+                    if (hoaDon.getTrangThai() == HoaDon.DATHANHTOAN) {
+                        lstHoaDon.add(hoaDon);
+                    }
+                }
+            }
+            case HoaDon.CHUATHANHTOAN -> {
+                for (HoaDon hoaDon : _lstHoaDon) {
+                    if (hoaDon.getTrangThai() == HoaDon.CHUATHANHTOAN) {
+                        lstHoaDon.add(hoaDon);
+                    }
+                }
+            }
+            case HoaDon.DAHUY -> {
+                for (HoaDon hoaDon : _lstHoaDon) {
+                    if (hoaDon.getTrangThai() == HoaDon.DAHUY) {
+                        lstHoaDon.add(hoaDon);
+                    }
+                }
+            }
+            case HoaDon.DANGVANCHUYEN -> {
+                for (HoaDon hoaDon : _lstHoaDon) {
+                    if (hoaDon.getTrangThai() == HoaDon.DANGVANCHUYEN) {
+                        lstHoaDon.add(hoaDon);
+                    }
+                }
+            }
+            default -> {
+                lstHoaDon = _lstHoaDon;
+            }
+        }
+        loadTableHoaDon(lstHoaDon);
+    }
+
+    private void chkSearchByDayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chkSearchByDayItemStateChanged
+        if (chkSearchByDay.isSelected()) {
+            btnChonNgay.setEnabled(true);
+            btnSearch.setEnabled(true);
+            btnSearch.setBackground(new Color(35, 35, 132));
+            txtNgay.setEnabled(true);
+        } else {
+            btnChonNgay.setEnabled(false);
+            btnSearch.setEnabled(false);
+            btnSearch.setBackground(new Color(204, 204, 204));
+            txtNgay.setEnabled(false);
+            _searching = false;
+            rdoTatCa.setSelected(false);
+            rdoTatCa.doClick();
+        }
+    }//GEN-LAST:event_chkSearchByDayItemStateChanged
+
+    private void rdoTatCaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoTatCaItemStateChanged
+        _status = -1;
+        if (_searching) {
+            loadTableSearcher();
+        } else {
+            if (rdoTatCa.isSelected()) {
+                _lstHoaDon = _hoaDonService.sellectAll();
+                loadTableHoaDon(_lstHoaDon);
+            }
+        }
+    }//GEN-LAST:event_rdoTatCaItemStateChanged
+
+    private void rdoDaThanhToanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoDaThanhToanItemStateChanged
+        _status = HoaDon.DATHANHTOAN;
+        if (_searching) {
+            loadTableSearcher();
+        } else {
+
+            if (rdoDaThanhToan.isSelected()) {
+                _lstHoaDon = _hoaDonService.sellectAllHoaDon(_status);
+                loadTableHoaDon(_lstHoaDon);
+            }
+        }
+    }//GEN-LAST:event_rdoDaThanhToanItemStateChanged
+
+    private void rdoChuaThanhToanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoChuaThanhToanItemStateChanged
+        _status = HoaDon.CHUATHANHTOAN;
+        if (_searching) {
+            _status = HoaDon.CHUATHANHTOAN;
+            loadTableSearcher();
+        } else {
+            if (rdoChuaThanhToan.isSelected()) {
+                _lstHoaDon = _hoaDonService.sellectAllHoaDon(_status);
+                loadTableHoaDon(_lstHoaDon);
+            }
+        }
+    }//GEN-LAST:event_rdoChuaThanhToanItemStateChanged
+
+    private void rdoDangGiaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoDangGiaoItemStateChanged
+        _status = HoaDon.DANGVANCHUYEN;
+        if (_searching) {
+            _status = HoaDon.DANGVANCHUYEN;
+            loadTableSearcher();
+        } else {
+            if (rdoDangGiao.isSelected()) {
+                _lstHoaDon = _hoaDonService.sellectAllHoaDon(_status);
+                loadTableHoaDon(_lstHoaDon);
+            }
+        }
+    }//GEN-LAST:event_rdoDangGiaoItemStateChanged
+
+    private void rdoDaHuyItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoDaHuyItemStateChanged
+         _status = HoaDon.DAHUY;
+        if (_searching) {
+            _status = HoaDon.DAHUY;
+            loadTableSearcher();
+        } else {
+            if (rdoDaHuy.isSelected()) {
+                _lstHoaDon = _hoaDonService.sellectAllHoaDon(_status);
+                loadTableHoaDon(_lstHoaDon);
+            }
+        }
+    }//GEN-LAST:event_rdoDaHuyItemStateChanged
 
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
@@ -1431,13 +1603,16 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog DialogUpdate;
+    private View.ButtonDesign.Button btnChonNgay;
     private View.ButtonDesign.Button btnGiaoHangThanhCong;
     private View.ButtonDesign.Button btnHuyHoaDon;
     private View.ButtonDesign.Button btnQRGiaoHangThanhCong;
     private View.ButtonDesign.Button btnRefresh;
+    private View.ButtonDesign.Button btnSearch;
     private View.ButtonDesign.Button btnUpdateDialogUpdate;
     private View.ButtonDesign.Button btnUpdateHoaDon;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox chkSearchByDay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -1476,6 +1651,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
     private javax.swing.JLabel lblTongTien;
     private javax.swing.JLabel lblTongTienDialogUpdate;
     private javax.swing.JLabel lblTrangThai;
+    private View.DateChooser.DateChooser ngayBatDau;
     private View.DesignComponent.JPanelBourder panel;
     private javax.swing.JRadioButton rdoChuaThanhToan;
     private javax.swing.JRadioButton rdoDaHuy;
@@ -1488,5 +1664,6 @@ public class HoaDon_Form extends javax.swing.JPanel {
     private View.DesignComponent.Table tblHoaDonCTDialogUpdate;
     private View.DesignComponent.Table tblHoaDonChiTiet;
     private javax.swing.JTextField txtMoTa;
+    private View.DesignComponent.TextField txtNgay;
     // End of variables declaration//GEN-END:variables
 }

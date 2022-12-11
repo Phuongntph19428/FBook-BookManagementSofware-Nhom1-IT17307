@@ -416,11 +416,15 @@ public class ChucVu_Form extends javax.swing.JPanel {
         int row = tbChucVu.getSelectedRow();
         if (row == -1) {
             ThongBao.showNoti_Error(this, "Vui lòng chọn bản ghi muốn cập nhật");
-            return;
         } else if (cv == null) {
             ThongBao.showNoti_Error(this, "Không được để trống");
-            return;
         } else {
+            for (ChucVu cv1 : listCv) {
+            if (cv1.getMa().equals(cv.getMa()) && !cv1.getId().equals(cv.getId())) {
+               ThongBao.showNoti_Error(this, "Trùng Mã Chức Vụ \n Cập nhật thất Bại");
+                return;
+            }
+        }
             ChucVuServicer.update(cv);
             ThongBao.showNoti_Succes(this, "Cập nhật thành công");
             initTableData();

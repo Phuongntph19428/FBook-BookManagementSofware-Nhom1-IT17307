@@ -4,6 +4,7 @@
  */
 package service;
 
+import java.util.Date;
 import java.util.List;
 import model.HoaDon;
 import model.HoaDonChiTiet;
@@ -32,8 +33,12 @@ public interface HoaDonService {
     public int genMaHoaDon();
 
     public List<HoaDon> sellectAll();
+    
+    public List<HoaDon> sellectAll(Date ngay);
 
     public List<HoaDon> sellectAllHoaDon(int trangThai);
+    
+    public List<HoaDon> sellectAllHoaDon(int trangThai, Date ngay);
 
     public HoaDon getByMaHD(String maHD);
 

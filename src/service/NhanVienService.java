@@ -22,5 +22,7 @@ public interface NhanVienService {
     NhanVien getNhanVienById(String Id);
 
     String updateNhanVien(NhanVien nhanVien);
+    
+    NhanVien getNhanVienByEmail(String Email);
 
 }

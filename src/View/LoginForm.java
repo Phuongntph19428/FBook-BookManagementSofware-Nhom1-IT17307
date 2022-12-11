@@ -5,14 +5,26 @@
 package View;
 
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
+import javax.mail.Message;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import model.ChucVu;
 import model.NhanVien;
+import service.NhanVienService;
+import service.impl.NhanVienServiceImpl;
+import service.impl.SystemServiceImpl;
 import util.Auth;
 import util.MyMD5;
 
@@ -24,6 +36,8 @@ public class LoginForm extends javax.swing.JFrame {
 
     Auth auth = new Auth();
     boolean isToggle = true;
+    SystemServiceImpl sysSer = new SystemServiceImpl();
+    NhanVienService nvSer = new NhanVienServiceImpl();
 
     public LoginForm() {
         initComponents();
@@ -66,7 +80,6 @@ public class LoginForm extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         btnexit = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -83,6 +96,7 @@ public class LoginForm extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 690));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton1.setBackground(new java.awt.Color(31, 31, 111));
         jButton1.setFont(new java.awt.Font("Lucida Console", 1, 18)); // NOI18N
@@ -141,9 +155,19 @@ public class LoginForm extends javax.swing.JFrame {
 
         txtUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtUserName.setBorder(null);
+        txtUserName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUserNameKeyPressed(evt);
+            }
+        });
         jPanel4.add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 411, 40));
 
         txtPassword.setBorder(null);
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
         jPanel4.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 370, 40));
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
@@ -166,13 +190,14 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel6.setText("Username");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, 20));
 
-        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jCheckBox1.setText("Remember password?");
-        jPanel4.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 170, -1));
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jLabel7.setText("Forgot password ?");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 120, 20));
 
         btnexit.setBorder(null);
@@ -213,7 +238,7 @@ public class LoginForm extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 76, Short.MAX_VALUE)))
+                        .addGap(0, 78, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(201, 201, 201)
@@ -238,7 +263,7 @@ public class LoginForm extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
         );
@@ -271,14 +296,63 @@ public class LoginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnHideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHideMouseClicked
-     if(isToggle){
-         txtPassword.setEchoChar((char)0);
-         isToggle = false;
-     }else{
-         txtPassword.setEchoChar('*');
-         isToggle = true;
-     }
+        if (isToggle) {
+            txtPassword.setEchoChar((char) 0);
+            isToggle = false;
+        } else {
+            txtPassword.setEchoChar('*');
+            isToggle = true;
+        }
     }//GEN-LAST:event_btnHideMouseClicked
+
+    private void txtUserNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserNameKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            txtPassword.grabFocus();
+            txtPassword.requestFocus();
+        }
+    }//GEN-LAST:event_txtUserNameKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jButton1.doClick();
+        }
+    }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+
+        String email = JOptionPane.showInputDialog(null, "Vui lòng nhập Email", "Quên Mật Khẩu", 1);
+        if (email == null) {
+            return;
+        }
+        if (email.length() == 0) {
+            ThongBao.showNoti_Error(this, "Tài khoản này không tồn tại \n Vui lòng kiểm tra lại");
+            return ;
+        }
+        NhanVien nvget = auth.checkNhanVienExistsInDB(email);
+        if (nvget != null) {
+            Random rnd = new Random();
+            int s = 100000 + rnd.nextInt(900000);
+            sysSer.sendEmail(email, "Mã OTP của bạn là :" + s);
+            String otpCheck;
+            do {
+                otpCheck = JOptionPane.showInputDialog("Vui lòng nhập mã OTP đã được gửi đến Email");
+            } while (Integer.parseInt(otpCheck) != s);
+
+            if (s == Integer.parseInt(otpCheck)) {
+
+                String newPassword = JOptionPane.showInputDialog("Tạo Mật Khẩu Mới");
+                nvget.setMatKhau(MyMD5.getMd5(newPassword));
+                nvSer.updateNhanVien(nvget);
+                ThongBao.showNoti_Succes(this, "Thay đổi mật khẩu thành công");
+            } else {
+                return;
+            }
+        } else {
+            ThongBao.showNoti_Error(this, "Tài khoản này không tồn tại \n Vui lòng kiểm tra lại");
+
+        }
+
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments
@@ -320,7 +394,6 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JButton btnexit;
     private javax.swing.JButton btnmini;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

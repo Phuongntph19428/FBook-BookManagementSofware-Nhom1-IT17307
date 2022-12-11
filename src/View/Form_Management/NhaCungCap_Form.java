@@ -21,7 +21,6 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
 
     private NhaCungCapService nhaCungCapService;
     private List<NhaCungCap> lstNhaCungCap;
-    private List<NhaCungCap> lstAllNhaCungCap;
 
     public NhaCungCap_Form() {
         initComponents();
@@ -432,14 +431,35 @@ public class NhaCungCap_Form extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn nhà cung cấp");
             return;
         }
+        
+        for (NhaCungCap ncc : lstNhaCungCap) {
+            if (ncc.getMa().equals(nhaCungCap.getMa()) && !ncc.getId().equals(nhaCungCap.getId())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã nhà cung cấp", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (ncc.getSdt().equals(nhaCungCap.getSdt()) && !ncc.getId().equals(nhaCungCap.getId())) {
+                JOptionPane.showMessageDialog(this, "Trùng sdt nhà cung cấp", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         String updateResult = nhaCungCapService.updateNhaCungCap(nhaCungCap);
         JOptionPane.showMessageDialog(this, updateResult);
-        lstAllNhaCungCap = nhaCungCapService.getAllNhaCungCap();
-        loadTable(lstAllNhaCungCap);
+        lstNhaCungCap = nhaCungCapService.getAllNhaCungCap();
+        loadTable(lstNhaCungCap);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         NhaCungCap nhaCungCap = getForm();
+        for (NhaCungCap ncc : lstNhaCungCap) {
+            if (ncc.getMa().equals(nhaCungCap.getMa())) {
+                JOptionPane.showMessageDialog(this, "Trùng mã nhà cung cấp", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (ncc.getSdt().equals(nhaCungCap.getSdt())) {
+                JOptionPane.showMessageDialog(this, "Trùng sdt nhà cung cấp", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
         String insertForm = nhaCungCapService.addNhaCungCap(nhaCungCap);
         JOptionPane.showMessageDialog(this, insertForm);
         loadTable(lstNhaCungCap);
