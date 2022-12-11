@@ -141,6 +141,7 @@ public class SplassScreen_Form extends java.awt.Dialog {
                     }while(mng == null);
                     doTask("Done ...", 100);
                     dispose();
+                    mng.btnTest.doClick();
                     mng.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

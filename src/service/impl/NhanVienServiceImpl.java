@@ -44,4 +44,9 @@ public class NhanVienServiceImpl implements NhanVienService {
         return result ? "Sửa nhân viên thành công" : "Sửa nhân viên thất bại";
     }
 
+    @Override
+    public NhanVien getNhanVienByEmail(String Email) {
+        return nhanVienRepositoryImpl.getNhanVienByEmail(Email);
+    }
+
     }

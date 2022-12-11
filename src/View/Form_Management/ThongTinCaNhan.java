@@ -5,9 +5,15 @@
 package View.Form_Management;
 
 import View.ThongBao;
+import java.awt.Image;
+import java.util.Random;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import model.NhanVien;
 import service.NhanVienService;
 import service.impl.NhanVienServiceImpl;
+import service.impl.SystemServiceImpl;
 import util.Auth;
 import util.MyMD5;
 
@@ -18,6 +24,7 @@ import util.MyMD5;
 public class ThongTinCaNhan extends javax.swing.JPanel {
 
     NhanVienService iNVser = new NhanVienServiceImpl();
+    SystemServiceImpl sysSer = new SystemServiceImpl();
 
     public ThongTinCaNhan() {
         initComponents();
@@ -35,7 +42,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
 
         jPanelBourder1 = new View.DesignComponent.JPanelBourder();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
-        jLabel2 = new javax.swing.JLabel();
+        lbAvatar = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lbName = new javax.swing.JLabel();
         lbMaNV = new javax.swing.JLabel();
@@ -66,6 +73,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
         txtMKmoi = new View.DesignComponent.TextField();
         txtNhapLaiMKmoi = new View.DesignComponent.TextField();
         btnTimKiem3 = new View.ButtonDesign.Button();
+        btnTimKiem4 = new View.ButtonDesign.Button();
 
         setBackground(new java.awt.Color(11, 20, 55));
 
@@ -79,14 +87,14 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbAvatar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelBourder2Layout.setVerticalGroup(
             jPanelBourder2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(lbAvatar, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -335,6 +343,18 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
             }
         });
 
+        btnTimKiem4.setBackground(new java.awt.Color(31, 31, 111));
+        btnTimKiem4.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnTimKiem4.setForeground(new java.awt.Color(255, 255, 255));
+        btnTimKiem4.setText("Quên Mật Khẩu");
+        btnTimKiem4.setFocusable(false);
+        btnTimKiem4.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnTimKiem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiem4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder3Layout = new javax.swing.GroupLayout(jPanelBourder3);
         jPanelBourder3.setLayout(jPanelBourder3Layout);
         jPanelBourder3Layout.setHorizontalGroup(
@@ -342,12 +362,17 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
             .addGroup(jPanelBourder3Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanelBourder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNhapLaiMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelBourder3Layout.createSequentialGroup()
                         .addComponent(txtMKcu, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 236, Short.MAX_VALUE)
-                        .addComponent(btnTimKiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
+                        .addComponent(btnTimKiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelBourder3Layout.createSequentialGroup()
+                        .addComponent(txtNhapLaiMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelBourder3Layout.createSequentialGroup()
+                        .addComponent(txtMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTimKiem4, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15))
         );
         jPanelBourder3Layout.setVerticalGroup(
@@ -358,7 +383,9 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
                     .addComponent(txtMKcu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimKiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelBourder3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTimKiem4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtNhapLaiMKmoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(72, Short.MAX_VALUE))
@@ -425,6 +452,10 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
         lbMaNV.setText(nv.getMa());
         lbTrangThai.setText(TrangThai);
         lbChucVu.setText(nv.getChucVu().getTen());
+        if (nv.getHinh() != null) {
+            lbAvatar.setIcon(new ImageIcon(new ImageIcon(nv.getHinh()).getImage().getScaledInstance(201, 236, Image.SCALE_DEFAULT)));
+        }
+
     }
     private void btnTimKiem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem3ActionPerformed
         String matkhauCu, matkhauMoi1, matkhauMoi2;
@@ -451,10 +482,18 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnTimKiem3ActionPerformed
 
+    private void btnTimKiem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem4ActionPerformed
+        NhanVien nv = Auth.getNhanVien();
+        Random r = new Random(System.currentTimeMillis());
+        int s = ((1 + r.nextInt(2)) * 100000 + r.nextInt(10000));
+        sysSer.sendEmail(nv.getEmail(), "Mật khẩu mới của bạn là :" + s);
+    }//GEN-LAST:event_btnTimKiem4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private View.ButtonDesign.Button btnTimKiem2;
     private View.ButtonDesign.Button btnTimKiem3;
+    private View.ButtonDesign.Button btnTimKiem4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
@@ -462,7 +501,6 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
@@ -475,6 +513,7 @@ public class ThongTinCaNhan extends javax.swing.JPanel {
     private View.DesignComponent.JPanelBourder jPanelBourder3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lbAvatar;
     private javax.swing.JLabel lbChucVu;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbGioiTinh;

@@ -52,7 +52,7 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
     @Override
     public List<NhanVien> getAllNhanVien() {
         List<NhanVien> listNhanVien;
-        try ( Session session = factory.openSession()) {
+        try (Session session = factory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<NhanVien> cq = criteriaBuilder.createQuery(NhanVien.class);
             Root<NhanVien> root = cq.from(NhanVien.class);
@@ -69,7 +69,7 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
     public List<NhanVien> getListNhanVienByName(String name) {
         List<NhanVien> listNhanVien = null;
         String nameSelect = "%" + name + "%";
-        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<NhanVien> query = session.createQuery("From NhanVien WHERE Ten like :key");
             query.setParameter("key", nameSelect);
             listNhanVien = query.getResultList();
@@ -83,7 +83,7 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
     @Override
     public NhanVien getNhanVienById(String Id) {
         NhanVien nhanVien = null;
-        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             nhanVien = session.get(NhanVien.class, Id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,10 +116,26 @@ public class NhanVienRepositoryImpl implements NhanVienRepository {
     @Override
     public NhanVien getNhanVien(String ma, String password) {
         NhanVien nhanVien = null;
-        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             TypedQuery<NhanVien> query = session.createQuery("from NhanVien n where n.ma = :ma and n.matKhau = :matKhau");
             query.setParameter("ma", ma);
             query.setParameter("matKhau", password);
+
+            nhanVien = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return nhanVien;
+    }
+
+    @Override
+    public NhanVien getNhanVienByEmail(String Email) {
+        NhanVien nhanVien = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            TypedQuery<NhanVien> query = session.createQuery("from NhanVien n where n.email = :email");
+            query.setParameter("email", Email);
 
             nhanVien = query.getSingleResult();
         } catch (NoResultException e) {
