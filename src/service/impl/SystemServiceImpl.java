@@ -317,7 +317,7 @@ public class SystemServiceImpl implements ISystemService {
 
     public static void main(String[] args) {
         SystemServiceImpl s = new SystemServiceImpl();
-        s.setTimeSend();
+        
     }
 
 }
