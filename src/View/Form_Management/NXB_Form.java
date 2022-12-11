@@ -6,16 +6,10 @@ package View.Form_Management;
 
 import model.SachFake;
 import View.ButtonDesign.Button;
-import View.ManagementBookForm;
 import View.ScrollBarCustom;
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.NhaXuatBan;
@@ -32,7 +26,7 @@ public class NXB_Form extends javax.swing.JPanel {
     private List<SachFake> listS = new ArrayList<>();
     private List<Button> listBtn = new ArrayList<>();
     private List<NhaXuatBan> listNxb = new ArrayList<>();
-    private NhaXuatBanService NhaXuatBanServicer;
+    private final NhaXuatBanService NhaXuatBanServicer;
 
     public NXB_Form() {
         initComponents();

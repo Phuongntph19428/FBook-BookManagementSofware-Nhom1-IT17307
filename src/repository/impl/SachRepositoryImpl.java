@@ -155,7 +155,7 @@ public class SachRepositoryImpl implements SachRepositoty {
     @Override
     public Sach getSachByMa(String ma) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM Sach s WHERE s.ma = :ma";
+            String hql = "FROM Sach s WHERE s.ma = :ma or s.barCode = :ma";
             TypedQuery<Sach> query = session.createQuery(hql);
             query.setParameter("ma", ma);
 
@@ -295,7 +295,7 @@ public class SachRepositoryImpl implements SachRepositoty {
     @Override
     public Sach selectUpdateSach(Sach sach) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM Sach s WHERE s.ma = :ma and s.id != :id";
+            String hql = "FROM Sach s WHERE (s.ma = :ma or s.barCode = :ma) and s.id != :id";
             TypedQuery<Sach> query = session.createQuery(hql);
             query.setParameter("ma", sach.getMa());
             query.setParameter("id", sach.getId());
