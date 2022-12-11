@@ -649,7 +649,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
             return;
         }
 
-        KhachHang checkKH = _khachHangService.sellectByMa(khachHang.getMa());
+        KhachHang checkKH = _khachHangService.sellectByMa(khachHang);
         if (checkKH != null) {
             if (checkKH.getMa().equals(khachHang.getMa())) {
                 ThongBao.showNoti_Error(this, "Mã khách hàng đã tồn tại. Vui lòng nhập mã khác");

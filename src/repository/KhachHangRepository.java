@@ -23,7 +23,7 @@ public interface KhachHangRepository {
 
     public boolean addDiemKhachHang(KhachHang khachHang, int diem);
     
-    public KhachHang sellectByMa(String ma);
+    public KhachHang sellectByMa(KhachHang khachHang);
     
     public KhachHang selectUpdateByMa(KhachHang khachHang);
 }

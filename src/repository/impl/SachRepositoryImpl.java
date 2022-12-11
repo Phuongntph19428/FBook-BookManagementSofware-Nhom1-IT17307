@@ -30,7 +30,7 @@ public class SachRepositoryImpl implements SachRepositoty {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "SELECT s FROM Sach s order by s.ma asc";
             TypedQuery<Sach> query = session.createQuery(hql);
-            query.setFirstResult(position);
+            query.setFirstResult(position * pageSize);
             query.setMaxResults(pageSize);
 
             lstSach = query.getResultList();
@@ -153,11 +153,12 @@ public class SachRepositoryImpl implements SachRepositoty {
     }
 
     @Override
-    public Sach getSachByMa(String ma) {
+    public Sach getSachCheck(Sach sach) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM Sach s WHERE s.ma = :ma or s.barCode = :ma";
+            String hql = "FROM Sach s WHERE s.ma = :ma or s.barCode = :barcode";
             TypedQuery<Sach> query = session.createQuery(hql);
-            query.setParameter("ma", ma);
+            query.setParameter("ma", sach.getMa());
+            query.setParameter("barcode", sach.getBarCode());
 
             try {
                 List<Sach> lstsach = query.getResultList();
@@ -307,6 +308,25 @@ public class SachRepositoryImpl implements SachRepositoty {
                 return null;
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Sach getSachByMa(String ma) {
+        try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM Sach s WHERE s.ma = :ma";
+            TypedQuery<Sach> query = session.createQuery(hql);
+            query.setParameter("ma",ma);
+
+            try {
+                List<Sach> lstsach = query.getResultList();
+                return lstsach.get(0);
+            } catch (Exception e) {
+                
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
