@@ -33,6 +33,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private List<KhuyenMaiChiTiet> listKhuyenMaiChiTiets = new ArrayList<>();
     private List<KhuyenMaiChiTiet> listNewAdd = new ArrayList<>();
     private List<Sach> lstSach = new ArrayList<>();
+    private List<Sach> lst = new ArrayList<>();
     HashMap<String, KhuyenMaiChiTiet> hsKMCT = new HashMap<>();
     private IKhuyenMaiChiTietService iKhuyenMaiChiTietService;
     private SachService iSachser;
@@ -561,6 +562,8 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Vui lòng chọn dòng cần xóa");
             return;
         } else {
+            Sach s = listNewAdd.get(row).getSach();
+            lst.add(s);
             listNewAdd.remove(row);
             loadListNew();
         }
@@ -591,7 +594,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_comboboxChucVuActionPerformed
 
     private void btnTimKiem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem3ActionPerformed
-    insert();
+        insert();
     }//GEN-LAST:event_btnTimKiem3ActionPerformed
     private void insert() {
         String maKM, IdKM;
@@ -628,10 +631,10 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private JDialog jdialog = new JDialog();
 
     private void setSachDialog() {
-        List<Sach> lstSachProcessed = removeElemetExitst(listKhuyenMaiChiTiets, lstSach);
+        lst = removeElemetExitst(listNewAdd, lstSach);
         DefaultTableModel dtm = (DefaultTableModel) tblSachProcessed.getModel();
         dtm.setRowCount(0);
-        for (Sach k : lstSachProcessed) {
+        for (Sach k : lst) {
             dtm.addRow(k.toDataRow());
         }
         jdialog.setSize(1185, 454);
@@ -639,15 +642,20 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         jdialog.add(ChonSach);
         jdialog.setLocation(this.getWidth() / 2 - 200, this.getHeight() / 2 - 200);
         jdialog.show(true);
+        int count = 0;
+        int rowSelected = -1;
         tblSachProcessed.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     JTable target = (JTable) e.getSource();
                     int row = target.getSelectedRow();
+                    if(row == -1) {
+                        return;
+                    }
                     System.out.println(row);
-                    Sach s = lstSachProcessed.get(row);
-                    lstSachProcessed.remove(row);
+                    Sach s = lst.get(row);;
+                    lst.remove(row);
                     String maKM, IdKM;
                     maKM = lbKhuyenMai.getText().trim();
                     if (maKM.equals("-")) {
@@ -658,12 +666,13 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
                     km.setMa(maKM);
                     km.setId(IdKM);
                     KhuyenMaiChiTiet kmct = new KhuyenMaiChiTiet(km, s);
-                    tblChiTietKhuyenMai.addRow(new Object[]{kmct.getKhuyenMai().getMa(), kmct.getSach().getTen()});
                     dtm.removeRow(row);
                     listNewAdd.add(kmct);
+                    loadListNew();
                 }
             }
         });
+
     }
 
     private void btnTimKiem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem4ActionPerformed
