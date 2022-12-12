@@ -9,6 +9,8 @@ import View.ButtonDesign.Button;
 import View.ScrollBarCustom;
 import java.awt.Color;
 import java.awt.Image;
+import View.ThongBao;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -366,22 +368,42 @@ public class Vitri_Form extends javax.swing.JPanel {
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         int row = tableViTri.getSelectedRow();
         ViTri viTri = viTriService.getAllViTri().get(row);
-        viTri.setMa(txtMaViTri.getText());
-        viTri.setMoTa(txtMoTa.getText());
-        viTriService.updateViTri(viTri);
-        listViTri = viTriService.getAllViTri();
-        loadViTri(listViTri);
-        clearForm();
+
+        if (txtMaViTri.getText().length() == 0) {
+            ThongBao.showNoti_Error(this, "Không được để trống mã vị trí");
+        } else if (txtMaViTri.getText().length() > 30) {
+            ThongBao.showNoti_Error(this, "Mã vị trí phải nhỏ hơn 30 kí tự");
+        } else if (txtMoTa.getText().length() > 100) {
+            ThongBao.showNoti_Error(this, "Mô tả không được quá 100 kí tự");
+        } else {
+            viTri.setMa(txtMaViTri.getText());
+            viTri.setMoTa(txtMoTa.getText());
+            viTriService.updateViTri(viTri);
+            ThongBao.showNoti_Succes(this, "Cập nhật thành công");
+            listViTri = viTriService.getAllViTri();
+            loadViTri(listViTri);
+            clearForm();
+        }
+
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         ViTri viTri = new ViTri();
-        viTri.setMa(txtMaViTri.getText());
-        viTri.setMoTa(txtMoTa.getText());
-        viTriService.addViTri(viTri);
-        listViTri = viTriService.getAllViTri();
-        loadViTri(listViTri);
-        clearForm();
+        if (txtMaViTri.getText().length() == 0) {
+            ThongBao.showNoti_Error(this, "Không được để trống mã vị trí");
+        } else if (txtMaViTri.getText().length() > 30) {
+            ThongBao.showNoti_Error(this, "Mã vị trí phải nhỏ hơn 30 kí tự");
+        } else if (txtMoTa.getText().length() > 100) {
+            ThongBao.showNoti_Error(this, "Mô tả không được quá 100 kí tự");
+        } else {
+            viTri.setMa(txtMaViTri.getText());
+            viTri.setMoTa(txtMoTa.getText());
+            viTriService.addViTri(viTri);
+            listViTri = viTriService.getAllViTri();
+            ThongBao.showNoti_Succes(this, "Thêm thành công");
+            loadViTri(listViTri);
+            clearForm();
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
