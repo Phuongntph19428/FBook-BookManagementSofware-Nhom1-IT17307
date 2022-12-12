@@ -68,7 +68,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     List<JPanel> listJPanel = new ArrayList<>();
     Sach_ChucNang_Form scn = new Sach_ChucNang_Form();
     Sach_Form sach = new Sach_Form();
-
+    ThongTinCaNhan ttcn = new ThongTinCaNhan();
     public ManagementBookForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -97,7 +97,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         KhuyenMaiChiTiet_Form kmct = new KhuyenMaiChiTiet_Form();
         PhieuNhapChiTiet_Form pnct = new PhieuNhapChiTiet_Form();
         ThongKe_Form tk = new ThongKe_Form();
-        ThongTinCaNhan ttcn = new ThongTinCaNhan();
         CuaHang_Form ch = new CuaHang_Form();
 
         this.Layout_1_Card.add(bieuDoForm);// 0
@@ -522,6 +521,11 @@ public class ManagementBookForm extends javax.swing.JFrame {
     }
 
     public void LogOut() {
+        ThongBao.showNoti_Confirm(this, "Bạn có muốn đăng xuất");
+        int kq = ThongBao.getSelected();
+        if(kq == ThongBao.NO){
+            return ;
+        }
         this.dispose();
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1165,6 +1169,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
 
     private void lbUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUserMouseClicked
         showJPanel(20);
+        ttcn.showEditProfile();
     }//GEN-LAST:event_lbUserMouseClicked
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
