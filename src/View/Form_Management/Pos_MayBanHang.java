@@ -372,7 +372,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
         String ma = hoaDonCT.getSach().getMa();
         Sach sach = _sachService.getSachByMa(ma);
-        if (sach.getSoLuong() < amountChanged) {
+        if (sach.getSoLuong() + hoaDonCT.getSoLuong() < amountChanged) {
             ThongBao.showNoti_Error(this, "Số lượng sách không đủ. Trong kho hiện tại còn: " + sach.getSoLuong() + " cuốn");
             tblHoaDonChiTiet.setValueAt(hoaDonCT.getSoLuong(), e.getFirstRow(), 3);
             return;
@@ -449,8 +449,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             System.out.println(value);
         }
         loadTableHoaDonCT();
-        if (searcher) {
-                        
+        if (searcher) {                        
             loadSachSearch(_customSachService.getAllByKeyword(_keyword), _currentPage, _pageSize);
             System.out.println(_lstCustomSach.size());
             setPageLabel(true);
@@ -2218,6 +2217,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void refreshSP() {
         setPageLabel(searcher);
         if (searcher) {
+            loadSachSearch(_customSachService.getAllByKeyword(_keyword), _currentPage, _pageSize);
+            System.out.println(_lstCustomSach.size());
+            setPageLabel(true);
             loadSachSearch(_lstCustomSach, _currentPage, _pageSize);
         } else {
             loadSach(_currentPage, _pageSize);
