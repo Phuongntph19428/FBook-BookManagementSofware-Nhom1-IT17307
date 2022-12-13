@@ -85,7 +85,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private final HoaDonService _hoaDonService;
     private List<HoaDon> _lstHoaDon;
-    
+
     private final SachService _sachService;
 
     private final CustomSachService _customSachService;
@@ -108,6 +108,8 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private HoaDon _hoaDon = null;
 
+    private String _keyword = "";
+    
     private final HinhThucThanhToanService _hinhThucThanhToanService;
 
 //    List<SachFake> listS = new ArrayList<>();
@@ -366,16 +368,16 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Số lượng phải lớn hơn 0");
             tblHoaDonChiTiet.setValueAt(hoaDonCT.getSoLuong(), e.getFirstRow(), 3);
             return;
-        }        
-        
+        }
+
         String ma = hoaDonCT.getSach().getMa();
         Sach sach = _sachService.getSachByMa(ma);
-        if(sach.getSoLuong() < amountChanged) {
+        if (sach.getSoLuong() < amountChanged) {
             ThongBao.showNoti_Error(this, "Số lượng sách không đủ. Trong kho hiện tại còn: " + sach.getSoLuong() + " cuốn");
             tblHoaDonChiTiet.setValueAt(hoaDonCT.getSoLuong(), e.getFirstRow(), 3);
             return;
         }
-        
+
         hoaDonCT.setSoLuong(amountChanged);
         _hoaDonService.updateHoaDonChiTiet(hoaDonCT);
         _lstHoaDonChiTiet.put(hoaDonCT.getId(), hoaDonCT);
@@ -448,6 +450,10 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         }
         loadTableHoaDonCT();
         if (searcher) {
+                        
+            loadSachSearch(_customSachService.getAllByKeyword(_keyword), _currentPage, _pageSize);
+            System.out.println(_lstCustomSach.size());
+            setPageLabel(true);
             loadSachSearch(_lstCustomSach, _currentPage, _pageSize);
         } else {
             loadSach(_currentPage, _pageSize);
@@ -2319,7 +2325,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     }
                     if (!cam.isFocusOwner()) {
                         closedCam(cam);
-                        btnScan.setEnabled(true);                        
+                        btnScan.setEnabled(true);
                         x = false;
                     }
 
@@ -2343,6 +2349,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         String keyword = txtTimKiem.getText();
+        _keyword = keyword;
         searcher = true;
         if (keyword.isBlank()) {
             setPageLabel(false);
