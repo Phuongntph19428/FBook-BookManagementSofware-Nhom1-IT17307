@@ -60,13 +60,14 @@ public class Sach_Form extends javax.swing.JPanel {
         table1.setBackground(Color.WHITE);
         this.table1.setRowHeight(59);
         this.table1.setBackground(Color.white);
-        loadAll();
 //        showTarget(1);
 
     }
 
     public void loadAll() {
         loadTable(_currentPage - 1, _pageSize);
+        setPageLabel(searcher);
+        setLabelPage();
     }
 
     private void setPageLabel(boolean searching) {
@@ -654,6 +655,7 @@ public class Sach_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnPreviousMouseClicked
 
     private void btnNextMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextMouseClicked
+        
         if (_currentPage == _totalPage) {
             return;
         }

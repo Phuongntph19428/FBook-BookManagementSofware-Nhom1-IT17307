@@ -5,6 +5,8 @@
 package View;
 
 import javax.swing.JDialog;
+import model.NhanVien;
+import util.Auth;
 
 /**
  *
@@ -136,12 +138,14 @@ public class SplassScreen_Form extends java.awt.Dialog {
                     doTask("loading ser./iser/kbog.prc./3933/ ....", 77);
                     doTask("loading ser./iser/30497.png./d ...", 80);
                     doTask("loading ser./content./23", 90);
-                    do{
+                    do {
                         doTask("loading ser./poe09/.938", 100);
-                    }while(mng == null);
+                    } while (mng == null);
                     doTask("Done ...", 100);
                     dispose();
-                    mng.btnTest.doClick();
+                    if (Auth.getNhanVien().getChucVu().getMa().equalsIgnoreCase("Nhân viên")) {
+                        mng.btnTest.doClick();
+                    }
                     mng.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

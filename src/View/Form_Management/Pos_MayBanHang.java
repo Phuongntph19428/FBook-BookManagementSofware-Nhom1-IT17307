@@ -2198,12 +2198,14 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Không có gì để xóa");
             return;
         }
-        ThongBao.showNoti_Confirm(this, "Xác nhận thanh toán?");
+        ThongBao.showNoti_Confirm(this, "Xác nhận xóa?");
         if (ThongBao.getSelected() == ThongBao.YES) {
             _hoaDonService.removeAllHoaDonCT(_hoaDon);
             btnDeleteAll.setBackground(new Color(204, 204, 204));
             btnDeleteAll.setEnabled(false);
             ThongBao.showNoti_Succes(this, "Đã xóa");
+            refreshSP();
+            loadTableHoaDonCT();
         }
     }//GEN-LAST:event_btnDeleteAllActionPerformed
 
@@ -2298,7 +2300,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     closedCam(cam);
                     sach.setSoLuong(1);
                     addHoaDonCT(sach);
-
+                    continuteScanner();
                 }
 
             }
@@ -2317,8 +2319,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     }
                     if (!cam.isFocusOwner()) {
                         closedCam(cam);
-                        btnScan.setEnabled(true);
-                        continuteScanner();
+                        btnScan.setEnabled(true);                        
                         x = false;
                     }
 
@@ -2567,6 +2568,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         } else {
             btnDeleteAll.setBackground(enabledTrue);
+            btnDeleteAll.setEnabled(true);
             btnDatHang.setEnabled(true);
             btnDatHang.setBackground(enabledTrue);
             btnXoa.setEnabled(true);

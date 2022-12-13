@@ -111,7 +111,7 @@ public class TacGiaRepositoryImpl implements TacGiaRepository {
     @Override
     public TacGia selectUpdateByMa(TacGia tacGia) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "SELECT t FROM TacGia t WHERE t.ma = :ma and t.id != id";
+            String hql = "SELECT t FROM TacGia t WHERE t.ma = :ma and t.id != :id";
             TypedQuery<TacGia> query = session.createQuery(hql);
             query.setParameter("ma", tacGia.getMa());
             query.setParameter("id", tacGia.getId());

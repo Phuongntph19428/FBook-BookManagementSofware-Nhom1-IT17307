@@ -36,7 +36,6 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private String currentDirectory;
     private final TacGiaService _tacGiaService = new TacGiaServiceImpl();
-    private List<TacGia> _lstAllTacGia;
     private List<TacGia> _lstTacGia;
 
     private byte[] _hinh;
@@ -52,8 +51,7 @@ public class TacGia_Form extends javax.swing.JPanel {
         this.lblAvatar.setIcon(imageIcon);
 //        showTarget(1);
 
-        _lstAllTacGia = _tacGiaService.selectAll();
-        _lstTacGia = _lstAllTacGia;
+        _lstTacGia = _tacGiaService.selectAll();
         loadTable(_lstTacGia);
     }
 
@@ -472,8 +470,8 @@ public class TacGia_Form extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Bạn chưa chọn tác giả");
             return;
         }
-        
-        if(_tacGiaService.selectUpdateByMa(tacGia) != null) {
+
+        if (_tacGiaService.selectUpdateByMa(tacGia) != null) {
             ThongBao.showNoti_Error(this, "Mã tác giả đã tồn tại. Vui lòng nhập mã khác");
             return;
         }
@@ -487,9 +485,9 @@ public class TacGia_Form extends javax.swing.JPanel {
                 return;
             }
         }
-        _lstAllTacGia = _tacGiaService.selectAll();
+        _lstTacGia = _tacGiaService.selectAll();
         clear();
-        loadTable(_lstAllTacGia);
+        loadTable(_lstTacGia);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -517,9 +515,9 @@ public class TacGia_Form extends javax.swing.JPanel {
                 return;
             }
         }
-        _lstAllTacGia = _tacGiaService.selectAll();
+        _lstTacGia = _tacGiaService.selectAll();
         clear();
-        loadTable(_lstAllTacGia);
+        loadTable(_lstTacGia);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void clear() {
@@ -582,7 +580,7 @@ public class TacGia_Form extends javax.swing.JPanel {
 
     private void txtSearchCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchCaretUpdate
         String keyword = txtSearch.getText().trim();
-        _lstTacGia = _tacGiaService.searchTacGiaByKeyWord(_lstAllTacGia, keyword);
+        _lstTacGia = _tacGiaService.searchTacGiaByKeyWord(_lstTacGia, keyword);
         loadTable(_lstTacGia);
     }//GEN-LAST:event_txtSearchCaretUpdate
 
