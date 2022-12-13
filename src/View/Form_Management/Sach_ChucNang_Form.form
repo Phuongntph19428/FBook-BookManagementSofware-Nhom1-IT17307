@@ -165,6 +165,7 @@
                                               <Component id="btnSelectTacGia" min="-2" pref="48" max="-2" attributes="0"/>
                                               <Component id="txtMoTa" min="-2" pref="282" max="-2" attributes="0"/>
                                               <Component id="btnSelectTheLoai" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="btnClear1" alignment="1" min="-2" pref="162" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -241,6 +242,7 @@
                           <Component id="btnAdd" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnUpdate" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                           <Component id="btnClear" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnClear1" alignment="3" min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
@@ -784,6 +786,30 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="View.ButtonDesign.Button" name="btnClear1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="6f" green="1f" red="1f" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder bottom="1" left="1" right="1" top="-3"/>
+                  </Border>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Refresh"/>
+                <Property name="toolTipText" type="java.lang.String" value="Clear form"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI Semibold" size="14" style="1"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClear1ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

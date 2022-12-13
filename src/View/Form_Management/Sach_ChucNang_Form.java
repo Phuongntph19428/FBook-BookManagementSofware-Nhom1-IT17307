@@ -182,6 +182,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         rdoNgungKinhDoanh = new View.ComboBoxDesign.RadioButtonCustom();
         cboNhaXuatBan = new View.DesignComponent.Combobox();
         cboViTri = new View.DesignComponent.Combobox();
+        btnClear1 = new View.ButtonDesign.Button();
         jPanelBourder2 = new View.DesignComponent.JPanelBourder();
         lblAvartar = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -484,6 +485,19 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         cboViTri.setLabeText("Vị Trí");
         cboViTri.setLineColor(new java.awt.Color(255, 255, 255));
 
+        btnClear1.setBackground(new java.awt.Color(31, 31, 111));
+        btnClear1.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnClear1.setForeground(new java.awt.Color(255, 255, 255));
+        btnClear1.setText("Refresh");
+        btnClear1.setToolTipText("Clear form");
+        btnClear1.setFocusable(false);
+        btnClear1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnClear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClear1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder1Layout = new javax.swing.GroupLayout(jPanelBourder1);
         jPanelBourder1.setLayout(jPanelBourder1Layout);
         jPanelBourder1Layout.setHorizontalGroup(
@@ -541,7 +555,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                                     .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(btnSelectTacGia, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtMoTa, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(btnSelectTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanelBourder1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCamBarCode, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -596,7 +611,8 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
                 .addGroup(jPanelBourder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -1359,6 +1375,10 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
         this.TruongThongTin.show(true);
     }//GEN-LAST:event_btnInBaoCaoActionPerformed
 
+    private void btnClear1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClear1ActionPerformed
+        loadCbo();
+    }//GEN-LAST:event_btnClear1ActionPerformed
+
     private void closedCam(CamJFrame cam) {
         cam.webcam.close();
         cam.dispose();
@@ -1374,6 +1394,7 @@ public class Sach_ChucNang_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnCameraImage;
     private View.ButtonDesign.Button btnChooseImage;
     private View.ButtonDesign.Button btnClear;
+    private View.ButtonDesign.Button btnClear1;
     private View.ButtonDesign.Button btnInBaoCao;
     private View.ButtonDesign.Button btnSelectTacGia;
     private View.ButtonDesign.Button btnSelectTheLoai;
