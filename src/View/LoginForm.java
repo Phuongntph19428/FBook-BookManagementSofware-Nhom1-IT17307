@@ -279,12 +279,19 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String userName = this.txtUserName.getText().trim();
-        String password = MyMD5.getMd5(this.txtPassword.getText().trim());
-
+        String password = this.txtPassword.getText().trim();
+        if (userName.length() == 0 || password.length() == 0) {
+            ThongBao.showNoti_Error(this, "Vui lòng không bỏ trống tài khoản và mật khẩu");
+            return;
+        }
+        if (userName.length() > 30 || password.length() > 32) {
+            ThongBao.showNoti_Error(this, "Tài Khoản và mật khẩu không được vượt quá 32 ký tự");
+            return;
+        }
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
         System.out.println(timeStamp);
         boolean loginCheck = false;
-        loginCheck = auth.getNhanVieninDatabase(userName, password);
+        loginCheck = auth.getNhanVieninDatabase(userName, MyMD5.getMd5(password));
         if (loginCheck == false) {
             ThongBao.showNoti_Error(this, "Sai tài khoản hoặc mật khẩu");
             return;
@@ -326,7 +333,7 @@ public class LoginForm extends javax.swing.JFrame {
         }
         if (email.length() == 0) {
             ThongBao.showNoti_Error(this, "Tài khoản này không tồn tại \n Vui lòng kiểm tra lại");
-            return ;
+            return;
         }
         NhanVien nvget = auth.checkNhanVienExistsInDB(email);
         if (nvget != null) {
