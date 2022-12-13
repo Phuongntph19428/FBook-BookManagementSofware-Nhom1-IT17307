@@ -509,14 +509,36 @@ public class TheLoai_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaFrom1ActionPerformed
 
     private TheLoai getDaTa() {
+
         String id = txtId.getText().trim();
         String ma = txtMa.getText().trim();
         String ten = txtTen.getText().trim();
         String moTa = txtMoTa.getText().trim();
-        if (ma.length() == 0 || ten.length() == 0 || moTa.length() == 0) {
+
+        if (ma.isEmpty() || ten.isEmpty() || moTa.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Không được để trống, cần điền đầy đủ thông tin !", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
             return null;
+        } //        else if (!ma.matches("[a-z A-Z 0-9]+")) {
+        //            JOptionPane.showMessageDialog(this, "Mã thể loại không được có ký tự đặc biệt");
+        //            return null;
+        //        } else if (!ten.matches("[a-z A-Z 0-9]+")) {
+        //            JOptionPane.showMessageDialog(this, "Tên thể loại không được có ký tự đặc biệt");
+        //            return null;
+        //        } else if (!moTa.matches("[a-z A-Z 0-9]+")) {
+        //            JOptionPane.showMessageDialog(this, "Mô tả  thể loại không được có ký tự đặc biệt");
+        //            return null;
+        //        }
+        else if (ma.length() > 30) {
+            JOptionPane.showMessageDialog(this, "Mã thể loại không được vượt quá 30 ký tự");
+            return null;
+        } else if (ten.length() > 50) {
+            JOptionPane.showMessageDialog(this, "Tên thể loại không được vượt quá 50 ký tự");
+            return null;
+        } else if (moTa.length() > 100) {
+            JOptionPane.showMessageDialog(this, "Mô tả thể loại không được vượt quá 100 ký tự");
+            return null;
         }
+
         TheLoai loai = new TheLoai(id, ma, ten, moTa);
         return loai;
     }

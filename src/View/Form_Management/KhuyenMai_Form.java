@@ -6,11 +6,16 @@ package View.Form_Management;
 
 import View.ManagementBookForm;
 import View.ScrollBarCustom;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import java.awt.Color;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -501,7 +506,9 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jPanelBourder3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(366, 366, 366))
                             .addComponent(jPanelBourder1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1204, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 8, Short.MAX_VALUE)))
@@ -665,11 +672,19 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
+//        LocalDateTime localDate = LocalDateTime.now();
+//        int ngay = localDate.getDayOfMonth();
+//        int thang = localDate.getMonthValue();
+//        int nam = localDate.getYear();
+//        String a = String.valueOf(ngay + "-" + thang + "-" + nam);
+
         int row = tbKhuyenMai.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Chọn dóng cần xóa");
             return;
+
         } else if (JOptionPane.showConfirmDialog(this, "Xóa", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
+
 //            JOptionPane.showMessageDialog(this, "Xóa thành công");
             ManagementBookForm mng = new ManagementBookForm();
             mng.runNotificationXoa();
@@ -695,6 +710,27 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
                 || txtChietKhau.getText().trim().length() == 0
                 || txtMoTa.getText().trim().length() == 0) {
             JOptionPane.showMessageDialog(this, "Không được để trống, cần điền đầy đủ thông tin!", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
+            return null;
+        } //        else if (!txtMaKM.getText().trim().matches("[a-z A-Z 0-9]+")) {
+        //            JOptionPane.showMessageDialog(this, "Mã khuyến mãi không được có ký tự đặc biệt");
+        //            return null;
+        //        } 
+        //        
+        //        else if (!txtTenKM.getText().trim().matches("[a-z A-Z 0-9]+")) {
+        //            JOptionPane.showMessageDialog(this, "Tên khuyến mãi không được có ký tự đặc biệt");
+        //            return null;
+        //        } else if (!txtMoTa.getText().trim().matches("[a-z A-Z 0-9]+")) {
+        //            JOptionPane.showMessageDialog(this, "Mô tả  khuyến mãi không được có ký tự đặc biệt");
+        //            return null;
+        //        } 
+        else if (txtMaKM.getText().trim().length() > 30) {
+            JOptionPane.showMessageDialog(this, "Mã khuyến mãi không được vượt quá 30 ký tự");
+            return null;
+        } else if (txtTenKM.getText().trim().length() > 50) {
+            JOptionPane.showMessageDialog(this, "Tên khuyến mãi không được vượt quá 50 ký tự");
+            return null;
+        } else if (txtMoTa.getText().trim().length() > 100) {
+            JOptionPane.showMessageDialog(this, "Mô tả khuyến mãi không được vượt quá 100 ký tự");
             return null;
         } else if (!txtNgayBD.getText().trim().matches("[0-9]{2}-[0-9]{2}-[0-9]{4}+")) {
             JOptionPane.showMessageDialog(this, "Sai định dạng ngày tháng năm! Nhập theo dạng dd-MM-yyyy", "Thông báo lỗi", JOptionPane.ERROR_MESSAGE);
