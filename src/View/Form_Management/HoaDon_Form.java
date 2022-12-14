@@ -524,8 +524,6 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setBorder(null);
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane3.setPreferredSize(new java.awt.Dimension(452, 395));
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
@@ -769,8 +767,6 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane4.setBorder(null);
-        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane4.setPreferredSize(new java.awt.Dimension(452, 395));
 
         tblHoaDonChiTiet.setModel(new javax.swing.table.DefaultTableModel(
@@ -928,8 +924,6 @@ public class HoaDon_Form extends javax.swing.JPanel {
 
         jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane5.setBorder(null);
-        jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane5.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane5.setPreferredSize(new java.awt.Dimension(452, 395));
 
         tblHinhThucThanhToan.setModel(new javax.swing.table.DefaultTableModel(

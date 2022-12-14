@@ -945,6 +945,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                 tblHoaDonMouseEntered(evt);
             }
         });
+        tblHoaDon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblHoaDonKeyReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblHoaDon);
 
         javax.swing.GroupLayout jPanelBourder6Layout = new javax.swing.GroupLayout(jPanelBourder6);
@@ -2825,6 +2830,24 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         thread.start();
     }//GEN-LAST:event_btnQRCodeActionPerformed
 
+    private void tblHoaDonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblHoaDonKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP) {
+            setHDKey();
+        }
+    }//GEN-LAST:event_tblHoaDonKeyReleased
+
+    private void setHDKey() {
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        _hoaDon = _lstHoaDon.get(row);
+        loadTableHoaDonCT();
+        lblThoiGianTao.setText(_hoaDon.getNgayTao() + "");
+        lblThoiGianTaoDatHang.setText(_hoaDon.getNgayTao() + "");
+        setEnableButton();
+    }
+    
     private void fillByCode(String info) {
         clear();
         String[] infoStr = info.split("\\|");
