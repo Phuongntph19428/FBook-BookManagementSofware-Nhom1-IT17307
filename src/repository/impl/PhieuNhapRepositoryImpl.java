@@ -26,7 +26,7 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
     public List<PhieuNhap> getAllPhieuNhap() {
         List<PhieuNhap> listPhieuNhap;
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
-            listPhieuNhap = session.createQuery("from PhieuNhap").list();
+            listPhieuNhap = session.createQuery("from PhieuNhap pn order by pn.ma desc").list();
         }
         return listPhieuNhap;
     }
@@ -35,7 +35,7 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
     public List<PhieuNhap> getPhieuChuaNhap() {
         List<PhieuNhap> listPhieuNhap;
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
-            listPhieuNhap = session.createQuery("from PhieuNhap p where p.trangThai  = 0").list();
+            listPhieuNhap = session.createQuery("from PhieuNhap p where p.trangThai  = 0 order by p.ma desc").list();
         }
         return listPhieuNhap;
     }
@@ -44,7 +44,7 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
     public List<PhieuNhap> getPhieuDaNhap() {
         List<PhieuNhap> listPhieuNhap;
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
-            listPhieuNhap = session.createQuery("from PhieuNhap p where p.trangThai = 1").list();
+            listPhieuNhap = session.createQuery("from PhieuNhap p where p.trangThai = 1 order by p.ma desc").list();
         }
         return listPhieuNhap;
     }

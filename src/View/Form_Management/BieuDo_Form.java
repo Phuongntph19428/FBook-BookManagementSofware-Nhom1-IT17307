@@ -4,14 +4,9 @@
  */
 package View.Form_Management;
 
-import View.ColorFrame;
 import View.DesignComponent.DC_ModelBieuDo;
 import View.DesignComponent.ModelPieChart;
 import View.DesignComponent.PieChartItem;
-import View.ManagementBookForm;
-import com.fasterxml.jackson.datatype.jsr310.deser.MonthDayDeserializer;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -21,21 +16,14 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
-import java.awt.Font;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.MonthDay;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
