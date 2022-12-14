@@ -69,6 +69,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     Sach_ChucNang_Form scn = new Sach_ChucNang_Form();
     Sach_Form sach = new Sach_Form();
     ThongTinCaNhan ttcn = new ThongTinCaNhan();
+    KhachHang_Form kh = new KhachHang_Form();
     public ManagementBookForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -88,7 +89,6 @@ public class ManagementBookForm extends javax.swing.JFrame {
         ChucVu_Form cv = new ChucVu_Form();
         NhanVien_ChucNang_Form nvcn = new NhanVien_ChucNang_Form();
         KhuyenMai_Form km = new KhuyenMai_Form();
-        KhachHang_Form kh = new KhachHang_Form();
         Vitri_Form vt = new Vitri_Form();
         HoaDon_Form hd = new HoaDon_Form();
         NhaCungCap_Form ncc = new NhaCungCap_Form();
@@ -523,8 +523,8 @@ public class ManagementBookForm extends javax.swing.JFrame {
     public void LogOut() {
         ThongBao.showNoti_Confirm(this, "Bạn có muốn đăng xuất");
         int kq = ThongBao.getSelected();
-        if(kq == ThongBao.NO){
-            return ;
+        if (kq == ThongBao.NO) {
+            return;
         }
         this.dispose();
         try {
@@ -552,7 +552,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         lb.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                if (index == 11) {
+                    kh.loadTable(null);
+                }
                 if (index == 2) {
                     sach.loadAll();
                 }
