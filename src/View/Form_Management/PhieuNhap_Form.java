@@ -339,6 +339,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         txtMaPN.setLabelText("Mã Phiếu Nhập");
         txtMaPN.setLineColor(new java.awt.Color(255, 255, 255));
 
+        txtNgayNhap.setEditable(false);
         txtNgayNhap.setBackground(new java.awt.Color(47, 55, 90));
         txtNgayNhap.setForeground(new java.awt.Color(255, 255, 255));
         txtNgayNhap.setCaretColor(new java.awt.Color(255, 255, 255));
@@ -528,7 +529,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         clear();
     }//GEN-LAST:event_btnClearActionPerformed
     
-    private final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private final SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
     private PhieuNhap getForm() {
         String id = txtId.getText().trim();
@@ -594,6 +595,8 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             } else {
                 ThongBao.showNoti_Error(this, "Thêm thất bại");
             }
+            _lstPhieuNhap = _phieuNhapService.getAllPhieuNhap();
+            loadTable(_lstPhieuNhap);
             clear();
         }
 
@@ -620,6 +623,8 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             } else {
                 ThongBao.showNoti_Error(this, "Cập nhật thất bại");
             }
+            _lstPhieuNhap = _phieuNhapService.getAllPhieuNhap();
+            loadTable(_lstPhieuNhap);
             clear();
         }
     }//GEN-LAST:event_btnSuaActionPerformed
