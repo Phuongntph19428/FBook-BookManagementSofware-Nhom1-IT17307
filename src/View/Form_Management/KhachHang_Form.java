@@ -53,7 +53,11 @@ public class KhachHang_Form extends javax.swing.JPanel {
         loadTable(_lstKhachHang);
     }
 
-    private void loadTable(List<KhachHang> lstKhachHang) {
+    public void loadTable(List<KhachHang> lstKhachHang) {
+        _lstAllKhachHang = _khachHangService.selectAll();
+        if (lstKhachHang == null) {
+            lstKhachHang = _lstAllKhachHang;
+        }
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHang.getModel();
         dtm.setRowCount(0);
         for (KhachHang khachHang : lstKhachHang) {
@@ -71,7 +75,8 @@ public class KhachHang_Form extends javax.swing.JPanel {
         String SDT = txtSDT.getText().trim();
         String diaChi = txtDiaChi.getText().trim();
         String gioiTinh = rdoNam.isSelected() ? "Nam" : "Nữ";
-
+         String diemTichLuyStr = lblDiem.getText().trim();
+        int diemTichLuy = Integer.parseInt(diemTichLuyStr);
         if (ma.isBlank() || ten.isBlank() || tenDem.isBlank() || ho.isBlank() || ngaySinhStr.isBlank() || SDT.isBlank() || diaChi.isBlank()) {
             ThongBao.showNoti_Error(this, "Không được để trống");
             return null;
@@ -109,7 +114,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
             }
         }
 
-        return new KhachHang(id.isBlank() ? null : id, ma, ten, tenDem, ho, gioiTinh, ngaySinh, SDT, 0, diaChi);
+        return new KhachHang(id.isBlank() ? null : id, ma, ten, tenDem, ho, gioiTinh, ngaySinh, SDT, diemTichLuy, diaChi);
     }
 
     private void setForm(KhachHang khachHang) {
@@ -778,7 +783,7 @@ public class KhachHang_Form extends javax.swing.JPanel {
         if (row == - 1) {
             return;
         }
-        setForm(_lstKhachHang.get(row));
+        setForm(_lstAllKhachHang.get(row));
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
     private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed

@@ -93,6 +93,7 @@ public class SystemServiceImpl implements ISystemService {
         list = sachSer.selectAllLowerThan(QuantityLowerThan);
         if (typeSend == 1) {
             listProgessedandSend = ProcessingList(list);
+            if(listProgessedandSend.isEmpty() || listProgessedandSend == null) return;
             sendMethod(listProgessedandSend);
         } else if (typeSend == 2) {
             setTimeSend();
