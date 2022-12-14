@@ -4,18 +4,12 @@
  */
 package View.Form_Management;
 
-import View.ManagementBookForm;
 import View.ScrollBarCustom;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import View.ThongBao;
 import java.awt.Color;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -587,8 +581,9 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
                 if (km == null) {
                     return;
                 }
-                ManagementBookForm mng = new ManagementBookForm();
-                mng.runNotificationSua();
+//                ManagementBookForm mng = new ManagementBookForm();
+//                mng.runNotificationSua();
+                ThongBao.showNoti_Succes(this, "Sửa thành công");
                 iKhuyenMaiServicer.update(km);
 //                JOptionPane.showMessageDialog(this, "Cập nhật thành công");
                 loadTable();
@@ -620,8 +615,9 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
         }
         if (JOptionPane.showConfirmDialog(this, "Thêm", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
 //            JOptionPane.showMessageDialog(this, "Thêm thành công");
-            ManagementBookForm mng = new ManagementBookForm();
-            mng.runNotificationThem();
+//            ManagementBookForm mng = new ManagementBookForm();
+//            mng.runNotificationThem();
+            ThongBao.showNoti_Succes(this, "Thêm thành công");
             iKhuyenMaiServicer.insert(km);
             loadTable();
 //
@@ -664,8 +660,6 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
             }
         }
 //        JOptionPane.showMessageDialog(this, "Đã tìm thấy");
-        ManagementBookForm mng = new ManagementBookForm();
-        mng.runNotificationTim();
         loadTable();
         xoaFrom();
     }//GEN-LAST:event_btnTimKiemActionPerformed
@@ -686,8 +680,8 @@ public class KhuyenMai_Form extends javax.swing.JPanel {
         } else if (JOptionPane.showConfirmDialog(this, "Xóa", "Xác nhận", JOptionPane.OK_CANCEL_OPTION) == 0) {
 
 //            JOptionPane.showMessageDialog(this, "Xóa thành công");
-            ManagementBookForm mng = new ManagementBookForm();
-            mng.runNotificationXoa();
+            
+            ThongBao.showNoti_Succes(this, "Xóa thành công");
             String id = txtId.getText().trim();
             iKhuyenMaiServicer.delete(id);
             lamMoi();
