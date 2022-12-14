@@ -56,6 +56,9 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
         tblPhieuNhapCT.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
+                if(_phieuNhap == null) {
+                    return;
+                }
                 if (_phieuNhap.getTrangThai() == PhieuNhap.CHUATHEMVAOKHO) {
                     if(_lstPhieuNhapCT.get(_phieuNhap.getId()).isEmpty()) {
                         return;
@@ -74,11 +77,12 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
 
                     phieuNhapCT.setSoLuong(amountChanged);
                     _lstPhieuNhapCT.get(_phieuNhap.getId()).put(phieuNhapCT.getSach().getId(), phieuNhapCT);
+                    loadTablePhieuNhapCT();
                 }
             }
         });
     }
-
+    
     private void loadTablePhieuNhap(int trangThai) {
         DefaultTableModel dtm = (DefaultTableModel) tblPhieuNhap.getModel();
         dtm.setRowCount(0);
@@ -698,6 +702,7 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_tblPhieuNhapCTMouseClicked
 
     private void btnThemVaoKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemVaoKhoActionPerformed
+
         if (_phieuNhap == null) {
             ThongBao.showNoti_Error(this, "Bạn hãy chọn phiếu nhập trước");
             return;
@@ -719,7 +724,8 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
                 _phieuNhapService.updatePhieuNhap(_phieuNhap);
             }
         }
-        btnRefresh.doClick();
+        loadTablePhieuNhap(-1);
+        
     }//GEN-LAST:event_btnThemVaoKhoActionPerformed
 
     private List<PhieuNhapChiTiet> getListPhieuNhapCT() {
@@ -763,12 +769,14 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaHetActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-
+        
         rdoTatCa.setSelected(true);
         txtSearch.setText("");
         loadComboboxSach();
         _phieuNhap = null;
         loadTablePhieuNhapCT();
+        loadTablePhieuNhap(-1);
+        tblPhieuNhap.clearSelection();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private final DecimalFormat df = new DecimalFormat("#,###");
@@ -807,6 +815,10 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
             return;
         }
         PhieuNhapChiTiet phieuNhapCT = new PhieuNhapChiTiet(_phieuNhap, sach, 1);
+        if(_lstPhieuNhapCT.get(_phieuNhap.getId()).get(phieuNhapCT.getSach().getId()) != null) {
+            ThongBao.showNoti_Error(this, "Sách đã tồn tại");
+            return;
+        }
         _lstPhieuNhapCT.get(_phieuNhap.getId()).put(phieuNhapCT.getSach().getId(), phieuNhapCT);
         loadTablePhieuNhapCT();
     }

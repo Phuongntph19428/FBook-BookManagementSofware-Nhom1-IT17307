@@ -407,8 +407,12 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Bạn chưa chọn hóa đơn");
             return null;
         }
-        String input = JOptionPane.showInputDialog(this, "Mời bạn nhập số lượng: ");
+        String input = JOptionPane.showInputDialog(this, "Mời bạn nhập số lượng: ").trim();
         if (input == null) {
+            return null;
+        }
+        if (input.matches("0")) {
+            ThongBao.showNoti_Error(this, "Số lượng phải > 0");
             return null;
         }
         if (!input.matches("\\d+")) {
@@ -943,6 +947,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 tblHoaDonMouseEntered(evt);
+            }
+        });
+        tblHoaDon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblHoaDonKeyReleased(evt);
             }
         });
         jScrollPane3.setViewportView(tblHoaDon);
@@ -2282,6 +2291,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     ex.printStackTrace();
                 }
                 Result result = null;
+                
                 LuminanceSource source = new BufferedImageLuminanceSource((BufferedImage) image);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
@@ -2824,6 +2834,24 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         thread.start();
     }//GEN-LAST:event_btnQRCodeActionPerformed
 
+    private void tblHoaDonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblHoaDonKeyReleased
+        if(evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP) {
+            setHDKey();
+        }
+    }//GEN-LAST:event_tblHoaDonKeyReleased
+
+    private void setHDKey() {
+        int row = tblHoaDon.getSelectedRow();
+        if (row == -1) {
+            return;
+        }
+        _hoaDon = _lstHoaDon.get(row);
+        loadTableHoaDonCT();
+        lblThoiGianTao.setText(_hoaDon.getNgayTao() + "");
+        lblThoiGianTaoDatHang.setText(_hoaDon.getNgayTao() + "");
+        setEnableButton();
+    }
+    
     private void fillByCode(String info) {
         clear();
         String[] infoStr = info.split("\\|");
@@ -2978,7 +3006,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         boolean print() {
             try {
                 File directory = new File("hoaDon");
-                String path = "hoaDon//" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSSZ").format(_hoaDon.getNgayThanhToan()) + ".pdf";
+                String path = "hoaDon//" + _hoaDon.getMa() + ".pdf";
                 File file = new File(path);
                 if (!file.exists()) {
                     directory.mkdirs();
@@ -3110,7 +3138,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         boolean printDelivery() {
             try {
                 File directory = new File("hoaDonVanChuyen");
-                String path = "hoaDonVanChuyen//" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSSZ").format(new Date()) + ".pdf";
+                String path = "hoaDonVanChuyen//" + _hoaDon.getMa() + ".pdf";
                 File file = new File(path);
                 if (!file.exists()) {
                     directory.mkdirs();
