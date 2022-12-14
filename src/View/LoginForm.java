@@ -38,6 +38,8 @@ public class LoginForm extends javax.swing.JFrame {
     boolean isToggle = true;
     SystemServiceImpl sysSer = new SystemServiceImpl();
     NhanVienService nvSer = new NhanVienServiceImpl();
+    Icon iconhide = new ImageIcon("image/hide_38px.png");
+    Icon iconnothide = new ImageIcon("image/not_hide_38px.png");
 
     public LoginForm() {
         initComponents();
@@ -49,7 +51,7 @@ public class LoginForm extends javax.swing.JFrame {
         Icon icon = new ImageIcon("image/anhloginn.png");
         Icon iconexit = new ImageIcon("image/multiply_38px.png");
         Icon iconmini = new ImageIcon("image/minimize.png");
-        Icon iconhide = new ImageIcon("image/hide_38px.png");
+
         lbNen.setIcon(icon);
         btnexit.setIcon(iconexit);
         btnmini.setIcon(iconmini);
@@ -306,9 +308,11 @@ public class LoginForm extends javax.swing.JFrame {
         if (isToggle) {
             txtPassword.setEchoChar((char) 0);
             isToggle = false;
+            btnHide.setIcon(iconnothide);
         } else {
             txtPassword.setEchoChar('*');
             isToggle = true;
+            btnHide.setIcon(iconhide);
         }
     }//GEN-LAST:event_btnHideMouseClicked
 
