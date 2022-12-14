@@ -56,6 +56,9 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
         tblPhieuNhapCT.getModel().addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {
+                if(_phieuNhap == null) {
+                    return;
+                }
                 if (_phieuNhap.getTrangThai() == PhieuNhap.CHUATHEMVAOKHO) {
                     if(_lstPhieuNhapCT.get(_phieuNhap.getId()).isEmpty()) {
                         return;
@@ -766,12 +769,14 @@ public class PhieuNhapChiTiet_Form extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaHetActionPerformed
 
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
-
+        
         rdoTatCa.setSelected(true);
         txtSearch.setText("");
         loadComboboxSach();
         _phieuNhap = null;
         loadTablePhieuNhapCT();
+        loadTablePhieuNhap(-1);
+        tblPhieuNhap.clearSelection();
     }//GEN-LAST:event_btnRefreshActionPerformed
 
     private final DecimalFormat df = new DecimalFormat("#,###");

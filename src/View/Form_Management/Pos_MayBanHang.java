@@ -407,8 +407,12 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             ThongBao.showNoti_Error(this, "Bạn chưa chọn hóa đơn");
             return null;
         }
-        String input = JOptionPane.showInputDialog(this, "Mời bạn nhập số lượng: ");
+        String input = JOptionPane.showInputDialog(this, "Mời bạn nhập số lượng: ").trim();
         if (input == null) {
+            return null;
+        }
+        if (input.matches("0")) {
+            ThongBao.showNoti_Error(this, "Số lượng phải > 0");
             return null;
         }
         if (!input.matches("\\d+")) {
