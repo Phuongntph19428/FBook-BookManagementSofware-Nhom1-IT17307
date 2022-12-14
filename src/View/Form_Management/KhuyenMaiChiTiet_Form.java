@@ -4,14 +4,12 @@
  */
 package View.Form_Management;
 
-import View.ManagementBookForm;
 import View.ThongBao;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -83,6 +81,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         btnTimKiem4 = new View.ButtonDesign.Button();
         jPanelBourder5 = new View.DesignComponent.JPanelBourder();
         jLabel4 = new javax.swing.JLabel();
+        btnTimKiem5 = new View.ButtonDesign.Button();
         btnTimKiem = new View.ButtonDesign.Button();
         btnTimKiem1 = new View.ButtonDesign.Button();
         btnTimKiem2 = new View.ButtonDesign.Button();
@@ -322,7 +321,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 301, Short.MAX_VALUE)
                 .addComponent(btnTimKiem4, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(comboboxChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -353,6 +352,18 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
         jLabel4.setForeground(new java.awt.Color(104, 143, 222));
         jLabel4.setText("Danh Sách Khuyến Mãi");
 
+        btnTimKiem5.setBackground(new java.awt.Color(31, 31, 111));
+        btnTimKiem5.setBorder(javax.swing.BorderFactory.createEmptyBorder(-3, 1, 1, 1));
+        btnTimKiem5.setForeground(new java.awt.Color(255, 255, 255));
+        btnTimKiem5.setText("Refresh");
+        btnTimKiem5.setFocusable(false);
+        btnTimKiem5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        btnTimKiem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiem5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBourder5Layout = new javax.swing.GroupLayout(jPanelBourder5);
         jPanelBourder5.setLayout(jPanelBourder5Layout);
         jPanelBourder5Layout.setHorizontalGroup(
@@ -360,14 +371,18 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
             .addGroup(jPanelBourder5Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(923, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTimKiem5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
         );
         jPanelBourder5Layout.setVerticalGroup(
             jPanelBourder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBourder5Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelBourder5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTimKiem5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         btnTimKiem.setBackground(new java.awt.Color(31, 31, 111));
@@ -461,7 +476,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
                     .addComponent(btnTimKiem2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbIDKhuyenMai)
                     .addComponent(btnTimKiem3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -682,6 +697,10 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private void tblSachProcessedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSachProcessedMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tblSachProcessedMouseClicked
+
+    private void btnTimKiem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiem5ActionPerformed
+        loadTableKM();
+    }//GEN-LAST:event_btnTimKiem5ActionPerformed
 //    private KhuyenMaiChiTiet getDaTa() {
 //        int row = tblKhuyenMai.getSelectedRow();
 //        String khuyenMai = tblKhuyenMai.getValueAt(row, 0).toString();
@@ -696,6 +715,7 @@ public class KhuyenMaiChiTiet_Form extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnTimKiem2;
     private View.ButtonDesign.Button btnTimKiem3;
     private View.ButtonDesign.Button btnTimKiem4;
+    private View.ButtonDesign.Button btnTimKiem5;
     private View.DesignComponent.Combobox comboboxChucVu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
