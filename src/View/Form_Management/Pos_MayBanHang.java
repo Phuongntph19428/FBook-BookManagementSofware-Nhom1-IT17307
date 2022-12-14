@@ -2282,6 +2282,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     ex.printStackTrace();
                 }
                 Result result = null;
+                
                 LuminanceSource source = new BufferedImageLuminanceSource((BufferedImage) image);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
@@ -2978,7 +2979,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         boolean print() {
             try {
                 File directory = new File("hoaDon");
-                String path = "hoaDon//" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSSZ").format(_hoaDon.getNgayThanhToan()) + ".pdf";
+                String path = "hoaDon//" + _hoaDon.getMa() + ".pdf";
                 File file = new File(path);
                 if (!file.exists()) {
                     directory.mkdirs();
@@ -3110,7 +3111,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         boolean printDelivery() {
             try {
                 File directory = new File("hoaDonVanChuyen");
-                String path = "hoaDonVanChuyen//" + new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSSZ").format(new Date()) + ".pdf";
+                String path = "hoaDonVanChuyen//" + _hoaDon.getMa() + ".pdf";
                 File file = new File(path);
                 if (!file.exists()) {
                     directory.mkdirs();

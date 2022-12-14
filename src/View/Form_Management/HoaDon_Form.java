@@ -1332,6 +1332,7 @@ public class HoaDon_Form extends javax.swing.JPanel {
             _hoaDon.setLstHoaDonCT(_lstHoaDonCT);
             _hoaDonService.updateHoaDonChiTiet(_hoaDon.getLstHoaDonCT(), _hoaDon);
             DialogUpdate.dispose();
+            setFormHoaDonCT();
             ThongBao.showNoti_Succes(this, "Cập nhật thành công");
         }
 
