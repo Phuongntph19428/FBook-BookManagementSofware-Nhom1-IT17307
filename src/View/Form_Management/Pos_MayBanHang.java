@@ -2043,7 +2043,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
             if (_khachHang != null) {
                 _hoaDon.setKhachHang(_khachHang);
-                _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue());
+                _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue() - _diemSuDung);
             }
             PrintOrder print = new PrintOrder();
             boolean printSuccess = print.print();
@@ -2104,7 +2104,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             _hoaDon.setTrangThai(HoaDon.DATHANHTOAN);
             if (_khachHang != null) {
                 _hoaDon.setKhachHang(_khachHang);
-                _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue());
+                _khachHangService.addDiemKhachHang(_khachHang, (_tongTien.divide(BigDecimal.valueOf(100000))).intValue() - _diemSuDung);
             }
             boolean updateStatus = _hoaDonService.updateHoaDon(_hoaDon);
             addHinhThucThanhToan();
