@@ -16,17 +16,21 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -1087,7 +1091,15 @@ public class BieuDo_Form extends javax.swing.JPanel {
             try {
                 // khởi tạo một PdfWriter truyền vào document và FileOutputStream
 
-                PdfWriter.getInstance(document, new FileOutputStream("ThongKe.pdf"));
+                File directory = new File("thongKe");
+                String path = "thongKe//" +"ThongKe"+ new Date().getTime() + ".pdf";
+                File file = new File(path);
+                if (!file.exists()) {
+                    directory.mkdirs();
+                    file.createNewFile();
+                    System.out.println(file.getAbsolutePath());
+                }
+                PdfWriter.getInstance(document, new FileOutputStream(file));
                 // mở file để thực hiện viết
                 document.open();
                 // thêm nội dung sử dụng add function
@@ -1098,25 +1110,20 @@ public class BieuDo_Form extends javax.swing.JPanel {
 //                -- tao anh  
                 document.add(new Paragraph("FBook"));
                 try {
-                    Image image4 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\ssqqqsqsqsqs.png");
+                    Image image4 = Image.getInstance("image\\ssqqqsqsqsqs.png");
                     image4.setAbsolutePosition(350, 215);
                     document.add(image4);
                 } catch (Exception e) {
                 }
+                
                 try {
-                    Image image1 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\logo-fpt-fpt-polytechnic-tach-nen_043151201 (5).png");
-                    image1.setAbsolutePosition(250, 10);
-                    document.add(image1);
-                } catch (Exception e) {
-                }
-                try {
-                    Image image3 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\11111.png");
+                    Image image3 = Image.getInstance("image\\11111.png");
                     image3.setAbsolutePosition(60, 730);
                     document.add(image3);
                 } catch (Exception e) {
                 }
                 try {
-                    Image image2 = Image.getInstance("D:\\FPTPOLYTECH\\duanbieudo\\New folder (3)\\duan3\\image\\icons8_best_seller_30px_1.png");
+                    Image image2 = Image.getInstance("image\\icons8_best_seller_30px_1.png");
                     document.add(image2);
                 } catch (Exception e) {
                 }
@@ -1295,7 +1302,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph17);
                 document.add(paragraph18);
                 try {
-                    Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(99999)));
+                    Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " +  removeAccent(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(99999))));
                     Paragraph paragraph34 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0)));
                     paragraph33.setIndentationLeft(80);
                     paragraph33.setIndentationRight(230);
@@ -1320,7 +1327,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
                 document.add(paragraph19);
                 try {
-                    Paragraph paragraph35 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(1)));
+                    Paragraph paragraph35 = new Paragraph("+ Ten San Pham: " +  removeAccent(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(1))));
                     Paragraph paragraph36 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(1)));
                     paragraph35.setIndentationLeft(80);
                     paragraph35.setIndentationRight(230);
@@ -1346,7 +1353,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
                 try {
 
-                    Paragraph paragraph37 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(2)));
+                    Paragraph paragraph37 = new Paragraph("+ Ten San Pham: " +  removeAccent(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(2))));
                     Paragraph paragraph38 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(2)));
                     paragraph37.setIndentationLeft(80);
                     paragraph37.setIndentationRight(230);
@@ -1372,7 +1379,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph21);
 
                 try {
-                    Paragraph paragraph39 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(3)));
+                    Paragraph paragraph39 = new Paragraph("+ Ten San Pham: " +  removeAccent(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(3))));
                     Paragraph paragraph40 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(3)));
                     paragraph39.setIndentationLeft(80);
                     paragraph39.setIndentationRight(230);
@@ -1397,7 +1404,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph22);
                 try {
 
-                    Paragraph paragraph41 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(4)));
+                    Paragraph paragraph41 = new Paragraph("+ Ten San Pham: " + removeAccent(String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(4))));
                     Paragraph paragraph42 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(4)));
                     paragraph41.setIndentationLeft(80);
                     paragraph41.setIndentationRight(230);
@@ -1440,6 +1447,13 @@ public class BieuDo_Form extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnInBaoCaoActionPerformed
+
+    public String removeAccent(String s) {
+        String temp = Normalizer.normalize(s, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        temp = pattern.matcher(temp).replaceAll("");
+        return temp.replaceAll("đ", "d").replaceAll("Đ", "D");
+    }
 
     private void cbNgayHienTaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNgayHienTaiActionPerformed
         // TODO add your handling code here:
