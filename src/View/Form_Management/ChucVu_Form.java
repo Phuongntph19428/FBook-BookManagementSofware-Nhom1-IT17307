@@ -478,6 +478,25 @@ public class ChucVu_Form extends javax.swing.JPanel {
         String ten = txtTenCV.getText().trim();
         String moTa = txtMoTa.getText().trim();
         ChucVu chucVu = new ChucVu(id, ma, ten, moTa);
+        if(ma.isBlank()|| ten.isBlank()|| moTa.isBlank()){
+            ThongBao.showNoti_Error(this, "Không được để trống");
+            return null;
+        }
+        
+        if (ma.length() > 30) {
+            ThongBao.showNoti_Error(this, "Mã chức vụ không được quá 30 ký tự");
+            return null;
+        }
+        
+         if (ten.length() > 30) {
+            ThongBao.showNoti_Error(this, "Tên chức vụ không được quá 30 ký tự");
+            return null;
+        }
+         
+         if (moTa.length() > 100) {
+            ThongBao.showNoti_Error(this, "Mô tả  không được quá 100 ký tự");
+            return null;
+        }
         return chucVu;
     }
 

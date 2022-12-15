@@ -4,6 +4,7 @@
  */
 package View.Form_Management;
 
+import View.ThongBao;
 import View.soundeffect.MySoundEffect;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -143,6 +144,45 @@ public class NhanVien_ChucNang_Form extends javax.swing.JPanel {
             date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
         } catch (ParseException ex) {
 
+        }
+        
+        if (maNhanVien.isBlank() || ten.isBlank() || tenDem .isBlank() || ho.isBlank() || email.isBlank() || sdt.isBlank() || diaChi.isBlank() || dateStr .isBlank()) {
+            ThongBao.showNoti_Error(this, "Không được để chống");
+        }
+
+        if (maNhanVien.length() > 30) {
+            ThongBao.showNoti_Error(this, "Mã nhân viên không được quá 30 ký tự");
+            return null;
+        }
+        
+        if (ten.length() > 30) {
+            ThongBao.showNoti_Error(this, "Tên nhân viên không được quá 30 ký tự");
+            return null;
+        }
+        
+        if (tenDem.length() > 30) {
+            ThongBao.showNoti_Error(this, "Tên đệm nhân viên không được quá 30 ký tự");
+            return null;
+        }
+        
+        if (ho.length() > 30) {
+            ThongBao.showNoti_Error(this, "Họ nhân viên không được quá 30 ký tự");
+            return null;
+        }
+        
+        if (email.length() > 50) {
+            ThongBao.showNoti_Error(this, "Email không được quá 50 ký tự");
+            return null;
+        }
+        
+        if (sdt.length() > 12) {
+            ThongBao.showNoti_Error(this, "Số điện thoại không được quá 12 ký tự");
+            return null;
+        }
+        
+        if (diaChi.length() > 100) {
+            ThongBao.showNoti_Error(this, "Địa chỉ không được quá 100 ký tự");
+            return null;
         }
 
         ChucVu chucVu = listChucVu.get(comboboxChucVu.getSelectedIndex());
