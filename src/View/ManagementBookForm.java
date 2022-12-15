@@ -458,10 +458,11 @@ public class ManagementBookForm extends javax.swing.JFrame {
         menudoanhThu.setBackground(ColorFrame.COLOR_KEY);
         menudoanhThu.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
 
-        MenuItem menuthongKe = new MenuItem(iconTK, "                 Thống Kê", null, ItemDoanhThu, ItemCuaHang);
+        MenuItem menuthongKe = new MenuItem(iconthuchi, "                 Thu Chi", null, ItemDoanhThu);
         menuthongKe.setBackground(ColorFrame.COLOR_KEY);
         menuthongKe.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
-        menuthongKe.setIconUpDown(down);
+//        menuthongKe.setIconUpDown(down);
+        ActionListenerJLabel(menuthongKe.getIcon(), 19, menuthongKe, MenuItem_);
         MenuItem menunhapKho = new MenuItem(iconKho, "                 Nhập Kho", null, ItemnhapKho, itemPNCT, ItemNhaCC);
         menunhapKho.setBackground(ColorFrame.COLOR_KEY);
         menunhapKho.getNameLabel().setForeground(ColorFrame.COLOR_LABEL);
