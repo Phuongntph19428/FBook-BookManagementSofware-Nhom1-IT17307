@@ -654,7 +654,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         }
         Date date = null;
         try {
-            date = _simpleDateFormat.parse(ngayStr);
+            date = new SimpleDateFormat("dd-MM-yyyy").parse(ngayStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
