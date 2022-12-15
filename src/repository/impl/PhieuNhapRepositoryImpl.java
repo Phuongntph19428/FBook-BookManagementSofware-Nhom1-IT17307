@@ -173,7 +173,7 @@ public class PhieuNhapRepositoryImpl implements PhieuNhapRepository {
     public List<PhieuNhap> selectByDay(Date date) {
         List<PhieuNhap> listPhieuNhap;
         try ( Session session = HibernateUtil.getSessionFactory().openSession();) {
-            listPhieuNhap = session.createQuery("from PhieuNhap p where p.ngayNhap = :ngayNhap").setParameter("ngayNhap", date).list();
+            listPhieuNhap = session.createQuery("from PhieuNhap p where p.ngayNhap between :ngayNhap and dateadd(day, 1, :ngayNhap)").setParameter("ngayNhap", date).list();
         }
         return listPhieuNhap;
     }
