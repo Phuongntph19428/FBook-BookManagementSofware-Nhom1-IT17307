@@ -36,7 +36,11 @@ public class TheLoaiRepository implements ITheLoaiRepository {
             }
         }
     }
-
+    
+    
+    
+    
+    
     @Override
     public boolean update(TheLoai km) {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
