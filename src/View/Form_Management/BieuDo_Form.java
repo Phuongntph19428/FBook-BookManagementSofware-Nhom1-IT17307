@@ -46,6 +46,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
     private List<HoaDonChiTiet> list3;
     private List<HoaDonChiTiet> list2;
     private List<HoaDonChiTiet> list1;
+    private List<HoaDonChiTiet> list4;
 
     public BieuDo_Form() {
         initComponents();
