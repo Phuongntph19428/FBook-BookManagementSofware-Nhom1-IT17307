@@ -2430,6 +2430,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         _tienPhaiTra = tienPhaiTra;
         BigDecimal tienDaTra = BigDecimal.ZERO;
         lblTongTien.setText("<html>" + df.format(tienPhaiTra) + "<sup style='Color: Red'>vnđ</sup></html>");
+        lblTongTienDH.setText("<html>" + df.format(_tongTien) + "<sup style='Color: Red'>vnđ</sup></html>");
         if (!txtTienMat.getText().isBlank()) {
             tienDaTra = BigDecimal.valueOf(Double.parseDouble(txtTienMat.getText() + ""));
         }
