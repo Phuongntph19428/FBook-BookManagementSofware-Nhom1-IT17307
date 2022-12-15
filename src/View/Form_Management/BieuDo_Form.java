@@ -16,6 +16,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -1085,9 +1086,23 @@ public class BieuDo_Form extends javax.swing.JPanel {
             String hd1 = ">==========================================<";
 
             try {
-                // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+                LocalDateTime localDate = LocalDateTime.now();
+                int ngay = localDate.getDayOfMonth();
+                int thang = localDate.getMonthValue();
+                int nam = localDate.getYear();
+                int gio = localDate.getHour();
+                int phut = localDate.getMinute();
 
-                PdfWriter.getInstance(document, new FileOutputStream("ThongKe.pdf"));
+                // khởi tạo một PdfWriter truyền vào document và FileOutputStream
+                File directory = new File("thongKe");
+                String path = "thongKe//" + "thongke_in_ngay" + String.valueOf(ngay + "_" + thang + "_" + nam + "TG" + gio + "h" + phut + "p") + ".pdf";
+                File file = new File(path);
+                if (!file.exists()) {
+                    directory.mkdirs();
+                    file.createNewFile();
+                    System.out.println(file.getAbsolutePath());
+                }
+                PdfWriter.getInstance(document, new FileOutputStream(file));
                 // mở file để thực hiện viết
                 document.open();
                 // thêm nội dung sử dụng add function
@@ -1123,8 +1138,8 @@ public class BieuDo_Form extends javax.swing.JPanel {
 
                 Paragraph paragraph3 = new Paragraph(hd);
                 Paragraph paragraph1 = new Paragraph(hd1);
-                Paragraph paragraph16 = new Paragraph("- Thoi Gian In : " + cbNgayHienTai.getItemAt(0));
-                Paragraph paragraph24 = new Paragraph("1. Ngay Hom Nay - " + cbNgayHienTai.getItemAt(0));
+                Paragraph paragraph16 = new Paragraph("- Thoi Gian In : " + String.valueOf(ngay + "_" + thang + "_" + nam + "TG" + gio + "h" + phut + "p"));
+                Paragraph paragraph24 = new Paragraph("1. Ngay Hom Nay - " + String.valueOf(ngay + "_" + thang + "_" + nam));
                 Paragraph paragraph25 = new Paragraph("- Hoa Don: " + lblHoaDon0.getText().trim() + "    ");
                 Paragraph paragraph26 = new Paragraph("- Thu: " + lblDoanhThu0.getText().trim() + " VND");
                 Paragraph paragraph2 = new Paragraph("2. Doanh Thu 3 Thang Gan Nhat.");
