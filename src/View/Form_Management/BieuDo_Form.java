@@ -1310,7 +1310,7 @@ public class BieuDo_Form extends javax.swing.JPanel {
                 document.add(paragraph17);
                 document.add(paragraph18);
                 try {
-                    Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(99999)));
+                    Paragraph paragraph33 = new Paragraph("+ Ten San Pham: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeSachBieuDoTron().get(0)));
                     Paragraph paragraph34 = new Paragraph("+ So Luong: " + String.valueOf(donService.sellectAllHoaDonChiTietsThongKeBieuDoTron().get(0)));
                     paragraph33.setIndentationLeft(80);
                     paragraph33.setIndentationRight(230);
