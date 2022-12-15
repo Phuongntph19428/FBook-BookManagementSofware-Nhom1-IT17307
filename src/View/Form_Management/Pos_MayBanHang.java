@@ -614,11 +614,11 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã", "Tên", "Tên đệm", "Họ", "SĐT", "Địa chỉ"
+                "Mã", "Tên", "Tên đệm", "Họ", "SĐT", "Điểm", "Địa chỉ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2499,7 +2499,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         DefaultTableModel dtm = (DefaultTableModel) tblKhachHang.getModel();
         dtm.setRowCount(0);
         for (KhachHang khachHang : _lstKhachHang) {
-            dtm.addRow(new Object[]{khachHang.getMa(), khachHang.getTen(), khachHang.getTenDem(), khachHang.getHo(), khachHang.getSdt(), khachHang.getDiaChi()});
+            dtm.addRow(new Object[]{khachHang.getMa(), khachHang.getTen(), khachHang.getTenDem(), khachHang.getHo(), khachHang.getSdt(), khachHang.getDiemTichLuy(), khachHang.getDiaChi()});
         }
     }
 
