@@ -7,6 +7,7 @@ package View.Form_Management;
 import model.SachFake;
 import View.ButtonDesign.Button;
 import View.ScrollBarCustom;
+import View.ThongBao;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -492,6 +493,24 @@ public class NXB_Form extends javax.swing.JPanel {
         String ten = txtTenNXB.getText().trim();
         String moTa = txtMoTa.getText().trim();
         NhaXuatBan nhaXuatBan = new NhaXuatBan(id, ma, ten, moTa);
+        
+        if(ma.isBlank() || ten.isBlank() || moTa.isBlank()){
+            ThongBao.showNoti_Error(this, "Không được để chống");
+        }
+        
+        if(ma.length() > 30){
+            ThongBao.showNoti_Error(this, "Mã nhà xuất bản không được quá 30 ký tự");
+            return null;
+        }
+         if(ten.length() > 50){
+            ThongBao.showNoti_Error(this, "Tên nhà xuất bản không được quá 50 ký tự");
+            return null;
+        }
+         
+          if(moTa.length() > 100){
+            ThongBao.showNoti_Error(this, "Mô tả nhà xuất bản không được quá 100 ký tự");
+            return null;
+        }
         return nhaXuatBan;
     }
 
