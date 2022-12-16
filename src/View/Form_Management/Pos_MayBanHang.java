@@ -110,7 +110,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private HoaDon _hoaDon = null;
 
     private String _keyword = "";
-    
+
     private final HinhThucThanhToanService _hinhThucThanhToanService;
 
 //    List<SachFake> listS = new ArrayList<>();
@@ -454,7 +454,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             System.out.println(value);
         }
         loadTableHoaDonCT();
-        if (searcher) {                        
+        if (searcher) {
             loadSachSearch(_customSachService.getAllByKeyword(_keyword), _currentPage, _pageSize);
             System.out.println(_lstCustomSach.size());
             setPageLabel(true);
@@ -2067,6 +2067,14 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnThanhToanVaInActionPerformed
 
+    public void reload() {
+        loadTableHoaDon();
+        clearTableHDCT();
+        _hoaDon = null;
+        setEnableButton();
+        clearFormBanHang();
+    }
+
     private void clearFormBanHang() {
         txtTimKiem.setText("");
         txtSoDienThoaiDatHang.setText("");
@@ -2293,7 +2301,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
                     ex.printStackTrace();
                 }
                 Result result = null;
-                
+
                 LuminanceSource source = new BufferedImageLuminanceSource((BufferedImage) image);
                 BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
@@ -2496,6 +2504,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         lblKhachHang.setText(khachHang.toString());
         lblKhachHangDatHang.setText(khachHang.toString());
     }
+
     private void loadLabelKhachHangDH(KhachHang khachHang) {
         if (khachHang == null) {
             lblKhachHangDatHang.setText("");
@@ -2529,6 +2538,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             loadLabelKhachHang(_khachHang);
         }
     }
+
     private void clearKhachHangDH() {
         if (rdoClearKHDatHang.isSelected()) {
             rdoClearKHDatHang.setEnabled(true);
@@ -2856,7 +2866,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnQRCodeActionPerformed
 
     private void tblHoaDonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblHoaDonKeyReleased
-        if(evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP) {
+        if (evt.getKeyCode() == KeyEvent.VK_DOWN || evt.getKeyCode() == KeyEvent.VK_UP) {
             setHDKey();
         }
     }//GEN-LAST:event_tblHoaDonKeyReleased
@@ -2872,7 +2882,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         lblThoiGianTaoDatHang.setText(_hoaDon.getNgayTao() + "");
         setEnableButton();
     }
-    
+
     private void fillByCode(String info) {
         clear();
         String[] infoStr = info.split("\\|");
