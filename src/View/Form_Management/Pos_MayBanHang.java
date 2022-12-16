@@ -2684,6 +2684,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             loadLabelKhachHang(_khachHang);
             loadLabelKhachHangDH(_khachHangDH);
             _khachHangDialog.setVisible(false);
+            setTienThanhToan(_tongTien);
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
