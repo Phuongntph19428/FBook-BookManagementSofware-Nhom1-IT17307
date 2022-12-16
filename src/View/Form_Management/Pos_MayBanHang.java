@@ -2533,6 +2533,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             rdoClearKhachHang.setEnabled(false);
             _khachHang = null;
             _diemSuDung = 0;
+            txtDiemSuDung.setText("");
             lblDiemDangDung.setText("");
             setTienThanhToan(_tongTien);
             loadLabelKhachHang(_khachHang);
@@ -2678,9 +2679,12 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
 
             _khachHang = _lstKhachHang.get(row);
             _khachHangDH = _lstKhachHang.get(row);
+            _diemSuDung = 0;
+            lblDiemDangDung.setText("");
             loadLabelKhachHang(_khachHang);
             loadLabelKhachHangDH(_khachHangDH);
             _khachHangDialog.setVisible(false);
+            setTienThanhToan(_tongTien);
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
