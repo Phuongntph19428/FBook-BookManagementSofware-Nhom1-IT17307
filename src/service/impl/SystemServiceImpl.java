@@ -26,9 +26,6 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Scanner;
@@ -54,8 +51,8 @@ import org.quartz.impl.StdSchedulerFactory;
 public class SystemServiceImpl implements ISystemService {
 
     // Find your Account Sid and Token at twilio.com/console 
-    public static final String ACCOUNT_SID = "AC03d4a2d2defffec65d58d99d0ab048e3";
-    public static final String AUTH_TOKEN = "4ee3872df3e87927cf283ad9edf87b60";
+    public static final String ACCOUNT_SID = "AC5d7c762476362ec233d1160840a0db37";
+    public static final String AUTH_TOKEN = "884d1b5cf23c27e9e53eb2411cabffa7";
 
     final String fromEmail = "bongngoc713@gmail.com";
     final String password = "rqtiziyaegpvqjxa";
@@ -168,7 +165,7 @@ public class SystemServiceImpl implements ISystemService {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         Message message = Message.creator(
                 new com.twilio.type.PhoneNumber("+84" + PhoneNumber),
-                "MG460bfa62917ce55950114f6444d25e08", "Sách sắp hết hàng \n" + content)
+                "MG8a30a7e51cb74d47d9a5a84ef64b22af", "Sách sắp hết hàng \n" + content)
                 .create();
 
         System.out.println(message.getSid());

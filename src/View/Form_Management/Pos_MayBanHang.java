@@ -2603,7 +2603,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         Color enabledFalse = new Color(204, 204, 204);
         Color enabledTrue = new Color(35, 35, 132);
 
-        if (_hoaDon == null) {
+        if (_hoaDon == null || _tongTien.compareTo(BigDecimal.ZERO) == 0) {
             btnThanhToan.setEnabled(false);
             btnDatHang.setEnabled(false);
             btnThanhToanVaIn.setEnabled(false);
