@@ -70,6 +70,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
     Sach_Form sach = new Sach_Form();
     ThongTinCaNhan ttcn = new ThongTinCaNhan();
     KhachHang_Form kh = new KhachHang_Form();
+    Pos_MayBanHang pos = new Pos_MayBanHang();
     public ManagementBookForm() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -93,7 +94,7 @@ public class ManagementBookForm extends javax.swing.JFrame {
         HoaDon_Form hd = new HoaDon_Form();
         NhaCungCap_Form ncc = new NhaCungCap_Form();
         PhieuNhap_Form pn = new PhieuNhap_Form();
-        Pos_MayBanHang pos = new Pos_MayBanHang();
+        
         KhuyenMaiChiTiet_Form kmct = new KhuyenMaiChiTiet_Form();
         PhieuNhapChiTiet_Form pnct = new PhieuNhapChiTiet_Form();
         ThongKe_Form tk = new ThongKe_Form();
@@ -642,6 +643,9 @@ public class ManagementBookForm extends javax.swing.JFrame {
         }
         if (index != 2) {
             showJPanel(16);
+        }
+        if (index == 0) {
+            pos.reload();
         }
         System.out.println("ra" + indexSelectedJPanel + " - " + index);
 
