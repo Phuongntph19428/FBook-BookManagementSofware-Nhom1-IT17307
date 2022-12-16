@@ -101,6 +101,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private final KhachHangService _khachHangService;
     private List<KhachHang> _lstKhachHang;
     private KhachHang _khachHang = null;
+    private KhachHang _khachHangDH = null;
     private int _diemSuDung = 0;
     private BigDecimal _tongTien = BigDecimal.ZERO;
     private BigDecimal _tienThua = BigDecimal.ZERO;
@@ -2078,6 +2079,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
         lblTongTienDH.setText("");
         lblTienThua.setText("");
         txtTienMat.setText("");
+        txtDiemSuDung.setText("");
 
         txtTienChuyenKhoan.setText("");
     }
@@ -2128,14 +2130,14 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }
 
     private void btnDatHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatHangActionPerformed
-        if (_khachHang == null) {
+        if (_khachHangDH == null) {
             ThongBao.showNoti_Error(this, "Chưa chọn khách hàng");
             return;
         }
         ThongBao.showNoti_Confirm(this, "Xác nhận giao hàng?");
         if (ThongBao.getSelected() == ThongBao.YES) {
             Date ngayShip = new Date();
-            _hoaDon.setKhachHang(_khachHang);
+            _hoaDon.setKhachHang(_khachHangDH);
             _hoaDon.setNgayShip(ngayShip);
             _hoaDon.setTrangThai(HoaDon.DANGVANCHUYEN);
             PrintOrder print = new PrintOrder();
@@ -2491,8 +2493,15 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             return;
         }
         rdoClearKhachHang.setSelected(true);
-        rdoClearKHDatHang.setSelected(true);
         lblKhachHang.setText(khachHang.toString());
+        lblKhachHangDatHang.setText(khachHang.toString());
+    }
+    private void loadLabelKhachHangDH(KhachHang khachHang) {
+        if (khachHang == null) {
+            lblKhachHangDatHang.setText("");
+            return;
+        }
+        rdoClearKHDatHang.setSelected(true);
         lblKhachHangDatHang.setText(khachHang.toString());
     }
 
@@ -2511,15 +2520,24 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     private void clearKhachHang() {
         if (rdoClearKhachHang.isSelected()) {
             rdoClearKhachHang.setEnabled(true);
-            rdoClearKHDatHang.setEnabled(true);
         } else {
             rdoClearKhachHang.setEnabled(false);
-            rdoClearKHDatHang.setEnabled(false);
             _khachHang = null;
             _diemSuDung = 0;
             lblDiemDangDung.setText("");
             setTienThanhToan(_tongTien);
             loadLabelKhachHang(_khachHang);
+        }
+    }
+    private void clearKhachHangDH() {
+        if (rdoClearKHDatHang.isSelected()) {
+            rdoClearKHDatHang.setEnabled(true);
+        } else {
+            rdoClearKHDatHang.setEnabled(false);
+            _khachHangDH = null;
+            _diemSuDung = 0;
+            setTienThanhToan(_tongTien);
+            loadLabelKhachHangDH(_khachHangDH);
         }
     }
     private void rdoClearKhachHangStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoClearKhachHangStateChanged
@@ -2563,7 +2581,7 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
     private void rdoClearKHDatHangStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rdoClearKHDatHangStateChanged
-        clearKhachHang();
+        clearKhachHangDH();
     }//GEN-LAST:event_rdoClearKHDatHangStateChanged
 
     private void rdoClearKHDatHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoClearKHDatHangMouseClicked
@@ -2649,7 +2667,9 @@ public class Pos_MayBanHang extends javax.swing.JPanel {
             }
 
             _khachHang = _lstKhachHang.get(row);
+            _khachHangDH = _lstKhachHang.get(row);
             loadLabelKhachHang(_khachHang);
+            loadLabelKhachHangDH(_khachHangDH);
             _khachHangDialog.setVisible(false);
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked

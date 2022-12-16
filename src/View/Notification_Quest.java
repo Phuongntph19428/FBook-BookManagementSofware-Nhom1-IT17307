@@ -20,7 +20,6 @@ public class Notification_Quest extends javax.swing.JPanel {
         initComponents();
         Icon iconClose = new ImageIcon("image/icons8_multiply_18px.png");
         Icon iconOke = new ImageIcon("image/icons8_help_65px.png");//icons8_error_120px
-        jLabel5.setIcon(iconClose);
 
     }
 
@@ -57,7 +56,6 @@ public class Notification_Quest extends javax.swing.JPanel {
     private void initComponents() {
 
         bar = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         lbIcon = new javax.swing.JLabel();
         lbName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -84,8 +82,6 @@ public class Notification_Quest extends javax.swing.JPanel {
 
         add(bar);
         bar.setBounds(2, 2, 8, 179);
-        add(jLabel5);
-        jLabel5.setBounds(505, 2, 24, 27);
 
         lbIcon.setForeground(new java.awt.Color(255, 255, 255));
         add(lbIcon);
@@ -141,7 +137,6 @@ public class Notification_Quest extends javax.swing.JPanel {
     private View.ButtonDesign.Button btnCancel;
     private View.ButtonDesign.Button btnYes;
     private javax.swing.JTextArea content;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbName;
