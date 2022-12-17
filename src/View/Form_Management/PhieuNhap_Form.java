@@ -225,8 +225,6 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 395));
 
         tblPhieuNhap.setModel(new javax.swing.table.DefaultTableModel(
@@ -571,6 +569,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
         txtMoTa.setText(phieuNhap.getMoTa());
         cbbNCC.setSelectedItem(phieuNhap.getNhaCungCap());
         lblTrangThai.setText(phieuNhap.getTrangThai() == PhieuNhap.DATHEMVAOKHO ? "Đã thêm vào kho" : "Chưa thêm vào kho");
+        _trangThai = phieuNhap.getTrangThai();
     }
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -614,6 +613,8 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
             return;
         }
         
+        phieuNhap.setTrangThai(_trangThai);
+        
         ThongBao.showNoti_Confirm(this, "Xác nhận thêm?");
         if (ThongBao.getSelected() == ThongBao.YES) {
             boolean updateStatus = _phieuNhapService.updatePhieuNhap(phieuNhap);
@@ -633,6 +634,7 @@ public class PhieuNhap_Form extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnXoaActionPerformed
 
+    private int _trangThai = PhieuNhap.CHUATHEMVAOKHO;
     private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuNhapMouseClicked
         int row = tblPhieuNhap.getSelectedRow();
         if (row == -1) {

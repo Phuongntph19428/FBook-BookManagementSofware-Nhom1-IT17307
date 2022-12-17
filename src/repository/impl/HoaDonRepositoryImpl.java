@@ -551,7 +551,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
 
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             var hql = """
-                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -1, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -1, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -1, getDate()))""";
+                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -1, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -1, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -1, getDate())) and pn.trangThai = 1""";
 
             TypedQuery<PhieuNhapChiTiet> query = session.createQuery(hql);
             try {
@@ -592,7 +592,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
 
             var hql = """
-                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -3, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -3, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -3, getDate()))""";
+                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -3, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -3, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -3, getDate())) and pn.trangThai = 1""";
 
             TypedQuery<PhieuNhapChiTiet> query = session.createQuery(hql);
             try {
@@ -612,7 +612,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
 
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             var hql = """
-                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -4, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -4, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -4, getDate()))""";
+                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -4, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -4, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -4, getDate())) and pn.trangThai = 1""";
 
             TypedQuery<PhieuNhapChiTiet> query = session.createQuery(hql);
             try {
@@ -632,7 +632,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
 
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             var hql = """
-                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -5, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -5, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -5, getDate()))""";
+                      SELECT Sum(s.giaNhap*pnct.soLuong) FROM  PhieuNhap pn inner join pn.lstPhieuNhapCT pnct inner join pnct.sach s WHERE DAY(pn.ngayNhap) = DAY(DATEADD(day, -5, getDate())) AND MONTH(pn.ngayNhap) = MONTH(DATEADD(day, -5, getDate()))AND YEAR(pn.ngayNhap) = YEAR(DATEADD(day, -5, getDate())) and pn.trangThai = 1""";
 
             TypedQuery<PhieuNhapChiTiet> query = session.createQuery(hql);
             try {
@@ -653,7 +653,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = """
                          SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(DATEADD(day, -1, getDate())) AND MONTH(h.ngayThanhToan) = MONTH(DATEADD(day, -1, getDate()))AND YEAR(h.ngayThanhToan) = YEAR(DATEADD(day, -1, getDate())) AND h.trangThai =1
-                                                  GROUP BY h.ngayThanhToan """;
+                                                  """;
             TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
 
             try {
@@ -675,7 +675,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = """
                          SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(DATEADD(day, -2, getDate())) AND MONTH(h.ngayThanhToan) = MONTH(DATEADD(day, -2, getDate()))AND YEAR(h.ngayThanhToan) = YEAR(DATEADD(day, -2, getDate())) AND h.trangThai =1
-                                                  GROUP BY h.ngayThanhToan """;
+                                                """;
             TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
 
             try {
@@ -697,7 +697,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = """
                          SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(DATEADD(day, -3, getDate())) AND MONTH(h.ngayThanhToan) = MONTH(DATEADD(day, -3, getDate()))AND YEAR(h.ngayThanhToan) = YEAR(DATEADD(day, -3, getDate())) AND h.trangThai =1
-                                                  GROUP BY h.ngayThanhToan """;
+                                                  """;
             TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
 
             try {
@@ -719,7 +719,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = """
                          SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(DATEADD(day, -4, getDate())) AND MONTH(h.ngayThanhToan) = MONTH(DATEADD(day, -4, getDate()))AND YEAR(h.ngayThanhToan) = YEAR(DATEADD(day, -4, getDate())) AND h.trangThai =1
-                                                  GROUP BY h.ngayThanhToan """;
+                                                 """;
             TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
 
             try {
@@ -741,7 +741,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         try ( Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = """
                          SELECT SUM(hdct.soLuong * hdct.donGia) FROM  HoaDon h inner join h.lstHoaDonCT hdct WHERE DAY(h.ngayThanhToan) = DAY(DATEADD(day, -5, getDate())) AND MONTH(h.ngayThanhToan) = MONTH(DATEADD(day, -5, getDate()))AND YEAR(h.ngayThanhToan) = YEAR(DATEADD(day, -5, getDate())) AND h.trangThai =1
-                                                  GROUP BY h.ngayThanhToan """;
+                                                  """;
             TypedQuery<HoaDonChiTiet> query = session.createQuery(hql);
 
             try {
